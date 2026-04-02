@@ -29,24 +29,10 @@ const budgets = [
 ];
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    company: '',
-    service: '',
-    budget: '',
-    message: '',
-  });
+  
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+
 
   return (
     <div className="bg-[#080c14] pt-24">
@@ -67,21 +53,19 @@ export default function Contact() {
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           <ScrollReveal className="lg:col-span-3">
-            {submitted ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-16 rounded-2xl bg-[#0a0f1c] border border-[#c9a84c]/20">
-                <div className="w-20 h-20 rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-6">
-                  <CheckCircle2 className="text-[#c9a84c]" size={36} />
-                </div>
-                <h3 className="serif text-3xl font-bold text-white mb-3">Message Sent!</h3>
-                <p className="text-white/50 max-w-sm">
-                  Thank you for reaching out. I personally read every message and will get back to you within 24 hours.
-                </p>
-                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="mt-8 gold-bg text-[#080c14] font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
-                  Book a Call Now <ArrowRight size={16} />
-                </a>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5 p-8 rounded-2xl bg-[#0a0f1c] border border-white/10">
+            
+             <form 
+  action="https://formsubmit.co/info@pranjaldigital.com" 
+  method="POST"
+  className="space-y-5 p-8 rounded-2xl bg-[#0a0f1c] border border-white/10"
+>
+               
+<input type="hidden" name="_captcha" value="false" />
+<input type="hidden" name="_subject" value="New Lead from Website" />
+<input type="hidden" name="_template" value="table" />
+<input type="hidden" name="_honey" style="display:none">               
+<input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
+               
                 <h2 className="serif text-2xl font-bold text-white mb-6">Send Me a Message</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
@@ -89,8 +73,7 @@ export default function Contact() {
                     <input
                       name="name"
                       required
-                      value={form.name}
-                      onChange={handleChange}
+                     
                       placeholder="John Smith"
                       className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
                     />
@@ -101,8 +84,7 @@ export default function Contact() {
                       name="email"
                       type="email"
                       required
-                      value={form.email}
-                      onChange={handleChange}
+                     
                       placeholder="john@company.com"
                       className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
                     />
@@ -112,8 +94,7 @@ export default function Contact() {
                   <label className="block text-white/60 text-sm mb-1.5">Company / Website</label>
                   <input
                     name="company"
-                    value={form.company}
-                    onChange={handleChange}
+                    
                     placeholder="Your company or website URL"
                     className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
                   />
@@ -123,8 +104,7 @@ export default function Contact() {
                     <label className="block text-white/60 text-sm mb-1.5">Service Interested In</label>
                     <select
                       name="service"
-                      value={form.service}
-                      onChange={handleChange}
+                      
                       className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
                     >
                       <option value="">Select a service...</option>
@@ -137,8 +117,7 @@ export default function Contact() {
                     <label className="block text-white/60 text-sm mb-1.5">Monthly Budget</label>
                     <select
                       name="budget"
-                      value={form.budget}
-                      onChange={handleChange}
+                      
                       className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
                     >
                       <option value="">Select budget range...</option>
@@ -153,8 +132,7 @@ export default function Contact() {
                   <textarea
                     name="message"
                     required
-                    value={form.message}
-                    onChange={handleChange}
+                   
                     rows={5}
                     placeholder="Tell me about your business, current challenges, and what you're looking to achieve..."
                     className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors resize-none"
