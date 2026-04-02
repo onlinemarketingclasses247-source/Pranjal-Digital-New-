@@ -374,15 +374,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA MIDPAGE */}
-      <section className="py-16 bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/5 to-[#c9a84c]/10 border-y border-[#c9a84c]/20">
+      {/* CTA */}
+      <section className="py-24 bg-[#080c14]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <h3 className="serif text-3xl font-bold text-white mb-4">Ready to See a Real Strategy in Action?</h3>
-            <p className="text-white/50 mb-8">Book a free 30-minute strategy call. No sales pitch — just straight talk about what will move your numbers.</p>
-            <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="gold-bg text-[#080c14] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
-              Book Your Free Strategy Call <ArrowRight size={18} />
-            </a>
+            <h2 className="serif text-4xl font-bold text-white mb-4">Ready to Build Something Big Together?</h2>
+            <p className="text-white/50 mb-8">Let's talk about your goals, your challenges, and how 12+ years of cross-industry expertise can accelerate your growth.</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="gold-bg text-[#080c14] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+                Book a Strategy Call <ArrowRight size={18} />
+              </a>
+              <Link href="/services" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors">
+                View All Services
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>
