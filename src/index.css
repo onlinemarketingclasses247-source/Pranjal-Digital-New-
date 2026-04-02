@@ -68,6 +68,11 @@ button, a {
   transition: all 0.3s ease;
 }
 
+/* Fix light CTA section */
+.bg-\[\#f5f5f5\] * {
+  color: #000 !important;
+}
+
 /* Improve hover clarity */
 a:hover {
   opacity: 0.9;
