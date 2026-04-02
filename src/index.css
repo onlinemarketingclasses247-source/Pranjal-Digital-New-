@@ -1,3 +1,74 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* ================= GLOBAL UI FIX ================= */
+
+/* Improve text visibility everywhere */
+.text-white\/60 {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+.text-white\/50 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+.text-white\/40 {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Fix borders visibility */
+.border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Improve card backgrounds */
+.bg-\[\#0a0f1c\] {
+  background-color: #0f172a !important;
+}
+
+/* Fix CTA buttons globally */
+.gold-bg {
+  background-color: #c9a84c !important;
+  color: #000 !important;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.4);
+}
+
+.gold-bg:hover {
+  background-color: #b8963f !important;
+}
+
+/* Improve contrast on gradients */
+.gold-gradient {
+  background: linear-gradient(90deg, #c9a84c, #f5d76e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Fix section readability */
+section {
+  position: relative;
+}
+
+/* Optional: add subtle overlay to all dark sections */
+section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.15);
+  pointer-events: none;
+  z-index: 0;
+}
+
+section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Improve buttons visibility */
+button, a {
+  transition: all 0.3s ease;
+}
+
+/* Improve hover clarity */
+a:hover {
+  opacity: 0.9;
+}
