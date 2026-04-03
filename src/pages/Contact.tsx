@@ -145,7 +145,7 @@ export default function Contact() {
                   Send Message <ArrowRight size={18} />
                 </button>
               </form>
-            )}
+        
           </ScrollReveal>
 
           <div className="lg:col-span-2 space-y-6">
