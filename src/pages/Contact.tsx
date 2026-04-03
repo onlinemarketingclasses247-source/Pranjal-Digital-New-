@@ -31,6 +31,7 @@ const budgets = [
 export default function Contact() {
   return (
     <div className="bg-[#080c14] pt-24">
+
       {/* Hero */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#040608] to-[#080c14]" />
@@ -47,9 +48,11 @@ export default function Contact() {
       {/* Contact Form */}
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+
+          {/* LEFT SIDE FORM */}
           <ScrollReveal className="lg:col-span-3">
-            <form 
-              action="https://formsubmit.co/pranjallundefined@gmail.com" 
+            <form
+              action="https://formsubmit.co/pranjallundefined@gmail.com"
               method="POST"
               className="space-y-5 p-8 rounded-2xl bg-[#0a0f1c] border border-white/10"
             >
@@ -73,6 +76,7 @@ export default function Contact() {
                     className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
                   />
                 </div>
+
                 <div>
                   <label className="block text-white/60 text-sm mb-1.5">Email Address *</label>
                   <input
@@ -143,8 +147,9 @@ export default function Contact() {
             </form>
           </ScrollReveal>
 
-          {/* RIGHT SIDE (UNCHANGED) */}
+          {/* RIGHT SIDE */}
           <div className="lg:col-span-2 space-y-6">
+
             <ScrollReveal delay={0.1}>
               <div className="p-6 rounded-2xl bg-[#0a0f1c] border border-white/10">
                 <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mb-4">
@@ -193,19 +198,22 @@ export default function Contact() {
                 </div>
               </div>
             </ScrollReveal>
+
           </div>
         </div>
       </section>
 
-      {/* CALENDLY SECTION (UNCHANGED) */}
+      {/* Calendly */}
       <section className="py-20 bg-[#040608]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4">
           <ScrollReveal className="text-center mb-10">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Calendar className="text-[#c9a84c]" size={24} />
               <h2 className="serif text-3xl font-bold text-white">Prefer to Talk Directly?</h2>
             </div>
-            <p className="text-white/50">Book a free 30-minute strategy call and let's map out your path to growth.</p>
+            <p className="text-white/50">
+              Book a free 30-minute strategy call and let's map out your path to growth.
+            </p>
           </ScrollReveal>
 
           <div className="rounded-2xl overflow-hidden border border-white/10">
@@ -214,12 +222,13 @@ export default function Contact() {
               width="100%"
               height="700"
               frameBorder="0"
-              title="Book a Meeting with Pranjal Digital"
+              title="Book a Meeting"
               className="bg-white"
             />
           </div>
         </div>
       </section>
+
     </div>
   );
 }
