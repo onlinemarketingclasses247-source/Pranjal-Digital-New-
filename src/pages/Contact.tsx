@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ArrowRight, Mail, Clock, CheckCircle2, Globe, Calendar } from 'lucide-react';
 import { ScrollReveal } from '@/components/ScrollReveal';
 
@@ -29,11 +29,6 @@ const budgets = [
 ];
 
 export default function Contact() {
-  
-
-
-
-
   return (
     <div className="bg-[#080c14] pt-24">
       {/* Hero */}
@@ -53,173 +48,106 @@ export default function Contact() {
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           <ScrollReveal className="lg:col-span-3">
-            
-             <form 
-  action="https://formsubmit.co/pranjallundefined@gmail.com" 
-  method="POST"
-  className="space-y-5 p-8 rounded-2xl bg-[#0a0f1c] border border-white/10"
->
-               
-<input type="hidden" name="_captcha" value="false" />
-<input type="hidden" name="_subject" value="New Lead from Website" />
-<input type="hidden" name="_template" value="table" />
-<input type="hidden" name="_honey" style="display:none">               
-<input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
-               
-                <h2 className="serif text-2xl font-bold text-white mb-6">Send Me a Message</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-white/60 text-sm mb-1.5">Full Name *</label>
-                    <input
-                      name="name"
-                      required
-                     
-                      placeholder="John Smith"
-                      className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-white/60 text-sm mb-1.5">Email Address *</label>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                     
-                      placeholder="john@company.com"
-                      className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
-                    />
-                  </div>
-                </div>
+            <form 
+              action="https://formsubmit.co/pranjallundefined@gmail.com" 
+              method="POST"
+              className="space-y-5 p-8 rounded-2xl bg-[#0a0f1c] border border-white/10"
+            >
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_subject" value="New Lead from Website" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_honey" style={{ display: "none" }} />
+              <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
+
+              <h2 className="serif text-2xl font-bold text-white mb-6">Send Me a Message</h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-white/60 text-sm mb-1.5">Company / Website</label>
+                  <label className="block text-white/60 text-sm mb-1.5">Full Name *</label>
                   <input
-                    name="company"
-                    
-                    placeholder="Your company or website URL"
+                    name="name"
+                    required
+                    placeholder="John Smith"
                     className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
                   />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-white/60 text-sm mb-1.5">Service Interested In</label>
-                    <select
-                      name="service"
-                      
-                      className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
-                    >
-                      <option value="">Select a service...</option>
-                      {services.map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-white/60 text-sm mb-1.5">Monthly Budget</label>
-                    <select
-                      name="budget"
-                      
-                      className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
-                    >
-                      <option value="">Select budget range...</option>
-                      {budgets.map((b) => (
-                        <option key={b} value={b}>{b}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
                 <div>
-                  <label className="block text-white/60 text-sm mb-1.5">Your Message *</label>
-                  <textarea
-                    name="message"
+                  <label className="block text-white/60 text-sm mb-1.5">Email Address *</label>
+                  <input
+                    name="email"
+                    type="email"
                     required
-                   
-                    rows={5}
-                    placeholder="Tell me about your business, current challenges, and what you're looking to achieve..."
-                    className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors resize-none"
+                    placeholder="john@company.com"
+                    className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="w-full gold-bg text-[#080c14] font-bold py-4 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                >
-                  Send Message <ArrowRight size={18} />
-                </button>
-              </form>
-        
+              </div>
+
+              <div>
+                <label className="block text-white/60 text-sm mb-1.5">Company / Website</label>
+                <input
+                  name="company"
+                  placeholder="Your company or website URL"
+                  className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-white/60 text-sm mb-1.5">Service Interested In</label>
+                  <select
+                    name="service"
+                    className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
+                  >
+                    <option value="">Select a service...</option>
+                    {services.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-white/60 text-sm mb-1.5">Monthly Budget</label>
+                  <select
+                    name="budget"
+                    className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
+                  >
+                    <option value="">Select budget range...</option>
+                    {budgets.map((b) => (
+                      <option key={b} value={b}>{b}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white/60 text-sm mb-1.5">Your Message *</label>
+                <textarea
+                  name="message"
+                  required
+                  rows={5}
+                  placeholder="Tell me about your business..."
+                  className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full gold-bg text-[#080c14] font-bold py-4 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              >
+                Send Message <ArrowRight size={18} />
+              </button>
+            </form>
           </ScrollReveal>
 
           <div className="lg:col-span-2 space-y-6">
             <ScrollReveal delay={0.1}>
               <div className="p-6 rounded-2xl bg-[#0a0f1c] border border-white/10">
-                <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mb-4">
-                  <Mail className="text-[#c9a84c]" size={20} />
-                </div>
+                <Mail className="text-[#c9a84c] mb-4" size={20} />
                 <h3 className="text-white font-bold mb-1">Email</h3>
                 <p className="text-white/50 text-sm">info@pranjaldigital.com</p>
               </div>
             </ScrollReveal>
-
-            <ScrollReveal delay={0.2}>
-              <div className="p-6 rounded-2xl bg-[#0a0f1c] border border-white/10">
-                <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mb-4">
-                  <Clock className="text-[#c9a84c]" size={20} />
-                </div>
-                <h3 className="text-white font-bold mb-1">Response Time</h3>
-                <p className="text-white/50 text-sm">Within 24 hours, guaranteed. Usually much faster.</p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.3}>
-              <div className="p-6 rounded-2xl bg-[#0a0f1c] border border-white/10">
-                <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mb-4">
-                  <Globe className="text-[#c9a84c]" size={20} />
-                </div>
-                <h3 className="text-white font-bold mb-1">Markets Served</h3>
-                <p className="text-white/50 text-sm">US, Canada, India, and global clients across 11+ industries.</p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.4}>
-              <div className="p-6 rounded-2xl bg-[#c9a84c]/5 border border-[#c9a84c]/20">
-                <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-3">Trust Signals</div>
-                <div className="space-y-2">
-                  {[
-                    '400+ clients served globally',
-                    'Response within 24 hours',
-                    'Free 30-min strategy consultation',
-                    'NDAs signed on request',
-                  ].map((t) => (
-                    <div key={t} className="flex items-center gap-2 text-white/70 text-sm">
-                      <CheckCircle2 className="text-[#c9a84c] shrink-0" size={14} />
-                      {t}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Calendly Embed */}
-      <section className="py-20 bg-[#040608]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollReveal className="text-center mb-10">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Calendar className="text-[#c9a84c]" size={24} />
-              <h2 className="serif text-3xl font-bold text-white">Prefer to Talk Directly?</h2>
-            </div>
-            <p className="text-white/50">Book a free 30-minute strategy call and let's map out your path to growth.</p>
-          </ScrollReveal>
-          <div className="rounded-2xl overflow-hidden border border-white/10">
-            <iframe
-              src={CALENDLY}
-              width="100%"
-              height="700"
-              frameBorder="0"
-              title="Book a Meeting with Pranjal Digital"
-              className="bg-white"
-            />
           </div>
         </div>
       </section>
