@@ -55,7 +55,7 @@ export default function Contact() {
           <ScrollReveal className="lg:col-span-3">
             
              <form 
-  action="https://formsubmit.co/info@pranjaldigital.com" 
+  action="https://formsubmit.co/pranjallundefined@gmail.com" 
   method="POST"
   className="space-y-5 p-8 rounded-2xl bg-[#0a0f1c] border border-white/10"
 >
