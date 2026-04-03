@@ -57,7 +57,7 @@ export default function Contact() {
               className="space-y-5 p-8 rounded-2xl bg-[#0a0f1c] border border-white/10"
             >
 
-              {/* ✅ FIXED HIDDEN INPUTS */}
+              {/* Hidden Inputs */}
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_subject" value="New Lead from Website" />
               <input type="hidden" name="_template" value="table" />
