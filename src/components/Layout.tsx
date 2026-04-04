@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ChatPopup from "@/components/ChatPopup";
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -244,6 +245,7 @@ export function Layout({ children }: LayoutProps) {
       </main>
       <Footer />
       <MobileCTA />
+      <ChatPopup />
     </div>
   );
 }
