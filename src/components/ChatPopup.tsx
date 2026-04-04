@@ -15,7 +15,7 @@ export default function ChatPopup() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+<div className="fixed bottom-6 right-6 z-50 animate-pulse">
       <div className="bg-[#0a0f1c] border border-[#c9a84c]/20 rounded-2xl shadow-xl p-4 w-72 animate-fade-in">
 
         {/* Close button */}
