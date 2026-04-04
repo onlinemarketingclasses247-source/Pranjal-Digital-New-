@@ -29,7 +29,8 @@ export default function ChatPopup() {
         {/* Content */}
         <div className="flex items-start gap-3">
           <img
-            src="/images/author.webp" // 👈 your image
+          <img
+           src="/images/blogs/author.webp"
             alt="Pranjal"
             className="w-10 h-10 rounded-full object-cover"
           />
