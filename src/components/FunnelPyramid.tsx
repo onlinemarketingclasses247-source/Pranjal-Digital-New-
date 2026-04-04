@@ -25,10 +25,14 @@ const stages = [
 
 export default function FunnelPyramid() {
   const [active, setActive] = useState(null);
-  const [animate, setAnimate] = useState(false);
+  const [highlightIndex, setHighlightIndex] = useState(0);
 
+  // Sequential blinking effect
   useEffect(() => {
-    setTimeout(() => setAnimate(true), 200);
+    const interval = setInterval(() => {
+      setHighlightIndex((prev) => (prev + 1) % stages.length);
+    }, 1200);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -40,46 +44,53 @@ export default function FunnelPyramid() {
           Full-Funnel Growth Strategy
         </h2>
 
-        {/* CLEAN TEXT */}
-        <div className="text-white/70 max-w-2xl mx-auto mb-14 text-sm space-y-2">
-          <p>✔ Most businesses focus only on ads or traffic.</p>
-          <p>✔ Real growth happens when every stage works together.</p>
-          <p>✔ This is how I build predictable revenue systems.</p>
+        {/* TEXT (CLEAN + GOLD CTA) */}
+        <div className="text-white/70 max-w-2xl mx-auto mb-14 text-sm leading-relaxed space-y-2">
+          <p>
+            Most businesses go through multiple stages before a lead becomes a customer.
+          </p>
+          <p>
+            Each stage of the funnel plays a critical role in driving conversions and revenue.
+          </p>
+          <p>
+            <span className="text-[#c9a84c] font-semibold">
+              Click on any stage below to interact and understand how the funnel works.
+            </span>
+          </p>
         </div>
 
-        {/* 3D PYRAMID */}
-        <div className="relative flex flex-col items-center perspective-[1200px]">
+        {/* PYRAMID */}
+        <div className="relative flex flex-col items-center perspective-[1200px] space-y-2">
 
-          <div
-            className={`space-y-3 transition-all duration-1000 ${
-              animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-            }`}
-          >
+          {stages.map((stage, index) => (
+            <React.Fragment key={index}>
 
-            {stages.map((stage, index) => (
+              {/* LAYER */}
               <div
-                key={index}
                 onClick={() => setActive(index)}
-                className="cursor-pointer group relative"
+                className={`cursor-pointer group relative transition-all duration-500 ${
+                  highlightIndex === index ? "scale-105" : "opacity-80"
+                }`}
                 style={{
                   width: `${220 + index * 80}px`,
                 }}
               >
-
-                {/* LAYER */}
                 <div
-                  className="relative text-center py-6 rounded-md border border-[#c9a84c]/70"
+                  className="relative text-center py-6 rounded-md border"
                   style={{
                     transform: "rotateX(12deg)",
+                    borderColor:
+                      highlightIndex === index
+                        ? "#c9a84c"
+                        : "rgba(201,168,76,0.4)",
                     background:
                       "linear-gradient(145deg, rgba(201,168,76,0.25), rgba(10,15,28,0.95))",
                     boxShadow:
-                      "0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)",
+                      highlightIndex === index
+                        ? "0 0 25px rgba(201,168,76,0.6)"
+                        : "0 10px 25px rgba(0,0,0,0.5)",
                   }}
                 >
-
-                  {/* GOLD LIGHT SWEEP */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700 bg-gradient-to-r from-transparent via-[#c9a84c]/20 to-transparent" />
 
                   {/* TEXT */}
                   <div className="relative text-white font-semibold group-hover:text-[#c9a84c] transition">
@@ -87,14 +98,25 @@ export default function FunnelPyramid() {
                   </div>
 
                   {/* SAND FLOW LINE */}
-                  <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[2px] h-full bg-gradient-to-b from-[#c9a84c] to-transparent opacity-0 group-hover:opacity-60 transition" />
+                  <div
+                    className={`absolute left-1/2 top-0 -translate-x-1/2 w-[2px] h-full bg-gradient-to-b from-[#c9a84c] to-transparent transition ${
+                      highlightIndex === index ? "opacity-60" : "opacity-0"
+                    }`}
+                  />
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* FLOATING GLOW */}
-          <div className="absolute bottom-[-20px] w-[300px] h-[20px] bg-[#c9a84c]/30 blur-xl rounded-full animate-pulse" />
+              {/* ARROW BETWEEN STAGES */}
+              {index < stages.length - 1 && (
+                <div className="text-[#c9a84c] text-xl animate-bounce">
+                  ↓
+                </div>
+              )}
+            </React.Fragment>
+          ))}
+
+          {/* BASE GLOW */}
+          <div className="mt-4 w-[300px] h-[20px] bg-[#c9a84c]/30 blur-xl rounded-full animate-pulse" />
         </div>
 
         {/* MODAL */}
