@@ -13,33 +13,45 @@ const services = [
   "Funnels","YouTube","Performance"
 ];
 
-// 🔥 REAL DELIVERABLES (CORE FIX)
 const deliverablesMap = {
-  SEO: ["Keyword Research","On-page SEO","Technical Audit","Backlink Strategy"],
-  "Google Ads": ["Campaign Setup","Conversion Tracking","Bid Optimization"],
-  "Meta Ads": ["Creative Strategy","Audience Targeting","Ad Testing"],
-  Content: ["Content Calendar","SEO Blogs","Conversion Copy"],
-  Email: ["Email Automation","Drip Funnels","Campaign Strategy"],
-  CRO: ["A/B Testing","UX Improvements","Heatmap Analysis"],
-  "Landing Pages": ["Landing Page Design","Copywriting","Conversion Setup"],
-  Analytics: ["GA4 Setup","Tracking Setup","Reporting Dashboard"],
-  Strategy: ["Marketing Plan","Growth Roadmap","Channel Strategy"],
-  Funnels: ["Sales Funnel Design","Lead Flow Setup"],
-  YouTube: ["Video Strategy","SEO Optimization"],
-  Performance: ["Full Funnel Optimization","Scaling Strategy"]
+  SEO: ["Keyword Research","On-page SEO","Technical SEO","Backlinks"],
+  Content: ["Content Plan","SEO Blogs","Copywriting"],
+  Email: ["Automation","Flows","Campaigns"],
+  "Google Ads": ["Campaign Setup","Conversion Tracking","Optimization"],
+  "Meta Ads": ["Ad Creatives","Audience Targeting","Scaling"],
+  CRO: ["A/B Testing","UX Fixes","Conversion Optimization"],
+  "Landing Pages": ["Design","Copy","Conversion Setup"],
+  Analytics: ["GA4 Setup","Tracking","Dashboard"],
+  Strategy: ["Marketing Plan","Growth Strategy"],
+  Funnels: ["Sales Funnels","Lead Journey"],
+  YouTube: ["SEO","Video Strategy"],
+  Performance: ["Scaling","Optimization"]
 };
 
-export default function CostCalculator() {
+export default function Calculator() {
+
   const [currency, setCurrency] = useState("USD");
   const [hours, setHours] = useState(5);
   const [months, setMonths] = useState(1);
   const [selected, setSelected] = useState([]);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const [currencyChanged, setCurrencyChanged] = useState(false);
   const [clicked, setClicked] = useState(false);
 
+  // 🔥 SMART STEP LOGIC
+  const handleHoursChange = (val) => {
+    let newVal = Number(val);
+
+    if (newVal <= 100) newVal = Math.round(newVal / 5) * 5;
+    else if (newVal <= 500) newVal = Math.round(newVal / 50) * 50;
+    else newVal = Math.round(newVal / 100) * 100;
+
+    setHours(newVal);
+  };
+
   const toggleService = (s) => {
-    setSelected((prev) =>
+    setSelected(prev =>
       prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
     );
   };
@@ -47,12 +59,12 @@ export default function CostCalculator() {
   const calculate = () => {
     if (selected.length === 0) {
       setError("⚠ Please select at least one service");
-      setResult(null);
       return;
     }
 
     setError("");
     setClicked(true);
+    setCurrencyChanged(false);
 
     const { rate, symbol } = currencyConfig[currency];
     const total = hours * months * rate;
@@ -71,28 +83,35 @@ export default function CostCalculator() {
     });
   };
 
-  // CURSOR POINTER
+  // 🔥 Currency change logic
+  const handleCurrencyChange = (c) => {
+    setCurrency(c);
+
+    if (result) {
+      setResult(null);
+      setCurrencyChanged(true);
+    }
+  };
+
+  // 🔥 Cursor pointer animation
   useEffect(() => {
     if (clicked) return;
 
-    const el = document.getElementById("calc-btn");
-    if (!el) return;
+    const btn = document.getElementById("calc-btn");
+    if (!btn) return;
 
     let count = 0;
 
     const interval = setInterval(() => {
-      if (count >= 3) {
-        clearInterval(interval);
-        return;
-      }
+      if (count >= 3) return clearInterval(interval);
 
-      el.style.transform = "scale(1.1)";
+      btn.style.transform = "translateY(-5px)";
       setTimeout(() => {
-        el.style.transform = "scale(1)";
-      }, 600);
+        btn.style.transform = "translateY(0)";
+      }, 400);
 
       count++;
-    }, 1200);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [clicked]);
@@ -101,7 +120,7 @@ export default function CostCalculator() {
     <section className="py-20 bg-[#040608]">
       <div className="max-w-6xl mx-auto px-4">
 
-        <h2 className="text-3xl text-white text-center font-bold mb-6">
+        <h2 className="text-3xl text-white text-center mb-6 font-bold">
           Digital Marketing Cost Calculator
         </h2>
 
@@ -110,7 +129,7 @@ export default function CostCalculator() {
           {Object.keys(currencyConfig).map(c => (
             <button
               key={c}
-              onClick={() => setCurrency(c)}
+              onClick={() => handleCurrencyChange(c)}
               className={`px-4 py-1 rounded ${
                 currency === c
                   ? "bg-[#c9a84c] text-black"
@@ -132,10 +151,10 @@ export default function CostCalculator() {
                 <button
                   key={s}
                   onClick={() => toggleService(s)}
-                  className={`p-2 text-xs rounded border ${
+                  className={`p-2 text-xs rounded ${
                     selected.includes(s)
                       ? "bg-[#c9a84c] text-black"
-                      : "border-white/20 text-white/70"
+                      : "border border-white/20 text-white/70"
                   }`}
                 >
                   {s}
@@ -151,8 +170,9 @@ export default function CostCalculator() {
               type="range"
               min="5"
               max="5000"
+              step="5"
               value={hours}
-              onChange={(e) => setHours(+e.target.value)}
+              onChange={(e) => handleHoursChange(e.target.value)}
               className="w-full accent-[#c9a84c]"
             />
 
@@ -173,6 +193,12 @@ export default function CostCalculator() {
               <p className="text-red-400 text-sm mt-2">{error}</p>
             )}
 
+            {currencyChanged && (
+              <p className="text-yellow-400 text-sm mt-2">
+                Currency changed → Please recalculate
+              </p>
+            )}
+
             <button
               id="calc-btn"
               onClick={calculate}
@@ -186,16 +212,26 @@ export default function CostCalculator() {
           <div className="bg-[#0a0f1c] p-6 rounded border border-[#c9a84c]/20">
 
             {!result ? (
-              <div className="space-y-4 text-white/60 text-sm">
+              <div className="text-white/60 space-y-4">
                 <p className="text-white font-semibold">
-                  What you’ll get:
+                  Your Estimate Preview
                 </p>
-                <ul className="space-y-2">
-                  <li>✔ Full-funnel marketing strategy</li>
-                  <li>✔ Execution across selected channels</li>
-                  <li>✔ Weekly reporting & optimization</li>
-                  <li>✔ Growth-focused approach</li>
-                </ul>
+
+                <p>
+                  Select services, define hours, and calculate to get
+                  a realistic marketing investment.
+                </p>
+
+                <div className="mt-6 text-sm space-y-2">
+                  <p>✔ Strategy + Execution</p>
+                  <p>✔ Funnel Optimization</p>
+                  <p>✔ Ads + SEO + CRO</p>
+                  <p>✔ Reporting & Growth Plan</p>
+                </div>
+
+                <div className="mt-6 border-t border-white/10 pt-4 text-xs text-white/40">
+                  This is not a guess — this is how real marketing budgets are built.
+                </div>
               </div>
             ) : (
               <div className="space-y-4">
@@ -213,14 +249,14 @@ export default function CostCalculator() {
                 </p>
 
                 <div className="text-white/70 text-sm mt-4">
-                  <p className="font-semibold mb-2">Included Services:</p>
+                  <p className="font-semibold mb-2">Deliverables:</p>
                   {result.deliverables.map((d, i) => (
                     <p key={i}>✔ {d}</p>
                   ))}
                 </div>
 
                 <p className="text-white/40 text-xs mt-4">
-                  This is not just execution — it’s a complete revenue system.
+                  Built for predictable growth — not random marketing.
                 </p>
 
               </div>
