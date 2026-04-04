@@ -141,14 +141,27 @@ function Footer() {
           <div>
             <div className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-4">Navigation</div>
             <ul className="space-y-2.5">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-white/50 hover:text-white text-sm transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+  {navLinks.map((link) => (
+    <li key={link.href}>
+      <Link href={link.href} className="text-white/50 hover:text-white text-sm transition-colors">
+        {link.label}
+      </Link>
+    </li>
+  ))}
+
+  {/* ✅ ADD THESE */}
+  <li>
+    <Link href="/terms-of-service" className="text-white/50 hover:text-white text-sm transition-colors">
+      Terms of Service
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/privacy-policy" className="text-white/50 hover:text-white text-sm transition-colors">
+      Privacy Policy
+    </Link>
+  </li>
+</ul>
           </div>
 
           <div>
