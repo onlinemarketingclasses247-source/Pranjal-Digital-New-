@@ -130,11 +130,34 @@ function Footer() {
               Driving Real Results Through Data-Driven Marketing. 12+ years of expertise across US, Canada, and India markets.
             </p>
             <div className="flex gap-4 mt-5">
-              {['LinkedIn', 'Twitter', 'YouTube'].map((s) => (
-                <span key={s} className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors cursor-pointer">
-                  {s}
-                </span>
-              ))}
+             <div className="flex gap-4 mt-5">
+  <a
+    href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
+  >
+    LinkedIn
+  </a>
+
+  <a
+    href="https://x.com/Pranjaldigitl"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
+  >
+    X
+  </a>
+
+  <a
+    href="https://www.youtube.com/@PranjalSharmaDigital"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
+  >
+    YouTube
+  </a>
+</div>
             </div>
           </div>
 
