@@ -9,6 +9,7 @@ import Services from "@/pages/Services";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Blog from "@/pages/Blog";
+import CaseStudies from "@/pages/CaseStudies";
 
 const queryClient = new QueryClient();
 
