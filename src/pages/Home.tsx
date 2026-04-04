@@ -1,3 +1,4 @@
+import FunnelPyramid from "@/components/FunnelPyramid";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
 import { motion, useInView } from 'framer-motion';
@@ -292,6 +293,7 @@ export default function Home() {
           </div>
         </section>
       </ScrollReveal>
+      <FunnelPyramid />
 
       {/* SERVICES OVERVIEW */}
       <section className="py-24 bg-[#040608]">
