@@ -14,7 +14,7 @@ const posts = [
     readTime: "10 min read",
     excerpt:
       "Complete breakdown of Google March 2026 update with real company examples and actionable strategy.",
-    image: "/images/Google-Core-Update-March-2026.webp",
+    image: "/images/blogs/google-core-update-march-2026.webp",
   },
 ];
 const categories = ['All', 'SEO', 'PPC', 'SaaS Marketing', 'B2B Marketing', 'IT Services'];
