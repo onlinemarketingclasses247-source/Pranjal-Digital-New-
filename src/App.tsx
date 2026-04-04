@@ -25,8 +25,8 @@ function Router() {
         <Route path="/blog" component={Blog} />
         <Route path="/blog/google-core-update-march-2026" component={BlogPost} />
         <Route path="/case-studies" component={CaseStudies} />
-     <Route path="/terms-of-service" element={<TermsOfService />} />
-<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+  <Route path="/terms-of-service" component={TermsOfService} />
+<Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
