@@ -9,7 +9,7 @@ export default function BlogPost() {
       {/* FEATURED IMAGE */}
       <div className="max-w-5xl mx-auto px-4 mb-10">
         <img
-          src="/images/blogs/Google-Core-Update-March-2026.webp"
+          src="/images/blogs/google-Core-Update-March-2026.webp"
           className="rounded-2xl w-full"
         />
       </div>
