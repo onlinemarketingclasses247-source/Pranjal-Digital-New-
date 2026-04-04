@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const currencyConfig = {
   USD: { rate: 20, symbol: "$" },
@@ -7,77 +7,75 @@ const currencyConfig = {
   INR: { rate: 800, symbol: "₹" },
 };
 
-const services = [
-  "SEO","Google Ads","Meta Ads","Content","Email",
-  "CRO","Landing Pages","Analytics","Strategy",
-  "Funnels","YouTube","Performance"
+const servicesList = [
+  "SEO",
+  "Google Ads",
+  "Meta Ads",
+  "Content",
+  "Email",
+  "CRO",
+  "Landing Pages",
+  "Analytics",
+  "Strategy",
+  "Funnels",
+  "YouTube",
+  "Performance",
 ];
+
+const serviceOutputs = {
+  SEO: ["Keyword Research", "On-page SEO", "Technical Fixes"],
+  "Google Ads": ["Campaign Setup", "Optimization", "ROAS Tracking"],
+  "Meta Ads": ["Ad Creatives", "Audience Targeting", "Scaling"],
+  Content: ["Content Strategy", "Blog Writing", "Distribution"],
+  Email: ["Email Flows", "Automation", "Retention"],
+  CRO: ["A/B Testing", "UX Optimization", "Conversion Tracking"],
+};
 
 export default function CostCalculator() {
   const [currency, setCurrency] = useState("USD");
-  const [selected, setSelected] = useState([]);
   const [hours, setHours] = useState(20);
   const [months, setMonths] = useState(3);
-  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState([]);
   const [result, setResult] = useState(null);
-  const [display, setDisplay] = useState(0);
-  const [clicked, setClicked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const toggle = (s) => {
-    setSelected(prev =>
-      prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
+  const toggleService = (s) => {
+    setSelected((prev) =>
+      prev.includes(s)
+        ? prev.filter((x) => x !== s)
+        : [...prev, s]
     );
   };
 
-  // cursor keeps looping UNTIL click
-  useEffect(() => {
-    if (clicked) return;
-
-    const interval = setInterval(() => {
-      const el = document.getElementById("calc-btn");
-      if (el) {
-        el.classList.add("scale-110");
-        setTimeout(() => el.classList.remove("scale-110"), 800);
-      }
-    }, 1500);
-
-    return () => clearInterval(interval);
-  }, [clicked]);
-
-  const animateNumber = (final) => {
-    let start = 0;
-    let duration = 900;
-    let startTime = null;
-
-    const step = (t) => {
-      if (!startTime) startTime = t;
-      const progress = Math.min((t - startTime)/duration, 1);
-      setDisplay(Math.floor(progress * final));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-
-    requestAnimationFrame(step);
-  };
-
   const calculate = () => {
-    setClicked(true);
     setLoading(true);
 
     setTimeout(() => {
-      const { rate } = currencyConfig[currency];
-      const totalHours = hours * selected.length;
-      const total = totalHours * rate * months;
+      const { rate, symbol } = currencyConfig[currency];
+
+      const total = hours * rate * months;
       const discount = total * 0.9;
 
       setResult({
         total,
         discount,
-        hours: totalHours,
+        symbol,
       });
 
-      animateNumber(discount);
       setLoading(false);
-    }, 1800);
+    }, 1200);
+  };
+
+  const getDeliverables = () => {
+    let output = [];
+
+    selected.forEach((s) => {
+      if (serviceOutputs[s]) {
+        output = [...output, ...serviceOutputs[s]];
+      }
+    });
+
+    return [...new Set(output)];
   };
 
   return (
@@ -90,14 +88,14 @@ export default function CostCalculator() {
 
         {/* Currency */}
         <div className="flex justify-center gap-3 mb-6">
-          {Object.keys(currencyConfig).map(c => (
+          {Object.keys(currencyConfig).map((c) => (
             <button
               key={c}
               onClick={() => setCurrency(c)}
               className={`px-4 py-1 rounded ${
-                currency===c
-                ? "bg-[#c9a84c] text-black"
-                : "text-white/60 border border-white/20"
+                currency === c
+                  ? "bg-[#c9a84c] text-black"
+                  : "border border-white/20 text-white/60"
               }`}
             >
               {c}
@@ -110,12 +108,13 @@ export default function CostCalculator() {
           {/* LEFT */}
           <div className="bg-[#0a0f1c] p-5 rounded border border-white/10">
 
+            {/* SERVICES */}
             <div className="grid grid-cols-2 gap-2 mb-4">
-              {services.map(s => (
+              {servicesList.map((s) => (
                 <button
                   key={s}
-                  onClick={() => toggle(s)}
-                  className={`p-2 text-xs rounded border transition ${
+                  onClick={() => toggleService(s)}
+                  className={`p-2 text-xs rounded border ${
                     selected.includes(s)
                       ? "bg-[#c9a84c] text-black"
                       : "border-white/20 text-white/70"
@@ -128,90 +127,83 @@ export default function CostCalculator() {
 
             {/* HOURS */}
             <label className="text-white/60 text-sm">
-              Hours ({hours})
+              Total Project Hours: {hours}
             </label>
             <input
               type="range"
               min="5"
               max="100"
               value={hours}
-              onChange={(e)=>setHours(+e.target.value)}
+              onChange={(e) => setHours(+e.target.value)}
               className="w-full accent-[#c9a84c]"
             />
 
-            {/* MONTH */}
+            {/* MONTHS */}
             <label className="text-white/60 text-sm mt-3 block">
-              Duration ({months} months)
+              Duration: {months} months
             </label>
             <input
               type="range"
               min="1"
               max="12"
               value={months}
-              onChange={(e)=>setMonths(+e.target.value)}
+              onChange={(e) => setMonths(+e.target.value)}
               className="w-full accent-[#c9a84c]"
             />
 
             {/* BUTTON */}
             <button
-              id="calc-btn"
               onClick={calculate}
-              className="w-full mt-5 bg-[#c9a84c] text-black py-3 rounded font-semibold transition"
+              className="w-full mt-5 bg-[#c9a84c] text-black py-3 rounded font-semibold"
             >
               Calculate Cost
             </button>
           </div>
 
           {/* RIGHT */}
-          <div className="bg-[#0a0f1c] rounded border border-[#c9a84c]/20 flex items-center justify-center relative overflow-hidden">
+          <div className="bg-[#0a0f1c] p-6 rounded border border-[#c9a84c]/20 flex items-center justify-center">
 
             {loading ? (
-              <div className="absolute inset-0 flex items-center justify-center">
-
-                {/* BIG SPINNER */}
-                <div className="w-72 h-72 border-[6px] border-[#c9a84c] border-t-transparent rounded-full animate-spin"></div>
-
-                {/* TEXT ROTATION */}
-                <div className="absolute animate-spin text-white/40 text-xs tracking-widest">
-                  SEO • ADS • FUNNELS • CONTENT • CRO • EMAIL •
+              <div className="text-center">
+                <div className="w-32 h-2 bg-white/10 rounded overflow-hidden mb-4">
+                  <div className="h-full bg-[#c9a84c] animate-pulse w-full"></div>
                 </div>
-
-              </div>
-            ) : result && (
-              <div className="p-6 text-center space-y-4">
-
                 <p className="text-white/50 text-sm">
-                  Total Hours: {result.hours}
+                  Calculating optimal strategy...
                 </p>
+              </div>
+            ) : result ? (
+              <div className="space-y-4 text-center">
 
                 <p className="text-white/40 line-through">
-                  {currencyConfig[currency].symbol}
+                  {result.symbol}
                   {Math.floor(result.total).toLocaleString()}
                 </p>
 
                 <p className="text-[#c9a84c] text-3xl font-bold">
-                  {currencyConfig[currency].symbol}
-                  {display.toLocaleString()}
+                  {result.symbol}
+                  {Math.floor(result.discount).toLocaleString()}
                 </p>
 
                 <p className="text-green-400 text-sm">
                   10% Discount Applied
                 </p>
 
-                {/* VALUE */}
-                <div className="text-left text-white/70 text-sm mt-4 space-y-2">
-                  <p>✔ Strategy + Execution</p>
-                  <p>✔ Funnel Optimization</p>
-                  <p>✔ Ads + SEO + CRO</p>
-                  <p>✔ Weekly Reporting</p>
-                  <p>✔ Growth Roadmap</p>
+                {/* DYNAMIC OUTPUT */}
+                <div className="text-left mt-4 text-white/70 text-sm space-y-1">
+                  {getDeliverables().map((item, i) => (
+                    <p key={i}>✔ {item}</p>
+                  ))}
                 </div>
 
                 <p className="text-white/40 text-xs mt-3">
-                  This is not just execution — it's a full revenue system.
+                  Built for revenue growth — not just execution.
                 </p>
-
               </div>
+            ) : (
+              <p className="text-white/40">
+                Select services & calculate
+              </p>
             )}
           </div>
         </div>
