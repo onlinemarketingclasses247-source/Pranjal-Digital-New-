@@ -11,6 +11,8 @@ import Contact from "@/pages/Contact";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import CaseStudies from "@/pages/CaseStudies";
+import TermsOfService from "@/pages/TermsOfService";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
