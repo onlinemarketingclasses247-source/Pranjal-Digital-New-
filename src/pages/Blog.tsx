@@ -8,54 +8,14 @@ const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 const posts = [
   {
     id: 1,
-    title: 'How I Generated 500K Monthly Organic Traffic Without a Single Paid Backlink',
-    category: 'SEO',
-    date: 'March 18, 2026',
-    readTime: '8 min read',
-    excerpt: 'A detailed breakdown of the exact technical SEO and content strategy that took a client from 12K to 500K+ monthly visitors in under 18 months — no PBNs, no shortcuts.',
-  },
-  {
-    id: 2,
-    title: '6X ROAS on Google Ads: The Campaign Structure Nobody Talks About',
-    category: 'PPC',
-    date: 'March 5, 2026',
-    readTime: '6 min read',
-    excerpt: 'Most Google Ads accounts are structured to make agencies money, not your business. Here\'s the campaign architecture I use to consistently achieve 6X+ return on ad spend.',
-  },
-  {
-    id: 3,
-    title: 'SaaS Marketing in 2026: Why Product-Led Growth Needs Paid Support',
-    category: 'SaaS Marketing',
-    date: 'February 20, 2026',
-    readTime: '7 min read',
-    excerpt: 'Product-led growth alone won\'t scale your SaaS anymore. Here\'s how I combine PLG with targeted paid campaigns to accelerate MRR growth and reduce churn simultaneously.',
-  },
-  {
-    id: 4,
-    title: 'B2B Lead Generation: Why LinkedIn ABM Outperforms Cold Outreach in 2026',
-    category: 'B2B Marketing',
-    date: 'February 8, 2026',
-    readTime: '5 min read',
-    excerpt: 'I analyzed 50+ B2B campaigns. Account-based marketing on LinkedIn generates 3X more qualified pipeline than cold email — and I\'ll show you exactly why and how.',
-  },
-  {
-    id: 5,
-    title: 'What Is AEO and Why Your SEO Strategy Is Already Obsolete',
-    category: 'SEO',
-    date: 'January 25, 2026',
-    readTime: '9 min read',
-    excerpt: 'Answer Engine Optimization is the next frontier of search. As AI answers replace blue links, brands that don\'t adapt now will disappear from search results by 2027.',
-  },
-  {
-    id: 6,
-    title: 'IT Services Marketing: How to Win US Clients Against Massive Competition',
-    category: 'IT Services',
-    date: 'January 12, 2026',
-    readTime: '6 min read',
-    excerpt: 'Winning US clients for IT services companies requires more than a good website and a Clutch profile. Here\'s the complete playbook I\'ve used to generate leads for IT firms since 2012.',
+    title: "Google Core Update March 2026 – Real Analysis with Mohali Examples",
+    category: "SEO",
+    date: "March 2026",
+    readTime: "10 min read",
+    excerpt:
+      "Complete breakdown of Google March 2026 update with real company examples and actionable strategy.",
   },
 ];
-
 const categories = ['All', 'SEO', 'PPC', 'SaaS Marketing', 'B2B Marketing', 'IT Services'];
 
 const categoryColors: Record<string, string> = {
@@ -108,12 +68,17 @@ export default function Blog() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {filtered.map((post, i) => (
             <ScrollReveal key={post.id} delay={i * 0.1}>
-              <article className="group p-6 rounded-2xl bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/20 transition-colors flex flex-col h-full">
+              <Link href={`/blog/${post.id}`}>
+               <article className="group p-6 rounded-2xl bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/20 transition-colors flex flex-col h-full cursor-pointer">
                 <div className="flex items-center gap-3 mb-4">
                   <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${categoryColors[post.category] || 'bg-white/5 text-white/50 border-white/10'}`}>
                     {post.category}
                   </span>
                 </div>
+                 <img
+  src={post.image}
+  className="w-full h-40 object-cover rounded-xl mb-4"
+/>
                 <h2 className="text-white font-bold text-lg leading-snug mb-3 group-hover:text-[#c9a84c] transition-colors flex-1">
                   {post.title}
                 </h2>
@@ -131,6 +96,7 @@ export default function Blog() {
                   </span>
                 </div>
               </article>
+               </Link> 
             </ScrollReveal>
           ))}
         </div>
