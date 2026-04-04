@@ -1,4 +1,5 @@
 import FunnelPyramid from "@/components/FunnelPyramid";
+import CostCalculator from "@/components/CostCalculator";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
 import { motion, useInView } from 'framer-motion';
