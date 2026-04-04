@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-const rates = {
-  USD: 20,
-  GBP: 15,
-  EUR: 17,
-  INR: 800,
+const currencyConfig = {
+  USD: { rate: 20, symbol: "$" },
+  GBP: { rate: 15, symbol: "£" },
+  EUR: { rate: 17, symbol: "€" },
+  INR: { rate: 800, symbol: "₹" },
 };
 
 const services = [
-  "SEO",
-  "Google Ads",
-  "Meta Ads",
-  "SaaS Marketing",
-  "B2B Marketing",
-  "Content Marketing",
-  "Email Marketing",
-  "CRO",
-  "Landing Pages",
-  "Analytics",
-  "Strategy",
-  "Funnels",
-  "YouTube Marketing",
-  "Performance Marketing",
+  "SEO","Google Ads","Meta Ads","Content","Email",
+  "CRO","Landing Pages","Analytics","Strategy",
+  "Funnels","YouTube","Performance"
 ];
 
 export default function CostCalculator() {
@@ -31,89 +20,84 @@ export default function CostCalculator() {
   const [months, setMonths] = useState(3);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState(null);
-  const [displayCost, setDisplayCost] = useState(0);
-  const [cursorCount, setCursorCount] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
+  const [display, setDisplay] = useState(0);
+  const [clicked, setClicked] = useState(false);
 
-  const toggleService = (s) => {
-    setSelected((prev) =>
-      prev.includes(s)
-        ? prev.filter((x) => x !== s)
-        : [...prev, s]
+  const toggle = (s) => {
+    setSelected(prev =>
+      prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
     );
   };
 
-  // BIG CURSOR ANIMATION
+  // cursor keeps looping UNTIL click
   useEffect(() => {
-    if (cursorCount >= 3) return;
+    if (clicked) return;
 
-    const timer = setTimeout(() => {
-      setShowCursor(true);
-      setTimeout(() => {
-        setShowCursor(false);
-        setCursorCount((c) => c + 1);
-      }, 1200);
+    const interval = setInterval(() => {
+      const el = document.getElementById("calc-btn");
+      if (el) {
+        el.classList.add("scale-110");
+        setTimeout(() => el.classList.remove("scale-110"), 800);
+      }
     }, 1500);
 
-    return () => clearTimeout(timer);
-  }, [cursorCount]);
+    return () => clearInterval(interval);
+  }, [clicked]);
 
-  // CALCULATION
-  const calculate = () => {
-    setLoading(true);
-    setResult(null);
-
-    setTimeout(() => {
-      const hourlyRate = rates[currency];
-      const totalHours = hours * selected.length;
-      const total = totalHours * hourlyRate * months;
-      const discounted = total * 0.9;
-
-      setResult({
-        total,
-        discounted,
-        hours: totalHours,
-      });
-
-      animateNumber(discounted);
-      setLoading(false);
-    }, 1500);
-  };
-
-  // ODOMETER
   const animateNumber = (final) => {
     let start = 0;
-    let duration = 800;
+    let duration = 900;
     let startTime = null;
 
     const step = (t) => {
       if (!startTime) startTime = t;
-      const progress = Math.min((t - startTime) / duration, 1);
-      setDisplayCost(Math.floor(progress * final));
+      const progress = Math.min((t - startTime)/duration, 1);
+      setDisplay(Math.floor(progress * final));
       if (progress < 1) requestAnimationFrame(step);
     };
 
     requestAnimationFrame(step);
   };
 
+  const calculate = () => {
+    setClicked(true);
+    setLoading(true);
+
+    setTimeout(() => {
+      const { rate } = currencyConfig[currency];
+      const totalHours = hours * selected.length;
+      const total = totalHours * rate * months;
+      const discount = total * 0.9;
+
+      setResult({
+        total,
+        discount,
+        hours: totalHours,
+      });
+
+      animateNumber(discount);
+      setLoading(false);
+    }, 1800);
+  };
+
   return (
     <section className="py-20 bg-[#040608]">
       <div className="max-w-6xl mx-auto px-4">
 
-        <h2 className="text-3xl text-white font-bold text-center mb-4">
+        <h2 className="text-3xl text-white text-center font-bold mb-6">
           Digital Marketing Cost Calculator
         </h2>
 
         {/* Currency */}
         <div className="flex justify-center gap-3 mb-6">
-          {Object.keys(rates).map((c) => (
+          {Object.keys(currencyConfig).map(c => (
             <button
               key={c}
               onClick={() => setCurrency(c)}
               className={`px-4 py-1 rounded ${
-                currency === c
-                  ? "bg-[#c9a84c] text-black"
-                  : "text-white/60 border border-white/20"
+                currency===c
+                ? "bg-[#c9a84c] text-black"
+                : "text-white/60 border border-white/20"
               }`}
             >
               {c}
@@ -123,18 +107,17 @@ export default function CostCalculator() {
 
         <div className="grid md:grid-cols-2 gap-6">
 
-          {/* LEFT PANEL */}
+          {/* LEFT */}
           <div className="bg-[#0a0f1c] p-5 rounded border border-white/10">
 
-            {/* SERVICES */}
             <div className="grid grid-cols-2 gap-2 mb-4">
-              {services.map((s) => (
+              {services.map(s => (
                 <button
                   key={s}
-                  onClick={() => toggleService(s)}
+                  onClick={() => toggle(s)}
                   className={`p-2 text-xs rounded border transition ${
                     selected.includes(s)
-                      ? "bg-[#c9a84c] text-black scale-105"
+                      ? "bg-[#c9a84c] text-black"
                       : "border-white/20 text-white/70"
                   }`}
                 >
@@ -143,96 +126,92 @@ export default function CostCalculator() {
               ))}
             </div>
 
-            {/* HOURS SLIDER */}
-            <div className="mb-4">
-              <label className="text-white/60 text-sm">
-                Hours per Service ({hours} hrs)
-              </label>
-              <input
-                type="range"
-                min="5"
-                max="100"
-                value={hours}
-                onChange={(e) => setHours(Number(e.target.value))}
-                className="w-full accent-[#c9a84c]"
-              />
-            </div>
+            {/* HOURS */}
+            <label className="text-white/60 text-sm">
+              Hours ({hours})
+            </label>
+            <input
+              type="range"
+              min="5"
+              max="100"
+              value={hours}
+              onChange={(e)=>setHours(+e.target.value)}
+              className="w-full accent-[#c9a84c]"
+            />
 
-            {/* MONTH SLIDER */}
-            <div className="mb-4">
-              <label className="text-white/60 text-sm">
-                Duration ({months} months)
-              </label>
-              <input
-                type="range"
-                min="1"
-                max="12"
-                value={months}
-                onChange={(e) => setMonths(Number(e.target.value))}
-                className="w-full accent-[#c9a84c]"
-              />
-            </div>
+            {/* MONTH */}
+            <label className="text-white/60 text-sm mt-3 block">
+              Duration ({months} months)
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="12"
+              value={months}
+              onChange={(e)=>setMonths(+e.target.value)}
+              className="w-full accent-[#c9a84c]"
+            />
 
             {/* BUTTON */}
-            <div className="relative mt-5">
-              <button
-                onClick={calculate}
-                className="w-full bg-[#c9a84c] text-black py-3 rounded font-semibold"
-              >
-                Calculate Cost
-              </button>
-
-              {/* BIG CURSOR */}
-              {showCursor && cursorCount < 3 && (
-                <div className="absolute -top-16 left-1/2 -translate-x-1/2 animate-bounce text-5xl">
-                  👇
-                </div>
-              )}
-            </div>
+            <button
+              id="calc-btn"
+              onClick={calculate}
+              className="w-full mt-5 bg-[#c9a84c] text-black py-3 rounded font-semibold transition"
+            >
+              Calculate Cost
+            </button>
           </div>
 
-          {/* RIGHT PANEL */}
-          <div className="bg-[#0a0f1c] p-5 rounded border border-[#c9a84c]/20 flex items-center justify-center relative overflow-hidden">
+          {/* RIGHT */}
+          <div className="bg-[#0a0f1c] rounded border border-[#c9a84c]/20 flex items-center justify-center relative overflow-hidden">
 
             {loading ? (
-              <div className="relative w-40 h-40 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center">
 
-                {/* SPINNING RING */}
-                <div className="absolute w-full h-full border-4 border-[#c9a84c] border-t-transparent rounded-full animate-spin"></div>
+                {/* BIG SPINNER */}
+                <div className="w-72 h-72 border-[6px] border-[#c9a84c] border-t-transparent rounded-full animate-spin"></div>
 
-                {/* ROTATING TEXT */}
-                <div className="absolute animate-spin text-xs text-white/60">
-                  SEO • ADS • CRO • FUNNELS • CONTENT • EMAIL •
+                {/* TEXT ROTATION */}
+                <div className="absolute animate-spin text-white/40 text-xs tracking-widest">
+                  SEO • ADS • FUNNELS • CONTENT • CRO • EMAIL •
                 </div>
 
               </div>
-            ) : result ? (
-              <div className="text-center space-y-3">
+            ) : result && (
+              <div className="p-6 text-center space-y-4">
 
                 <p className="text-white/50 text-sm">
                   Total Hours: {result.hours}
                 </p>
 
                 <p className="text-white/40 line-through">
-                  {currency} {Math.floor(result.total).toLocaleString()}
+                  {currencyConfig[currency].symbol}
+                  {Math.floor(result.total).toLocaleString()}
                 </p>
 
                 <p className="text-[#c9a84c] text-3xl font-bold">
-                  {currency} {displayCost.toLocaleString()}
+                  {currencyConfig[currency].symbol}
+                  {display.toLocaleString()}
                 </p>
 
                 <p className="text-green-400 text-sm">
                   10% Discount Applied
                 </p>
 
-                <p className="text-white/60 text-xs mt-2">
-                  Includes strategy, execution, optimization & reporting across selected channels.
+                {/* VALUE */}
+                <div className="text-left text-white/70 text-sm mt-4 space-y-2">
+                  <p>✔ Strategy + Execution</p>
+                  <p>✔ Funnel Optimization</p>
+                  <p>✔ Ads + SEO + CRO</p>
+                  <p>✔ Weekly Reporting</p>
+                  <p>✔ Growth Roadmap</p>
+                </div>
+
+                <p className="text-white/40 text-xs mt-3">
+                  This is not just execution — it's a full revenue system.
                 </p>
+
               </div>
-            ) : (
-              <p className="text-white/40">
-                Select services & calculate
-              </p>
             )}
           </div>
         </div>
