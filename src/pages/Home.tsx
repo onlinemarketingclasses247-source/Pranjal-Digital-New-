@@ -199,7 +199,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 border border-[#c9a84c]/30 rounded-full px-4 py-1.5 text-[#c9a84c] text-sm font-medium mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse" />
-            Digital Marketing Consultant — Elevance Health (Nov 2025 – Present)
+           Hi, I am Pranjal — real strategies that drive revenue in 2026 , not vanity metrics.
           </motion.div>
 
           <motion.h1
