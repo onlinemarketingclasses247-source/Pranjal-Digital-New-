@@ -299,7 +299,7 @@ export default function Home() {
           <ScrollReveal className="text-center mb-14">
             <p className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-3">Expertise</p>
             <h2 className="serif text-4xl font-bold text-white mb-4">What I Specialize In</h2>
-            <p className="text-white/50 max-w-2xl mx-auto">End-to-end digital marketing execution across the channels that matter most for your business growth.</p>
+            <p className="text-white/50 max-w-2xl mx-auto">End-to-end digital marketing execution across the channels that matter most for your business growth, combining data-driven strategies, creative execution, and continuous optimization to drive traffic, leads, conversions, and long-term revenue.</p>
           </ScrollReveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s, i) => (
