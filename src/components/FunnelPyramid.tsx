@@ -34,9 +34,9 @@ export default function FunnelPyramid() {
           Full-Funnel Growth Strategy
         </h2>
 
-        <p className="text-white/50 mb-12">
-          Click on any stage to see how I grow your business.
-        </p>
+       <p className="text-white/50 mb-12 animate-pulse">
+  Click on any stage to explore the funnel
+</p>
 
         {/* Pyramid */}
         <div className="flex flex-col items-center gap-4">
