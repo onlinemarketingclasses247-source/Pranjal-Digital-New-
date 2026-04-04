@@ -7,10 +7,12 @@ const rates = {
   INR: 800,
 };
 
-const servicesList = [
+const services = [
   "SEO",
   "Google Ads",
   "Meta Ads",
+  "SaaS Marketing",
+  "B2B Marketing",
   "Content Marketing",
   "Email Marketing",
   "CRO",
@@ -18,42 +20,67 @@ const servicesList = [
   "Analytics",
   "Strategy",
   "Funnels",
+  "YouTube Marketing",
+  "Performance Marketing",
 ];
 
 export default function CostCalculator() {
   const [currency, setCurrency] = useState("USD");
+  const [selected, setSelected] = useState([]);
+  const [hours, setHours] = useState(20);
   const [months, setMonths] = useState(3);
-  const [services, setServices] = useState({});
-  const [complexity, setComplexity] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [result, setResult] = useState(null);
   const [displayCost, setDisplayCost] = useState(0);
+  const [cursorCount, setCursorCount] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
 
-  // Initialize services
+  const toggleService = (s) => {
+    setSelected((prev) =>
+      prev.includes(s)
+        ? prev.filter((x) => x !== s)
+        : [...prev, s]
+    );
+  };
+
+  // BIG CURSOR ANIMATION
   useEffect(() => {
-    const init = {};
-    servicesList.forEach((s) => (init[s] = 0));
-    setServices(init);
-  }, []);
+    if (cursorCount >= 3) return;
 
-  // Cursor animation (points to button)
-  useEffect(() => {
-    let count = 0;
-    const interval = setInterval(() => {
-      if (count < 3) {
-        setShowCursor(true);
-        setTimeout(() => setShowCursor(false), 1200);
-        count++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 2000);
+    const timer = setTimeout(() => {
+      setShowCursor(true);
+      setTimeout(() => {
+        setShowCursor(false);
+        setCursorCount((c) => c + 1);
+      }, 1200);
+    }, 1500);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearTimeout(timer);
+  }, [cursorCount]);
 
-  // Odometer animation
+  // CALCULATION
+  const calculate = () => {
+    setLoading(true);
+    setResult(null);
+
+    setTimeout(() => {
+      const hourlyRate = rates[currency];
+      const totalHours = hours * selected.length;
+      const total = totalHours * hourlyRate * months;
+      const discounted = total * 0.9;
+
+      setResult({
+        total,
+        discounted,
+        hours: totalHours,
+      });
+
+      animateNumber(discounted);
+      setLoading(false);
+    }, 1500);
+  };
+
+  // ODOMETER
   const animateNumber = (final) => {
     let start = 0;
     let duration = 800;
@@ -69,31 +96,6 @@ export default function CostCalculator() {
     requestAnimationFrame(step);
   };
 
-  const calculate = () => {
-    setLoading(true);
-    setResult(null);
-
-    setTimeout(() => {
-      const totalHours =
-        Object.values(services).reduce((a, b) => a + b, 0) *
-        complexity;
-
-      const hourlyRate = rates[currency];
-
-      const total = totalHours * hourlyRate * months;
-      const discounted = total * 0.9;
-
-      setResult({
-        total,
-        discounted,
-        hours: totalHours,
-      });
-
-      animateNumber(discounted);
-      setLoading(false);
-    }, 1500);
-  };
-
   return (
     <section className="py-20 bg-[#040608]">
       <div className="max-w-6xl mx-auto px-4">
@@ -102,16 +104,16 @@ export default function CostCalculator() {
           Digital Marketing Cost Calculator
         </h2>
 
-        {/* Currency Selector */}
+        {/* Currency */}
         <div className="flex justify-center gap-3 mb-6">
           {Object.keys(rates).map((c) => (
             <button
               key={c}
               onClick={() => setCurrency(c)}
-              className={`px-4 py-1 rounded border ${
+              className={`px-4 py-1 rounded ${
                 currency === c
                   ? "bg-[#c9a84c] text-black"
-                  : "text-white/60 border-white/20"
+                  : "text-white/60 border border-white/20"
               }`}
             >
               {c}
@@ -124,80 +126,86 @@ export default function CostCalculator() {
           {/* LEFT PANEL */}
           <div className="bg-[#0a0f1c] p-5 rounded border border-white/10">
 
-            {/* Services + Hours */}
-            {servicesList.map((s) => (
-              <div key={s} className="flex justify-between items-center mb-2">
-                <span className="text-white text-sm">{s}</span>
-
-                <input
-                  type="number"
-                  min="0"
-                  placeholder="hrs"
-                  className="w-20 bg-black border border-white/20 text-white text-sm px-2 py-1 rounded"
-                  onChange={(e) =>
-                    setServices({
-                      ...services,
-                      [s]: Number(e.target.value),
-                    })
-                  }
-                />
-              </div>
-            ))}
-
-            {/* Complexity */}
-            <div className="mt-4">
-              <label className="text-white/60 text-sm">
-                Complexity
-              </label>
-
-              <select
-                onChange={(e) => setComplexity(Number(e.target.value))}
-                className="w-full mt-1 bg-black border border-white/20 text-white p-2 rounded"
-              >
-                <option value={1}>Basic</option>
-                <option value={1.5}>Medium</option>
-                <option value={2}>Advanced</option>
-              </select>
+            {/* SERVICES */}
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {services.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => toggleService(s)}
+                  className={`p-2 text-xs rounded border transition ${
+                    selected.includes(s)
+                      ? "bg-[#c9a84c] text-black scale-105"
+                      : "border-white/20 text-white/70"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
             </div>
 
-            {/* Month Slider */}
-            <div className="mt-4">
+            {/* HOURS SLIDER */}
+            <div className="mb-4">
+              <label className="text-white/60 text-sm">
+                Hours per Service ({hours} hrs)
+              </label>
+              <input
+                type="range"
+                min="5"
+                max="100"
+                value={hours}
+                onChange={(e) => setHours(Number(e.target.value))}
+                className="w-full accent-[#c9a84c]"
+              />
+            </div>
+
+            {/* MONTH SLIDER */}
+            <div className="mb-4">
               <label className="text-white/60 text-sm">
                 Duration ({months} months)
               </label>
-
               <input
                 type="range"
                 min="1"
                 max="12"
                 value={months}
                 onChange={(e) => setMonths(Number(e.target.value))}
-                className="w-full mt-2 accent-[#c9a84c]"
+                className="w-full accent-[#c9a84c]"
               />
             </div>
 
-            {/* Calculate Button */}
+            {/* BUTTON */}
             <div className="relative mt-5">
               <button
                 onClick={calculate}
-                className="w-full bg-[#c9a84c] text-black py-3 rounded font-semibold hover:scale-105 transition"
+                className="w-full bg-[#c9a84c] text-black py-3 rounded font-semibold"
               >
                 Calculate Cost
               </button>
 
-              {showCursor && (
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 animate-bounce text-white text-lg">
-                  ↓
+              {/* BIG CURSOR */}
+              {showCursor && cursorCount < 3 && (
+                <div className="absolute -top-16 left-1/2 -translate-x-1/2 animate-bounce text-5xl">
+                  👇
                 </div>
               )}
             </div>
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="bg-[#0a0f1c] p-5 rounded border border-[#c9a84c]/20 flex items-center justify-center">
+          <div className="bg-[#0a0f1c] p-5 rounded border border-[#c9a84c]/20 flex items-center justify-center relative overflow-hidden">
 
             {loading ? (
-              <div className="animate-spin h-16 w-16 border-4 border-[#c9a84c] border-t-transparent rounded-full"></div>
+              <div className="relative w-40 h-40 flex items-center justify-center">
+
+                {/* SPINNING RING */}
+                <div className="absolute w-full h-full border-4 border-[#c9a84c] border-t-transparent rounded-full animate-spin"></div>
+
+                {/* ROTATING TEXT */}
+                <div className="absolute animate-spin text-xs text-white/60">
+                  SEO • ADS • CRO • FUNNELS • CONTENT • EMAIL •
+                </div>
+
+              </div>
             ) : result ? (
               <div className="text-center space-y-3">
 
@@ -218,12 +226,12 @@ export default function CostCalculator() {
                 </p>
 
                 <p className="text-white/60 text-xs mt-2">
-                  Includes strategy, execution, optimization & reporting.
+                  Includes strategy, execution, optimization & reporting across selected channels.
                 </p>
               </div>
             ) : (
-              <p className="text-white/40 text-center">
-                Enter details & calculate
+              <p className="text-white/40">
+                Select services & calculate
               </p>
             )}
           </div>
