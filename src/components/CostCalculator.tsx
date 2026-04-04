@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const currencyConfig = {
   USD: { rate: 20, symbol: "$" },
@@ -8,27 +8,16 @@ const currencyConfig = {
 };
 
 const servicesList = [
-  "SEO",
-  "Google Ads",
-  "Meta Ads",
-  "Content",
-  "Email",
-  "CRO",
-  "Landing Pages",
-  "Analytics",
-  "Strategy",
-  "Funnels",
-  "YouTube",
-  "Performance",
+  "SEO","Google Ads","Meta Ads","Content","Email",
+  "CRO","Landing Pages","Analytics","Strategy",
+  "Funnels","YouTube","Performance"
 ];
 
 const serviceOutputs = {
-  SEO: ["Keyword Research", "On-page SEO", "Technical Fixes"],
-  "Google Ads": ["Campaign Setup", "Optimization", "ROAS Tracking"],
-  "Meta Ads": ["Ad Creatives", "Audience Targeting", "Scaling"],
-  Content: ["Content Strategy", "Blog Writing", "Distribution"],
-  Email: ["Email Flows", "Automation", "Retention"],
-  CRO: ["A/B Testing", "UX Optimization", "Conversion Tracking"],
+  SEO: ["Keyword Research", "On-page SEO"],
+  "Google Ads": ["Campaign Setup", "ROAS Optimization"],
+  Content: ["Content Strategy", "Blogs"],
+  CRO: ["A/B Testing", "UX Optimization"],
 };
 
 export default function CostCalculator() {
@@ -38,6 +27,8 @@ export default function CostCalculator() {
   const [selected, setSelected] = useState([]);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [currencyChanged, setCurrencyChanged] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const toggleService = (s) => {
     setSelected((prev) =>
@@ -47,12 +38,37 @@ export default function CostCalculator() {
     );
   };
 
+  // BIG CURSOR LOOP
+  useEffect(() => {
+    if (clicked) return;
+
+    const interval = setInterval(() => {
+      const el = document.getElementById("calc-btn");
+      if (el) {
+        el.classList.add("scale-110");
+        setTimeout(() => el.classList.remove("scale-110"), 800);
+      }
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, [clicked]);
+
+  // HANDLE CURRENCY CHANGE
+  const handleCurrency = (c) => {
+    setCurrency(c);
+    if (result) {
+      setResult(null);
+      setCurrencyChanged(true);
+    }
+  };
+
   const calculate = () => {
+    setClicked(true);
     setLoading(true);
+    setCurrencyChanged(false);
 
     setTimeout(() => {
       const { rate, symbol } = currencyConfig[currency];
-
       const total = hours * rate * months;
       const discount = total * 0.9;
 
@@ -68,13 +84,11 @@ export default function CostCalculator() {
 
   const getDeliverables = () => {
     let output = [];
-
     selected.forEach((s) => {
       if (serviceOutputs[s]) {
         output = [...output, ...serviceOutputs[s]];
       }
     });
-
     return [...new Set(output)];
   };
 
@@ -91,7 +105,7 @@ export default function CostCalculator() {
           {Object.keys(currencyConfig).map((c) => (
             <button
               key={c}
-              onClick={() => setCurrency(c)}
+              onClick={() => handleCurrency(c)}
               className={`px-4 py-1 rounded ${
                 currency === c
                   ? "bg-[#c9a84c] text-black"
@@ -108,7 +122,6 @@ export default function CostCalculator() {
           {/* LEFT */}
           <div className="bg-[#0a0f1c] p-5 rounded border border-white/10">
 
-            {/* SERVICES */}
             <div className="grid grid-cols-2 gap-2 mb-4">
               {servicesList.map((s) => (
                 <button
@@ -132,13 +145,17 @@ export default function CostCalculator() {
             <input
               type="range"
               min="5"
-              max="100"
+              max="5000"
               value={hours}
               onChange={(e) => setHours(+e.target.value)}
               className="w-full accent-[#c9a84c]"
             />
 
-            {/* MONTHS */}
+            <p className="text-white/40 text-xs mt-1">
+              Total effort across all selected services (not per service)
+            </p>
+
+            {/* MONTH */}
             <label className="text-white/60 text-sm mt-3 block">
               Duration: {months} months
             </label>
@@ -153,8 +170,9 @@ export default function CostCalculator() {
 
             {/* BUTTON */}
             <button
+              id="calc-btn"
               onClick={calculate}
-              className="w-full mt-5 bg-[#c9a84c] text-black py-3 rounded font-semibold"
+              className="w-full mt-5 bg-[#c9a84c] text-black py-3 rounded font-semibold transition"
             >
               Calculate Cost
             </button>
@@ -165,13 +183,17 @@ export default function CostCalculator() {
 
             {loading ? (
               <div className="text-center">
-                <div className="w-32 h-2 bg-white/10 rounded overflow-hidden mb-4">
+                <div className="w-40 h-2 bg-white/10 rounded overflow-hidden mb-4">
                   <div className="h-full bg-[#c9a84c] animate-pulse w-full"></div>
                 </div>
                 <p className="text-white/50 text-sm">
-                  Calculating optimal strategy...
+                  Building your growth plan...
                 </p>
               </div>
+            ) : currencyChanged ? (
+              <p className="text-yellow-400 text-sm">
+                Currency changed — click calculate again
+              </p>
             ) : result ? (
               <div className="space-y-4 text-center">
 
@@ -189,21 +211,18 @@ export default function CostCalculator() {
                   10% Discount Applied
                 </p>
 
-                {/* DYNAMIC OUTPUT */}
-                <div className="text-left mt-4 text-white/70 text-sm space-y-1">
+                <div className="text-left text-white/70 text-sm space-y-1 mt-4">
                   {getDeliverables().map((item, i) => (
                     <p key={i}>✔ {item}</p>
                   ))}
                 </div>
 
-                <p className="text-white/40 text-xs mt-3">
-                  Built for revenue growth — not just execution.
-                </p>
               </div>
             ) : (
-              <p className="text-white/40">
-                Select services & calculate
-              </p>
+              <div className="text-center text-white/50 text-sm space-y-2">
+                <p>Select services & calculate</p>
+                <p>Get a clear estimate of your growth investment</p>
+              </div>
             )}
           </div>
         </div>
