@@ -68,7 +68,7 @@ export default function Blog() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {filtered.map((post, i) => (
             <ScrollReveal key={post.id} delay={i * 0.1}>
-              <Link href={`/blog/${post.id}`}>
+             <Link href="/blog/google-core-update-march-2026">
                <article className="group p-6 rounded-2xl bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/20 transition-colors flex flex-col h-full cursor-pointer">
                 <div className="flex items-center gap-3 mb-4">
                   <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${categoryColors[post.category] || 'bg-white/5 text-white/50 border-white/10'}`}>
