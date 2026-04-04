@@ -47,11 +47,14 @@ export default function ChatPopup() {
         </div>
 
         {/* CTA */}
-        <Link href="/contact">
-          <div className="mt-4 bg-[#c9a84c] text-[#080c14] text-sm font-semibold py-2 px-4 rounded-lg text-center cursor-pointer hover:opacity-90 transition">
-            Contact Me Now →
-          </div>
-        </Link>
+       <Link href="/contact">
+  <div
+    onClick={() => setShow(false)}
+    className="mt-4 bg-[#c9a84c] text-[#080c14] text-sm font-semibold py-2 px-4 rounded-lg text-center cursor-pointer hover:opacity-90 transition"
+  >
+    Contact Me Now →
+  </div>
+</Link>
       </div>
     </div>
   );
