@@ -295,6 +295,7 @@ export default function Home() {
         </section>
       </ScrollReveal>
       <FunnelPyramid />
+      <CostCalculator />
 
       {/* SERVICES OVERVIEW */}
       <section className="py-24 bg-[#040608]">
