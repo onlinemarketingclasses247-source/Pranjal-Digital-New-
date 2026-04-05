@@ -51,13 +51,7 @@ export default function Calculator() {
       return;
     }
 
-    // Enterprise condition
-    if (hours > 150) {
-      setResult({ enterprise: true });
-      setError("");
-      setClicked(true);
-      return;
-    }
+   
 
     setError("");
     setClicked(true);
@@ -72,12 +66,13 @@ export default function Calculator() {
       deliverables = [...deliverables, ...(deliverablesMap[s] || [])];
     });
 
-    setResult({
-      total,
-      discounted,
-      symbol,
-      deliverables: [...new Set(deliverables)]
-    });
+  setResult({
+  total,
+  discounted,
+  symbol,
+  deliverables: [...new Set(deliverables)],
+  showEnterprise: hours > 150
+});
   };
 
   const handleCurrencyChange = (c) => {
@@ -223,26 +218,7 @@ export default function Calculator() {
                 </div>
               </div>
 
-            ) : result.enterprise ? (
-
-              <div className="space-y-5 text-center">
-                <p className="text-[#c9a84c] text-xl font-bold">
-                  High Scale Requirement Detected
-                </p>
-
-                <p className="text-white/60 text-sm">
-                  For projects above <span className="text-white font-semibold">150+ hours/month</span>,
-                  we provide custom strategy, dedicated team & pricing.
-                </p>
-
-                <a href="/contact">
-                  <div className="mt-4 bg-[#c9a84c] text-black py-3 rounded-lg font-semibold cursor-pointer hover:opacity-90">
-                    Contact Us for Custom Quote →
-                  </div>
-                </a>
-              </div>
-
-            ) : (
+           
 
               <div className="space-y-4">
                 <p className="text-white/40 line-through">
@@ -263,7 +239,35 @@ export default function Calculator() {
                     <p key={i}>✔ {d}</p>
                   ))}
                 </div>
-              </div>
+       {/* 🚀 ENTERPRISE CTA */}
+{result.showEnterprise && (
+  <div className="mt-6 border-t border-white/10 pt-5 text-center space-y-3">
+
+    <p className="text-[#c9a84c] font-semibold">
+      Looking for more than 200 hours per month?
+    </p>
+
+    <p className="text-white/60 text-sm">
+      <span className="text-white font-semibold">
+        High Scale Requirement Detected:
+      </span>
+    </p>
+
+    <p className="text-white/50 text-xs">
+      For projects above 200+ hours/month, we provide custom strategy,
+      dedicated team & pricing.
+    </p>
+
+    <a href="/contact">
+      <div className="mt-3 bg-[#c9a84c] text-black py-3 rounded-lg font-semibold cursor-pointer hover:opacity-90">
+        Contact Us for Custom Quote →
+      </div>
+    </a>
+
+  </div>
+)}
+
+</div>
 
             )}
           </div>
