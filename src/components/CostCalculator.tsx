@@ -39,8 +39,6 @@ export default function Calculator() {
   const [currencyChanged, setCurrencyChanged] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  
-
   const toggleService = (s) => {
     setSelected(prev =>
       prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
@@ -52,36 +50,15 @@ export default function Calculator() {
       setError("⚠ Please select at least one service");
       return;
     }
-// 🚨 NEW CONDITION
-  if (hours > 150) {
-    setResult({
-      enterprise: true
-    });
-    setError("");
-    setClicked(true);
-    return;
-  }
 
-  setError("");
-  setClicked(true);
-  setCurrencyChanged(false);
+    // Enterprise condition
+    if (hours > 150) {
+      setResult({ enterprise: true });
+      setError("");
+      setClicked(true);
+      return;
+    }
 
-  const { rate, symbol } = currencyConfig[currency];
-  const total = hours * months * rate;
-  const discounted = total * 0.9;
-
-  let deliverables = [];
-  selected.forEach(s => {
-    deliverables = [...deliverables, ...(deliverablesMap[s] || [])];
-  });
-
-  setResult({
-    total,
-    discounted,
-    symbol,
-    deliverables: [...new Set(deliverables)]
-  });
-};
     setError("");
     setClicked(true);
     setCurrencyChanged(false);
@@ -103,7 +80,6 @@ export default function Calculator() {
     });
   };
 
-  // 🔥 Currency change logic
   const handleCurrencyChange = (c) => {
     setCurrency(c);
 
@@ -113,7 +89,6 @@ export default function Calculator() {
     }
   };
 
-  // 🔥 Cursor pointer animation
   useEffect(() => {
     if (clicked) return;
 
@@ -182,20 +157,19 @@ export default function Calculator() {
               ))}
             </div>
 
-            {/* HOURS */}
             <p className="text-white/60 text-sm">
               Hours per month: {hours}
             </p>
-           <input
-  type="range"
-  min="5"
-  max="200"
-  step="5"
-  value={hours}
-  onChange={(e) => setHours(Number(e.target.value))}
-  className="w-full accent-[#c9a84c]"
-/>
-            {/* MONTH */}
+            <input
+              type="range"
+              min="5"
+              max="200"
+              step="5"
+              value={hours}
+              onChange={(e) => setHours(Number(e.target.value))}
+              className="w-full accent-[#c9a84c]"
+            />
+
             <p className="text-white/60 text-sm mt-3">
               Duration: {months} months
             </p>
@@ -230,81 +204,68 @@ export default function Calculator() {
           {/* RIGHT */}
           <div className="bg-[#0a0f1c] p-6 rounded border border-[#c9a84c]/20">
 
-           {!result ? (
-  <div className="text-white/60 space-y-4">
-    <p className="text-white font-semibold">
-      Your Estimate Preview
-    </p>
+            {!result ? (
+              <div className="text-white/60 space-y-4">
+                <p className="text-white font-semibold">
+                  Your Estimate Preview
+                </p>
 
-    <p>
-      Select services, define hours, and calculate to get
-      a realistic marketing investment.
-    </p>
+                <p>
+                  Select services, define hours, and calculate to get
+                  a realistic marketing investment.
+                </p>
 
-    <div className="mt-6 text-sm space-y-2">
-      <p>✔ Strategy + Execution</p>
-      <p>✔ Funnel Optimization</p>
-      <p>✔ Ads + SEO + CRO</p>
-      <p>✔ Reporting & Growth Plan</p>
-    </div>
-  </div>
+                <div className="mt-6 text-sm space-y-2">
+                  <p>✔ Strategy + Execution</p>
+                  <p>✔ Funnel Optimization</p>
+                  <p>✔ Ads + SEO + CRO</p>
+                  <p>✔ Reporting & Growth Plan</p>
+                </div>
+              </div>
 
-) : result.enterprise ? (
+            ) : result.enterprise ? (
 
-  {/* 🚀 ENTERPRISE CTA */}
-  <div className="space-y-5 text-center">
+              <div className="space-y-5 text-center">
+                <p className="text-[#c9a84c] text-xl font-bold">
+                  High Scale Requirement Detected
+                </p>
 
-    <p className="text-[#c9a84c] text-xl font-bold">
-      High Scale Requirement Detected
-    </p>
+                <p className="text-white/60 text-sm">
+                  For projects above <span className="text-white font-semibold">150+ hours/month</span>,
+                  we provide custom strategy, dedicated team & pricing.
+                </p>
 
-    <p className="text-white/60 text-sm">
-      For projects above <span className="text-white font-semibold">150+ hours/month</span>,
-      we provide custom strategy, dedicated team & pricing.
-    </p>
+                <a href="/contact">
+                  <div className="mt-4 bg-[#c9a84c] text-black py-3 rounded-lg font-semibold cursor-pointer hover:opacity-90">
+                    Contact Us for Custom Quote →
+                  </div>
+                </a>
+              </div>
 
-    <p className="text-white/40 text-xs">
-      Let’s build a tailored growth system for your business.
-    </p>
+            ) : (
 
-    <a href="/contact">
-      <div className="mt-4 bg-[#c9a84c] text-black py-3 rounded-lg font-semibold cursor-pointer hover:opacity-90">
-        Contact Us for Custom Quote →
-      </div>
-    </a>
+              <div className="space-y-4">
+                <p className="text-white/40 line-through">
+                  {result.symbol}{Math.floor(result.total)}
+                </p>
 
-  </div>
+                <p className="text-[#c9a84c] text-3xl font-bold">
+                  {result.symbol}{Math.floor(result.discounted)}
+                </p>
 
-) : (
+                <p className="text-green-400 text-sm">
+                  10% Discount Applied
+                </p>
 
-  {/* 💰 NORMAL RESULT */}
-  <div className="space-y-4">
+                <div className="text-white/70 text-sm mt-4">
+                  <p className="font-semibold mb-2">Deliverables:</p>
+                  {result.deliverables.map((d, i) => (
+                    <p key={i}>✔ {d}</p>
+                  ))}
+                </div>
+              </div>
 
-    <p className="text-white/40 line-through">
-      {result.symbol}{Math.floor(result.total)}
-    </p>
-
-    <p className="text-[#c9a84c] text-3xl font-bold">
-      {result.symbol}{Math.floor(result.discounted)}
-    </p>
-
-    <p className="text-green-400 text-sm">
-      10% Discount Applied
-    </p>
-
-    <div className="text-white/70 text-sm mt-4">
-      <p className="font-semibold mb-2">Deliverables:</p>
-      {result.deliverables.map((d, i) => (
-        <p key={i}>✔ {d}</p>
-      ))}
-    </div>
-
-    <p className="text-white/40 text-xs mt-4">
-      Built for predictable growth — not random marketing.
-    </p>
-
-  </div>
-)}
+            )}
           </div>
 
         </div>
