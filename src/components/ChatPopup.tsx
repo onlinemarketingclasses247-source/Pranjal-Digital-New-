@@ -4,73 +4,56 @@ import { useLocation } from "wouter";
 
 export default function ChatPopup() {
   const [show, setShow] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [, navigate] = useLocation();
 
-  // ⏱ Show after 10 sec
+  // ⏱ Show after 10 seconds (DESKTOP ONLY)
   useEffect(() => {
-    const timer = setTimeout(() => setShow(true), 10000);
+    if (window.innerWidth < 768) return; // ❌ disable on mobile
+
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 10000);
+
     return () => clearTimeout(timer);
   }, []);
-
-  // ⏱ Auto expand after icon appears
-  useEffect(() => {
-    if (show) {
-      const timer = setTimeout(() => setExpanded(true), 1200);
-      return () => clearTimeout(timer);
-    }
-  }, [show]);
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed z-50 
-            right-4 
-            bottom-6 md:bottom-6 
-            md:right-6 
-            max-w-[260px]"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 40 }}
+          transition={{ duration: 0.4 }}
+          className="fixed bottom-5 right-5 z-50 hidden md:block"
         >
-          {/* MOBILE POSITION FIX */}
-          <div className="md:hidden fixed right-3 top-1/2 -translate-y-1/2" />
+          <div className="relative bg-[#0a0f1c] border border-[#c9a84c]/30 rounded-lg shadow-xl px-4 py-3 w-[240px]">
 
-          {/* MAIN CONTAINER */}
-          <motion.div
-            layout
-            className="bg-[#0a0f1c] border border-[#c9a84c]/30 rounded-full shadow-xl px-3 py-2 flex items-center gap-2 cursor-pointer"
-            onClick={() => navigate("/contact")}
-          >
-            {/* AI ICON */}
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9a84c] to-yellow-400 flex items-center justify-center text-black font-bold text-xs shadow-lg"
+            {/* ❌ CLOSE BUTTON */}
+            <button
+              onClick={() => setShow(false)}
+              className="absolute top-1 right-2 text-white/40 hover:text-white text-xs"
             >
-              AI
-            </motion.div>
+              ✕
+            </button>
 
-            {/* TEXT EXPAND */}
-            <AnimatePresence>
-              {expanded && (
-                <motion.div
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="text-left"
-                >
-                  <p className="text-[11px] text-[#c9a84c] font-semibold animate-pulse">
-                    Knock Knock 👀
-                  </p>
-                  <p className="text-[11px] text-white/80 leading-tight">
-                    Get more leads. More sales.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+            {/* TEXT */}
+            <p className="text-white text-xs font-semibold leading-tight">
+              Need More Leads & Sales?
+            </p>
+
+            <p className="text-white/60 text-[11px] mt-1 leading-tight">
+              Book a free consulting session with Pranjal.
+            </p>
+
+            {/* CTA */}
+            <button
+              onClick={() => navigate("/contact")}
+              className="mt-3 w-full bg-[#c9a84c] text-black text-xs font-semibold py-2 rounded-md hover:opacity-90 transition"
+            >
+              Book Now →
+            </button>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
