@@ -3,18 +3,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 
 export default function ChatPopup() {
-  const [step, setStep] = useState(0); // 0 = dot, 1 = brand, 2 = message
+  const [step, setStep] = useState(0); // 0 dot, 1 brand, 2 message
   const [visible, setVisible] = useState(false);
   const [, navigate] = useLocation();
 
   useEffect(() => {
-    if (window.innerWidth < 768) return; // ❌ desktop only
+    if (window.innerWidth < 768) return; // desktop only
 
     const timer = setTimeout(() => {
       setVisible(true);
 
-      setTimeout(() => setStep(1), 600);   // show brand
-      setTimeout(() => setStep(2), 1400);  // show message
+      // 🧠 TIMELINE (SLOW + PREMIUM)
+      setTimeout(() => setStep(1), 4000);  // after vibration
+      setTimeout(() => setStep(2), 7000);  // after brand pause
     }, 10000);
 
     return () => clearTimeout(timer);
@@ -26,11 +27,10 @@ export default function ChatPopup() {
         <div className="fixed bottom-6 right-6 z-50 hidden md:block">
 
           <motion.div
-            layout
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="relative"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
           >
+
             {/* ❌ CLOSE */}
             {step === 2 && (
               <button
@@ -41,46 +41,60 @@ export default function ChatPopup() {
               </button>
             )}
 
-            {/* STEP 0 → DOT */}
+            {/* STEP 0 → AI DOT (VIBRATION) */}
             {step === 0 && (
               <motion.div
-                className="w-3 h-3 rounded-full bg-[#c9a84c] shadow-lg"
-                animate={{ scale: [1, 1.4, 1] }}
-                transition={{ repeat: Infinity, duration: 1.2 }}
-              />
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c9a84c] to-yellow-400 flex items-center justify-center text-black font-bold shadow-lg"
+                animate={{
+                  x: [0, -2, 2, -2, 2, 0],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{
+                  duration: 0.4,
+                  repeat: 10   // 👈 vibration ~4 sec
+                }}
+              >
+                AI
+              </motion.div>
             )}
 
-            {/* STEP 1 → BRAND */}
+            {/* STEP 1 & 2 → EXPANDED UI */}
             {step >= 1 && (
               <motion.div
-                initial={{ width: 40 }}
-                animate={{ width: step >= 2 ? 260 : 140 }}
-                className="bg-[#0a0f1c] border border-[#c9a84c]/30 rounded-full px-3 py-2 shadow-xl flex items-center gap-2 overflow-hidden"
+                initial={{ width: 50 }}
+                animate={{ width: step === 2 ? 280 : 160 }}
+                transition={{ duration: 0.6 }}
+                className="bg-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl shadow-xl px-3 py-3 overflow-hidden"
               >
-                {/* AI ICON */}
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#c9a84c] to-yellow-400 flex items-center justify-center text-black text-[10px] font-bold">
-                  AI
+                {/* HEADER */}
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9a84c] to-yellow-400 flex items-center justify-center text-black text-xs font-bold">
+                    AI
+                  </div>
+
+                  <span className="text-white text-sm font-semibold whitespace-nowrap">
+                    Pranjal Digital
+                  </span>
                 </div>
 
-                {/* BRAND TEXT */}
-                <span className="text-white text-xs font-semibold whitespace-nowrap">
-                  Pranjal Digital
-                </span>
-
-                {/* STEP 2 → MESSAGE */}
+                {/* MESSAGE */}
                 {step === 2 && (
                   <motion.div
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="ml-2 border-l border-white/10 pl-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-3"
                   >
-                    <p className="text-[11px] text-white font-semibold leading-tight">
-                      Need More Leads & Sales?
+                    <p className="text-xs text-white leading-relaxed">
+                      Need more leads & sales?
+                    </p>
+
+                    <p className="text-[11px] text-white/60 mt-1">
+                      Book a free consultation with Pranjal.
                     </p>
 
                     <button
                       onClick={() => navigate("/contact")}
-                      className="text-[10px] text-[#c9a84c] font-semibold mt-1 hover:underline"
+                      className="mt-3 w-full bg-[#c9a84c] text-black text-xs font-semibold py-2 rounded-md hover:opacity-90 transition"
                     >
                       Book Free Consultation →
                     </button>
@@ -88,6 +102,7 @@ export default function ChatPopup() {
                 )}
               </motion.div>
             )}
+
           </motion.div>
         </div>
       )}
