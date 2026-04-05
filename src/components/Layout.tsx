@@ -60,16 +60,27 @@ function Header() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center">
-            <a
-              href={CALENDLY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gold-bg text-[#080c14] font-semibold text-sm px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Book a Meeting
-            </a>
-          </div>
+          <div className="hidden lg:flex items-center gap-3">
+
+  {/* CONTACT BUTTON */}
+  <Link
+    href="/contact"
+    className="border border-[#c9a84c]/40 text-[#c9a84c] font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-[#c9a84c]/10 transition"
+  >
+    Contact Us
+  </Link>
+
+  {/* BOOK A MEETING */}
+  <a
+    href={CALENDLY}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="gold-bg text-[#080c14] font-semibold text-sm px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity"
+  >
+    Book a Meeting
+  </a>
+
+</div>
 
           <button
             className="lg:hidden text-white p-2"
