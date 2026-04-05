@@ -39,16 +39,7 @@ export default function Calculator() {
   const [currencyChanged, setCurrencyChanged] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  // 🔥 SMART STEP LOGIC
-  const handleHoursChange = (val) => {
-    let newVal = Number(val);
-
-    if (newVal <= 100) newVal = Math.round(newVal / 5) * 5;
-    else if (newVal <= 500) newVal = Math.round(newVal / 50) * 50;
-    else newVal = Math.round(newVal / 100) * 100;
-
-    setHours(newVal);
-  };
+  
 
   const toggleService = (s) => {
     setSelected(prev =>
@@ -61,7 +52,36 @@ export default function Calculator() {
       setError("⚠ Please select at least one service");
       return;
     }
+// 🚨 NEW CONDITION
+  if (hours > 150) {
+    setResult({
+      enterprise: true
+    });
+    setError("");
+    setClicked(true);
+    return;
+  }
 
+  setError("");
+  setClicked(true);
+  setCurrencyChanged(false);
+
+  const { rate, symbol } = currencyConfig[currency];
+  const total = hours * months * rate;
+  const discounted = total * 0.9;
+
+  let deliverables = [];
+  selected.forEach(s => {
+    deliverables = [...deliverables, ...(deliverablesMap[s] || [])];
+  });
+
+  setResult({
+    total,
+    discounted,
+    symbol,
+    deliverables: [...new Set(deliverables)]
+  });
+};
     setError("");
     setClicked(true);
     setCurrencyChanged(false);
@@ -166,16 +186,15 @@ export default function Calculator() {
             <p className="text-white/60 text-sm">
               Hours per month: {hours}
             </p>
-            <input
-              type="range"
-              min="5"
-              max="5000"
-              step="5"
-              value={hours}
-              onChange={(e) => handleHoursChange(e.target.value)}
-              className="w-full accent-[#c9a84c]"
-            />
-
+           <input
+  type="range"
+  min="5"
+  max="200"
+  step="5"
+  value={hours}
+  onChange={(e) => setHours(Number(e.target.value))}
+  className="w-full accent-[#c9a84c]"
+/>
             {/* MONTH */}
             <p className="text-white/60 text-sm mt-3">
               Duration: {months} months
@@ -211,56 +230,81 @@ export default function Calculator() {
           {/* RIGHT */}
           <div className="bg-[#0a0f1c] p-6 rounded border border-[#c9a84c]/20">
 
-            {!result ? (
-              <div className="text-white/60 space-y-4">
-                <p className="text-white font-semibold">
-                  Your Estimate Preview
-                </p>
+           {!result ? (
+  <div className="text-white/60 space-y-4">
+    <p className="text-white font-semibold">
+      Your Estimate Preview
+    </p>
 
-                <p>
-                  Select services, define hours, and calculate to get
-                  a realistic marketing investment.
-                </p>
+    <p>
+      Select services, define hours, and calculate to get
+      a realistic marketing investment.
+    </p>
 
-                <div className="mt-6 text-sm space-y-2">
-                  <p>✔ Strategy + Execution</p>
-                  <p>✔ Funnel Optimization</p>
-                  <p>✔ Ads + SEO + CRO</p>
-                  <p>✔ Reporting & Growth Plan</p>
-                </div>
+    <div className="mt-6 text-sm space-y-2">
+      <p>✔ Strategy + Execution</p>
+      <p>✔ Funnel Optimization</p>
+      <p>✔ Ads + SEO + CRO</p>
+      <p>✔ Reporting & Growth Plan</p>
+    </div>
+  </div>
 
-                <div className="mt-6 border-t border-white/10 pt-4 text-xs text-white/40">
-                  This is not a guess — this is how real marketing budgets are built.
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-4">
+) : result.enterprise ? (
 
-                <p className="text-white/40 line-through">
-                  {result.symbol}{Math.floor(result.total)}
-                </p>
+  {/* 🚀 ENTERPRISE CTA */}
+  <div className="space-y-5 text-center">
 
-                <p className="text-[#c9a84c] text-3xl font-bold">
-                  {result.symbol}{Math.floor(result.discounted)}
-                </p>
+    <p className="text-[#c9a84c] text-xl font-bold">
+      High Scale Requirement Detected
+    </p>
 
-                <p className="text-green-400 text-sm">
-                  10% Discount Applied
-                </p>
+    <p className="text-white/60 text-sm">
+      For projects above <span className="text-white font-semibold">150+ hours/month</span>,
+      we provide custom strategy, dedicated team & pricing.
+    </p>
 
-                <div className="text-white/70 text-sm mt-4">
-                  <p className="font-semibold mb-2">Deliverables:</p>
-                  {result.deliverables.map((d, i) => (
-                    <p key={i}>✔ {d}</p>
-                  ))}
-                </div>
+    <p className="text-white/40 text-xs">
+      Let’s build a tailored growth system for your business.
+    </p>
 
-                <p className="text-white/40 text-xs mt-4">
-                  Built for predictable growth — not random marketing.
-                </p>
+    <a href="/contact">
+      <div className="mt-4 bg-[#c9a84c] text-black py-3 rounded-lg font-semibold cursor-pointer hover:opacity-90">
+        Contact Us for Custom Quote →
+      </div>
+    </a>
 
-              </div>
-            )}
+  </div>
+
+) : (
+
+  {/* 💰 NORMAL RESULT */}
+  <div className="space-y-4">
+
+    <p className="text-white/40 line-through">
+      {result.symbol}{Math.floor(result.total)}
+    </p>
+
+    <p className="text-[#c9a84c] text-3xl font-bold">
+      {result.symbol}{Math.floor(result.discounted)}
+    </p>
+
+    <p className="text-green-400 text-sm">
+      10% Discount Applied
+    </p>
+
+    <div className="text-white/70 text-sm mt-4">
+      <p className="font-semibold mb-2">Deliverables:</p>
+      {result.deliverables.map((d, i) => (
+        <p key={i}>✔ {d}</p>
+      ))}
+    </div>
+
+    <p className="text-white/40 text-xs mt-4">
+      Built for predictable growth — not random marketing.
+    </p>
+
+  </div>
+)}
           </div>
 
         </div>
