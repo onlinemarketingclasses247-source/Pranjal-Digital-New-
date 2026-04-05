@@ -4,75 +4,73 @@ import { useLocation } from "wouter";
 
 export default function ChatPopup() {
   const [show, setShow] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [, navigate] = useLocation();
 
+  // ⏱ Show after 10 sec
   useEffect(() => {
-    const timer = setTimeout(() => setShow(true), 10000); // 10 sec delay
+    const timer = setTimeout(() => setShow(true), 10000);
     return () => clearTimeout(timer);
   }, []);
 
-  // ❌ Do NOT show on mobile
+  // ⏱ Auto expand after icon appears
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setShow(false);
+    if (show) {
+      const timer = setTimeout(() => setExpanded(true), 1200);
+      return () => clearTimeout(timer);
     }
-  }, []);
+  }, [show]);
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0, x: 120 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 120 }}
-          transition={{ duration: 0.5 }}
-          className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:block"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed z-50 
+            right-4 
+            bottom-6 md:bottom-6 
+            md:right-6 
+            max-w-[260px]"
         >
-          <div className="w-[260px] bg-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl shadow-xl p-4 text-center">
+          {/* MOBILE POSITION FIX */}
+          <div className="md:hidden fixed right-3 top-1/2 -translate-y-1/2" />
 
-            {/* Heading */}
-            <p className="text-white text-sm font-semibold mb-3">
-              Do you want more leads & revenue?
-            </p>
+          {/* MAIN CONTAINER */}
+          <motion.div
+            layout
+            className="bg-[#0a0f1c] border border-[#c9a84c]/30 rounded-full shadow-xl px-3 py-2 flex items-center gap-2 cursor-pointer"
+            onClick={() => navigate("/contact")}
+          >
+            {/* AI ICON */}
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9a84c] to-yellow-400 flex items-center justify-center text-black font-bold text-xs shadow-lg"
+            >
+              AI
+            </motion.div>
 
-            {/* FLAGS */}
-            <div className="flex justify-between gap-3">
-
-              {/* GREEN FLAG */}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{ y: [0, -5, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                onClick={() => navigate("/contact")}
-                className="flex-1 bg-green-600 text-white text-xs font-semibold py-3 rounded-lg shadow-lg"
-              >
-                🚩 YES  
-                <br />
-                <span className="text-[10px] font-normal">
-                  I need more sales
-                </span>
-              </motion.button>
-
-              {/* RED FLAG */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{ y: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                onClick={() => setShow(false)}
-                className="flex-1 bg-red-600 text-white text-xs font-semibold py-3 rounded-lg shadow-lg"
-              >
-                🚩 NO  
-                <br />
-                <span className="text-[10px] font-normal">
-                  I'm covered
-                </span>
-              </motion.button>
-
-            </div>
-
-          </div>
+            {/* TEXT EXPAND */}
+            <AnimatePresence>
+              {expanded && (
+                <motion.div
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-left"
+                >
+                  <p className="text-[11px] text-[#c9a84c] font-semibold animate-pulse">
+                    Knock Knock 👀
+                  </p>
+                  <p className="text-[11px] text-white/80 leading-tight">
+                    Get more leads. More sales.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
