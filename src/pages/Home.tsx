@@ -324,60 +324,28 @@ function FAQItem({ q, a, index }) {
 
 function WorldMap() {
   return (
-<div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-[#c9a84c]/30 bg-[#0b1220]">
+    <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-[#c9a84c]/30 bg-[#0b1220]">
 
-  <svg
-  viewBox="0 0 1000 500"
-  className="w-full h-full"
->
-  {/* Background */}
-  <rect width="1000" height="500" fill="#0b1220" />
+      <img
+        src="/images/world-map-clean.png"
+        alt="Global Presence"
+        className="w-full h-full object-contain"
+      />
 
-  {/* Land shapes (clean abstract) */}
-  <path d="M100,200 L250,180 L300,250 L200,300 Z" fill="#1a2332" />
-  <path d="M300,180 L450,160 L500,250 L380,300 Z" fill="#1a2332" />
-  <path d="M500,150 L700,140 L750,260 L600,300 Z" fill="#1a2332" />
-  <path d="M750,300 L900,280 L950,400 L800,420 Z" fill="#1a2332" />
+      <div className="absolute inset-0">
 
-  {/* Points */}
+        <div className="pin" style={{ top: "45%", left: "23%" }} />
+        <div className="pin" style={{ top: "30%", left: "23%" }} />
+        <div className="pin" style={{ top: "38%", left: "48%" }} />
+        <div className="pin" style={{ top: "42%", left: "50%" }} />
+        <div className="pin" style={{ top: "28%", left: "52%" }} />
+        <div className="pin" style={{ top: "52%", left: "58%" }} />
+        <div className="pin" style={{ top: "58%", left: "63%" }} />
+        <div className="pin" style={{ top: "68%", left: "70%" }} />
+        <div className="pin" style={{ top: "42%", left: "82%" }} />
+        <div className="pin" style={{ top: "85%", left: "80%" }} />
 
-  {/* USA */}
-  <circle cx="220" cy="220" r="6" fill="#c9a84c">
-    <animate attributeName="r" values="4;7;4" dur="2s" repeatCount="indefinite" />
-  </circle>
-
-  {/* Canada */}
-  <circle cx="220" cy="160" r="6" fill="#c9a84c" />
-
-  {/* UK */}
-  <circle cx="480" cy="190" r="6" fill="#c9a84c" />
-
-  {/* Europe */}
-  <circle cx="500" cy="210" r="6" fill="#c9a84c" />
-
-  {/* Sweden */}
-  <circle cx="520" cy="150" r="6" fill="#c9a84c" />
-
-  {/* UAE */}
-  <circle cx="580" cy="260" r="6" fill="#c9a84c" />
-
-  {/* India */}
-  <circle cx="630" cy="280" r="6" fill="#c9a84c" />
-
-  {/* Singapore */}
-  <circle cx="700" cy="330" r="6" fill="#c9a84c" />
-
-  {/* Japan */}
-  <circle cx="820" cy="220" r="6" fill="#c9a84c" />
-
-  {/* Australia */}
-  <circle cx="800" cy="420" r="6" fill="#c9a84c" />
-
-</svg>
-
-
-
-     
+      </div>
 
     </div>
   );
