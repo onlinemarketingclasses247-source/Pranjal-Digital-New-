@@ -448,14 +448,15 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 // ── MAIN COMPONENT ─────────────────────────────────────────────────────────
 export default function Services() {
+
   useEffect(() => {
-  document.title = "Digital Marketing Services | Pranjal Digital";
+  document.title = "Digital Marketing Services | SEO, Google Ads, CRO & Funnels – Pranjal Digital";
 
   const meta = document.querySelector("meta[name='description']");
   if (meta) {
     meta.setAttribute(
       "content",
-      "Explore SEO, Google Ads, Meta Ads, CRO, and full-funnel digital marketing services designed to drive traffic, leads, and measurable growth."
+      "Explore SEO, Google Ads, Meta Ads, CRO, and full-funnel marketing services designed to increase traffic, generate qualified leads, and scale business growth."
     );
   }
 }, []);
