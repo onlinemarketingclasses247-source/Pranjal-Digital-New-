@@ -1,5 +1,5 @@
-import FunnelPyramid from "@/components/FunnelPyramid";
-import CostCalculator from "@/components/CostCalculator";
+import FunnelPyramid from "../components/FunnelPyramid";
+import CostCalculator from "../components/CostCalculator";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
@@ -9,7 +9,8 @@ import {
   Star, Zap, Shield, Clock, PhoneCall, X, Check, Award, Briefcase,
   Sparkles, Heart, Coffee, Smile, ThumbsUp, Rocket as RocketIcon,
   Layers, Palette, Grid, Circle, Triangle, Hexagon, Instagram, Facebook,
-  Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart
+  Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart,
+  Settings // ✅ CRITICAL FIX: Settings was missing causing white screen
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -33,7 +34,7 @@ function useCountUp(end: number, duration: number = 2000, start: boolean = false
 
 // Animated Stat Card
 function StatCard({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const count = useCountUp(value, 2000, inView);
   return (
@@ -87,7 +88,7 @@ const industries = [
   { name: 'Non-Profit', icon: Heart, gradient: 'from-red-500/20 to-rose-500/20' },
   { name: 'Entertainment', icon: Play, gradient: 'from-violet-500/20 to-purple-500/20' },
   { name: 'Gaming', icon: Target, gradient: 'from-fuchsia-500/20 to-pink-500/20' },
-  { name: 'Manufacturing', icon: Settings, gradient: 'from-gray-500/20 to-slate-500/20' },
+  { name: 'Manufacturing', icon: Settings, gradient: 'from-gray-500/20 to-slate-500/20' }, // ✅ Settings now works
   { name: 'Logistics', icon: Globe, gradient: 'from-teal-500/20 to-cyan-500/20' },
   { name: 'Agencies', icon: Users, gradient: 'from-rose-500/20 to-pink-500/20' },
   { name: 'Startups', icon: RocketIcon, gradient: 'from-violet-500/20 to-purple-500/20' },
