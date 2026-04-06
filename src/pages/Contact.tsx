@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Mail, Clock, CheckCircle2, Globe, Calendar } from 'lucide-react';
 import { ScrollReveal } from '@/components/ScrollReveal';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
+
+function setMeta(description) {
+  let meta = document.querySelector("meta[name='description']");
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", description);
+}
 
 const services = [
 'SEO (Technical / Content / Local)',
@@ -29,6 +41,14 @@ const budgets = [
 ];
 
 export default function Contact() {
+
+  useEffect(() => {
+  document.title = "Contact Digital Marketing Consultant | Pranjal Digital";
+
+  setMeta(
+    "Contact a digital marketing consultant to discuss your business growth. Book a strategy call or send a message to explore SEO, ads, and full-funnel solutions."
+  );
+}, []);
 
 return (
 <div className="bg-[#080c14] pt-24">
