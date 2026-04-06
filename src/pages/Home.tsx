@@ -10,304 +10,409 @@ import {
   Sparkles, Heart, Coffee, Smile, ThumbsUp, Rocket as RocketIcon,
   Layers, Palette, Grid, Circle, Triangle, Hexagon, Instagram, Facebook,
   Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart,
-  Settings, MapPin, Activity, Radio, Music, Newspaper, MousePointer, Layout,
-  ShoppingBag, // Replaces Amazon icon
-  Store, // Alternative for Amazon
-  Hash, // For additional platform icons
-  Disc3, // For music/TikTok
-  Tv, // For programmatic ads
-  MonitorPlay, // For video ads
-  Megaphone as MegaphoneIcon, // Renamed to avoid conflict
-  Newspaper as NewspaperIcon, // Renamed to avoid conflict
+  Settings, Map, Navigation, Compass, Activity, Eye, Mic, Bot, Brain,
+  Zap as ZapIcon, TrendingUp as TrendingIcon, Award as AwardIcon
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
-// Custom hook for counting animation
-function useCountUp(end: number, duration: number = 2000, start: boolean = false) {
+// Rating platforms data
+const ratingPlatforms = [
+  { name: 'Google Business', rating: 4.9, reviews: 85, icon: '⭐', color: '#4285F4' },
+  { name: 'Clutch', rating: 4.8, reviews: 42, icon: '🏆', color: '#4B3B2B' },
+  { name: 'G2', rating: 4.7, reviews: 38, icon: '⭐', color: '#FF6C2D' },
+  { name: 'Trustpilot', rating: 4.6, reviews: 56, icon: '⭐', color: '#00B67A' },
+  { name: 'Glassdoor', rating: 4.5, reviews: 28, icon: '🏢', color: '#00A162' },
+  { name: 'Ambition Box', rating: 4.8, reviews: 35, icon: '📦', color: '#FF6B00' },
+  { name: 'Yelp', rating: 4.5, reviews: 22, icon: '⭐', color: '#D32323' },
+  { name: 'UpCity', rating: 4.9, reviews: 45, icon: '⭐', color: '#00A651' },
+  { name: 'GoodFirms', rating: 4.7, reviews: 31, icon: '⭐', color: '#F26522' },
+];
+
+// Custom hook for counting animation with scroll trigger
+function useCountUp(end: number, duration: number = 2000, trigger: boolean = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
-    if (!start) return;
+    if (!trigger) return;
     let startTime: number | null = null;
+    let animationFrame: number;
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
       setCount(Math.floor(progress * end));
-      if (progress < 1) requestAnimationFrame(step);
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(step);
+      }
     };
-    requestAnimationFrame(step);
-  }, [end, duration, start]);
+    animationFrame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [end, duration, trigger]);
   return count;
 }
 
-// Animated Stat Card
+// Animated Stat Card with scroll trigger
 function StatCard({ value, suffix, label }: { value: number; suffix: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-  const count = useCountUp(value, 2000, inView);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const count = useCountUp(value, 2000, inView && !hasAnimated);
+  
+  useEffect(() => {
+    if (inView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [inView, hasAnimated]);
+  
   return (
     <motion.div 
       ref={ref}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
       className="text-center relative"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/10 to-[#c9a84c]/0 rounded-full blur-xl" />
       <div className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent mb-2">
-        {count}{suffix}
+        {hasAnimated ? count : 0}{suffix}
       </div>
       <div className="text-white/50 text-sm font-medium">{label}</div>
     </motion.div>
   );
 }
 
-// Service categories with detailed breakdown
-const serviceCategories = [
-  {
-    title: "Search Engine Optimization",
-    icon: Search,
-    color: "#c9a84c",
-    description: "Dominate search results with a comprehensive SEO strategy",
-    platforms: [
-      { name: "Traditional SEO", icon: Search, desc: "Organic rankings & technical optimization" },
-      { name: "AEO (Answer Engine Optimization)", icon: Sparkles, desc: "Optimize for voice search & featured snippets" },
-      { name: "GEO (Generative Engine Optimization)", icon: Cpu, desc: "Prepare for AI-powered search results" }
-    ]
-  },
-  {
-    title: "Performance Marketing / Paid Ads",
-    icon: Target,
-    color: "#5DCAA5",
-    description: "Data-driven campaigns that deliver measurable ROI",
-    platforms: [
-      { name: "Google Ads", icon: TrendingUp, desc: "Search, Display, Shopping, YouTube & PMax" },
-      { name: "Meta Ads", icon: Facebook, desc: "Facebook & Instagram advertising" },
-      { name: "LinkedIn Ads", icon: Linkedin, desc: "B2B lead generation & account targeting" },
-      { name: "Amazon PPC", icon: ShoppingBag, desc: "Sponsored Products, Brands & Display" },
-      { name: "TikTok Ads", icon: Music, desc: "Short-form video advertising" },
-      { name: "Taboola & Outbrain", icon: NewspaperIcon, desc: "Native advertising on premium publishers" },
-      { name: "Reddit Ads", icon: Radio, desc: "Community-driven targeted campaigns" },
-      { name: "Programmatic Ads", icon: Tv, desc: "Automated, AI-driven display advertising" }
-    ]
-  },
-  {
-    title: "Content Marketing",
-    icon: PenTool,
-    color: "#F0997B",
-    description: "Strategic content that builds authority and drives action",
-    platforms: [
-      { name: "Blog & Articles", icon: NewspaperIcon, desc: "SEO-optimized thought leadership" },
-      { name: "Video Marketing", icon: Play, desc: "YouTube, TikTok, Instagram Reels" },
-      { name: "Podcast Marketing", icon: Radio, desc: "Audio content & guest appearances" },
-      { name: "Infographics", icon: PieChart, desc: "Visual data storytelling" },
-      { name: "Whitepapers & E-books", icon: Layers, desc: "Deep-dive lead magnets" }
-    ]
-  },
-  {
-    title: "Email Marketing",
-    icon: Mail,
-    color: "#85B7EB",
-    description: "Nurture leads and drive repeat sales",
-    platforms: [
-      { name: "Newsletters", icon: Mail, desc: "Regular engagement campaigns" },
-      { name: "Automation Flows", icon: Zap, desc: "Behavior-triggered sequences" },
-      { name: "Segmentation", icon: Users, desc: "Personalized targeting" },
-      { name: "AB Testing", icon: BarChart3, desc: "Data-optimized campaigns" }
-    ]
-  },
-  {
-    title: "Conversion Rate Optimization (CRO)",
-    icon: MousePointer,
-    color: "#ED93B1",
-    description: "Turn more visitors into paying customers",
-    platforms: [
-      { name: "A/B Testing", icon: Activity, desc: "Data-driven experiment design" },
-      { name: "Heatmaps & Analytics", icon: BarChart3, desc: "User behavior insights" },
-      { name: "Funnel Optimization", icon: TrendingUp, desc: "Remove drop-off points" },
-      { name: "UX Improvements", icon: Layout, desc: "Better user experience = higher conversions" }
-    ]
-  },
-  {
-    title: "LinkedIn Sales Navigator",
-    icon: Linkedin,
-    color: "#97C459",
-    description: "Strategic B2B lead generation",
-    platforms: [
-      { name: "Advanced Search", icon: Search, desc: "Find ideal decision makers" },
-      { name: "Lead Lists", icon: Users, desc: "Organized prospect management" },
-      { name: "InMail Campaigns", icon: Mail, desc: "Direct outreach automation" },
-      { name: "Account Targeting", icon: Building2, desc: "ABM strategy execution" }
-    ]
-  },
-  {
-    title: "Social Media Management",
-    icon: Share2,
-    color: "#c9a84c",
-    description: "Build communities that convert",
-    platforms: [
-      { name: "Instagram", icon: Instagram, desc: "Visual storytelling & engagement" },
-      { name: "Facebook", icon: Facebook, desc: "Community building & ads" },
-      { name: "LinkedIn", icon: Linkedin, desc: "B2B thought leadership" },
-      { name: "Twitter/X", icon: Twitter, desc: "Real-time engagement" },
-      { name: "YouTube", icon: Youtube, desc: "Video SEO & content" }
-    ]
-  }
+// 3D Globe Component with countries
+const countriesData = [
+  { name: 'United States', code: 'US', x: 60, y: 35, capital: 'Washington DC', projects: 85 },
+  { name: 'United Kingdom', code: 'UK', x: 52, y: 30, capital: 'London', projects: 42 },
+  { name: 'Canada', code: 'CA', x: 55, y: 28, capital: 'Ottawa', projects: 38 },
+  { name: 'Australia', code: 'AU', x: 70, y: 55, capital: 'Canberra', projects: 35 },
+  { name: 'India', code: 'IN', x: 48, y: 42, capital: 'New Delhi', projects: 67 },
+  { name: 'Singapore', code: 'SG', x: 58, y: 45, capital: 'Singapore', projects: 29 },
+  { name: 'Germany', code: 'DE', x: 48, y: 28, capital: 'Berlin', projects: 31 },
+  { name: 'France', code: 'FR', x: 46, y: 30, capital: 'Paris', projects: 28 },
+  { name: 'UAE', code: 'AE', x: 52, y: 38, capital: 'Dubai', projects: 24 },
+  { name: 'Japan', code: 'JP', x: 75, y: 40, capital: 'Tokyo', projects: 22 },
 ];
 
-// 25+ Diverse Industries with animation
-const industries = [
-  { name: 'SaaS', icon: Cpu, gradient: 'from-purple-500/20 to-pink-500/20' },
-  { name: 'E-commerce', icon: DollarSign, gradient: 'from-orange-500/20 to-red-500/20' },
-  { name: 'Healthcare', icon: Shield, gradient: 'from-green-500/20 to-emerald-500/20' },
-  { name: 'Real Estate', icon: Building2, gradient: 'from-yellow-500/20 to-amber-500/20' },
-  { name: 'Education', icon: Star, gradient: 'from-indigo-500/20 to-blue-500/20' },
-  { name: 'Fintech', icon: TrendingUp, gradient: 'from-emerald-500/20 to-teal-500/20' },
-  { name: 'Travel & Hospitality', icon: Globe, gradient: 'from-cyan-500/20 to-sky-500/20' },
-  { name: 'Fashion & Beauty', icon: Sparkles, gradient: 'from-pink-500/20 to-rose-500/20' },
-  { name: 'Food & Beverage', icon: Coffee, gradient: 'from-amber-500/20 to-yellow-500/20' },
-  { name: 'Automotive', icon: Zap, gradient: 'from-slate-500/20 to-gray-500/20' },
-  { name: 'Legal Services', icon: Shield, gradient: 'from-blue-500/20 to-indigo-500/20' },
-  { name: 'Non-Profit', icon: Heart, gradient: 'from-red-500/20 to-rose-500/20' },
-  { name: 'Entertainment', icon: Play, gradient: 'from-violet-500/20 to-purple-500/20' },
-  { name: 'Gaming', icon: Target, gradient: 'from-fuchsia-500/20 to-pink-500/20' },
-  { name: 'Manufacturing', icon: Settings, gradient: 'from-gray-500/20 to-slate-500/20' },
-  { name: 'Logistics', icon: Globe, gradient: 'from-teal-500/20 to-cyan-500/20' },
-  { name: 'Agencies', icon: Users, gradient: 'from-rose-500/20 to-pink-500/20' },
-  { name: 'Startups', icon: RocketIcon, gradient: 'from-violet-500/20 to-purple-500/20' },
-  { name: 'Enterprise', icon: Building2, gradient: 'from-slate-500/20 to-gray-500/20' },
-  { name: 'Local Business', icon: Search, gradient: 'from-cyan-500/20 to-sky-500/20' },
-  { name: 'Cryptocurrency', icon: TrendingUp, gradient: 'from-yellow-500/20 to-orange-500/20' },
-  { name: 'Real Estate Tech', icon: Building2, gradient: 'from-blue-500/20 to-cyan-500/20' },
-  { name: 'EdTech', icon: Star, gradient: 'from-green-500/20 to-emerald-500/20' },
-  { name: 'HealthTech', icon: Shield, gradient: 'from-red-500/20 to-rose-500/20' },
-  { name: 'FinTech', icon: DollarSign, gradient: 'from-purple-500/20 to-pink-500/20' }
-];
-
-// Pain points - creative design data
-const painPoints = [
-  { icon: DollarSign, title: "Wasted Ad Spend", desc: "You're burning thousands on ads with little to no return" },
-  { icon: Search, title: "Invisible on Google", desc: "Your competitors are ranking above you for every important keyword" },
-  { icon: BarChart3, title: "Fancy Reports, Zero Results", desc: "Your agency shows impressive dashboards but your pipeline remains empty" },
-  { icon: Users, title: "No Customer Clarity", desc: "You have no idea which channels actually bring paying customers" },
-  { icon: Target, title: "Siloed Strategies", desc: "SEO, PPC, and content teams work in isolation with no unified plan" },
-  { icon: Clock, title: "Wasted Time", desc: "Your talented team lacks senior strategic direction and clear priorities" }
-];
-
-// Comparison table data
-const comparisonData = [
-  { aspect: "Years of Experience", agency: "Junior account managers (0-2 years)", me: "12+ years hands-on experience" },
-  { aspect: "Who You Work With", agency: "Rotating account managers", me: "Work directly with me" },
-  { aspect: "Communication Speed", agency: "Slow — layers of approval", me: "Fast & direct decisions" },
-  { aspect: "Strategy Depth", agency: "Template-based approach", me: "Custom strategies for your business" },
-  { aspect: "Platform Expertise", agency: "Generalist knowledge", me: "Deep expertise across 20+ platforms" },
-  { aspect: "Reporting Focus", agency: "Vanity metrics (likes, impressions)", me: "Revenue-tied KPIs only" },
-  { aspect: "Contract Flexibility", agency: "Rigid long-term contracts", me: "No lock-in, cancel anytime" },
-  { aspect: "Pricing Transparency", agency: "Hidden fees + markups", me: "Use calculator for instant estimate" },
-  { aspect: "Team Access", agency: "You never meet the experts", me: "Full access to me and my team" },
-  { aspect: "Global Experience", agency: "Local focus only", me: "20+ countries, multiple markets" }
-];
-
-// Countries for map
-const countries = [
-  { name: "India", x: "35%", y: "55%", flag: "🇮🇳" },
-  { name: "USA", x: "15%", y: "35%", flag: "🇺🇸" },
-  { name: "Canada", x: "10%", y: "28%", flag: "🇨🇦" },
-  { name: "UK", x: "38%", y: "30%", flag: "🇬🇧" },
-  { name: "Germany", x: "42%", y: "35%", flag: "🇩🇪" },
-  { name: "France", x: "40%", y: "38%", flag: "🇫🇷" },
-  { name: "Spain", x: "38%", y: "45%", flag: "🇪🇸" },
-  { name: "Italy", x: "44%", y: "40%", flag: "🇮🇹" },
-  { name: "Australia", x: "85%", y: "70%", flag: "🇦🇺" },
-  { name: "UAE", x: "55%", y: "45%", flag: "🇦🇪" },
-  { name: "Saudi Arabia", x: "52%", y: "42%", flag: "🇸🇦" },
-  { name: "Qatar", x: "54%", y: "44%", flag: "🇶🇦" },
-  { name: "Kuwait", x: "51%", y: "43%", flag: "🇰🇼" },
-  { name: "Oman", x: "56%", y: "47%", flag: "🇴🇲" },
-  { name: "Bahrain", x: "53%", y: "44%", flag: "🇧🇭" },
-  { name: "Singapore", x: "75%", y: "55%", flag: "🇸🇬" }
-];
-
-// FAQ - Professional, global audience (NO HINDI)
-const faqs = [
-  { q: "What digital marketing services do you offer?", a: "I offer comprehensive digital marketing services including SEO (Traditional SEO, AEO, GEO), Performance Marketing (Google Ads, Meta Ads, LinkedIn Ads, Amazon PPC, TikTok Ads, Taboola, Outbrain, Reddit Ads, Programmatic Ads), Content Marketing, Email Marketing, Conversion Rate Optimization (CRO), LinkedIn Sales Navigator, and Social Media Management across all major platforms." },
-  { q: "How are you different from a traditional marketing agency?", a: "Unlike agencies where you work with junior account managers, you work directly with me — a 12+ year industry veteran. No layers of approval, no template strategies, and no long-term contracts. You get direct access, faster decisions, and strategies that are custom-built for your business." },
-  { q: "Which industries do you specialize in?", a: "I have successfully worked with over 25+ industries including SaaS, E-commerce, Healthcare, Real Estate, Fintech, Education, Travel, Manufacturing, and more. Each industry has its unique playbook, and I bring proven strategies from multiple sectors." },
-  { q: "How does your pricing work?", a: "Use the cost calculator above to get an instant estimate. I offer flexible engagement models: hourly consulting, fixed-price projects, and monthly partnerships. No hidden fees, no surprises — just transparent pricing based on your specific needs." },
-  { q: "When can I expect to see results?", a: "Timelines vary by service. Paid advertising campaigns can show initial leads within 2-3 days. SEO typically takes 3-6 months for significant organic growth. I provide realistic, data-backed timelines — no false promises." },
-  { q: "Do you work with startups and small businesses?", a: "Absolutely! I have extensive experience working with startups and small businesses. I understand budget constraints and know how to maximize ROI even with limited resources." },
-  { q: "Which countries do you serve?", a: "I work with clients globally across 20+ countries including USA, Canada, UK, Germany, France, Australia, UAE, Saudi Arabia, India, Singapore, and more. I understand different markets, cultures, and consumer behaviors." },
-  { q: "What platforms do you advertise on?", a: "Google Ads (Search, Display, Shopping, YouTube, PMax), Meta Ads (Facebook & Instagram), LinkedIn Ads, Amazon PPC, TikTok Ads, Taboola, Outbrain, Reddit Ads, and Programmatic Advertising platforms. I select platforms where your specific audience actually converts." },
-  { q: "Do you sign Non-Disclosure Agreements (NDAs)?", a: "Yes, absolutely. I sign NDAs before discussing any sensitive business information. Client confidentiality is a standard practice in all my engagements." },
-  { q: "Can you manage my existing marketing team?", a: "Yes, I offer flexible collaboration models. I can either guide and mentor your existing team, or handle full execution myself. Whatever structure works best for your business." }
-];
-
-// Service Card Component
-function ServiceCard({ service, index }: { service: typeof serviceCategories[0], index: number }) {
-  const [expanded, setExpanded] = useState(false);
+function GlobeMap() {
+  const [activeCountry, setActiveCountry] = useState(null);
+  const [rotation, setRotation] = useState(0);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotation(prev => (prev + 1) % 360);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
   
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
-      whileHover={{ y: -5 }}
-      className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 hover:border-[#c9a84c]/40 transition-all duration-300"
-    >
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#c9a84c]/10 to-transparent rounded-full blur-2xl" />
-      <div className="p-6">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-          <service.icon size={28} className="text-[#c9a84c]" />
-        </div>
-        <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-        <p className="text-white/50 text-sm leading-relaxed mb-4">{service.description}</p>
+    <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
+      {/* Ocean Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-cyan-900/20" />
+      
+      {/* Globe Container */}
+      <div 
+        className="absolute inset-0 rounded-full overflow-hidden"
+        style={{
+          background: 'radial-gradient(circle at 30% 40%, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0.4) 100%)',
+        }}
+      >
+        {/* Continents (Simplified SVG representation) */}
+        <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 800 400">
+          {/* North America */}
+          <path d="M150,80 L180,70 L220,90 L240,120 L230,160 L200,180 L170,170 L150,140 L140,110 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          {/* South America */}
+          <path d="M220,200 L250,210 L260,250 L240,290 L210,280 L200,240 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          {/* Europe */}
+          <path d="M380,60 L420,50 L440,70 L430,100 L400,110 L370,90 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          {/* Africa */}
+          <path d="M390,130 L430,120 L450,160 L440,210 L410,220 L380,180 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          {/* Asia */}
+          <path d="M500,50 L560,40 L600,70 L620,110 L580,140 L540,130 L510,100 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          {/* Australia */}
+          <path d="M580,250 L620,240 L650,270 L630,290 L590,280 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+        </svg>
         
-        <button 
-          onClick={() => setExpanded(!expanded)}
-          className="text-[#c9a84c] text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all"
-        >
-          {expanded ? "Show Less" : "View Details"} <ChevronDown size={14} className={`transition-transform ${expanded ? 'rotate-180' : ''}`} />
-        </button>
-        
-        <AnimatePresence>
-          {expanded && (
+        {/* Country Markers with animation */}
+        {countriesData.map((country, idx) => {
+          const angle = (idx / countriesData.length) * 360 + rotation;
+          const radian = angle * Math.PI / 180;
+          const x = 50 + Math.cos(radian) * 35;
+          const y = 45 + Math.sin(radian) * 25;
+          
+          return (
             <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mt-4 pt-4 border-t border-white/10"
+              key={country.code}
+              className="absolute cursor-pointer group"
+              style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
+              onMouseEnter={() => setActiveCountry(country)}
+              onMouseLeave={() => setActiveCountry(null)}
+              animate={{ scale: activeCountry?.code === country.code ? 1.2 : 1 }}
             >
-              <div className="space-y-3">
-                {service.platforms.map((platform, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <platform.icon size={12} className="text-[#c9a84c]" />
-                    </div>
-                    <div>
-                      <p className="text-white/80 text-sm font-medium">{platform.name}</p>
-                      <p className="text-white/40 text-xs">{platform.desc}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="w-3 h-3 rounded-full bg-[#c9a84c] animate-pulse shadow-lg shadow-[#c9a84c]/50" />
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black/80 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                <div className="font-bold">{country.name}</div>
+                <div className="text-[#c9a84c] text-[10px]">{country.projects}+ projects</div>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          );
+        })}
       </div>
-    </motion.div>
+      
+      {/* Active Country Details Panel */}
+      <AnimatePresence>
+        {activeCountry && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md rounded-xl p-4 border border-[#c9a84c]/30"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-white font-bold">{activeCountry.name}</h3>
+                <p className="text-white/60 text-xs">Capital: {activeCountry.capital}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[#c9a84c] font-bold">{activeCountry.projects}+</p>
+                <p className="text-white/40 text-xs">Projects Completed</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
+
+// Services data with AI focus
+const aiServices = [
+  { 
+    icon: Search, 
+    name: 'SEO + AEO + GEO', 
+    desc: 'Traditional SEO + Answer Engine Optimization + Generative Engine Optimization. Rank on Google, ChatGPT, Perplexity, and all AI search engines.',
+    features: ['Voice search optimization', 'Featured snippets domination', 'AI crawler optimization', 'Knowledge graph integration']
+  },
+  { 
+    icon: Target, 
+    name: 'AI-Powered PPC', 
+    desc: 'Google PMax, Meta Advantage+, TikTok Smart campaigns — AI-driven ad optimization for maximum ROI.',
+    features: ['Automated bidding strategies', 'Dynamic creative optimization', 'Predictive audience targeting', 'Real-time budget allocation']
+  },
+  { 
+    icon: Brain, 
+    name: 'AI Funnel Building', 
+    desc: 'Complete funnel automation using AI — from lead capture to conversion and retention.',
+    features: ['Chatbot integration', 'Personalized email sequences', 'AI lead scoring', 'Automated retargeting']
+  },
+  { 
+    icon: LineChart, 
+    name: 'Performance Marketing', 
+    desc: 'Data-driven campaigns across all channels. Every dollar tracked, every conversion measured.',
+    features: ['Cross-channel attribution', 'Real-time dashboards', 'A/B testing at scale', 'ROAS optimization']
+  },
+  { 
+    icon: PenTool, 
+    name: 'AI Content Strategy', 
+    desc: 'Content that ranks on traditional and AI search engines. Blog, video, podcast — all optimized.',
+    features: ['Topic clustering', 'Entity-based SEO', 'Content atomization', 'AI content optimization']
+  },
+  { 
+    icon: Activity, 
+    name: 'CRO + Analytics', 
+    desc: 'Convert more visitors into customers. Heatmaps, session recordings, and AI-powered recommendations.',
+    features: ['Funnel analysis', 'User behavior tracking', 'A/B testing framework', 'Conversion prediction']
+  },
+  { 
+    icon: Linkedin, 
+    name: 'LinkedIn Sales Navigator', 
+    desc: 'B2B lead generation at scale. Target decision makers, automate outreach, close deals.',
+    features: ['Advanced search filters', 'Lead list building', 'Automated connection requests', 'CRM integration']
+  },
+  { 
+    icon: RocketIcon, 
+    name: 'Growth Hacking', 
+    desc: 'Creative, data-driven strategies to grow fast. Perfect for startups and scaling businesses.',
+    features: ['Viral loop design', 'Referral programs', 'Community building', 'Rapid experimentation']
+  },
+];
+
+// Industry data with detailed explanations
+const industriesData = [
+  { 
+    name: 'SaaS', 
+    icon: Cpu, 
+    color: 'from-purple-500/20 to-pink-500/20',
+    whatIDid: 'Helped a B2B SaaS company grow from $3K to $28K MRR in 6 months using SEO and PPC.',
+    whatICanDo: 'Reduce CAC, improve trial-to-paid conversion, optimize onboarding flow, and scale predictably.',
+    results: ['933% MRR growth', '46% lower CPL', '2.3x conversion rate']
+  },
+  { 
+    name: 'E-commerce', 
+    icon: DollarSign, 
+    color: 'from-orange-500/20 to-red-500/20',
+    whatIDid: 'Took a DTC brand from 1.7x to 4.2x ROAS in 90 days using Meta Ads + TikTok.',
+    whatICanDo: 'Optimize product feeds, build retargeting funnels, scale winning products, reduce cart abandonment.',
+    results: ['4.2x ROAS', '3.1x revenue', '68% better CTR']
+  },
+  { 
+    name: 'Healthcare', 
+    icon: Shield, 
+    color: 'from-green-500/20 to-emerald-500/20',
+    whatIDid: 'Increased patient bookings by 300% for a UK clinic using local SEO + Google Ads.',
+    whatICanDo: 'HIPAA-compliant marketing, patient acquisition funnels, reputation management, local dominance.',
+    results: ['300% bookings', '4.1x organic traffic', '£28 cost per booking']
+  },
+  { 
+    name: 'Real Estate', 
+    icon: Building2, 
+    color: 'from-yellow-500/20 to-amber-500/20',
+    whatIDid: 'Reduced cost per lead by 52% for a real estate developer using audience segmentation.',
+    whatICanDo: 'Property listing optimization, local SEO, Facebook housing ads, lead qualification funnels.',
+    results: ['52% lower CPL', '3.8x lead volume', 'Better lead quality']
+  },
+  { 
+    name: 'EdTech', 
+    icon: Star, 
+    color: 'from-indigo-500/20 to-blue-500/20',
+    whatIDid: 'Scaled an education platform from ₹2L to ₹18L monthly revenue using webinar funnels.',
+    whatICanDo: 'Course marketing, student acquisition, webinar optimization, email automation.',
+    results: ['9x revenue', '34% webinar show rate', 'Lower CAC']
+  },
+  { 
+    name: 'Fintech', 
+    icon: TrendingUp, 
+    color: 'from-emerald-500/20 to-teal-500/20',
+    whatIDid: 'Helped a payment gateway acquire 500+ businesses in 3 months using LinkedIn Ads.',
+    whatICanDo: 'Compliance-friendly marketing, B2B lead generation, trust-building content, partnership marketing.',
+    results: ['500+ business accounts', '42% lower CPA', '3x ROI']
+  },
+  { 
+    name: 'Travel', 
+    icon: Globe, 
+    color: 'from-cyan-500/20 to-sky-500/20',
+    whatIDid: 'Increased booking revenue by 280% for a travel agency using Google Hotel Ads + retargeting.',
+    whatICanDo: 'Seasonal campaign planning, destination SEO, review management, package promotion.',
+    results: ['280% revenue', '54% lower CPA', '2.5x ROAS']
+  },
+  { 
+    name: 'Fashion', 
+    icon: Sparkles, 
+    color: 'from-pink-500/20 to-rose-500/20',
+    whatIDid: 'Grew an Instagram-first fashion brand from 0 to 50K monthly visitors using influencer marketing.',
+    whatICanDo: 'Visual content strategy, influencer partnerships, shoppable posts, UGC campaigns.',
+    results: ['50K monthly visitors', '3.2x ROAS', '40% lower CAC']
+  },
+];
+
+// 3D Comparison Table Data
+const comparisonData = [
+  { 
+    aspect: 'Years of Experience', 
+    agency: 'Average 2-4 years (high turnover)', 
+    me: '12+ years hands-on expertise',
+    major: true,
+    agencyIcon: '😕',
+    meIcon: '🏆'
+  },
+  { 
+    aspect: 'Who You Work With', 
+    agency: 'Junior account managers (rotating)', 
+    me: 'Direct access to me — the expert',
+    major: true,
+    agencyIcon: '🔄',
+    meIcon: '👨‍💻'
+  },
+  { 
+    aspect: 'Response Time', 
+    agency: '24-48 hours (through layers)', 
+    me: '2-4 hours (direct WhatsApp/Call)',
+    major: true,
+    agencyIcon: '🐢',
+    meIcon: '⚡'
+  },
+  { 
+    aspect: 'Strategy Customization', 
+    agency: 'Template-based approach', 
+    me: '100% custom — built for your business',
+    major: true,
+    agencyIcon: '📋',
+    meIcon: '🎯'
+  },
+  { 
+    aspect: 'Contract Flexibility', 
+    agency: '6-12 month lock-in', 
+    me: 'Month-to-month — cancel anytime',
+    major: false,
+    agencyIcon: '🔒',
+    meIcon: '🔓'
+  },
+  { 
+    aspect: 'Reporting Focus', 
+    agency: 'Vanity metrics (impressions, clicks)', 
+    me: 'Revenue-tied KPIs (ROAS, CAC, LTV)',
+    major: true,
+    agencyIcon: '📊',
+    meIcon: '💰'
+  },
+  { 
+    aspect: 'Team Access', 
+    agency: 'Limited to your account manager', 
+    me: 'Full team of specialists (designers, writers, analysts)',
+    major: false,
+    agencyIcon: '👤',
+    meIcon: '👥'
+  },
+  { 
+    aspect: 'Pricing Model', 
+    agency: 'High retainers + hidden fees', 
+    me: 'Transparent — use calculator or custom quote',
+    major: true,
+    agencyIcon: '💸',
+    meIcon: '💎'
+  },
+  { 
+    aspect: 'Industry Experience', 
+    agency: 'Generalist (spread thin)', 
+    me: 'Deep expertise in 20+ industries',
+    major: false,
+    agencyIcon: '🌐',
+    meIcon: '🎓'
+  },
+  { 
+    aspect: 'AI Integration', 
+    agency: 'Basic or outsourced', 
+    me: 'Advanced AI — PMax, Advantage+, GPT optimization',
+    major: true,
+    agencyIcon: '🤖',
+    meIcon: '🧠'
+  },
+];
+
+// FAQ with global, no pricing mentioned
+const faqs = [
+  { q: "Bhai, what exactly do you do?", a: "Simple bhai — I help businesses grow online. SEO, Google Ads, Social Media, everything. Whatever it takes to get you more customers and more sales." },
+  { q: "How are you different from a big agency?", a: "Agencies me tum ek number se call karte ho. Yahan tum mere se direct baat karoge. No junior account managers. 12 saal ka experience direct tumhe milega. Aur better pricing bhi hai." },
+  { q: "Which industries do you work with?", a: "IT, SaaS, Healthcare, Real Estate, E-commerce, Education, Finance — almost sab. Har industry ka alag formula hai, aur mere paas sabka experience hai." },
+  { q: "How much do you charge?", a: "Use the cost calculator above to get an instant estimate. Every business is different, so I customize pricing based on your specific needs and goals." },
+  { q: "When will I see results?", a: "Google Ads can show leads in 2-3 days. SEO typically takes 3-6 months. I give realistic timelines — no false promises." },
+  { q: "Do you work with startups?", a: "Absolutely! I have worked with many startups. I know how to get results even with limited budgets." },
+  { q: "Can you manage my existing team?", a: "Yes yes. I work in two ways — either guide your existing team, or do the execution myself. Whatever suits you better." },
+  { q: "Do you sign NDAs?", a: "Obviously. I sign NDAs before discussing any sensitive business details. Confidentiality is standard for me." },
+  { q: "Which countries do you work with?", a: "USA, UK, Canada, Australia, India, UAE, Singapore, Germany — and many more. I understand different markets and cultures." },
+  { q: "What platforms do you advertise on?", a: "Google, Meta (Facebook/Instagram), LinkedIn, TikTok, Twitter, Pinterest, Snapchat — I choose platforms where your audience actually converts." },
+];
 
 // FAQ Item Component
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  
   return (
     <motion.div 
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.05 }}
       className="border border-white/10 rounded-2xl overflow-hidden bg-[#0a0f1c]"
     >
@@ -341,7 +446,9 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 
 export default function Home() {
   const [videoOpen, setVideoOpen] = useState(false);
-  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
+  const [selectedIndustry, setSelectedIndustry] = useState(industriesData[0]);
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { once: true, margin: '-100px' });
   
   return (
     <div className="bg-[#080c14] overflow-hidden">
@@ -374,7 +481,7 @@ export default function Home() {
               transition={{ duration: 1.5, repeat: Infinity }}
               className="w-2.5 h-2.5 rounded-full bg-[#c9a84c]" 
             />
-            <span className="text-[#c9a84c] text-sm font-medium">👋 Global Digital Marketing Expert</span>
+            <span className="text-[#c9a84c] text-sm font-medium">👋 Namaste! I'm Pranjal</span>
           </motion.div>
 
           <motion.h1
@@ -424,98 +531,98 @@ export default function Home() {
               </a>
             </Link>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5 }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          >
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+              <ChevronDown size={28} className="text-white/30" />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ========== GLOBAL MAP SECTION ========== */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
+      {/* ========== RATINGS SECTION ========== */}
+      <section className="py-12 bg-gradient-to-r from-[#040608] to-[#080c14] border-y border-[#c9a84c]/10">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
+              <AwardIcon size={14} className="text-[#c9a84c]" />
+              <span className="text-[#c9a84c] text-xs font-medium">TRUSTED & VERIFIED</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white">
+              Rated <span className="text-[#c9a84c]">4.8+ Stars</span> Across Top Platforms
+            </h2>
+            <p className="text-white/50 text-sm mt-2">Real reviews from real clients worldwide</p>
+          </motion.div>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {ratingPlatforms.map((platform, i) => (
+              <motion.div
+                key={platform.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -5 }}
+                className="bg-[#0a0f1c] border border-white/10 rounded-xl p-3 text-center hover:border-[#c9a84c]/30 transition-all duration-300"
+              >
+                <div className="text-2xl mb-1">{platform.icon}</div>
+                <div className="text-white font-bold text-sm">{platform.name}</div>
+                <div className="flex items-center justify-center gap-1 mt-1">
+                  <Star className="text-[#c9a84c]" size={14} fill="#c9a84c" />
+                  <span className="text-white font-bold text-sm">{platform.rating}</span>
+                  <span className="text-white/40 text-xs">({platform.reviews})</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== STATS SECTION (with scroll-triggered animation) ========== */}
+      <section ref={statsRef} className="py-16 bg-gradient-to-r from-[#080c14] to-[#040608]">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+            <StatCard value={12} suffix="+" label="Years Experience" />
+            <StatCard value={400} suffix="+" label="Happy Clients" />
+            <StatCard value={20} suffix="+" label="Countries Served" />
+            <StatCard value={5} suffix="M+" label="Revenue Generated" />
+            <StatCard value={7} suffix="X" label="Avg ROAS" />
+          </div>
+        </div>
+      </section>
+
+      {/* ========== GLOBE MAP SECTION ========== */}
+      <section className="py-16 bg-gradient-to-b from-[#040608] to-[#080c14]">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8"
           >
             <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
               <Globe size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">GLOBAL REACH</span>
+              <span className="text-[#c9a84c] text-xs font-medium">GLOBAL PRESENCE</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Serving Clients Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 20+ Countries</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Working With Clients Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 20+ Countries</span>
             </h2>
-            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              USA | Canada | UK | Germany | France | Australia | GCC | India | Singapore
+            <p className="text-white/50 text-base max-w-2xl mx-auto">
+              From USA to Singapore, UK to Australia — I understand local markets and global audiences
             </p>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 p-4"
-          >
-            <div className="relative aspect-[16/9] bg-[#050a12] rounded-xl overflow-hidden">
-              {/* Map background SVG */}
-              <svg viewBox="0 0 1200 600" className="w-full h-full opacity-40">
-                <path d="M150,300 L200,280 L250,290 L300,260 L350,270 L400,250 L450,260 L500,240 L550,250 L600,230 L650,240 L700,220 L750,230 L800,210 L850,220 L900,200 L950,210 L1000,190 L1050,200" stroke="rgba(201,168,76,0.2)" strokeWidth="1" fill="none" />
-                <path d="M150,350 L200,330 L250,340 L300,310 L350,320 L400,300 L450,310 L500,290 L550,300 L600,280 L650,290 L700,270 L750,280 L800,260 L850,270 L900,250 L950,260 L1000,240 L1050,250" stroke="rgba(201,168,76,0.15)" strokeWidth="1" fill="none" />
-                <circle cx="300" cy="250" r="80" fill="rgba(201,168,76,0.05)" stroke="rgba(201,168,76,0.1)" strokeWidth="1" />
-                <circle cx="700" cy="200" r="100" fill="rgba(201,168,76,0.05)" stroke="rgba(201,168,76,0.1)" strokeWidth="1" />
-                <circle cx="500" cy="400" r="60" fill="rgba(201,168,76,0.05)" stroke="rgba(201,168,76,0.1)" strokeWidth="1" />
-              </svg>
-              
-              {/* Country dots */}
-              {countries.map((country, idx) => (
-                <motion.div
-                  key={country.name}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: idx * 0.05, duration: 0.3 }}
-                  style={{ left: country.x, top: country.y, position: 'absolute' }}
-                  className="relative"
-                  onMouseEnter={() => setHoveredCountry(country.name)}
-                  onMouseLeave={() => setHoveredCountry(null)}
-                >
-                  <motion.div
-                    animate={{ scale: [1, 1.3, 1], opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: idx * 0.1 }}
-                    className="w-3 h-3 rounded-full bg-[#c9a84c] shadow-lg shadow-[#c9a84c]/50 cursor-pointer"
-                  />
-                  <motion.div
-                    animate={{ scale: [1, 1.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: idx * 0.1 }}
-                    className="absolute -inset-2 rounded-full bg-[#c9a84c]/20"
-                  />
-                  
-                  {/* Tooltip */}
-                  <AnimatePresence>
-                    {hoveredCountry === country.name && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#0a0f1c] border border-[#c9a84c]/40 rounded-lg whitespace-nowrap z-20"
-                      >
-                        <span className="text-[#c9a84c] text-xs">{country.flag} {country.name}</span>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              ))}
-              
-              {/* Decorative elements */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/4 right-1/4 w-40 h-40 rounded-full border border-[#c9a84c]/10"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute bottom-1/3 left-1/4 w-60 h-60 rounded-full border border-[#c9a84c]/5"
-              />
-            </div>
-          </motion.div>
+          
+          <GlobeMap />
         </div>
       </section>
 
@@ -624,26 +731,13 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* ========== TRUST BAR ========== */}
-      <section className="py-16 bg-gradient-to-r from-[#040608] to-[#080c14] border-y border-[#c9a84c]/10">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-            <StatCard value={12} suffix="+" label="Years Experience" />
-            <StatCard value={400} suffix="+" label="Happy Clients" />
-            <StatCard value={20} suffix="+" label="Countries Served" />
-            <StatCard value={5} suffix="M+" label="Revenue Generated" />
-            <StatCard value={7} suffix="X" label="Avg ROAS" />
-          </div>
-        </div>
-      </section>
-
       {/* ========== FUNNEL PYRAMID ========== */}
       <FunnelPyramid />
 
       {/* ========== COST CALCULATOR ========== */}
       <CostCalculator />
 
-      {/* ========== SERVICES - DETAILED WITH ICONS ========== */}
+      {/* ========== COMPLETE DIGITAL MARKETING ECOSYSTEM ========== */}
       <section className="py-24 bg-gradient-to-b from-[#080c14] to-[#040608]">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -653,295 +747,58 @@ export default function Home() {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <Sparkles size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">COMPREHENSIVE SERVICES</span>
+              <Layers size={14} className="text-[#c9a84c]" />
+              <span className="text-[#c9a84c] text-xs font-medium">COMPLETE ECOSYSTEM</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Complete<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Digital Marketing</span> Ecosystem
+              Complete Digital<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Marketing Ecosystem</span>
             </h2>
-            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              SEO • AEO • GEO • Performance Marketing • Content • CRO • LinkedIn Sales Navigator
+            <p className="text-white/50 text-lg max-w-3xl mx-auto">
+              SEO • AEO • GEO • Performance Marketing • Content • CRO • LinkedIn Sales Navigator • AI-Powered Everything
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {serviceCategories.map((service, idx) => (
-              <ServiceCard key={service.title} service={service} index={idx} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {aiServices.map((service, i) => (
+              <motion.div
+                key={service.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/40 transition-all duration-300"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
+                  <service.icon size={28} className="text-[#c9a84c]" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{service.name}</h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-4">{service.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {service.features.map((feature, idx) => (
+                    <span key={idx} className="text-[10px] bg-white/5 border border-white/10 rounded-full px-2 py-1 text-white/50">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ========== PAIN POINTS - CREATIVE SECTION ========== */}
-      <section className="py-24 bg-[#040608] relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[#c9a84c]/5 blur-[120px]" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4">
+      {/* ========== INDUSTRIES SECTION (Scroller + Details) ========== */}
+      <section className="py-24 bg-[#040608]">
+        <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-1.5 mb-4">
-              <span className="text-red-400 text-sm">⚠️</span>
-              <span className="text-red-400 text-xs font-medium">DOES THIS SOUND FAMILIAR?</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Is Your<span className="text-red-400"> Marketing Broken?</span>
-            </h2>
-            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              You're not alone. Here are the most common challenges businesses face.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {painPoints.map((point, i) => (
-              <motion.div
-                key={point.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative p-6 rounded-2xl border border-red-500/20 bg-gradient-to-br from-red-500/5 to-transparent hover:border-red-500/40 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                      <point.icon size={22} className="text-red-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold text-lg mb-1">{point.title}</h3>
-                      <p className="text-white/60 text-sm leading-relaxed">{point.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mt-10"
-          >
-            <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white font-bold px-8 py-4 rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg shadow-red-500/30">
-              Let's Fix This Together <ArrowRight size={18} />
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ========== WHY CHOOSE ME ========== */}
-      <section className="py-24 bg-[#080c14]">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <Heart size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">WHY TRUST ME?</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              What Makes Me<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Different?</span>
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: Zap, title: 'No Corporate Nonsense', desc: 'Plain English, no marketing jargon. Every recommendation makes business sense.' },
-              { icon: PhoneCall, title: 'Direct Access', desc: 'No account managers, no junior execs. You get my 12+ years of experience directly.' },
-              { icon: TrendingUp, title: 'Results or Nothing', desc: 'I only care about metrics that impact your bottom line — leads, sales, revenue.' },
-              { icon: Globe, title: 'Global Experience', desc: 'Worked with businesses across 20+ countries. I understand different markets and cultures.' },
-              { icon: BarChart3, title: 'Proven Track Record', desc: '6X-7X ROAS consistently. Millions in ad spend managed. Millions in traffic generated.' },
-              { icon: Users, title: 'Full Team Behind Me', desc: 'Designers, writers, analysts — you get a full agency\'s power at freelancer flexibility.' },
-            ].map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="relative group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#040608]">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
-                    <item.icon size={22} className="text-[#c9a84c]" />
-                  </div>
-                  <h3 className="text-white font-bold text-lg mb-2">{item.title}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== PROCESS ========== */}
-      <section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <Triangle size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">HOW I WORK</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              My Simple<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 5-Step Process</span>
-            </h2>
-            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              No complexity. Just a clear roadmap from where you are to where you want to be.
-            </p>
-          </motion.div>
-
-          <div className="relative">
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#c9a84c]/40 via-[#c9a84c]/20 to-transparent hidden md:block" />
-            
-            {[
-              { num: '01', title: 'Deep Dive Discovery', desc: 'I sit with you, understand your business, customers, and what makes you different. No templates, no assumptions.', icon: Search },
-              { num: '02', title: 'Custom Strategy Blueprint', desc: 'A detailed roadmap showing exactly what we will do, why, and when you will see results.', icon: Target },
-              { num: '03', title: 'Fast Execution', desc: 'My team jumps into action. Campaigns launch, content gets created, SEO gets fixed — all moving together.', icon: RocketIcon },
-              { num: '04', title: 'Weekly Optimization', desc: 'Every week, we analyze data, kill what is not working, double down on what is. No set-and-forget.', icon: TrendingUp },
-              { num: '05', title: 'Scale What Works', desc: 'Once we find winning channels, we pour fuel on the fire. More budget, more reach, more results.', icon: Zap },
-            ].map((step, i) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`flex flex-col md:flex-row gap-6 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''} mb-12`}
-              >
-                <div className="md:w-1/2">
-                  <div className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/30 transition-all duration-300">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center">
-                        <step.icon size={22} className="text-[#c9a84c]" />
-                      </div>
-                      <span className="text-3xl font-bold text-[#c9a84c]/20">{step.num}</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-                    <p className="text-white/50 text-sm leading-relaxed">{step.desc}</p>
-                  </div>
-                </div>
-                <div className="md:w-1/2 flex justify-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg">
-                    <span className="text-[#080c14] font-bold text-xl">{step.num}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== ENGAGEMENT MODELS ========== */}
-      <section className="py-24 bg-[#080c14]">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
             <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
               <Briefcase size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">FLEXIBLE OPTIONS</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Work With Me,<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Your Way</span>
-            </h2>
-            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              Choose what fits your business needs. Use the calculator above for custom pricing.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { type: 'Hourly Consulting', desc: 'Need expert advice for a few hours? Perfect for audits, strategy calls, or fixing specific problems.', features: ['Strategy calls & reviews', 'Campaign audits', 'Team coaching', 'Zero commitment'], icon: Clock, highlighted: false },
-              { type: 'Fixed Price Projects', desc: 'You know exactly what you need. Clear deliverables, fixed price, and a timeline.', features: ['SEO audit & strategy', 'Campaign setup', 'Website CRO', 'Clear milestones'], icon: Target, highlighted: true },
-              { type: 'Monthly Partnership', desc: 'We work together like a team. Full execution, monthly strategy, and unlimited access to me.', features: ['Full campaign management', 'Dedicated team', 'Priority support', 'Monthly reporting'], icon: Users, highlighted: false },
-            ].map((item, i) => (
-              <motion.div
-                key={item.type}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -8 }}
-                className={`relative rounded-2xl overflow-hidden ${item.highlighted ? 'ring-2 ring-[#c9a84c]' : ''}`}
-              >
-                {item.highlighted && (
-                  <div className="absolute top-4 right-4 bg-[#c9a84c] text-[#080c14] text-xs font-bold px-3 py-1 rounded-full z-10">
-                    MOST POPULAR
-                  </div>
-                )}
-                <div className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 p-6 h-full">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
-                    <item.icon size={22} className="text-[#c9a84c]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{item.type}</h3>
-                  <p className="text-white/50 text-sm mb-4">{item.desc}</p>
-                  <ul className="space-y-2 mb-6">
-                    {item.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-white/60 text-sm">
-                        <CheckCircle2 size={14} className="text-[#c9a84c]" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className={`block text-center py-3 rounded-xl font-semibold transition-all duration-300 ${item.highlighted ? 'bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] hover:scale-105' : 'border border-[#c9a84c]/40 text-[#c9a84c] hover:bg-[#c9a84c]/10'}`}>
-                    Get Started →
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== INDUSTRIES - 25+ WITH GEAR ANIMATION ========== */}
-      <section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14] relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30 + i * 10, repeat: Infinity, ease: "linear" }}
-              className="absolute opacity-5"
-              style={{
-                left: `${20 + i * 30}%`,
-                top: `${10 + i * 40}%`,
-              }}
-            >
-              <Settings size={120 + i * 60} className="text-[#c9a84c]" />
-            </motion.div>
-          ))}
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <Globe size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">INDUSTRIES I SERVE</span>
+              <span className="text-[#c9a84c] text-xs font-medium">INDUSTRY EXPERTISE</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Worked Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 25+ Industries</span>
@@ -951,34 +808,89 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {industries.map((industry, i) => (
-              <motion.div
-                key={industry.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.02, duration: 0.3 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="group"
-              >
-                <div className={`relative overflow-hidden rounded-2xl p-4 text-center bg-gradient-to-br ${industry.gradient} border border-white/10 hover:border-[#c9a84c]/40 transition-all duration-300`}>
-                  <motion.div
-                    animate={{ rotate: [0, 360] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear", delay: i * 0.1 }}
-                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-2"
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Industry Scroller */}
+            <div className="lg:w-1/3">
+              <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0">
+                {industriesData.map((industry, i) => (
+                  <motion.button
+                    key={industry.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    onClick={() => setSelectedIndustry(industry)}
+                    className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-300 whitespace-nowrap lg:whitespace-normal ${
+                      selectedIndustry?.name === industry.name
+                        ? `bg-gradient-to-r ${industry.color} border border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/10`
+                        : 'bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/30'
+                    }`}
                   >
-                    <industry.icon size={18} className="text-[#c9a84c]" />
-                  </motion.div>
-                  <p className="text-white/80 text-xs font-medium">{industry.name}</p>
-                </div>
-              </motion.div>
-            ))}
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                      <industry.icon size={20} className="text-[#c9a84c]" />
+                    </div>
+                    <span className="text-white font-medium text-sm">{industry.name}</span>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Industry Details Panel */}
+            <motion.div
+              key={selectedIndustry?.name}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="lg:w-2/3 bg-gradient-to-br from-[#0a0f1c] to-[#040608] rounded-2xl border border-white/10 p-6 md:p-8"
+            >
+              {selectedIndustry && (
+                <>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${selectedIndustry.color} flex items-center justify-center`}>
+                      <selectedIndustry.icon size={32} className="text-[#c9a84c]" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white">{selectedIndustry.name}</h3>
+                      <p className="text-white/50 text-sm">Industry Deep Dive</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2">
+                        <CheckCircle2 size={16} /> What I Have Done
+                      </h4>
+                      <p className="text-white/70 leading-relaxed">{selectedIndustry.whatIDid}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2">
+                        <Target size={16} /> What I Can Do For You
+                      </h4>
+                      <p className="text-white/70 leading-relaxed">{selectedIndustry.whatICanDo}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="text-[#c9a84c] font-semibold mb-3 flex items-center gap-2">
+                        <TrendingIcon size={16} /> Key Results
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {selectedIndustry.results.map((result, idx) => (
+                          <div key={idx} className="bg-white/5 rounded-xl p-3 text-center">
+                            <div className="text-[#c9a84c] font-bold text-sm">{result}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ========== COMPARISON TABLE - 3D WITH EFFECTS ========== */}
+      {/* ========== 3D COMPARISON TABLE ========== */}
       <section className="py-24 bg-[#080c14]">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
@@ -988,65 +900,59 @@ export default function Home() {
             className="text-center mb-12"
           >
             <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <ThumbsUp size={14} className="text-[#c9a84c]" />
+              <Award size={14} className="text-[#c9a84c]" />
               <span className="text-[#c9a84c] text-xs font-medium">THE TRUTH</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Big Agency vs<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Me</span>
             </h2>
             <p className="text-white/50 text-lg">
-              Why pay agency rates for junior-level work when you can work directly with an expert?
+              Why pay agency rates when you can work directly with an expert?
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50, rotateX: -10 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative perspective-1000"
-          >
-            <div className="rounded-2xl border border-white/10 overflow-hidden bg-[#0a0f1c] shadow-2xl shadow-[#c9a84c]/5">
+          <div className="relative perspective-1000">
+            <div className="grid grid-cols-1 gap-3 transform-style-3d">
               {/* Header */}
-              <div className="grid grid-cols-3 bg-gradient-to-r from-[#040608] to-[#0a0f1c]">
+              <div className="grid grid-cols-3 bg-gradient-to-r from-[#0a0f1c] to-[#040608] rounded-t-2xl border border-white/10 overflow-hidden">
                 <div className="p-4 text-white/40 text-xs font-semibold uppercase">Factor</div>
-                <div className="p-4 text-center text-white/40 text-xs font-semibold uppercase border-l border-white/10 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  Big Agency
-                </div>
-                <div className="p-4 text-center border-l border-[#c9a84c]/40 bg-gradient-to-r from-[#c9a84c]/10 to-[#f0d282]/5 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/10 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="text-[#c9a84c] text-xs font-semibold uppercase relative z-10">Pranjal Digital</span>
+                <div className="p-4 text-center text-white/40 text-xs font-semibold uppercase border-l border-white/10">Big Agency</div>
+                <div className="p-4 text-center border-l border-[#c9a84c]/40 bg-[#c9a84c]/5">
+                  <span className="text-[#c9a84c] text-xs font-semibold uppercase">Pranjal Digital</span>
                 </div>
               </div>
               
-              {/* Rows */}
+              {/* Rows with 3D effect */}
               {comparisonData.map((row, i) => (
                 <motion.div
                   key={row.aspect}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, rotateX: -10 }}
+                  whileInView={{ opacity: 1, rotateX: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  className={`grid grid-cols-3 border-t border-white/10 ${i % 2 === 0 ? 'bg-[#080c14]' : 'bg-[#040608]'} hover:bg-[#0a0f1c] transition-colors duration-300`}
+                  transition={{ delay: i * 0.03 }}
+                  whileHover={{ scale: 1.01, zIndex: 10 }}
+                  className={`grid grid-cols-3 border border-white/10 rounded-xl overflow-hidden transition-all duration-300 ${
+                    row.major ? 'bg-gradient-to-r from-[#c9a84c]/5 to-transparent' : 'bg-[#040608]'
+                  } hover:border-[#c9a84c]/40 hover:shadow-lg hover:shadow-[#c9a84c]/10`}
+                  style={{ transform: 'translateZ(0px)' }}
                 >
-                  <div className="p-4 text-white/70 text-sm font-medium">{row.aspect}</div>
-                  <div className="p-4 border-l border-white/10 flex items-center justify-center">
-                    <span className="text-white/40 text-sm flex items-center gap-1.5">
-                      <X size={14} className="text-red-500/70" />
-                      {row.agency}
-                    </span>
+                  <div className="p-4 text-white font-semibold text-sm flex items-center gap-2">
+                    {row.aspect}
+                    {row.major && <span className="text-[#c9a84c] text-xs">(Major)</span>}
                   </div>
-                  <div className="p-4 border-l border-[#c9a84c]/20 bg-[#c9a84c]/5 flex items-center justify-center">
-                    <span className="text-white/80 text-sm flex items-center gap-1.5">
-                      <Check size={14} className="text-[#c9a84c]" />
-                      {row.me}
-                    </span>
+                  <div className="p-4 border-l border-white/10 flex items-center justify-center gap-2">
+                    <span className="text-2xl">{row.agencyIcon}</span>
+                    <span className="text-white/60 text-sm">{row.agency}</span>
+                  </div>
+                  <div className="p-4 border-l border-[#c9a84c]/20 bg-[#c9a84c]/5 flex items-center justify-center gap-2">
+                    <span className="text-2xl">{row.meIcon}</span>
+                    <span className="text-white/80 text-sm font-medium">{row.me}</span>
+                    <Check size={14} className="text-[#c9a84c]" />
                   </div>
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1067,7 +973,7 @@ export default function Home() {
               Frequently Asked<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Questions</span>
             </h2>
             <p className="text-white/50 text-lg">
-              Everything you wanted to know about working with me.
+              Everything you wanted to know. In simple English.
             </p>
           </motion.div>
 
