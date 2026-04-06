@@ -463,6 +463,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 export default function Services() {
 
 useEffect(() => {
+  // ✅ ADD THIS LINE (THIS IS MISSING)
+  document.title = "Digital Marketing Services | Pranjal Digital";
+
+  // existing meta
   setMeta(
     "Explore SEO, Google Ads, Meta Ads, CRO, and full-funnel digital marketing services designed to increase traffic, generate leads, and drive consistent business growth."
   );
