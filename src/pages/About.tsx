@@ -1,10 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ArrowRight, TrendingUp, Users, Globe, DollarSign, BarChart3, Cpu } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { Link } from 'wouter';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
+
+function setMeta(description) {
+  let meta = document.querySelector("meta[name='description']");
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", description);
+}
 
 function useCountUp(end: number, duration: number = 2000, start: boolean = false) {
   const [count, setCount] = React.useState(0);
@@ -70,6 +82,13 @@ const workModels = [
 ];
 
 export default function About() {
+  useEffect(() => {
+  document.title = "About Digital Marketing Consultant | Pranjal Digital";
+
+  setMeta(
+    "Learn about a digital marketing consultant with 12+ years of experience across global markets, delivering full-funnel strategies and performance-driven growth."
+  );
+}, []);
   return (
     <div className="bg-[#080c14] pt-24">
       {/* Hero */}
