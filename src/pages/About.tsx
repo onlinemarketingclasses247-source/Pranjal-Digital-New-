@@ -84,7 +84,7 @@ export default function About() {
               <span className="gold-gradient">The Results</span>
             </h1>
             <p className="text-white/60 text-lg leading-relaxed">
-              12+ years of hands-on digital marketing across US, Canada, and India markets. Not just an IT marketing expert — a multi-industry growth specialist who has scaled businesses from zero to market leaders.
+             12+ years of hands-on digital marketing across India, US, Canada, Australia, Europe, and the Middle East. With experience from execution to Head of Marketing roles, I’ve built and scaled multi-funnel growth systems across industries with deep, hands-on expertise.
             </p>
           </div>
         </div>
