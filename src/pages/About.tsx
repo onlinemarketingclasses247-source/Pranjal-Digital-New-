@@ -109,7 +109,7 @@ export default function About() {
           </ScrollReveal>
 
           <ScrollReveal direction="left">
-            <h2 className="serif text-3xl font-bold text-white mb-5">A Multi-Industry Expert, Not a Generalist</h2>
+            <h2 className="serif text-3xl font-bold text-white mb-5">Built on honesty, integrity, and strong technical expertise across marketing</h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
                 I started in 2012 as an IT services marketing specialist — learning the craft in one of the most competitive B2B niches in the world. While others stayed in their lane, I deliberately expanded into SaaS, Healthcare, E-commerce, Real Estate, Finance, and US Local Businesses.
