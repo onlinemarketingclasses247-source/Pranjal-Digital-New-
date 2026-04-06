@@ -324,14 +324,13 @@ function FAQItem({ q, a, index }) {
 
 function WorldMap() {
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#040608] flex items-center justify-center">
-
+<div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-[#c9a84c]/30 bg-[#0b1220] flex items-center justify-center">
       {/* World Map SVG */}
       <img 
-        src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+        src="https://upload.wikimedia.org/wikipedia/commons/2/23/World_map_blank_without_borders.svg"
         alt="World Map"
-        className="w-full h-full object-cover opacity-30"
-      />
+className="w-full h-full object-cover opacity-80 contrast-125 brightness-110"
+        />
 
       {/* Highlighted Countries (approx positions) */}
       <div className="absolute inset-0">
