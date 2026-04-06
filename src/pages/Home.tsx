@@ -65,7 +65,7 @@ const services = [
 
 // Pain points with better copy
 const painPoints = [
-  'You're burning lakhs on ads but seeing zero returns',
+  'You\'re burning lakhs on ads but seeing zero returns',
   'Your competitors are eating your lunch on Google every single day',
   'Your agency sends fancy reports but your pipeline is still empty',
   'You have no idea where your customers are coming from',
@@ -306,8 +306,11 @@ export default function Home() {
                 Book Free Strategy Call <ArrowRight size={18} className="group-hover:translate-x-1 transition" />
               </span>
             </a>
-            <Link href="/services" className="border-2 border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300">
-              See What I Do
+            {/* FIXED: wouter Link with proper <a> child */}
+            <Link href="/services">
+              <a className="border-2 border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300">
+                See What I Do
+              </a>
             </Link>
           </motion.div>
 
@@ -602,7 +605,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <Triangle size={14} className="text-[#c9a84c}" />
+              <Triangle size={14} className="text-[#c9a84c]" />
               <span className="text-[#c9a84c] text-xs font-medium">HOW I WORK</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -883,8 +886,11 @@ export default function Home() {
               >
                 Book Free Strategy Call <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
               </a>
-              <Link href="/contact" className="border-2 border-white/20 text-white font-semibold px-10 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 text-lg">
-                Send a Message
+              {/* FIXED: wouter Link with proper <a> child */}
+              <Link href="/contact">
+                <a className="border-2 border-white/20 text-white font-semibold px-10 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 text-lg">
+                  Send a Message
+                </a>
               </Link>
             </div>
             <p className="text-white/30 text-sm mt-6">
