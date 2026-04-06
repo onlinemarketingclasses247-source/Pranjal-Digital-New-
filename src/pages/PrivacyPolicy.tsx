@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+function setMeta(description) {
+  let meta = document.querySelector("meta[name='description']");
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", description);
+}
 
 export default function PrivacyPolicy() {
+  useEffect(() => {
+  document.title = "Privacy Policy | Pranjal Digital";
+
+  setMeta(
+    "Read the privacy policy of Pranjal Digital to understand how your data is collected, used, and protected."
+  );
+}, []);
   return (
     <div className="bg-[#080c14] text-white pt-28 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
