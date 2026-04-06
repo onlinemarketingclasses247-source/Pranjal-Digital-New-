@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   ArrowRight, 
   BarChart3, 
@@ -19,6 +19,47 @@ import {
   Wrench,
   ChevronRight
 } from "lucide-react";
+
+// ─── 6-STEP GROWTH PROCESS DATA ───────────────────────────────────────────
+
+const STEPS = [
+  {
+    icon: <Search size={22} />,
+    label: "Audit",
+    title: "Deep Audit & Discovery",
+    desc: "We analyse your current funnel, ad accounts, website, competitors, and market positioning to identify gaps, opportunities, and quick wins before spending a single dollar.",
+  },
+  {
+    icon: <Target size={22} />,
+    label: "Strategy",
+    title: "Custom Growth Strategy",
+    desc: "We build a tailored roadmap covering channel selection, messaging, audience targeting, funnel architecture, and KPIs aligned to your specific revenue goals.",
+  },
+  {
+    icon: <Settings size={22} />,
+    label: "Build",
+    title: "Funnel & Creative Build",
+    desc: "Landing pages, ad creatives, email sequences, CRM integration, tracking setup — everything is built from scratch with conversion in mind.",
+  },
+  {
+    icon: <Rocket size={22} />,
+    label: "Launch",
+    title: "Precision Launch",
+    desc: "Campaigns go live with structured A/B tests, budget controls, and real-time monitoring across every channel to ensure clean data from day one.",
+  },
+  {
+    icon: <BarChart2 size={22} />,
+    label: "Optimise",
+    title: "Weekly Optimisation Loops",
+    desc: "Every week we analyse data, cut losers, scale winners, refresh creatives, and refine audiences. No set-and-forget. Active management every single week.",
+  },
+  {
+    icon: <TrendingUp size={22} />,
+    label: "Scale",
+    title: "Systematic Scale",
+    desc: "Once core metrics are proven, we aggressively scale budgets, expand to new channels, and systemize growth to compound returns over time.",
+  },
+];
 
 // ─── EXPANDED CASE STUDIES DATA (15+ detailed cases) ───────────────────────
 
@@ -316,6 +357,100 @@ const NICHES = [
 
 const PER_PAGE = 6;
 
+// ─── PROCESS SECTION COMPONENT (with animation) ────────────────────────────
+
+function ProcessSection() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % STEPS.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleStepClick = (i) => setActiveStep(i);
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 mb-16">
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
+          <TrendingUp size={14} className="text-[#c9a84c]" />
+          <span className="text-xs text-[#c9a84c] font-medium">OUR PROCESS</span>
+        </div>
+        <h2 className="text-2xl md:text-3xl font-bold mb-3">6-Step Growth Process</h2>
+        <p className="text-white/50 max-w-2xl mx-auto text-sm">
+          A proven, data-driven framework that consistently delivers results
+        </p>
+      </div>
+
+      <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-6 md:p-8">
+        {/* Steps Row */}
+        <div className="flex flex-wrap md:flex-nowrap gap-4 md:gap-0 justify-between relative">
+          {STEPS.map((step, i) => {
+            const isActive = i === activeStep;
+            const isDone = i < activeStep;
+            
+            return (
+              <div
+                key={i}
+                onClick={() => handleStepClick(i)}
+                className="flex-1 text-center cursor-pointer group relative"
+              >
+                {/* Connector Line (hidden on mobile) */}
+                {i < STEPS.length - 1 && (
+                  <div className="hidden md:block absolute top-5 left-1/2 w-full h-[2px] -z-0">
+                    <div className={`h-full transition-all duration-500 ${
+                      isDone ? "bg-[#c9a84c]" : "bg-white/10"
+                    }`} style={{ width: "calc(100% - 2rem)", marginLeft: "1rem" }}></div>
+                  </div>
+                )}
+                
+                {/* Step Number */}
+                <div className={`relative z-10 w-10 h-10 mx-auto rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 mb-3 ${
+                  isActive 
+                    ? "bg-[#c9a84c] text-[#080c14] shadow-lg shadow-[#c9a84c]/30 scale-110" 
+                    : isDone 
+                    ? "bg-[#c9a84c]/20 border border-[#c9a84c]/40 text-[#c9a84c]" 
+                    : "bg-white/5 border border-white/15 text-white/40"
+                }`}>
+                  {isDone ? <CheckCircle size={16} /> : i + 1}
+                </div>
+                
+                {/* Icon */}
+                <div className={`flex justify-center mb-2 transition-all duration-300 ${
+                  isActive ? "text-[#c9a84c] scale-110" : isDone ? "text-[#c9a84c]/60" : "text-white/30"
+                }`}>
+                  {step.icon}
+                </div>
+                
+                {/* Label */}
+                <div className={`text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                  isActive ? "text-[#c9a84c]" : isDone ? "text-white/60" : "text-white/30"
+                }`}>
+                  {step.label}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Detail Panel */}
+        <div className="mt-8 pt-6 border-t border-white/10 text-center">
+          <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <h3 className="text-lg font-bold text-[#c9a84c] mb-2">
+              {STEPS[activeStep].title}
+            </h3>
+            <p className="text-white/60 text-sm max-w-2xl mx-auto leading-relaxed">
+              {STEPS[activeStep].desc}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── MODAL COMPONENT ────────────────────────────────────────────────────────
 
 function CaseStudyModal({ cs, onClose }) {
@@ -536,6 +671,9 @@ export default function CaseStudies() {
           </a>
         </div>
       </div>
+
+      {/* ✅ 6-STEP GROWTH PROCESS SECTION - Added right here */}
+      <ProcessSection />
 
       {/* Filter Section - Improved Visibility */}
       <div className="max-w-6xl mx-auto px-4 mb-8">
