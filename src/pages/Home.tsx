@@ -12,7 +12,8 @@ import {
   Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart,
   Settings, Map, Navigation, Compass, Activity, Eye, Mic, Bot, Brain,
   Zap as ZapIcon, TrendingUp as TrendingIcon, Award as AwardIcon,
-  MapPin, Navigation2, Compass as CompassIcon
+  MapPin, Navigation2, Compass as CompassIcon,
+  Package, Scale, Gamepad, Car, LucideIcon
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -30,13 +31,13 @@ const ratingPlatforms = [
 ];
 
 // Custom hook for counting animation with scroll trigger
-function useCountUp(end: number, duration: number = 2000, trigger: boolean = false) {
+function useCountUp(end, duration = 2000, trigger = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!trigger) return;
-    let startTime: number | null = null;
-    let animationFrame: number;
-    const step = (timestamp: number) => {
+    let startTime = null;
+    let animationFrame;
+    const step = (timestamp) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
       setCount(Math.floor(progress * end));
@@ -51,8 +52,8 @@ function useCountUp(end: number, duration: number = 2000, trigger: boolean = fal
 }
 
 // Animated Stat Card with scroll trigger
-function StatCard({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null);
+function StatCard({ value, suffix, label }) {
+  const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
   const [hasAnimated, setHasAnimated] = useState(false);
   const count = useCountUp(value, 2000, inView && !hasAnimated);
@@ -109,10 +110,8 @@ function GlobeMap() {
   
   return (
     <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
-      {/* Ocean Background with gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-blue-800/20 to-cyan-900/30" />
       
-      {/* Globe Container with rotation effect */}
       <div 
         ref={globeRef}
         className="absolute inset-0 rounded-full overflow-hidden"
@@ -122,27 +121,17 @@ function GlobeMap() {
           transition: 'transform 0.05s linear',
         }}
       >
-        {/* Continents - Detailed SVG Map */}
         <svg className="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 1000 500" preserveAspectRatio="none">
-          {/* North America */}
           <path d="M150,80 L200,60 L280,70 L320,100 L350,140 L340,180 L300,200 L260,190 L220,160 L180,140 L140,110 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          {/* South America */}
           <path d="M280,220 L320,210 L340,240 L350,280 L330,320 L300,340 L280,310 L270,270 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          {/* Europe */}
           <path d="M480,70 L520,60 L550,75 L560,100 L540,120 L500,125 L470,100 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          {/* Africa */}
           <path d="M490,140 L540,125 L570,150 L580,200 L560,250 L530,260 L500,220 L480,180 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          {/* Asia */}
           <path d="M620,50 L680,40 L720,60 L750,90 L760,130 L720,160 L670,150 L640,120 L610,90 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          {/* Australia */}
           <path d="M720,280 L770,270 L800,300 L790,330 L750,340 L720,320 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          {/* Antarctica */}
           <path d="M100,460 L900,460 L850,480 L150,480 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" opacity="0.5" />
         </svg>
         
-        {/* Country Markers with animation */}
         {countriesList.map((country, idx) => {
-          // Calculate position on globe based on rotation
           const angle = (idx / countriesList.length) * 360 + rotation;
           const radian = angle * Math.PI / 180;
           const x = 50 + Math.cos(radian) * 40;
@@ -161,7 +150,6 @@ function GlobeMap() {
               }}
               transition={{ duration: 0.2 }}
             >
-              {/* Pin with flag and country name */}
               <div className="relative">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg shadow-[#c9a84c]/30 animate-pulse">
                   <MapPin size={14} className="text-[#080c14]" />
@@ -181,7 +169,6 @@ function GlobeMap() {
         })}
       </div>
       
-      {/* Country labels on the side */}
       <div className="absolute left-4 top-4 bottom-4 w-48 bg-black/60 backdrop-blur-sm rounded-xl p-3 overflow-y-auto z-10 hidden lg:block">
         <div className="text-[#c9a84c] text-xs font-semibold mb-2">Countries Served</div>
         <div className="space-y-1">
@@ -195,7 +182,6 @@ function GlobeMap() {
         </div>
       </div>
       
-      {/* Active Country Details Panel */}
       <AnimatePresence>
         {activeCountry && (
           <motion.div
@@ -224,7 +210,7 @@ function GlobeMap() {
   );
 }
 
-// 14 Digital Marketing Services with detailed descriptions
+// 14 Digital Marketing Services
 const aiServices = [
   { 
     icon: Search, 
@@ -284,7 +270,7 @@ const aiServices = [
   },
 ];
 
-// 25 Industries with detailed explanations
+// 25+ Industries with detailed explanations - Using only imported icons
 const industriesData = [
   { name: 'SaaS', icon: Cpu, color: 'from-purple-500/20 to-pink-500/20', projects: 45, whatIDid: 'Helped a B2B SaaS company grow from $3K to $28K MRR in 6 months using SEO and PPC.', whatICanDo: 'Reduce CAC by 40-60%, improve trial-to-paid conversion by 2-3x, optimize onboarding flow, and scale predictably.', results: ['933% MRR growth', '46% lower CPL', '2.3x conversion rate'] },
   { name: 'E-commerce', icon: DollarSign, color: 'from-orange-500/20 to-red-500/20', projects: 38, whatIDid: 'Took a DTC brand from 1.7x to 4.2x ROAS in 90 days using Meta Ads + TikTok.', whatICanDo: 'Optimize product feeds, build retargeting funnels, scale winning products, reduce cart abandonment by 30-50%.', results: ['4.2x ROAS', '3.1x revenue', '68% better CTR'] },
@@ -296,11 +282,11 @@ const industriesData = [
   { name: 'Fashion', icon: Sparkles, color: 'from-pink-500/20 to-rose-500/20', projects: 18, whatIDid: 'Grew an Instagram-first fashion brand from 0 to 50K monthly visitors using influencer marketing.', whatICanDo: 'Visual content strategy, influencer partnerships, shoppable posts, UGC campaigns.', results: ['50K monthly visitors', '3.2x ROAS', '40% lower CAC'] },
   { name: 'Manufacturing', icon: Settings, color: 'from-gray-500/20 to-slate-500/20', projects: 15, whatIDid: 'Helped a B2B manufacturer generate 200+ qualified leads in 60 days using LinkedIn + Google Ads.', whatICanDo: 'Industrial SEO, technical content marketing, trade show integration, B2B lead nurturing.', results: ['200+ leads', '35% lower CPA', '4x ROI'] },
   { name: 'Logistics', icon: Package, color: 'from-blue-500/20 to-cyan-500/20', projects: 14, whatIDid: 'Scaled a freight forwarding company from 50 to 500+ monthly leads using Google Search Ads.', whatICanDo: 'Supply chain SEO, logistics keyword strategy, freight rate optimization, carrier acquisition.', results: ['900% lead growth', '28% lower CPA', '3.5x ROAS'] },
-  { name: 'Legal', icon: Scale, color: 'from-slate-500/20 to-gray-500/20', projects: 12, whatIDid: 'Helped a law firm rank #1 for 20+ practice area keywords in 6 months.', whatICanDo: 'Attorney SEO, case acquisition funnels, legal directory optimization, reputation management.', results: ['20+ #1 rankings', '150% more cases', '42% lower CPA'] },
+  { name: 'Legal', icon: Shield, color: 'from-slate-500/20 to-gray-500/20', projects: 12, whatIDid: 'Helped a law firm rank #1 for 20+ practice area keywords in 6 months.', whatICanDo: 'Attorney SEO, case acquisition funnels, legal directory optimization, reputation management.', results: ['20+ #1 rankings', '150% more cases', '42% lower CPA'] },
   { name: 'Non-Profit', icon: Heart, color: 'from-red-500/20 to-rose-500/20', projects: 11, whatIDid: 'Increased donor acquisition by 300% for a charity using Facebook fundraising ads.', whatICanDo: 'Donor journey mapping, grant SEO, volunteer recruitment, impact storytelling.', results: ['300% donors', '2.8x ROAS', '45% lower CPA'] },
   { name: 'Entertainment', icon: Play, color: 'from-violet-500/20 to-purple-500/20', projects: 10, whatIDid: 'Helped a streaming platform acquire 50K+ subscribers using YouTube Ads + influencer marketing.', whatICanDo: 'Content promotion, audience building, ticket sales optimization, fan engagement.', results: ['50K subscribers', '3.5x ROAS', '38% lower CPA'] },
-  { name: 'Gaming', icon: Gamepad, color: 'from-fuchsia-500/20 to-pink-500/20', projects: 9, whatIDid: 'Scaled a mobile game from 0 to 500K downloads using TikTok + App Store optimization.', whatICanDo: 'App store SEO, influencer campaigns, community building, retention optimization.', results: ['500K downloads', '$0.85 CPI', '35% Day-7 retention'] },
-  { name: 'Automotive', icon: Car, color: 'from-slate-500/20 to-gray-500/20', projects: 8, whatIDid: 'Helped a car dealership generate 500+ test drives using Google Local Services Ads.', whatICanDo: 'Local SEO, inventory feeds, service campaign optimization, review generation.', results: ['500+ test drives', '52% lower CPA', '3.8x ROAS'] },
+  { name: 'Gaming', icon: Target, color: 'from-fuchsia-500/20 to-pink-500/20', projects: 9, whatIDid: 'Scaled a mobile game from 0 to 500K downloads using TikTok + App Store optimization.', whatICanDo: 'App store SEO, influencer campaigns, community building, retention optimization.', results: ['500K downloads', '$0.85 CPI', '35% Day-7 retention'] },
+  { name: 'Automotive', icon: Zap, color: 'from-slate-500/20 to-gray-500/20', projects: 8, whatIDid: 'Helped a car dealership generate 500+ test drives using Google Local Services Ads.', whatICanDo: 'Local SEO, inventory feeds, service campaign optimization, review generation.', results: ['500+ test drives', '52% lower CPA', '3.8x ROAS'] },
   { name: 'Food & Bev', icon: Coffee, color: 'from-amber-500/20 to-yellow-500/20', projects: 8, whatIDid: 'Scaled a meal kit delivery service from 1K to 15K monthly subscribers using Meta Ads.', whatICanDo: 'Local restaurant SEO, delivery app optimization, loyalty program marketing.', results: ['15K subscribers', '4.2x ROAS', '35% lower CPA'] },
   { name: 'Agencies', icon: Users, color: 'from-rose-500/20 to-pink-500/20', projects: 7, whatIDid: 'Helped a marketing agency generate 80+ qualified leads/month using LinkedIn + content.', whatICanDo: 'Agency positioning, case study marketing, lead generation systems, proposal optimization.', results: ['80+ leads/month', '$52 CPL', '5.1x ROI'] },
   { name: 'Startups', icon: RocketIcon, color: 'from-violet-500/20 to-purple-500/20', projects: 25, whatIDid: 'Helped 25+ startups go from 0 to 10K+ users using growth hacking strategies.', whatICanDo: 'Product-led growth, viral loop design, investor deck SEO, launch strategy.', results: ['10K+ users', '$1.20 CAC', '62% activation'] },
@@ -308,7 +294,7 @@ const industriesData = [
   { name: 'Local Business', icon: MapPin, color: 'from-cyan-500/20 to-sky-500/20', projects: 35, whatIDid: 'Helped local businesses grow from 5 to 60+ leads/month using Google Maps + Local SEO.', whatICanDo: 'Google Business Profile optimization, local citations, review management, local link building.', results: ['12x leads', '38% lower CPA', '60 leads/month'] },
 ];
 
-// Enhanced 3D Comparison Table Data with better content
+// Enhanced Comparison Table Data
 const comparisonData = [
   { 
     aspect: 'Years of Hands-On Experience', 
@@ -413,20 +399,20 @@ const comparisonData = [
 
 // FAQ with detailed answers
 const faqs = [
-  { q: "Bhai, what exactly do you do?", a: "Simple bhai — I help businesses grow online. SEO, Google Ads, Social Media, everything. Whatever it takes to get you more customers and more sales. I have 12+ years of experience across 25+ industries and 20+ countries." },
-  { q: "How are you different from a big agency?", a: "Agencies me tum ek number se call karte ho. Yahan tum mere se direct baat karoge. No junior account managers. 12 saal ka experience direct tumhe milega. Aur better pricing bhi hai. Plus, I use AI and automation to deliver better results faster." },
-  { q: "Which industries do you work with?", a: "IT, SaaS, Healthcare, Real Estate, E-commerce, Education, Finance, Travel, Fashion, Manufacturing, Logistics, Legal, Non-Profit, Entertainment, Gaming, Automotive, Food & Beverage, Agencies, Startups, Enterprise, Local Business — 25+ industries in total." },
-  { q: "How much do you charge?", a: "Use the cost calculator above to get an instant estimate. Every business is different, so I customize pricing based on your specific needs and goals. Hourly, fixed project, or monthly retainer — whatever works for you." },
-  { q: "When will I see results?", a: "Google Ads can show leads in 2-3 days. SEO typically takes 3-6 months. I give realistic timelines — no false promises. I will share case studies of similar businesses so you know exactly what to expect." },
-  { q: "Do you work with startups?", a: "Absolutely! I have worked with 25+ startups. I know how to get results even with limited budgets. Growth hacking, viral loops, and creative strategies — that's my specialty." },
-  { q: "Can you manage my existing team?", a: "Yes yes. I work in two ways — either guide your existing team as a consultant, or do the full execution with my team of 25+ specialists. Whatever suits you better." },
-  { q: "Do you sign NDAs?", a: "Obviously. I sign NDAs before discussing any sensitive business details. Confidentiality is standard for me. Your data, your strategies, your results — all stay with you." },
-  { q: "Which countries do you work with?", a: "USA, UK, Canada, Australia, India, UAE, Singapore, Germany, France, Netherlands, Sweden, Japan — and many more. I understand different markets, cultures, and consumer behaviors." },
-  { q: "What platforms do you advertise on?", a: "Google (Search, Display, YouTube, PMax), Meta (Facebook, Instagram, Advantage+), LinkedIn, TikTok, Twitter, Pinterest, Snapchat, Reddit, Quora — I choose platforms where your audience actually converts." },
+  { q: "What exactly do you do?", a: "I help businesses grow online. SEO, Google Ads, Social Media, everything. Whatever it takes to get you more customers and more sales. I have 12+ years of experience across 25+ industries and 20+ countries." },
+  { q: "How are you different from a big agency?", a: "You talk to me directly. No junior account managers. 12 years of experience direct to you. Better pricing. Plus, I use AI and automation to deliver better results faster." },
+  { q: "Which industries do you work with?", a: "SaaS, E-commerce, Healthcare, Real Estate, EdTech, Fintech, Travel, Fashion, Manufacturing, Logistics, Legal, Non-Profit, Entertainment, Gaming, Automotive, Food & Beverage, Agencies, Startups, Enterprise, Local Business — 25+ industries in total." },
+  { q: "How much do you charge?", a: "Use the cost calculator above to get an instant estimate. Every business is different, so I customize pricing based on your specific needs and goals." },
+  { q: "When will I see results?", a: "Google Ads can show leads in 2-3 days. SEO typically takes 3-6 months. I give realistic timelines — no false promises." },
+  { q: "Do you work with startups?", a: "Absolutely! I have worked with 25+ startups. I know how to get results even with limited budgets." },
+  { q: "Can you manage my existing team?", a: "Yes. I work in two ways — either guide your existing team as a consultant, or do the full execution with my team of 25+ specialists." },
+  { q: "Do you sign NDAs?", a: "Yes. I sign NDAs before discussing any sensitive business details. Confidentiality is standard for me." },
+  { q: "Which countries do you work with?", a: "USA, UK, Canada, Australia, India, UAE, Singapore, Germany, France, Netherlands, Sweden, Japan — and many more." },
+  { q: "What platforms do you advertise on?", a: "Google (Search, Display, YouTube, PMax), Meta (Facebook, Instagram, Advantage+), LinkedIn, TikTok, Twitter, Pinterest, Snapchat, Reddit, Quora." },
 ];
 
 // FAQ Item Component
-function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
+function FAQItem({ q, a, index }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
@@ -567,7 +553,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== RATINGS SECTION with Brand Logos ========== */}
+      {/* ========== RATINGS SECTION ========== */}
       <section className="py-12 bg-gradient-to-r from-[#040608] to-[#080c14] border-y border-[#c9a84c]/10">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -876,7 +862,6 @@ export default function Home() {
           </motion.div>
 
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* Industry Scroller - Shows ALL 20+ industries */}
             <div className="lg:w-2/5">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                 {industriesData.map((industry, i) => (
@@ -908,7 +893,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Industry Details Panel - Takes remaining space */}
             <motion.div
               key={selectedIndustry?.name}
               initial={{ opacity: 0, x: 30 }}
@@ -996,10 +980,8 @@ export default function Home() {
           </motion.div>
 
           <div className="relative">
-            {/* 3D Perspective Container */}
             <div className="relative perspective-1000">
               <div className="grid grid-cols-1 gap-4 transform-style-3d">
-                {/* Header */}
                 <div className="grid grid-cols-3 bg-gradient-to-r from-[#0a0f1c] to-[#040608] rounded-t-2xl border border-white/10 overflow-hidden shadow-xl">
                   <div className="p-4 text-white/40 text-xs font-semibold uppercase bg-black/20">Factor</div>
                   <div className="p-4 text-center text-white/40 text-xs font-semibold uppercase border-l border-white/10 bg-black/20">Big Agency</div>
@@ -1008,7 +990,6 @@ export default function Home() {
                   </div>
                 </div>
                 
-                {/* Rows with 3D hover effects */}
                 {comparisonData.map((row, i) => (
                   <motion.div
                     key={row.aspect}
