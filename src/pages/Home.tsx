@@ -332,18 +332,37 @@ function WorldMap() {
         className="w-full h-full object-contain"
       />
 
-      <div className="absolute inset-0">
+<div className="absolute inset-0 z-10">
 
-        <div className="pin" style={{ top: "45%", left: "23%" }} />
-        <div className="pin" style={{ top: "30%", left: "23%" }} />
-        <div className="pin" style={{ top: "38%", left: "48%" }} />
-        <div className="pin" style={{ top: "42%", left: "50%" }} />
-        <div className="pin" style={{ top: "28%", left: "52%" }} />
-        <div className="pin" style={{ top: "52%", left: "58%" }} />
-        <div className="pin" style={{ top: "58%", left: "63%" }} />
-        <div className="pin" style={{ top: "68%", left: "70%" }} />
-        <div className="pin" style={{ top: "42%", left: "82%" }} />
-        <div className="pin" style={{ top: "85%", left: "80%" }} />
+       {/* USA */}
+<div className="pin" style={{ top: "35%", left: "25%" }} />
+
+{/* Canada */}
+<div className="pin" style={{ top: "20%", left: "28%" }} />
+
+{/* UK */}
+<div className="pin" style={{ top: "32%", left: "50%" }} />
+
+{/* Germany / France */}
+<div className="pin" style={{ top: "36%", left: "52%" }} />
+
+{/* Sweden */}
+<div className="pin" style={{ top: "20%", left: "55%" }} />
+
+{/* UAE */}
+<div className="pin" style={{ top: "45%", left: "60%" }} />
+
+{/* India */}
+<div className="pin" style={{ top: "50%", left: "65%" }} />
+
+{/* Singapore */}
+<div className="pin" style={{ top: "60%", left: "72%" }} />
+
+{/* Japan */}
+<div className="pin" style={{ top: "35%", left: "85%" }} />
+
+{/* Australia */}
+<div className="pin" style={{ top: "75%", left: "82%" }} />
 
       </div>
 
