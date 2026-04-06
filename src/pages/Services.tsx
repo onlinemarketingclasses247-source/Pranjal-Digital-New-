@@ -450,7 +450,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 export default function Services() {
 
   useEffect(() => {
-  document.title = "Digital Marketing Services | SEO, Google Ads, CRO & Funnels – Pranjal Digital";
+  document.title = "Digital Marketing Services | Pranjal Digital";
 
   const meta = document.querySelector("meta[name='description']");
   if (meta) {
