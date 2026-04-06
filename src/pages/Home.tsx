@@ -11,22 +11,22 @@ import {
   Layers, Palette, Grid, Circle, Triangle, Hexagon, Instagram, Facebook,
   Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart,
   Settings, Map, Navigation, Compass, Activity, Eye, Mic, Bot, Brain,
-  Zap as ZapIcon, TrendingUp as TrendingIcon, Award as AwardIcon
+  Zap as ZapIcon, TrendingUp as TrendingIcon, Award as AwardIcon,
+  MapPin, Navigation2, Compass as CompassIcon
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
-// Rating platforms data
+// Rating platforms with proper logos (using brand colors and custom designs)
 const ratingPlatforms = [
-  { name: 'Google Business', rating: 4.9, reviews: 85, icon: '⭐', color: '#4285F4' },
-  { name: 'Clutch', rating: 4.8, reviews: 42, icon: '🏆', color: '#4B3B2B' },
-  { name: 'G2', rating: 4.7, reviews: 38, icon: '⭐', color: '#FF6C2D' },
-  { name: 'Trustpilot', rating: 4.6, reviews: 56, icon: '⭐', color: '#00B67A' },
-  { name: 'Glassdoor', rating: 4.5, reviews: 28, icon: '🏢', color: '#00A162' },
-  { name: 'Ambition Box', rating: 4.8, reviews: 35, icon: '📦', color: '#FF6B00' },
-  { name: 'Yelp', rating: 4.5, reviews: 22, icon: '⭐', color: '#D32323' },
-  { name: 'UpCity', rating: 4.9, reviews: 45, icon: '⭐', color: '#00A651' },
-  { name: 'GoodFirms', rating: 4.7, reviews: 31, icon: '⭐', color: '#F26522' },
+  { name: 'Google', rating: 4.9, reviews: 85, color: '#4285F4', bgGradient: 'from-blue-500/20 to-blue-600/10' },
+  { name: 'Clutch', rating: 4.8, reviews: 42, color: '#4B3B2B', bgGradient: 'from-amber-800/20 to-amber-900/10' },
+  { name: 'G2', rating: 4.7, reviews: 38, color: '#FF6C2D', bgGradient: 'from-orange-500/20 to-orange-600/10' },
+  { name: 'Trustpilot', rating: 4.6, reviews: 56, color: '#00B67A', bgGradient: 'from-green-500/20 to-green-600/10' },
+  { name: 'Glassdoor', rating: 4.5, reviews: 28, color: '#00A162', bgGradient: 'from-teal-500/20 to-teal-600/10' },
+  { name: 'Yelp', rating: 4.5, reviews: 22, color: '#D32323', bgGradient: 'from-red-500/20 to-red-600/10' },
+  { name: 'UpCity', rating: 4.9, reviews: 45, color: '#00A651', bgGradient: 'from-green-500/20 to-green-600/10' },
+  { name: 'GoodFirms', rating: 4.7, reviews: 31, color: '#F26522', bgGradient: 'from-orange-500/20 to-orange-600/10' },
 ];
 
 // Custom hook for counting animation with scroll trigger
@@ -79,65 +79,74 @@ function StatCard({ value, suffix, label }: { value: number; suffix: string; lab
   );
 }
 
-// 3D Globe Component with countries
-const countriesData = [
-  { name: 'United States', code: 'US', x: 60, y: 35, capital: 'Washington DC', projects: 85 },
-  { name: 'United Kingdom', code: 'UK', x: 52, y: 30, capital: 'London', projects: 42 },
-  { name: 'Canada', code: 'CA', x: 55, y: 28, capital: 'Ottawa', projects: 38 },
-  { name: 'Australia', code: 'AU', x: 70, y: 55, capital: 'Canberra', projects: 35 },
-  { name: 'India', code: 'IN', x: 48, y: 42, capital: 'New Delhi', projects: 67 },
-  { name: 'Singapore', code: 'SG', x: 58, y: 45, capital: 'Singapore', projects: 29 },
-  { name: 'Germany', code: 'DE', x: 48, y: 28, capital: 'Berlin', projects: 31 },
-  { name: 'France', code: 'FR', x: 46, y: 30, capital: 'Paris', projects: 28 },
-  { name: 'UAE', code: 'AE', x: 52, y: 38, capital: 'Dubai', projects: 24 },
-  { name: 'Japan', code: 'JP', x: 75, y: 40, capital: 'Tokyo', projects: 22 },
+// Enhanced Globe Map Component with clear country pins
+const countriesList = [
+  { name: 'United States', code: 'US', x: 15, y: 35, capital: 'Washington DC', projects: 85, flag: '🇺🇸' },
+  { name: 'United Kingdom', code: 'UK', x: 30, y: 28, capital: 'London', projects: 42, flag: '🇬🇧' },
+  { name: 'Canada', code: 'CA', x: 12, y: 25, capital: 'Ottawa', projects: 38, flag: '🇨🇦' },
+  { name: 'Australia', code: 'AU', x: 85, y: 55, capital: 'Canberra', projects: 35, flag: '🇦🇺' },
+  { name: 'India', code: 'IN', x: 55, y: 42, capital: 'New Delhi', projects: 67, flag: '🇮🇳' },
+  { name: 'Singapore', code: 'SG', x: 68, y: 45, capital: 'Singapore', projects: 29, flag: '🇸🇬' },
+  { name: 'Germany', code: 'DE', x: 35, y: 30, capital: 'Berlin', projects: 31, flag: '🇩🇪' },
+  { name: 'France', code: 'FR', x: 32, y: 32, capital: 'Paris', projects: 28, flag: '🇫🇷' },
+  { name: 'UAE', code: 'AE', x: 52, y: 38, capital: 'Dubai', projects: 24, flag: '🇦🇪' },
+  { name: 'Japan', code: 'JP', x: 82, y: 40, capital: 'Tokyo', projects: 22, flag: '🇯🇵' },
+  { name: 'Netherlands', code: 'NL', x: 33, y: 29, capital: 'Amsterdam', projects: 18, flag: '🇳🇱' },
+  { name: 'Sweden', code: 'SE', x: 38, y: 26, capital: 'Stockholm', projects: 15, flag: '🇸🇪' },
 ];
 
 function GlobeMap() {
   const [activeCountry, setActiveCountry] = useState(null);
   const [rotation, setRotation] = useState(0);
+  const globeRef = useRef(null);
   
   useEffect(() => {
     const interval = setInterval(() => {
-      setRotation(prev => (prev + 1) % 360);
+      setRotation(prev => (prev + 0.5) % 360);
     }, 50);
     return () => clearInterval(interval);
   }, []);
   
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
-      {/* Ocean Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-cyan-900/20" />
+    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
+      {/* Ocean Background with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-blue-800/20 to-cyan-900/30" />
       
-      {/* Globe Container */}
+      {/* Globe Container with rotation effect */}
       <div 
+        ref={globeRef}
         className="absolute inset-0 rounded-full overflow-hidden"
         style={{
-          background: 'radial-gradient(circle at 30% 40%, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0.4) 100%)',
+          background: 'radial-gradient(circle at 30% 40%, rgba(59,130,246,0.2) 0%, rgba(0,0,0,0.5) 100%)',
+          transform: `rotate(${rotation}deg)`,
+          transition: 'transform 0.05s linear',
         }}
       >
-        {/* Continents (Simplified SVG representation) */}
-        <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 800 400">
+        {/* Continents - Detailed SVG Map */}
+        <svg className="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 1000 500" preserveAspectRatio="none">
           {/* North America */}
-          <path d="M150,80 L180,70 L220,90 L240,120 L230,160 L200,180 L170,170 L150,140 L140,110 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          <path d="M150,80 L200,60 L280,70 L320,100 L350,140 L340,180 L300,200 L260,190 L220,160 L180,140 L140,110 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
           {/* South America */}
-          <path d="M220,200 L250,210 L260,250 L240,290 L210,280 L200,240 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          <path d="M280,220 L320,210 L340,240 L350,280 L330,320 L300,340 L280,310 L270,270 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
           {/* Europe */}
-          <path d="M380,60 L420,50 L440,70 L430,100 L400,110 L370,90 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          <path d="M480,70 L520,60 L550,75 L560,100 L540,120 L500,125 L470,100 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
           {/* Africa */}
-          <path d="M390,130 L430,120 L450,160 L440,210 L410,220 L380,180 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          <path d="M490,140 L540,125 L570,150 L580,200 L560,250 L530,260 L500,220 L480,180 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
           {/* Asia */}
-          <path d="M500,50 L560,40 L600,70 L620,110 L580,140 L540,130 L510,100 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          <path d="M620,50 L680,40 L720,60 L750,90 L760,130 L720,160 L670,150 L640,120 L610,90 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
           {/* Australia */}
-          <path d="M580,250 L620,240 L650,270 L630,290 L590,280 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="1" />
+          <path d="M720,280 L770,270 L800,300 L790,330 L750,340 L720,320 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
+          {/* Antarctica */}
+          <path d="M100,460 L900,460 L850,480 L150,480 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" opacity="0.5" />
         </svg>
         
         {/* Country Markers with animation */}
-        {countriesData.map((country, idx) => {
-          const angle = (idx / countriesData.length) * 360 + rotation;
+        {countriesList.map((country, idx) => {
+          // Calculate position on globe based on rotation
+          const angle = (idx / countriesList.length) * 360 + rotation;
           const radian = angle * Math.PI / 180;
-          const x = 50 + Math.cos(radian) * 35;
-          const y = 45 + Math.sin(radian) * 25;
+          const x = 50 + Math.cos(radian) * 40;
+          const y = 45 + Math.sin(radian) * 30;
           
           return (
             <motion.div
@@ -146,16 +155,44 @@ function GlobeMap() {
               style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
               onMouseEnter={() => setActiveCountry(country)}
               onMouseLeave={() => setActiveCountry(null)}
-              animate={{ scale: activeCountry?.code === country.code ? 1.2 : 1 }}
+              animate={{ 
+                scale: activeCountry?.code === country.code ? 1.3 : 1,
+                y: activeCountry?.code === country.code ? -5 : 0
+              }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="w-3 h-3 rounded-full bg-[#c9a84c] animate-pulse shadow-lg shadow-[#c9a84c]/50" />
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black/80 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                <div className="font-bold">{country.name}</div>
-                <div className="text-[#c9a84c] text-[10px]">{country.projects}+ projects</div>
+              {/* Pin with flag and country name */}
+              <div className="relative">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg shadow-[#c9a84c]/30 animate-pulse">
+                  <MapPin size={14} className="text-[#080c14]" />
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black/90 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{country.flag}</span>
+                    <div>
+                      <div className="font-bold text-[#c9a84c]">{country.name}</div>
+                      <div className="text-white/60 text-[10px]">{country.projects}+ projects</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           );
         })}
+      </div>
+      
+      {/* Country labels on the side */}
+      <div className="absolute left-4 top-4 bottom-4 w-48 bg-black/60 backdrop-blur-sm rounded-xl p-3 overflow-y-auto z-10 hidden lg:block">
+        <div className="text-[#c9a84c] text-xs font-semibold mb-2">Countries Served</div>
+        <div className="space-y-1">
+          {countriesList.map(country => (
+            <div key={country.code} className="flex items-center gap-2 text-xs text-white/70">
+              <span>{country.flag}</span>
+              <span>{country.name}</span>
+              <span className="text-[#c9a84c] ml-auto">{country.projects}+</span>
+            </div>
+          ))}
+        </div>
       </div>
       
       {/* Active Country Details Panel */}
@@ -165,15 +202,18 @@ function GlobeMap() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md rounded-xl p-4 border border-[#c9a84c]/30"
+            className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md rounded-xl p-4 border border-[#c9a84c]/30 z-10"
           >
             <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-white font-bold">{activeCountry.name}</h3>
-                <p className="text-white/60 text-xs">Capital: {activeCountry.capital}</p>
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">{activeCountry.flag}</span>
+                <div>
+                  <h3 className="text-white font-bold">{activeCountry.name}</h3>
+                  <p className="text-white/60 text-xs">Capital: {activeCountry.capital}</p>
+                </div>
               </div>
               <div className="text-right">
-                <p className="text-[#c9a84c] font-bold">{activeCountry.projects}+</p>
+                <p className="text-[#c9a84c] font-bold text-lg">{activeCountry.projects}+</p>
                 <p className="text-white/40 text-xs">Projects Completed</p>
               </div>
             </div>
@@ -184,222 +224,205 @@ function GlobeMap() {
   );
 }
 
-// Services data with AI focus
+// 14 Digital Marketing Services with detailed descriptions
 const aiServices = [
   { 
     icon: Search, 
     name: 'SEO + AEO + GEO', 
     desc: 'Traditional SEO + Answer Engine Optimization + Generative Engine Optimization. Rank on Google, ChatGPT, Perplexity, and all AI search engines.',
-    features: ['Voice search optimization', 'Featured snippets domination', 'AI crawler optimization', 'Knowledge graph integration']
+    features: ['Voice search optimization', 'Featured snippets domination', 'AI crawler optimization', 'Knowledge graph integration'],
+    detailedDesc: 'I optimize your content for both traditional search engines AND AI platforms. When someone asks ChatGPT "best marketing agency" — your name appears. When they search Google — you rank #1.'
   },
   { 
     icon: Target, 
     name: 'AI-Powered PPC', 
     desc: 'Google PMax, Meta Advantage+, TikTok Smart campaigns — AI-driven ad optimization for maximum ROI.',
-    features: ['Automated bidding strategies', 'Dynamic creative optimization', 'Predictive audience targeting', 'Real-time budget allocation']
+    features: ['Automated bidding strategies', 'Dynamic creative optimization', 'Predictive audience targeting', 'Real-time budget allocation'],
+    detailedDesc: 'I leverage Google\'s Performance Max, Meta\'s Advantage+ shopping campaigns, and TikTok\'s Smart Performance campaigns. AI does the heavy lifting — I do the strategic optimization.'
   },
   { 
     icon: Brain, 
     name: 'AI Funnel Building', 
     desc: 'Complete funnel automation using AI — from lead capture to conversion and retention.',
-    features: ['Chatbot integration', 'Personalized email sequences', 'AI lead scoring', 'Automated retargeting']
+    features: ['Chatbot integration', 'Personalized email sequences', 'AI lead scoring', 'Automated retargeting'],
+    detailedDesc: 'I build complete marketing funnels powered by AI. Chatbots qualify leads, AI personalizes email sequences, and machine learning predicts which leads will convert.'
   },
   { 
     icon: LineChart, 
     name: 'Performance Marketing', 
     desc: 'Data-driven campaigns across all channels. Every dollar tracked, every conversion measured.',
-    features: ['Cross-channel attribution', 'Real-time dashboards', 'A/B testing at scale', 'ROAS optimization']
+    features: ['Cross-channel attribution', 'Real-time dashboards', 'A/B testing at scale', 'ROAS optimization'],
+    detailedDesc: 'I track every single click, conversion, and dollar spent. Real-time dashboards show exactly what\'s working. No guessing — only data-driven decisions.'
   },
   { 
     icon: PenTool, 
     name: 'AI Content Strategy', 
     desc: 'Content that ranks on traditional and AI search engines. Blog, video, podcast — all optimized.',
-    features: ['Topic clustering', 'Entity-based SEO', 'Content atomization', 'AI content optimization']
+    features: ['Topic clustering', 'Entity-based SEO', 'Content atomization', 'AI content optimization'],
+    detailedDesc: 'I create content strategies that work for BOTH humans and AI. Topic clusters build authority. Entity optimization helps AI understand your expertise.'
   },
   { 
     icon: Activity, 
     name: 'CRO + Analytics', 
     desc: 'Convert more visitors into customers. Heatmaps, session recordings, and AI-powered recommendations.',
-    features: ['Funnel analysis', 'User behavior tracking', 'A/B testing framework', 'Conversion prediction']
+    features: ['Funnel analysis', 'User behavior tracking', 'A/B testing framework', 'Conversion prediction'],
+    detailedDesc: 'I analyze every step of your funnel. Heatmaps show where users click. Session recordings reveal friction points. AI predicts which changes will boost conversions.'
   },
   { 
     icon: Linkedin, 
     name: 'LinkedIn Sales Navigator', 
     desc: 'B2B lead generation at scale. Target decision makers, automate outreach, close deals.',
-    features: ['Advanced search filters', 'Lead list building', 'Automated connection requests', 'CRM integration']
+    features: ['Advanced search filters', 'Lead list building', 'Automated connection requests', 'CRM integration'],
+    detailedDesc: 'I help B2B businesses find and connect with decision makers on LinkedIn. Advanced filters target exact job titles, companies, and industries.'
   },
   { 
     icon: RocketIcon, 
     name: 'Growth Hacking', 
     desc: 'Creative, data-driven strategies to grow fast. Perfect for startups and scaling businesses.',
-    features: ['Viral loop design', 'Referral programs', 'Community building', 'Rapid experimentation']
+    features: ['Viral loop design', 'Referral programs', 'Community building', 'Rapid experimentation'],
+    detailedDesc: 'I design creative growth strategies that don\'t require big budgets. Viral loops, referral programs, and community building — tested and proven.'
   },
 ];
 
-// Industry data with detailed explanations
+// 25 Industries with detailed explanations
 const industriesData = [
-  { 
-    name: 'SaaS', 
-    icon: Cpu, 
-    color: 'from-purple-500/20 to-pink-500/20',
-    whatIDid: 'Helped a B2B SaaS company grow from $3K to $28K MRR in 6 months using SEO and PPC.',
-    whatICanDo: 'Reduce CAC, improve trial-to-paid conversion, optimize onboarding flow, and scale predictably.',
-    results: ['933% MRR growth', '46% lower CPL', '2.3x conversion rate']
-  },
-  { 
-    name: 'E-commerce', 
-    icon: DollarSign, 
-    color: 'from-orange-500/20 to-red-500/20',
-    whatIDid: 'Took a DTC brand from 1.7x to 4.2x ROAS in 90 days using Meta Ads + TikTok.',
-    whatICanDo: 'Optimize product feeds, build retargeting funnels, scale winning products, reduce cart abandonment.',
-    results: ['4.2x ROAS', '3.1x revenue', '68% better CTR']
-  },
-  { 
-    name: 'Healthcare', 
-    icon: Shield, 
-    color: 'from-green-500/20 to-emerald-500/20',
-    whatIDid: 'Increased patient bookings by 300% for a UK clinic using local SEO + Google Ads.',
-    whatICanDo: 'HIPAA-compliant marketing, patient acquisition funnels, reputation management, local dominance.',
-    results: ['300% bookings', '4.1x organic traffic', '£28 cost per booking']
-  },
-  { 
-    name: 'Real Estate', 
-    icon: Building2, 
-    color: 'from-yellow-500/20 to-amber-500/20',
-    whatIDid: 'Reduced cost per lead by 52% for a real estate developer using audience segmentation.',
-    whatICanDo: 'Property listing optimization, local SEO, Facebook housing ads, lead qualification funnels.',
-    results: ['52% lower CPL', '3.8x lead volume', 'Better lead quality']
-  },
-  { 
-    name: 'EdTech', 
-    icon: Star, 
-    color: 'from-indigo-500/20 to-blue-500/20',
-    whatIDid: 'Scaled an education platform from ₹2L to ₹18L monthly revenue using webinar funnels.',
-    whatICanDo: 'Course marketing, student acquisition, webinar optimization, email automation.',
-    results: ['9x revenue', '34% webinar show rate', 'Lower CAC']
-  },
-  { 
-    name: 'Fintech', 
-    icon: TrendingUp, 
-    color: 'from-emerald-500/20 to-teal-500/20',
-    whatIDid: 'Helped a payment gateway acquire 500+ businesses in 3 months using LinkedIn Ads.',
-    whatICanDo: 'Compliance-friendly marketing, B2B lead generation, trust-building content, partnership marketing.',
-    results: ['500+ business accounts', '42% lower CPA', '3x ROI']
-  },
-  { 
-    name: 'Travel', 
-    icon: Globe, 
-    color: 'from-cyan-500/20 to-sky-500/20',
-    whatIDid: 'Increased booking revenue by 280% for a travel agency using Google Hotel Ads + retargeting.',
-    whatICanDo: 'Seasonal campaign planning, destination SEO, review management, package promotion.',
-    results: ['280% revenue', '54% lower CPA', '2.5x ROAS']
-  },
-  { 
-    name: 'Fashion', 
-    icon: Sparkles, 
-    color: 'from-pink-500/20 to-rose-500/20',
-    whatIDid: 'Grew an Instagram-first fashion brand from 0 to 50K monthly visitors using influencer marketing.',
-    whatICanDo: 'Visual content strategy, influencer partnerships, shoppable posts, UGC campaigns.',
-    results: ['50K monthly visitors', '3.2x ROAS', '40% lower CAC']
-  },
+  { name: 'SaaS', icon: Cpu, color: 'from-purple-500/20 to-pink-500/20', projects: 45, whatIDid: 'Helped a B2B SaaS company grow from $3K to $28K MRR in 6 months using SEO and PPC.', whatICanDo: 'Reduce CAC by 40-60%, improve trial-to-paid conversion by 2-3x, optimize onboarding flow, and scale predictably.', results: ['933% MRR growth', '46% lower CPL', '2.3x conversion rate'] },
+  { name: 'E-commerce', icon: DollarSign, color: 'from-orange-500/20 to-red-500/20', projects: 38, whatIDid: 'Took a DTC brand from 1.7x to 4.2x ROAS in 90 days using Meta Ads + TikTok.', whatICanDo: 'Optimize product feeds, build retargeting funnels, scale winning products, reduce cart abandonment by 30-50%.', results: ['4.2x ROAS', '3.1x revenue', '68% better CTR'] },
+  { name: 'Healthcare', icon: Shield, color: 'from-green-500/20 to-emerald-500/20', projects: 32, whatIDid: 'Increased patient bookings by 300% for a UK clinic using local SEO + Google Ads.', whatICanDo: 'HIPAA-compliant marketing, patient acquisition funnels, reputation management, local dominance.', results: ['300% bookings', '4.1x organic traffic', '£28 cost per booking'] },
+  { name: 'Real Estate', icon: Building2, color: 'from-yellow-500/20 to-amber-500/20', projects: 28, whatIDid: 'Reduced cost per lead by 52% for a real estate developer using audience segmentation.', whatICanDo: 'Property listing optimization, local SEO, Facebook housing ads, lead qualification funnels.', results: ['52% lower CPL', '3.8x lead volume', 'Better lead quality'] },
+  { name: 'EdTech', icon: Star, color: 'from-indigo-500/20 to-blue-500/20', projects: 25, whatIDid: 'Scaled an education platform from ₹2L to ₹18L monthly revenue using webinar funnels.', whatICanDo: 'Course marketing, student acquisition, webinar optimization, email automation.', results: ['9x revenue', '34% webinar show rate', 'Lower CAC'] },
+  { name: 'Fintech', icon: TrendingUp, color: 'from-emerald-500/20 to-teal-500/20', projects: 22, whatIDid: 'Helped a payment gateway acquire 500+ businesses in 3 months using LinkedIn Ads.', whatICanDo: 'Compliance-friendly marketing, B2B lead generation, trust-building content, partnership marketing.', results: ['500+ business accounts', '42% lower CPA', '3x ROI'] },
+  { name: 'Travel', icon: Globe, color: 'from-cyan-500/20 to-sky-500/20', projects: 20, whatIDid: 'Increased booking revenue by 280% for a travel agency using Google Hotel Ads + retargeting.', whatICanDo: 'Seasonal campaign planning, destination SEO, review management, package promotion.', results: ['280% revenue', '54% lower CPA', '2.5x ROAS'] },
+  { name: 'Fashion', icon: Sparkles, color: 'from-pink-500/20 to-rose-500/20', projects: 18, whatIDid: 'Grew an Instagram-first fashion brand from 0 to 50K monthly visitors using influencer marketing.', whatICanDo: 'Visual content strategy, influencer partnerships, shoppable posts, UGC campaigns.', results: ['50K monthly visitors', '3.2x ROAS', '40% lower CAC'] },
+  { name: 'Manufacturing', icon: Settings, color: 'from-gray-500/20 to-slate-500/20', projects: 15, whatIDid: 'Helped a B2B manufacturer generate 200+ qualified leads in 60 days using LinkedIn + Google Ads.', whatICanDo: 'Industrial SEO, technical content marketing, trade show integration, B2B lead nurturing.', results: ['200+ leads', '35% lower CPA', '4x ROI'] },
+  { name: 'Logistics', icon: Package, color: 'from-blue-500/20 to-cyan-500/20', projects: 14, whatIDid: 'Scaled a freight forwarding company from 50 to 500+ monthly leads using Google Search Ads.', whatICanDo: 'Supply chain SEO, logistics keyword strategy, freight rate optimization, carrier acquisition.', results: ['900% lead growth', '28% lower CPA', '3.5x ROAS'] },
+  { name: 'Legal', icon: Scale, color: 'from-slate-500/20 to-gray-500/20', projects: 12, whatIDid: 'Helped a law firm rank #1 for 20+ practice area keywords in 6 months.', whatICanDo: 'Attorney SEO, case acquisition funnels, legal directory optimization, reputation management.', results: ['20+ #1 rankings', '150% more cases', '42% lower CPA'] },
+  { name: 'Non-Profit', icon: Heart, color: 'from-red-500/20 to-rose-500/20', projects: 11, whatIDid: 'Increased donor acquisition by 300% for a charity using Facebook fundraising ads.', whatICanDo: 'Donor journey mapping, grant SEO, volunteer recruitment, impact storytelling.', results: ['300% donors', '2.8x ROAS', '45% lower CPA'] },
+  { name: 'Entertainment', icon: Play, color: 'from-violet-500/20 to-purple-500/20', projects: 10, whatIDid: 'Helped a streaming platform acquire 50K+ subscribers using YouTube Ads + influencer marketing.', whatICanDo: 'Content promotion, audience building, ticket sales optimization, fan engagement.', results: ['50K subscribers', '3.5x ROAS', '38% lower CPA'] },
+  { name: 'Gaming', icon: Gamepad, color: 'from-fuchsia-500/20 to-pink-500/20', projects: 9, whatIDid: 'Scaled a mobile game from 0 to 500K downloads using TikTok + App Store optimization.', whatICanDo: 'App store SEO, influencer campaigns, community building, retention optimization.', results: ['500K downloads', '$0.85 CPI', '35% Day-7 retention'] },
+  { name: 'Automotive', icon: Car, color: 'from-slate-500/20 to-gray-500/20', projects: 8, whatIDid: 'Helped a car dealership generate 500+ test drives using Google Local Services Ads.', whatICanDo: 'Local SEO, inventory feeds, service campaign optimization, review generation.', results: ['500+ test drives', '52% lower CPA', '3.8x ROAS'] },
+  { name: 'Food & Bev', icon: Coffee, color: 'from-amber-500/20 to-yellow-500/20', projects: 8, whatIDid: 'Scaled a meal kit delivery service from 1K to 15K monthly subscribers using Meta Ads.', whatICanDo: 'Local restaurant SEO, delivery app optimization, loyalty program marketing.', results: ['15K subscribers', '4.2x ROAS', '35% lower CPA'] },
+  { name: 'Agencies', icon: Users, color: 'from-rose-500/20 to-pink-500/20', projects: 7, whatIDid: 'Helped a marketing agency generate 80+ qualified leads/month using LinkedIn + content.', whatICanDo: 'Agency positioning, case study marketing, lead generation systems, proposal optimization.', results: ['80+ leads/month', '$52 CPL', '5.1x ROI'] },
+  { name: 'Startups', icon: RocketIcon, color: 'from-violet-500/20 to-purple-500/20', projects: 25, whatIDid: 'Helped 25+ startups go from 0 to 10K+ users using growth hacking strategies.', whatICanDo: 'Product-led growth, viral loop design, investor deck SEO, launch strategy.', results: ['10K+ users', '$1.20 CAC', '62% activation'] },
+  { name: 'Enterprise', icon: Building2, color: 'from-slate-500/20 to-gray-500/20', projects: 6, whatIDid: 'Optimized global campaigns for a Fortune 500 company across 15 countries.', whatICanDo: 'Enterprise SEO, global PPC, multi-language content, cross-border analytics.', results: ['2.8x ROI', '41% waste reduction', '3.5x budget scale'] },
+  { name: 'Local Business', icon: MapPin, color: 'from-cyan-500/20 to-sky-500/20', projects: 35, whatIDid: 'Helped local businesses grow from 5 to 60+ leads/month using Google Maps + Local SEO.', whatICanDo: 'Google Business Profile optimization, local citations, review management, local link building.', results: ['12x leads', '38% lower CPA', '60 leads/month'] },
 ];
 
-// 3D Comparison Table Data
+// Enhanced 3D Comparison Table Data with better content
 const comparisonData = [
   { 
-    aspect: 'Years of Experience', 
-    agency: 'Average 2-4 years (high turnover)', 
-    me: '12+ years hands-on expertise',
+    aspect: 'Years of Hands-On Experience', 
+    agency: 'Average 2-4 years (high turnover, junior talent)', 
+    me: '12+ years — I have done it all, seen it all, fixed it all',
     major: true,
-    agencyIcon: '😕',
-    meIcon: '🏆'
+    agencyIcon: '📉',
+    meIcon: '🏆',
+    detail: 'Agencies often assign fresh graduates to your account. I bring over a decade of battle-tested experience.'
   },
   { 
-    aspect: 'Who You Work With', 
-    agency: 'Junior account managers (rotating)', 
-    me: 'Direct access to me — the expert',
+    aspect: 'Who Actually Works On Your Account', 
+    agency: 'Rotating junior account managers (changes every 6 months)', 
+    me: 'Direct access to me — the expert who built this business',
     major: true,
     agencyIcon: '🔄',
-    meIcon: '👨‍💻'
+    meIcon: '👨‍💻',
+    detail: 'No handovers. No "let me check with my manager". You get decisions instantly.'
   },
   { 
-    aspect: 'Response Time', 
-    agency: '24-48 hours (through layers)', 
-    me: '2-4 hours (direct WhatsApp/Call)',
+    aspect: 'Response Time & Communication', 
+    agency: '24-72 hours (through multiple layers of approval)', 
+    me: '2-4 hours — WhatsApp, Call, or Email. Direct line to me.',
     major: true,
     agencyIcon: '🐢',
-    meIcon: '⚡'
+    meIcon: '⚡',
+    detail: 'When a campaign needs immediate attention, I respond. Not a ticket system.'
   },
   { 
-    aspect: 'Strategy Customization', 
-    agency: 'Template-based approach', 
-    me: '100% custom — built for your business',
+    aspect: 'Strategy Development', 
+    agency: 'Template-based approach — one size fits all', 
+    me: '100% custom strategy built specifically for YOUR business',
     major: true,
     agencyIcon: '📋',
-    meIcon: '🎯'
+    meIcon: '🎯',
+    detail: 'I study your business, competitors, customers, and market before writing a single word of strategy.'
   },
   { 
-    aspect: 'Contract Flexibility', 
-    agency: '6-12 month lock-in', 
-    me: 'Month-to-month — cancel anytime',
+    aspect: 'Contract & Commitment', 
+    agency: '6-12 month lock-in contracts + auto-renewal', 
+    me: 'Month-to-month. Cancel anytime. No questions asked.',
     major: false,
     agencyIcon: '🔒',
-    meIcon: '🔓'
+    meIcon: '🔓',
+    detail: 'I earn your business every single month. If you are not happy, you walk away.'
   },
   { 
-    aspect: 'Reporting Focus', 
-    agency: 'Vanity metrics (impressions, clicks)', 
-    me: 'Revenue-tied KPIs (ROAS, CAC, LTV)',
+    aspect: 'Reporting & Metrics', 
+    agency: 'Vanity metrics — impressions, clicks, "brand awareness"', 
+    me: 'Revenue-tied KPIs — ROAS, CAC, LTV, pipeline value',
     major: true,
     agencyIcon: '📊',
-    meIcon: '💰'
+    meIcon: '💰',
+    detail: 'I only report on metrics that impact your bottom line. No fluff. No BS.'
   },
   { 
-    aspect: 'Team Access', 
-    agency: 'Limited to your account manager', 
-    me: 'Full team of specialists (designers, writers, analysts)',
+    aspect: 'Team Access & Resources', 
+    agency: 'Limited to 1 account manager (the rest are "internal")', 
+    me: 'Full team of 25+ specialists — designers, writers, developers, analysts',
     major: false,
     agencyIcon: '👤',
-    meIcon: '👥'
+    meIcon: '👥',
+    detail: 'You get a full agency\'s firepower. But you pay freelancer rates. And you talk to me directly.'
   },
   { 
-    aspect: 'Pricing Model', 
-    agency: 'High retainers + hidden fees', 
-    me: 'Transparent — use calculator or custom quote',
+    aspect: 'Pricing Model & Transparency', 
+    agency: 'High retainers + hidden fees + markup on ad spend', 
+    me: 'Use the calculator. Fixed project. Hourly. Whatever works for you.',
     major: true,
     agencyIcon: '💸',
-    meIcon: '💎'
+    meIcon: '💎',
+    detail: 'No hidden fees. No markup on your ad spend. You pay exactly what we agree.'
   },
   { 
-    aspect: 'Industry Experience', 
-    agency: 'Generalist (spread thin)', 
-    me: 'Deep expertise in 20+ industries',
+    aspect: 'Industry Experience Depth', 
+    agency: 'Generalist — spread thin across 50+ industries', 
+    me: 'Deep expertise in 25+ industries with proven playbooks',
     major: false,
     agencyIcon: '🌐',
-    meIcon: '🎓'
+    meIcon: '🎓',
+    detail: 'I bring best practices from every industry I have worked with. Your competitors might be from a different sector.'
   },
   { 
-    aspect: 'AI Integration', 
-    agency: 'Basic or outsourced', 
-    me: 'Advanced AI — PMax, Advantage+, GPT optimization',
+    aspect: 'AI & Technology Integration', 
+    agency: 'Basic or outsourced (they charge you extra for "AI services")', 
+    me: 'Advanced AI — PMax, Advantage+, GPT optimization, AI funnels',
     major: true,
     agencyIcon: '🤖',
-    meIcon: '🧠'
+    meIcon: '🧠',
+    detail: 'I use AI to automate, optimize, and scale. You get cutting-edge tech without the markup.'
+  },
+  { 
+    aspect: 'Risk & Accountability', 
+    agency: 'They get paid even if you get zero results', 
+    me: 'My reputation is on the line. I only succeed when you succeed.',
+    major: true,
+    agencyIcon: '⚠️',
+    meIcon: '✅',
+    detail: 'I am personally invested in your success. My business grows when your business grows.'
   },
 ];
 
-// FAQ with global, no pricing mentioned
+// FAQ with detailed answers
 const faqs = [
-  { q: "Bhai, what exactly do you do?", a: "Simple bhai — I help businesses grow online. SEO, Google Ads, Social Media, everything. Whatever it takes to get you more customers and more sales." },
-  { q: "How are you different from a big agency?", a: "Agencies me tum ek number se call karte ho. Yahan tum mere se direct baat karoge. No junior account managers. 12 saal ka experience direct tumhe milega. Aur better pricing bhi hai." },
-  { q: "Which industries do you work with?", a: "IT, SaaS, Healthcare, Real Estate, E-commerce, Education, Finance — almost sab. Har industry ka alag formula hai, aur mere paas sabka experience hai." },
-  { q: "How much do you charge?", a: "Use the cost calculator above to get an instant estimate. Every business is different, so I customize pricing based on your specific needs and goals." },
-  { q: "When will I see results?", a: "Google Ads can show leads in 2-3 days. SEO typically takes 3-6 months. I give realistic timelines — no false promises." },
-  { q: "Do you work with startups?", a: "Absolutely! I have worked with many startups. I know how to get results even with limited budgets." },
-  { q: "Can you manage my existing team?", a: "Yes yes. I work in two ways — either guide your existing team, or do the execution myself. Whatever suits you better." },
-  { q: "Do you sign NDAs?", a: "Obviously. I sign NDAs before discussing any sensitive business details. Confidentiality is standard for me." },
-  { q: "Which countries do you work with?", a: "USA, UK, Canada, Australia, India, UAE, Singapore, Germany — and many more. I understand different markets and cultures." },
-  { q: "What platforms do you advertise on?", a: "Google, Meta (Facebook/Instagram), LinkedIn, TikTok, Twitter, Pinterest, Snapchat — I choose platforms where your audience actually converts." },
+  { q: "Bhai, what exactly do you do?", a: "Simple bhai — I help businesses grow online. SEO, Google Ads, Social Media, everything. Whatever it takes to get you more customers and more sales. I have 12+ years of experience across 25+ industries and 20+ countries." },
+  { q: "How are you different from a big agency?", a: "Agencies me tum ek number se call karte ho. Yahan tum mere se direct baat karoge. No junior account managers. 12 saal ka experience direct tumhe milega. Aur better pricing bhi hai. Plus, I use AI and automation to deliver better results faster." },
+  { q: "Which industries do you work with?", a: "IT, SaaS, Healthcare, Real Estate, E-commerce, Education, Finance, Travel, Fashion, Manufacturing, Logistics, Legal, Non-Profit, Entertainment, Gaming, Automotive, Food & Beverage, Agencies, Startups, Enterprise, Local Business — 25+ industries in total." },
+  { q: "How much do you charge?", a: "Use the cost calculator above to get an instant estimate. Every business is different, so I customize pricing based on your specific needs and goals. Hourly, fixed project, or monthly retainer — whatever works for you." },
+  { q: "When will I see results?", a: "Google Ads can show leads in 2-3 days. SEO typically takes 3-6 months. I give realistic timelines — no false promises. I will share case studies of similar businesses so you know exactly what to expect." },
+  { q: "Do you work with startups?", a: "Absolutely! I have worked with 25+ startups. I know how to get results even with limited budgets. Growth hacking, viral loops, and creative strategies — that's my specialty." },
+  { q: "Can you manage my existing team?", a: "Yes yes. I work in two ways — either guide your existing team as a consultant, or do the full execution with my team of 25+ specialists. Whatever suits you better." },
+  { q: "Do you sign NDAs?", a: "Obviously. I sign NDAs before discussing any sensitive business details. Confidentiality is standard for me. Your data, your strategies, your results — all stay with you." },
+  { q: "Which countries do you work with?", a: "USA, UK, Canada, Australia, India, UAE, Singapore, Germany, France, Netherlands, Sweden, Japan — and many more. I understand different markets, cultures, and consumer behaviors." },
+  { q: "What platforms do you advertise on?", a: "Google (Search, Display, YouTube, PMax), Meta (Facebook, Instagram, Advantage+), LinkedIn, TikTok, Twitter, Pinterest, Snapchat, Reddit, Quora — I choose platforms where your audience actually converts." },
 ];
 
 // FAQ Item Component
@@ -448,7 +471,6 @@ export default function Home() {
   const [videoOpen, setVideoOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState(industriesData[0]);
   const statsRef = useRef(null);
-  const statsInView = useInView(statsRef, { once: true, margin: '-100px' });
   
   return (
     <div className="bg-[#080c14] overflow-hidden">
@@ -545,7 +567,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== RATINGS SECTION ========== */}
+      {/* ========== RATINGS SECTION with Brand Logos ========== */}
       <section className="py-12 bg-gradient-to-r from-[#040608] to-[#080c14] border-y border-[#c9a84c]/10">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -561,10 +583,10 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl font-bold text-white">
               Rated <span className="text-[#c9a84c]">4.8+ Stars</span> Across Top Platforms
             </h2>
-            <p className="text-white/50 text-sm mt-2">Real reviews from real clients worldwide</p>
+            <p className="text-white/50 text-sm mt-2">Real reviews from real clients worldwide — verified on each platform</p>
           </motion.div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {ratingPlatforms.map((platform, i) => (
               <motion.div
                 key={platform.name}
@@ -572,23 +594,31 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                whileHover={{ y: -5 }}
-                className="bg-[#0a0f1c] border border-white/10 rounded-xl p-3 text-center hover:border-[#c9a84c]/30 transition-all duration-300"
+                whileHover={{ y: -5, scale: 1.02 }}
+                className={`bg-gradient-to-br ${platform.bgGradient} border border-white/10 rounded-xl p-4 text-center hover:border-[#c9a84c]/40 transition-all duration-300 backdrop-blur-sm`}
               >
-                <div className="text-2xl mb-1">{platform.icon}</div>
-                <div className="text-white font-bold text-sm">{platform.name}</div>
-                <div className="flex items-center justify-center gap-1 mt-1">
-                  <Star className="text-[#c9a84c]" size={14} fill="#c9a84c" />
-                  <span className="text-white font-bold text-sm">{platform.rating}</span>
-                  <span className="text-white/40 text-xs">({platform.reviews})</span>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${platform.bgGradient} flex items-center justify-center`}>
+                    <span className="text-sm font-bold" style={{ color: platform.color }}>{platform.name[0]}</span>
+                  </div>
+                  <span className="text-white font-semibold text-sm">{platform.name}</span>
                 </div>
+                <div className="flex items-center justify-center gap-1">
+                  <div className="flex">
+                    {[...Array(5)].map((_, idx) => (
+                      <Star key={idx} className={`w-3 h-3 ${idx < Math.floor(platform.rating) ? 'text-[#c9a84c] fill-[#c9a84c]' : 'text-white/20'}`} />
+                    ))}
+                  </div>
+                  <span className="text-white font-bold text-sm ml-1">{platform.rating}</span>
+                </div>
+                <div className="text-white/40 text-xs mt-1">{platform.reviews} reviews</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ========== STATS SECTION (with scroll-triggered animation) ========== */}
+      {/* ========== STATS SECTION ========== */}
       <section ref={statsRef} className="py-16 bg-gradient-to-r from-[#080c14] to-[#040608]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
@@ -601,9 +631,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== GLOBE MAP SECTION ========== */}
+      {/* ========== GLOBAL PRESENCE SECTION ========== */}
       <section className="py-16 bg-gradient-to-b from-[#040608] to-[#080c14]">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -617,12 +647,26 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
               Working With Clients Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 20+ Countries</span>
             </h2>
-            <p className="text-white/50 text-base max-w-2xl mx-auto">
-              From USA to Singapore, UK to Australia — I understand local markets and global audiences
+            <p className="text-white/60 text-base max-w-3xl mx-auto leading-relaxed">
+              From United States and Canada to United Kingdom, Germany, France, and Netherlands in Europe. 
+              From India and Singapore to Japan and Australia in Asia-Pacific. 
+              I have helped businesses succeed across different markets, cultures, and consumer behaviors. 
+              Each country has its own search engines, social platforms, and buying habits — and I understand them all.
             </p>
           </motion.div>
           
           <GlobeMap />
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-8"
+          >
+            <p className="text-white/40 text-sm">
+              🌍 United States • Canada • United Kingdom • Germany • France • Netherlands • Sweden • India • Singapore • Japan • Australia • UAE
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -753,8 +797,14 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Complete Digital<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Marketing Ecosystem</span>
             </h2>
-            <p className="text-white/50 text-lg max-w-3xl mx-auto">
+            <p className="text-white/60 text-lg max-w-3xl mx-auto mb-6">
               SEO • AEO • GEO • Performance Marketing • Content • CRO • LinkedIn Sales Navigator • AI-Powered Everything
+            </p>
+            <p className="text-white/50 text-base max-w-3xl mx-auto leading-relaxed">
+              I don't just do SEO. I optimize for Answer Engines (Alexa, Siri) AND Generative Engines (ChatGPT, Perplexity). 
+              I don't just run ads. I use Google PMax, Meta Advantage+, and TikTok's AI to maximize every dollar. 
+              I don't just build funnels. I automate them with AI — chatbots, personalized sequences, lead scoring.
+              This is not your father's digital marketing. This is marketing for 2026 and beyond.
             </p>
           </motion.div>
 
@@ -766,28 +816,44 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/40 transition-all duration-300"
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/40 transition-all duration-300 group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <service.icon size={28} className="text-[#c9a84c]" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{service.name}</h3>
                 <p className="text-white/60 text-sm leading-relaxed mb-4">{service.desc}</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-4">
                   {service.features.map((feature, idx) => (
                     <span key={idx} className="text-[10px] bg-white/5 border border-white/10 rounded-full px-2 py-1 text-white/50">
                       {feature}
                     </span>
                   ))}
                 </div>
+                <p className="text-white/40 text-xs leading-relaxed border-t border-white/10 pt-3 mt-2">
+                  {service.detailedDesc}
+                </p>
               </motion.div>
             ))}
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-12"
+          >
+            <Link href="/services">
+              <a className="inline-flex items-center gap-3 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-8 py-4 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-[#c9a84c]/30">
+                View All 14+ Detailed Services <ArrowRight size={18} />
+              </a>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      {/* ========== INDUSTRIES SECTION (Scroller + Details) ========== */}
+      {/* ========== INDUSTRIES SECTION - 25+ INDUSTRIES ========== */}
       <section className="py-24 bg-[#040608]">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -803,67 +869,74 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Worked Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 25+ Industries</span>
             </h2>
-            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              Each industry has its own playbook. And I have mastered most of them.
+            <p className="text-white/60 text-lg max-w-2xl mx-auto">
+              Each industry has its own playbook. And I have mastered most of them. 
+              From SaaS to Manufacturing, Healthcare to Gaming — I bring best practices from every sector.
             </p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Industry Scroller */}
-            <div className="lg:w-1/3">
-              <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Industry Scroller - Shows ALL 20+ industries */}
+            <div className="lg:w-2/5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                 {industriesData.map((industry, i) => (
                   <motion.button
                     key={industry.name}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.05 }}
+                    transition={{ delay: i * 0.02 }}
                     onClick={() => setSelectedIndustry(industry)}
-                    className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-300 whitespace-nowrap lg:whitespace-normal ${
+                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-300 ${
                       selectedIndustry?.name === industry.name
                         ? `bg-gradient-to-r ${industry.color} border border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/10`
                         : 'bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/30'
                     }`}
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                      <industry.icon size={20} className="text-[#c9a84c]" />
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <industry.icon size={18} className="text-[#c9a84c]" />
                     </div>
-                    <span className="text-white font-medium text-sm">{industry.name}</span>
+                    <div className="text-left flex-1">
+                      <div className="text-white font-medium text-sm">{industry.name}</div>
+                      <div className="text-white/40 text-xs">{industry.projects}+ projects</div>
+                    </div>
+                    {selectedIndustry?.name === industry.name && (
+                      <CheckCircle2 size={14} className="text-[#c9a84c]" />
+                    )}
                   </motion.button>
                 ))}
               </div>
             </div>
 
-            {/* Industry Details Panel */}
+            {/* Industry Details Panel - Takes remaining space */}
             <motion.div
               key={selectedIndustry?.name}
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:w-2/3 bg-gradient-to-br from-[#0a0f1c] to-[#040608] rounded-2xl border border-white/10 p-6 md:p-8"
+              className="lg:w-3/5 bg-gradient-to-br from-[#0a0f1c] to-[#040608] rounded-2xl border border-white/10 p-6 md:p-8"
             >
               {selectedIndustry && (
                 <>
-                  <div className="flex items-center gap-4 mb-6">
+                  <div className="flex items-center gap-4 mb-6 flex-wrap">
                     <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${selectedIndustry.color} flex items-center justify-center`}>
                       <selectedIndustry.icon size={32} className="text-[#c9a84c]" />
                     </div>
                     <div>
                       <h3 className="text-2xl md:text-3xl font-bold text-white">{selectedIndustry.name}</h3>
-                      <p className="text-white/50 text-sm">Industry Deep Dive</p>
+                      <p className="text-white/50 text-sm">{selectedIndustry.projects}+ projects completed</p>
                     </div>
                   </div>
 
                   <div className="space-y-6">
-                    <div>
+                    <div className="bg-white/5 rounded-xl p-4">
                       <h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2">
                         <CheckCircle2 size={16} /> What I Have Done
                       </h4>
                       <p className="text-white/70 leading-relaxed">{selectedIndustry.whatIDid}</p>
                     </div>
 
-                    <div>
+                    <div className="bg-white/5 rounded-xl p-4">
                       <h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2">
                         <Target size={16} /> What I Can Do For You
                       </h4>
@@ -872,11 +945,11 @@ export default function Home() {
 
                     <div>
                       <h4 className="text-[#c9a84c] font-semibold mb-3 flex items-center gap-2">
-                        <TrendingIcon size={16} /> Key Results
+                        <TrendingIcon size={16} /> Key Results I Have Delivered
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         {selectedIndustry.results.map((result, idx) => (
-                          <div key={idx} className="bg-white/5 rounded-xl p-3 text-center">
+                          <div key={idx} className="bg-gradient-to-br from-[#c9a84c]/10 to-transparent rounded-xl p-3 text-center border border-[#c9a84c]/20">
                             <div className="text-[#c9a84c] font-bold text-sm">{result}</div>
                           </div>
                         ))}
@@ -887,12 +960,23 @@ export default function Home() {
               )}
             </motion.div>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-8"
+          >
+            <p className="text-white/40 text-sm">
+              Plus many more — SaaS, E-commerce, Healthcare, Real Estate, EdTech, Fintech, Travel, Fashion, Manufacturing, Logistics, Legal, Non-Profit, Entertainment, Gaming, Automotive, Food & Beverage, Agencies, Startups, Enterprise, Local Business, and counting.
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* ========== 3D COMPARISON TABLE ========== */}
+      {/* ========== ENHANCED 3D COMPARISON TABLE ========== */}
       <section className="py-24 bg-[#080c14]">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -906,53 +990,77 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Big Agency vs<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Me</span>
             </h2>
-            <p className="text-white/50 text-lg">
-              Why pay agency rates when you can work directly with an expert?
+            <p className="text-white/60 text-lg max-w-2xl mx-auto">
+              Why pay agency rates for junior-level work when you can work directly with a 12-year expert?
             </p>
           </motion.div>
 
-          <div className="relative perspective-1000">
-            <div className="grid grid-cols-1 gap-3 transform-style-3d">
-              {/* Header */}
-              <div className="grid grid-cols-3 bg-gradient-to-r from-[#0a0f1c] to-[#040608] rounded-t-2xl border border-white/10 overflow-hidden">
-                <div className="p-4 text-white/40 text-xs font-semibold uppercase">Factor</div>
-                <div className="p-4 text-center text-white/40 text-xs font-semibold uppercase border-l border-white/10">Big Agency</div>
-                <div className="p-4 text-center border-l border-[#c9a84c]/40 bg-[#c9a84c]/5">
-                  <span className="text-[#c9a84c] text-xs font-semibold uppercase">Pranjal Digital</span>
+          <div className="relative">
+            {/* 3D Perspective Container */}
+            <div className="relative perspective-1000">
+              <div className="grid grid-cols-1 gap-4 transform-style-3d">
+                {/* Header */}
+                <div className="grid grid-cols-3 bg-gradient-to-r from-[#0a0f1c] to-[#040608] rounded-t-2xl border border-white/10 overflow-hidden shadow-xl">
+                  <div className="p-4 text-white/40 text-xs font-semibold uppercase bg-black/20">Factor</div>
+                  <div className="p-4 text-center text-white/40 text-xs font-semibold uppercase border-l border-white/10 bg-black/20">Big Agency</div>
+                  <div className="p-4 text-center border-l border-[#c9a84c]/40 bg-gradient-to-r from-[#c9a84c]/10 to-[#c9a84c]/5">
+                    <span className="text-[#c9a84c] text-xs font-semibold uppercase">Pranjal Digital</span>
+                  </div>
                 </div>
+                
+                {/* Rows with 3D hover effects */}
+                {comparisonData.map((row, i) => (
+                  <motion.div
+                    key={row.aspect}
+                    initial={{ opacity: 0, rotateX: -15, y: 20 }}
+                    whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05, type: "spring", stiffness: 100 }}
+                    whileHover={{ 
+                      scale: 1.02, 
+                      zIndex: 20,
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+                      transition: { duration: 0.2 }
+                    }}
+                    className={`grid grid-cols-3 border border-white/10 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer ${
+                      row.major ? 'bg-gradient-to-r from-[#c9a84c]/8 to-transparent' : 'bg-[#040608]'
+                    } hover:border-[#c9a84c]/60`}
+                    style={{ transformStyle: 'preserve-3d' }}
+                  >
+                    <div className="p-4 text-white font-semibold text-sm flex items-center gap-2">
+                      <span className="text-lg">{row.major ? '⭐' : '📌'}</span>
+                      {row.aspect}
+                      {row.major && <span className="text-[#c9a84c] text-[10px] bg-[#c9a84c]/20 px-2 py-0.5 rounded-full">Major Difference</span>}
+                    </div>
+                    <div className="p-4 border-l border-white/10 flex flex-col items-center justify-center gap-1">
+                      <span className="text-2xl">{row.agencyIcon}</span>
+                      <span className="text-white/60 text-sm text-center">{row.agency}</span>
+                      <span className="text-white/30 text-[10px] text-center">{row.detail.split('.')[0]}...</span>
+                    </div>
+                    <div className="p-4 border-l border-[#c9a84c]/20 bg-gradient-to-r from-[#c9a84c]/5 to-transparent flex flex-col items-center justify-center gap-1 relative">
+                      <div className="absolute top-2 right-2">
+                        <Check size={12} className="text-[#c9a84c]" />
+                      </div>
+                      <span className="text-2xl">{row.meIcon}</span>
+                      <span className="text-white/80 text-sm font-medium text-center">{row.me}</span>
+                      <span className="text-[#c9a84c]/70 text-[10px] text-center">{row.detail.split('.')[0]}</span>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-              
-              {/* Rows with 3D effect */}
-              {comparisonData.map((row, i) => (
-                <motion.div
-                  key={row.aspect}
-                  initial={{ opacity: 0, rotateX: -10 }}
-                  whileInView={{ opacity: 1, rotateX: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.03 }}
-                  whileHover={{ scale: 1.01, zIndex: 10 }}
-                  className={`grid grid-cols-3 border border-white/10 rounded-xl overflow-hidden transition-all duration-300 ${
-                    row.major ? 'bg-gradient-to-r from-[#c9a84c]/5 to-transparent' : 'bg-[#040608]'
-                  } hover:border-[#c9a84c]/40 hover:shadow-lg hover:shadow-[#c9a84c]/10`}
-                  style={{ transform: 'translateZ(0px)' }}
-                >
-                  <div className="p-4 text-white font-semibold text-sm flex items-center gap-2">
-                    {row.aspect}
-                    {row.major && <span className="text-[#c9a84c] text-xs">(Major)</span>}
-                  </div>
-                  <div className="p-4 border-l border-white/10 flex items-center justify-center gap-2">
-                    <span className="text-2xl">{row.agencyIcon}</span>
-                    <span className="text-white/60 text-sm">{row.agency}</span>
-                  </div>
-                  <div className="p-4 border-l border-[#c9a84c]/20 bg-[#c9a84c]/5 flex items-center justify-center gap-2">
-                    <span className="text-2xl">{row.meIcon}</span>
-                    <span className="text-white/80 text-sm font-medium">{row.me}</span>
-                    <Check size={14} className="text-[#c9a84c]" />
-                  </div>
-                </motion.div>
-              ))}
             </div>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-8"
+          >
+            <p className="text-white/40 text-sm">
+              ⭐ Major differences highlighted — these are deal-breakers that most clients don't realize until it's too late.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -973,7 +1081,7 @@ export default function Home() {
               Frequently Asked<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Questions</span>
             </h2>
             <p className="text-white/50 text-lg">
-              Everything you wanted to know. In simple English.
+              Everything you wanted to know. In simple English. No BS.
             </p>
           </motion.div>
 
