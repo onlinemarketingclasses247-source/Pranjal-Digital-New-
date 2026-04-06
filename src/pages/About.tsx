@@ -140,7 +140,7 @@ export default function About() {
             <div>
               <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-1">Why Pranjal Digital is Created? </div>
               <h3 className="text-white font-bold text-lg">I work with the philosophy that if you grow, I grow.</h3>
-              <p className="text-white/50 text-sm">Pranjal Digital was created with a mission and vision to deliver honest digital marketing services, always prioritizing client interests and transparency over profit.</p>
+              <p className="text-white/50 text-sm">Pranjal Digital was created with a clear mission and vision to deliver honest, transparent digital marketing services, where client interests always come first. Every strategy, recommendation, and execution is driven by long-term growth, trust, and results — never short-term profit.</p>
             </div>
           </div>
         </ScrollReveal>
