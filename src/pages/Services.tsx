@@ -448,6 +448,17 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 // ── MAIN COMPONENT ─────────────────────────────────────────────────────────
 export default function Services() {
+  useEffect(() => {
+  document.title = "Digital Marketing Services | Pranjal Digital";
+
+  const meta = document.querySelector("meta[name='description']");
+  if (meta) {
+    meta.setAttribute(
+      "content",
+      "Explore SEO, Google Ads, Meta Ads, CRO, and full-funnel digital marketing services designed to drive traffic, leads, and measurable growth."
+    );
+  }
+}, []);
   const [activeStep, setActiveStep] = useState(0);
   const [statsActive, setStatsActive] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
