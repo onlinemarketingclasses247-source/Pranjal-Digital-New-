@@ -18,6 +18,18 @@ import {
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
+function setMeta(description) {
+  let meta = document.querySelector("meta[name='description']");
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", description);
+}
+
 // Rating platforms with proper logos (using brand colors and custom designs)
 const ratingPlatforms = [
   { name: 'Google', rating: 4.9, reviews: 85, color: '#4285F4', bgGradient: 'from-blue-500/20 to-blue-600/10' },
@@ -334,6 +346,13 @@ function WorldMap() {
 }
 export default function Home() {
   const [videoOpen, setVideoOpen] = useState(false);
+  useEffect(() => {
+  document.title = "Digital Marketing Consultant | Pranjal Digital";
+
+  setMeta(
+    "Work with a digital marketing consultant offering SEO, Google Ads, Meta Ads, and full-funnel strategies to drive traffic, leads, and measurable growth."
+  );
+}, []);
   const [selectedIndustry, setSelectedIndustry] = useState(industriesData[0]);
   const statsRef = useRef(null);
   
