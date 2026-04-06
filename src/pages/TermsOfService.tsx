@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+function setMeta(description) {
+  let meta = document.querySelector("meta[name='description']");
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", description);
+}
 
 export default function TermsOfService() {
+
+  useEffect(() => {
+  document.title = "Terms of Service | Pranjal Digital";
+
+  setMeta(
+    "Read the terms of service for Pranjal Digital to understand service conditions, responsibilities, and policies."
+  );
+}, []);
   return (
     <div className="bg-[#080c14] text-white pt-28 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
