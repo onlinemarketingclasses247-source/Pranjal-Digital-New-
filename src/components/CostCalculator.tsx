@@ -9,8 +9,8 @@ const currencyConfig = {
 
 const services = [
   "SEO","Google Ads","Meta Ads","Content","Email",
-  "CRO","Landing Pages","Analytics","Strategy",
-  "Funnels","YouTube","Performance"
+  "CRO","Landing Pages","Analytics","Strategy Creation",
+  "Funnels","YouTube","Performance Marketing"
 ];
 
 const deliverablesMap = {
