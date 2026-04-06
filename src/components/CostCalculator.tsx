@@ -8,24 +8,120 @@ const currencyConfig = {
 };
 
 const services = [
-  "SEO","Google Ads","Meta Ads","Content","Email",
-  "CRO","Landing Pages","Analytics","Strategy Creation",
-  "Funnels","YouTube","Performance Marketing"
+  "SEO",
+  "Google Ads",
+  "Meta Ads",
+  "LinkedIn Ads",
+  "Programmatic Ads",
+  "Content Marketing",
+  "Email Marketing",
+  "CRO",
+  "Landing Pages",
+  "Analytics",
+  "Strategy",
+  "Funnels",
+  "YouTube Marketing",
+  "Performance Marketing"
 ];
 
 const deliverablesMap = {
-  SEO: ["Keyword Research","On-page SEO","Technical SEO","Backlinks"],
-  Content: ["Content Plan","SEO Blogs","Copywriting"],
-  Email: ["Automation","Flows","Campaigns"],
-  "Google Ads": ["Campaign Setup","Conversion Tracking","Optimization"],
-  "Meta Ads": ["Ad Creatives","Audience Targeting","Scaling"],
-  CRO: ["A/B Testing","UX Fixes","Conversion Optimization"],
-  "Landing Pages": ["Design","Copy","Conversion Setup"],
-  Analytics: ["GA4 Setup","Tracking","Dashboard"],
-  Strategy Creation: ["Marketing Plan","Growth Strategy"],
-  Funnels: ["Sales Funnels","Lead Journey"],
-  YouTube: ["SEO","Video Strategy"],
-  Performance Marketing: ["Scaling","Optimization", "Google Ads", "Meta ads", "Linkedin Ads", "Programatic Ads"]
+  SEO: [
+    "Keyword Research",
+    "On-Page SEO",
+    "Technical SEO",
+    "Link Building"
+  ],
+
+  "Google Ads": [
+    "Campaign Setup",
+    "Conversion Tracking",
+    "Bid Optimization",
+    "Performance Scaling"
+  ],
+
+  "Meta Ads": [
+    "Ad Creatives",
+    "Audience Targeting",
+    "Campaign Optimization",
+    "Scaling Strategies"
+  ],
+
+  "LinkedIn Ads": [
+    "B2B Targeting",
+    "Lead Generation Campaigns",
+    "Ad Creatives",
+    "Performance Optimization"
+  ],
+
+  "Programmatic Ads": [
+    "Media Buying",
+    "Audience Segmentation",
+    "Retargeting",
+    "Optimization"
+  ],
+
+  "Content Marketing": [
+    "Content Strategy",
+    "SEO Blogs",
+    "Copywriting",
+    "Content Distribution"
+  ],
+
+  "Email Marketing": [
+    "Automation Flows",
+    "Campaign Management",
+    "List Segmentation",
+    "Performance Tracking"
+  ],
+
+  CRO: [
+    "A/B Testing",
+    "User Behavior Analysis",
+    "Conversion Optimization",
+    "UX Improvements"
+  ],
+
+  "Landing Pages": [
+    "UI/UX Design",
+    "Conversion Copywriting",
+    "Funnel Integration",
+    "Performance Optimization"
+  ],
+
+  Analytics: [
+    "GA4 Setup",
+    "Event Tracking",
+    "Dashboard Creation",
+    "Data Insights"
+  ],
+
+  Strategy: [
+    "Marketing Strategy",
+    "Growth Planning",
+    "Channel Mix",
+    "Execution Roadmap"
+  ],
+
+  Funnels: [
+    "Sales Funnels",
+    "Lead Nurturing",
+    "Automation Setup",
+    "Conversion Flow Optimization"
+  ],
+
+  "YouTube Marketing": [
+    "Channel SEO",
+    "Video Strategy",
+    "Content Planning",
+    "Performance Optimization"
+  ],
+
+  "Performance Marketing": [
+    "Multi-Channel Campaigns",
+    "Budget Allocation",
+    "ROAS Optimization",
+    "Scaling Frameworks"
+  ]
 };
 
 export default function Calculator() {
