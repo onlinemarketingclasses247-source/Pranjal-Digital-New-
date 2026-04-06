@@ -813,8 +813,7 @@ export default function Home() {
             className="text-center mt-8"
           >
             <p className="text-white/40 text-sm">
-              Plus many more — SaaS, E-commerce, Healthcare, Real Estate, EdTech, Fintech, Travel, Fashion, Manufacturing, Logistics, Legal, Non-Profit, Entertainment, Gaming, Automotive, Food & Beverage, Agencies, Startups, Enterprise, Local Business, and counting.
-            </p>
+Pranjal Digital brings proven experience across 25+ industries, delivering results across diverse niches. With strong expertise in campaign planning, audience targeting, funnel optimization, and analytics, we understand what drives performance. Our multi-industry exposure enables agile strategy execution, data-driven decisions, and scalable growth, helping brands maximize visibility, engagement, and conversions across digital channels.            </p>
           </motion.div>
         </div>
       </section>
