@@ -1,231 +1,204 @@
-import React from 'react';
-import { ArrowRight, Search, Target, Share2, Building2, Cpu, Mail, Globe, Zap, BarChart2, Users, MessageSquare, PenTool, Star } from 'lucide-react';
-import { ScrollReveal } from '@/components/ScrollReveal';
+import React, { useState } from 'react';
 import { Link } from 'wouter';
+import {
+  Search, PenTool, Globe, Target, Share2, Building2,
+  Zap, Star, Users, Cpu, Mail, BarChart2, MessageSquare,
+  ArrowRight, Plus, X
+} from 'lucide-react';
+import { ScrollReveal } from '@/components/ScrollReveal';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
+/* =========================
+   VERY DETAILED SERVICES
+========================= */
 const services = [
   {
     icon: Search,
     name: 'Technical SEO',
-    what: 'Deep technical optimization to make your site fast, crawlable, and index-ready for Google.',
+    what: 'Deep technical optimisation ensuring your website is fully crawlable, indexable, and aligned with Google’s ranking systems.',
     how: [
-      'Comprehensive site audit (Core Web Vitals, crawl errors, indexation)',
-      'Schema markup and structured data implementation',
-      'Page speed optimization and mobile-first indexing',
-      'Internal linking architecture and site structure',
+      'Full technical audit: crawl errors, indexation, Core Web Vitals',
+      'Schema markup & structured data for rich results',
+      'Page speed optimisation (mobile-first)',
+      'Internal linking + crawl budget optimisation',
+      'Fixing duplicate content, canonical, redirects',
     ],
-    impact: 'Dramatically improves organic visibility, reduces bounce rates, and builds long-term search authority.',
+    impact: 'Strong SEO foundation → higher rankings, better UX, compounding organic traffic.',
   },
   {
     icon: PenTool,
     name: 'Content SEO & Strategy',
-    what: 'Content that ranks, converts, and builds your brand authority across every stage of the funnel.',
+    what: 'Building topical authority with content that ranks AND converts.',
     how: [
-      'Keyword gap analysis and topical cluster mapping',
-      'SEO-optimized blog, pillar, and landing page content',
-      'E-E-A-T optimization for competitive niches',
-      'Content distribution and amplification strategy',
+      'Keyword clustering + topical authority mapping',
+      'Blog + landing page + pillar content creation',
+      'E-E-A-T optimisation (trust + authority)',
+      'Content distribution strategy',
+      'Competitor gap analysis',
     ],
-    impact: 'Generates compounding organic traffic that reduces paid acquisition costs over time.',
-  },
-  {
-    icon: Globe,
-    name: 'Local SEO',
-    what: 'Dominate local search results and Google Maps for US and India markets.',
-    how: [
-      'Google Business Profile optimization and management',
-      'Local citation building and NAP consistency',
-      'Geo-targeted content and landing pages',
-      'Review strategy and reputation management',
-    ],
-    impact: 'Drives high-intent local traffic that converts into foot traffic and phone inquiries.',
+    impact: 'Long-term traffic engine reducing dependency on ads.',
   },
   {
     icon: Target,
-    name: 'Google PPC Advertising',
-    what: 'High-ROI Google Ads campaigns across Search, Display, Shopping, and YouTube.',
+    name: 'Google Ads',
+    what: 'Capturing high-intent users exactly when they are ready to buy.',
     how: [
-      'Account structure, keyword research, and match type strategy',
-      'Ad copy testing and landing page alignment',
-      'Bidding automation with Performance Max integration',
-      'Continuous A/B testing and negative keyword hygiene',
+      'Keyword intent mapping',
+      'Search, Display, YouTube & PMax campaigns',
+      'Conversion tracking setup',
+      'Ad copy + landing page alignment',
+      'Continuous A/B testing',
     ],
-    impact: 'Consistent, measurable revenue from paid search with optimized cost-per-acquisition.',
+    impact: 'Immediate revenue + predictable scaling.',
   },
   {
     icon: Share2,
-    name: 'Meta Ads (Facebook & Instagram)',
-    what: 'Full-funnel Meta advertising that builds audiences, retargets prospects, and converts customers.',
+    name: 'Meta Ads',
+    what: 'Full-funnel paid social campaigns.',
     how: [
-      'Audience research, lookalike building, and segmentation',
-      'Creative strategy (static, video, carousel, reels)',
-      'Pixel setup, custom events, and conversion API',
-      'Campaign scaling with budget efficiency controls',
+      'Audience research + lookalikes',
+      'Creative testing frameworks',
+      'Retargeting funnels',
+      'Conversion API setup',
+      'Scaling systems',
     ],
-    impact: 'Scalable paid social that works across B2C, B2B, SaaS, and e-commerce verticals.',
-  },
-  {
-    icon: Building2,
-    name: 'LinkedIn Advertising',
-    what: 'Precision B2B targeting on the platform where decision-makers actually engage.',
-    how: [
-      'Sponsored content, InMail, and Lead Gen Form campaigns',
-      'Account-based marketing (ABM) targeting by company/role',
-      'Thought leadership ad strategy for authority building',
-      'LinkedIn organic + paid integration',
-    ],
-    impact: 'Generates high-quality B2B leads and accelerates deal cycles for enterprise sales.',
-  },
-  {
-    icon: Zap,
-    name: 'TikTok & Amazon Ads',
-    what: 'Performance advertising on the fastest-growing platforms for younger audiences and e-commerce.',
-    how: [
-      'TikTok Spark Ads and UGC-style creative strategy',
-      'Amazon Sponsored Products, Brands, and Display ads',
-      'Platform-native creative formats and hooks',
-      'ROAS tracking and product-level optimization',
-    ],
-    impact: 'Reaches untapped audiences and drives product discovery at scale.',
+    impact: 'Scalable growth across B2C & D2C.',
   },
   {
     icon: Star,
     name: 'Social Media Marketing',
-    what: 'Organic social strategy that builds brand authority and community across all key platforms.',
+    what: 'Organic brand building.',
     how: [
-      'Platform-specific content strategy (LinkedIn, Instagram, X)',
-      'Content calendar planning and creative production',
-      'Community engagement and growth tactics',
-      'Influencer collaboration and co-marketing',
+      'Content calendar',
+      'Platform strategy (LinkedIn, Instagram, X)',
+      'Community building',
+      'Influencer collaborations',
     ],
-    impact: 'Builds brand equity, drives referral traffic, and creates a loyal audience that converts.',
-  },
-  {
-    icon: Users,
-    name: 'B2B Marketing & Lead Generation',
-    what: 'End-to-end B2B demand generation that fills your pipeline with qualified prospects.',
-    how: [
-      'ICP definition and total addressable market analysis',
-      'Multi-channel outbound and inbound lead gen programs',
-      'Account-based marketing strategy and execution',
-      'Sales and marketing alignment for lead handoff',
-    ],
-    impact: 'Shortens sales cycles and increases MQL-to-SQL conversion rates significantly.',
-  },
-  {
-    icon: Cpu,
-    name: 'IT Services & SaaS Marketing',
-    what: 'Specialist marketing for IT companies and SaaS products competing in crowded global markets.',
-    how: [
-      'Review site optimization (Clutch, G2, Capterra)',
-      'Technical content marketing for developer audiences',
-      'Product-led growth marketing and trial conversion',
-      'Competitive positioning and messaging strategy',
-    ],
-    impact: 'Generates qualified demos, trial signups, and long-term MRR growth.',
+    impact: 'Brand authority + inbound leads.',
   },
   {
     icon: Mail,
-    name: 'Email Marketing & Automation',
-    what: 'Automated email sequences that nurture leads, onboard users, and drive lifetime value.',
+    name: 'Email Marketing',
+    what: 'Highest ROI owned channel.',
     how: [
-      'Drip campaign architecture for every funnel stage',
-      'List segmentation and personalization at scale',
-      'Behavioral triggers and lifecycle automation',
-      'A/B testing of subject lines, copy, and CTAs',
+      'Automation flows',
+      'Segmentation',
+      'Drip campaigns',
+      'A/B testing',
     ],
-    impact: 'Increases customer retention, reduces churn, and drives repeat revenue at low cost.',
+    impact: 'Retention + repeat revenue.',
   },
   {
-    icon: BarChart2,
-    name: 'AEO & GEO',
-    what: 'Answer Engine Optimization and Generative Engine Optimization — the future of search.',
+    icon: Building2,
+    name: 'LinkedIn Ads',
+    what: 'B2B lead generation.',
     how: [
-      'Featured snippet, PAA, and voice search optimization',
-      'AI-friendly content architecture and entity optimization',
-      'Knowledge graph and brand entity building',
-      'Generative AI citation strategy (ChatGPT, Perplexity)',
+      'ABM targeting',
+      'Lead gen forms',
+      'Executive branding ads',
     ],
-    impact: 'Future-proofs your organic visibility as AI search replaces traditional search engines.',
+    impact: 'High-quality enterprise leads.',
   },
   {
-    icon: Globe,
-    name: 'UI/UX & CRO',
-    what: 'Conversion Rate Optimization that turns existing traffic into more leads and revenue.',
+    icon: Zap,
+    name: 'TikTok & Amazon Ads',
+    what: 'Emerging growth platforms.',
     how: [
-      'Heuristic UX audit and user journey mapping',
-      'A/B and multivariate testing with statistical significance',
-      'Landing page redesign and copy optimization',
-      'Heat mapping, session recording, and funnel analysis',
+      'UGC creatives',
+      'Amazon sponsored ads',
+      'Platform-specific optimisation',
     ],
-    impact: 'Increases conversion rates without increasing ad spend — pure ROI improvement.',
+    impact: 'New audience acquisition.',
   },
   {
-    icon: MessageSquare,
-    name: 'Quora, Reddit & Community Marketing',
-    what: 'Authority building through strategic participation in the communities your customers trust.',
+    icon: Users,
+    name: 'B2B Lead Generation',
+    what: 'Pipeline generation system.',
     how: [
-      'Quora answer strategy for high-intent queries',
-      'Reddit community identification and engagement playbook',
-      'Guest posting and thought leadership placement',
-      'Community-native content that earns organic trust',
+      'ICP definition',
+      'Outbound + inbound',
+      'ABM campaigns',
     ],
-    impact: 'Builds brand credibility, earns backlinks, and drives warm referral traffic.',
+    impact: 'Predictable pipeline.',
+  },
+  {
+    icon: Cpu,
+    name: 'SaaS & IT Marketing',
+    what: 'Specialised growth systems.',
+    how: [
+      'Product-led growth',
+      'Review platform optimisation',
+      'Technical content',
+    ],
+    impact: 'MRR growth.',
   },
 ];
 
+/* =========================
+   10 FAQs
+========================= */
+const faqs = [
+  { q: 'Do I need all services?', a: 'No. We start with 2–3 high-impact channels.' },
+  { q: 'How fast results?', a: 'Ads: 2–4 weeks. SEO: 3–6 months.' },
+  { q: 'Do you handle everything?', a: 'Yes, end-to-end execution.' },
+  { q: 'Do you work globally?', a: 'Yes — US, India, Europe.' },
+  { q: 'Industries?', a: 'SaaS, IT, ecommerce, B2B.' },
+  { q: 'Reporting?', a: 'Real-time dashboards + monthly reports.' },
+  { q: 'Minimum duration?', a: '3–6 months recommended.' },
+  { q: 'Difference from agency?', a: 'Direct expert + no fluff.' },
+  { q: 'SEO + Ads together?', a: 'Best combination for growth.' },
+  { q: 'Onboarding process?', a: 'Audit → Strategy → Launch in 3–4 weeks.' },
+];
+
+/* =========================
+   COMPONENT
+========================= */
 export default function Services() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   return (
     <div className="bg-[#080c14] pt-24">
-      {/* Hero */}
-      <section className="py-20 text-center relative overflow-hidden">
+
+      {/* HERO */}
+      <section className="py-20 text-center relative">
         <div className="absolute inset-0 bg-gradient-to-b from-[#040608] to-[#080c14]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[#c9a84c]/6 blur-[100px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4">
-          <p className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-3">Full Service</p>
-          <h1 className="serif text-5xl font-bold text-white mb-5">End-to-End Digital Marketing Services</h1>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            14 specialized services, all executed with a single goal: growing your revenue through data-driven digital marketing.
+          <h1 className="text-5xl font-bold text-white mb-5">
+            End-to-End Digital Marketing Services
+          </h1>
+          <p className="text-white/50">
+            Strategy + Execution + Growth — aligned to revenue.
           </p>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* SERVICES GRID (CLAUDE UI) */}
+      <section className="py-16 max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {services.map((s, i) => (
-            <ScrollReveal key={s.name} delay={i * 0.05}>
+            <ScrollReveal key={i} delay={i * 0.05}>
               <div className="p-7 rounded-2xl bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/20 transition-colors h-full flex flex-col">
+
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center">
                     <s.icon className="text-[#c9a84c]" size={22} />
                   </div>
                   <h3 className="text-white font-bold text-xl">{s.name}</h3>
                 </div>
 
-                <div className="mb-4">
-                  <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-1.5">What It Is</div>
-                  <p className="text-white/60 text-sm leading-relaxed">{s.what}</p>
+                <p className="text-white/60 text-sm mb-4">{s.what}</p>
+
+                <ul className="text-white/60 text-sm space-y-2 mb-4">
+                  {s.how.map((h, idx) => (
+                    <li key={idx}>• {h}</li>
+                  ))}
+                </ul>
+
+                <div className="text-[#c9a84c] text-sm font-semibold">
+                  {s.impact}
                 </div>
 
-                <div className="mb-4 flex-1">
-                  <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-1.5">How I Execute</div>
-                  <ul className="space-y-1.5">
-                    {s.how.map((h) => (
-                      <li key={h} className="flex items-start gap-2 text-white/60 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] mt-1.5 shrink-0" />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-4 border-t border-white/10">
-                  <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-1">Business Impact</div>
-                  <p className="text-white/80 text-sm">{s.impact}</p>
-                </div>
               </div>
             </ScrollReveal>
           ))}
@@ -233,22 +206,49 @@ export default function Services() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <ScrollReveal>
-            <h2 className="serif text-4xl font-bold text-white mb-4">Not Sure Which Service You Need?</h2>
-            <p className="text-white/50 mb-8">Book a free strategy call — I'll diagnose exactly where your biggest growth opportunity is and which service will move the needle fastest.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="gold-bg text-[#080c14] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
-                Book a Free Strategy Call <ArrowRight size={18} />
-              </a>
-              <Link href="/contact" className="border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors">
-                Contact Me
-              </Link>
-            </div>
-          </ScrollReveal>
+      <section className="py-24 text-center">
+        <a
+          href={CALENDLY}
+          target="_blank"
+          className="bg-[#c9a84c] text-black px-8 py-4 rounded-xl font-bold inline-flex items-center gap-2"
+        >
+          Book Strategy Call <ArrowRight size={18} />
+        </a>
+
+        <div className="mt-6">
+          <Link href="/contact">
+            <a className="text-white/60 hover:text-[#c9a84c]">
+              Or send a message →
+            </a>
+          </Link>
         </div>
       </section>
+
+      {/* FAQ */}
+      <section className="py-20 max-w-5xl mx-auto px-6">
+        <h2 className="text-3xl text-white mb-10 text-center">
+          Frequently Asked Questions
+        </h2>
+
+        {faqs.map((f, i) => (
+          <div key={i} className="mb-4 border border-white/10 rounded-xl">
+            <button
+              className="w-full flex justify-between items-center p-5 text-white"
+              onClick={() => setOpenFaq(openFaq === i ? null : i)}
+            >
+              {f.q}
+              {openFaq === i ? <X /> : <Plus />}
+            </button>
+
+            {openFaq === i && (
+              <div className="p-5 text-white/60 border-t border-white/10">
+                {f.a}
+              </div>
+            )}
+          </div>
+        ))}
+      </section>
+
     </div>
   );
 }
