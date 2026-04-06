@@ -76,135 +76,8 @@ const count = useCountUp(value, 2000, inView);
   );
 }
 
-// Enhanced Globe Map Component with clear country pins
-const countriesList = [
-  { name: 'United States', code: 'US', x: 15, y: 35, capital: 'Washington DC', projects: 85, flag: '🇺🇸' },
-  { name: 'United Kingdom', code: 'UK', x: 30, y: 28, capital: 'London', projects: 42, flag: '🇬🇧' },
-  { name: 'Canada', code: 'CA', x: 12, y: 25, capital: 'Ottawa', projects: 38, flag: '🇨🇦' },
-  { name: 'Australia', code: 'AU', x: 85, y: 55, capital: 'Canberra', projects: 35, flag: '🇦🇺' },
-  { name: 'India', code: 'IN', x: 55, y: 42, capital: 'New Delhi', projects: 67, flag: '🇮🇳' },
-  { name: 'Singapore', code: 'SG', x: 68, y: 45, capital: 'Singapore', projects: 29, flag: '🇸🇬' },
-  { name: 'Germany', code: 'DE', x: 35, y: 30, capital: 'Berlin', projects: 31, flag: '🇩🇪' },
-  { name: 'France', code: 'FR', x: 32, y: 32, capital: 'Paris', projects: 28, flag: '🇫🇷' },
-  { name: 'UAE', code: 'AE', x: 52, y: 38, capital: 'Dubai', projects: 24, flag: '🇦🇪' },
-  { name: 'Japan', code: 'JP', x: 82, y: 40, capital: 'Tokyo', projects: 22, flag: '🇯🇵' },
-  { name: 'Netherlands', code: 'NL', x: 33, y: 29, capital: 'Amsterdam', projects: 18, flag: '🇳🇱' },
-  { name: 'Sweden', code: 'SE', x: 38, y: 26, capital: 'Stockholm', projects: 15, flag: '🇸🇪' },
-];
 
-function GlobeMap() {
-  const [activeCountry, setActiveCountry] = useState(null);
-  const [rotation, setRotation] = useState(0);
-  const globeRef = useRef(null);
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation(prev => (prev + 0.5) % 360);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-  
-  return (
-    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-blue-800/20 to-cyan-900/30" />
-      
-      <div 
-        ref={globeRef}
-        className="absolute inset-0 rounded-full overflow-hidden"
-        style={{
-          background: 'radial-gradient(circle at 30% 40%, rgba(59,130,246,0.2) 0%, rgba(0,0,0,0.5) 100%)',
-          transform: `rotate(${rotation}deg)`,
-          transition: 'transform 0.05s linear',
-        }}
-      >
-        <svg className="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 1000 500" preserveAspectRatio="none">
-          <path d="M150,80 L200,60 L280,70 L320,100 L350,140 L340,180 L300,200 L260,190 L220,160 L180,140 L140,110 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          <path d="M280,220 L320,210 L340,240 L350,280 L330,320 L300,340 L280,310 L270,270 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          <path d="M480,70 L520,60 L550,75 L560,100 L540,120 L500,125 L470,100 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          <path d="M490,140 L540,125 L570,150 L580,200 L560,250 L530,260 L500,220 L480,180 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          <path d="M620,50 L680,40 L720,60 L750,90 L760,130 L720,160 L670,150 L640,120 L610,90 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          <path d="M720,280 L770,270 L800,300 L790,330 L750,340 L720,320 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" />
-          <path d="M100,460 L900,460 L850,480 L150,480 Z" fill="#4ade80" stroke="#22c55e" strokeWidth="2" opacity="0.5" />
-        </svg>
-        
-        {countriesList.map((country, idx) => {
-          const angle = (idx / countriesList.length) * 360 + rotation;
-          const radian = angle * Math.PI / 180;
-          const x = 50 + Math.cos(radian) * 40;
-          const y = 45 + Math.sin(radian) * 30;
-          
-          return (
-            <motion.div
-              key={country.code}
-              className="absolute cursor-pointer group"
-              style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
-              onMouseEnter={() => setActiveCountry(country)}
-              onMouseLeave={() => setActiveCountry(null)}
-              animate={{ 
-                scale: activeCountry?.code === country.code ? 1.3 : 1,
-                y: activeCountry?.code === country.code ? -5 : 0
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="relative">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg shadow-[#c9a84c]/30 animate-pulse">
-                  <MapPin size={14} className="text-[#080c14]" />
-                </div>
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black/90 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{country.flag}</span>
-                    <div>
-                      <div className="font-bold text-[#c9a84c]">{country.name}</div>
-                      <div className="text-white/60 text-[10px]">{country.projects}+ projects</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-      
-      <div className="absolute left-4 top-4 bottom-4 w-48 bg-black/60 backdrop-blur-sm rounded-xl p-3 overflow-y-auto z-10 hidden lg:block">
-        <div className="text-[#c9a84c] text-xs font-semibold mb-2">Countries Served</div>
-        <div className="space-y-1">
-          {countriesList.map(country => (
-            <div key={country.code} className="flex items-center gap-2 text-xs text-white/70">
-              <span>{country.flag}</span>
-              <span>{country.name}</span>
-              <span className="text-[#c9a84c] ml-auto">{country.projects}+</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      <AnimatePresence>
-        {activeCountry && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md rounded-xl p-4 border border-[#c9a84c]/30 z-10"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">{activeCountry.flag}</span>
-                <div>
-                  <h3 className="text-white font-bold">{activeCountry.name}</h3>
-                  <p className="text-white/60 text-xs">Capital: {activeCountry.capital}</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-[#c9a84c] font-bold text-lg">{activeCountry.projects}+</p>
-                <p className="text-white/40 text-xs">Projects Completed</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+
 
 // 14 Digital Marketing Services
 const aiServices = [
@@ -449,6 +322,52 @@ function FAQItem({ q, a, index }) {
   );
 }
 
+function WorldMap() {
+  return (
+    <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#040608] flex items-center justify-center">
+
+      {/* World Map SVG */}
+      <img 
+        src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+        alt="World Map"
+        className="w-full h-full object-cover opacity-30"
+      />
+
+      {/* Highlighted Countries (approx positions) */}
+      <div className="absolute inset-0">
+
+        {/* USA */}
+        <div className="absolute top-[35%] left-[18%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* Canada */}
+        <div className="absolute top-[25%] left-[18%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* UK */}
+        <div className="absolute top-[30%] left-[45%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* Germany / France / NL / Sweden */}
+        <div className="absolute top-[32%] left-[48%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* UAE */}
+        <div className="absolute top-[40%] left-[58%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* India */}
+        <div className="absolute top-[45%] left-[62%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* Singapore */}
+        <div className="absolute top-[52%] left-[70%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* Japan */}
+        <div className="absolute top-[40%] left-[82%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+        {/* Australia */}
+        <div className="absolute top-[70%] left-[80%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+
+      </div>
+
+    </div>
+  );
+}
 export default function Home() {
   const [videoOpen, setVideoOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState(industriesData[0]);
@@ -588,8 +507,38 @@ export default function Home() {
             </p>
           </motion.div>
           
-          <GlobeMap />
-          
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+
+  {/* LEFT CONTENT */}
+  <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-6">
+    <h3 className="text-[#c9a84c] font-semibold mb-4 text-sm uppercase">
+      Global Clients
+    </h3>
+
+    <div className="grid grid-cols-2 gap-2 text-white/70 text-sm">
+      <span>🇺🇸 United States</span>
+      <span>🇮🇳 India</span>
+      <span>🇨🇦 Canada</span>
+      <span>🇬🇧 United Kingdom</span>
+      <span>🇩🇪 Germany</span>
+      <span>🇫🇷 France</span>
+      <span>🇳🇱 Netherlands</span>
+      <span>🇸🇪 Sweden</span>
+      <span>🇸🇬 Singapore</span>
+      <span>🇯🇵 Japan</span>
+      <span>🇦🇺 Australia</span>
+      <span>🇦🇪 UAE</span>
+    </div>
+
+    <div className="mt-6 text-white/40 text-xs">
+      400+ Clients • 20+ Countries • Proven Global Experience
+    </div>
+  </div>
+
+  {/* RIGHT MAP */}
+  <WorldMap />
+
+</div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
