@@ -8,7 +8,8 @@ import {
   DollarSign, BarChart3, Search, Target, Share2, Building2, Cpu, Mail,
   Star, Zap, Shield, Clock, PhoneCall, X, Check, Award, Briefcase,
   Sparkles, Heart, Coffee, Smile, ThumbsUp, Rocket as RocketIcon,
-  Layers, Palette, Grid, Circle, Triangle, Hexagon
+  Layers, Palette, Grid, Circle, Triangle, Hexagon, Instagram, Facebook,
+  Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -32,7 +33,6 @@ function useCountUp(end: number, duration: number = 2000, start: boolean = false
 
 // Animated Stat Card
 function StatCard({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  // ✅ FIXED: Proper TypeScript ref typing
   const ref = useRef<HTMLDivElement | null>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const count = useCountUp(value, 2000, inView);
@@ -53,98 +53,114 @@ function StatCard({ value, suffix, label }: { value: number; suffix: string; lab
   );
 }
 
-// Services data with unique icons
+// 14 Digital Marketing Services (matches services page)
 const services = [
-  { icon: Search, name: 'SEO Excellence', desc: 'Get found on Google. Organic traffic that actually converts into customers.', color: '#c9a84c' },
-  { icon: Target, name: 'Smart PPC', desc: 'Every rupee spent works hard. Google, Meta, LinkedIn — all optimized.', color: '#5DCAA5' },
-  { icon: Share2, name: 'Social Media Magic', desc: 'Build a brand people love. Real engagement, real community, real growth.', color: '#F0997B' },
-  { icon: Building2, name: 'B2B Lead Machine', desc: 'Targeted campaigns that fill your pipeline with quality leads.', color: '#85B7EB' },
-  { icon: Cpu, name: 'SaaS Growth Hacks', desc: 'Turn free trials into paying customers. Reduce churn. Scale fast.', color: '#ED93B1' },
-  { icon: Globe, name: 'Global IT Marketing', desc: 'Position your IT company as a global leader. Build authority that sells.', color: '#97C459' },
+  { icon: Search, name: 'Search Engine Optimization', desc: 'Get found on Google. Organic traffic that converts into real customers.', link: '/services#seo' },
+  { icon: Target, name: 'Pay Per Click Advertising', desc: 'Smart campaigns on Google, Meta, LinkedIn, TikTok. Every dollar optimized.', link: '/services#ppc' },
+  { icon: Share2, name: 'Social Media Marketing', desc: 'Build a brand people love. Real engagement, real community, real growth.', link: '/services#social' },
+  { icon: Instagram, name: 'Instagram Marketing', desc: 'Visual storytelling that stops the scroll and drives action.', link: '/services#instagram' },
+  { icon: Facebook, name: 'Facebook Ads', desc: 'Targeted campaigns that reach your ideal customers where they hang out.', link: '/services#facebook' },
+  { icon: Linkedin, name: 'LinkedIn Marketing', desc: 'B2B lead generation. Reach decision makers and close bigger deals.', link: '/services#linkedin' },
+  { icon: Mail, name: 'Email Marketing', desc: 'Nurture leads, retain customers, and drive repeat sales.', link: '/services#email' },
+  { icon: PenTool, name: 'Content Marketing', desc: 'Blog posts, videos, podcasts — content that builds authority.', link: '/services#content' },
+  { icon: Megaphone, name: 'Influencer Marketing', desc: 'Partner with creators who your audience already trusts.', link: '/services#influencer' },
+  { icon: LineChart, name: 'Conversion Rate Optimization', desc: 'Turn more visitors into paying customers. Data-driven improvements.', link: '/services#cro' },
+  { icon: PieChart, name: 'Analytics & Reporting', desc: 'Real insights. No vanity metrics. Track what actually matters.', link: '/services#analytics' },
+  { icon: Users, name: 'Community Management', desc: 'Build and nurture your online community. Turn followers into fans.', link: '/services#community' },
+  { icon: RocketIcon, name: 'Growth Hacking', desc: 'Creative, low-cost strategies to grow fast. Perfect for startups.', link: '/services#growth' },
+  { icon: Globe, name: 'International SEO', desc: 'Rank globally. Reach customers in multiple countries and languages.', link: '/services#international' },
 ];
 
-// Pain points with better copy
+// 20+ Diverse Industries
+const industries = [
+  { name: 'SaaS', icon: Cpu, gradient: 'from-purple-500/20 to-pink-500/20' },
+  { name: 'E-commerce', icon: DollarSign, gradient: 'from-orange-500/20 to-red-500/20' },
+  { name: 'Healthcare', icon: Shield, gradient: 'from-green-500/20 to-emerald-500/20' },
+  { name: 'Real Estate', icon: Building2, gradient: 'from-yellow-500/20 to-amber-500/20' },
+  { name: 'Education', icon: Star, gradient: 'from-indigo-500/20 to-blue-500/20' },
+  { name: 'Fintech', icon: TrendingUp, gradient: 'from-emerald-500/20 to-teal-500/20' },
+  { name: 'Travel & Hospitality', icon: Globe, gradient: 'from-cyan-500/20 to-sky-500/20' },
+  { name: 'Fashion & Beauty', icon: Sparkles, gradient: 'from-pink-500/20 to-rose-500/20' },
+  { name: 'Food & Beverage', icon: Coffee, gradient: 'from-amber-500/20 to-yellow-500/20' },
+  { name: 'Automotive', icon: Zap, gradient: 'from-slate-500/20 to-gray-500/20' },
+  { name: 'Legal Services', icon: Shield, gradient: 'from-blue-500/20 to-indigo-500/20' },
+  { name: 'Non-Profit', icon: Heart, gradient: 'from-red-500/20 to-rose-500/20' },
+  { name: 'Entertainment', icon: Play, gradient: 'from-violet-500/20 to-purple-500/20' },
+  { name: 'Gaming', icon: Target, gradient: 'from-fuchsia-500/20 to-pink-500/20' },
+  { name: 'Manufacturing', icon: Settings, gradient: 'from-gray-500/20 to-slate-500/20' },
+  { name: 'Logistics', icon: Globe, gradient: 'from-teal-500/20 to-cyan-500/20' },
+  { name: 'Agencies', icon: Users, gradient: 'from-rose-500/20 to-pink-500/20' },
+  { name: 'Startups', icon: RocketIcon, gradient: 'from-violet-500/20 to-purple-500/20' },
+  { name: 'Enterprise', icon: Building2, gradient: 'from-slate-500/20 to-gray-500/20' },
+  { name: 'Local Business', icon: Search, gradient: 'from-cyan-500/20 to-sky-500/20' },
+];
+
+// Pain points - global perspective
 const painPoints = [
-  'You\'re burning lakhs on ads but seeing zero returns',
-  'Your competitors are eating your lunch on Google every single day',
+  'You are burning money on ads but seeing zero returns',
+  'Your competitors are outranking you on Google every single day',
   'Your agency sends fancy reports but your pipeline is still empty',
-  'You have no idea where your customers are coming from',
+  'You have no clue where your customers are coming from',
   'Your marketing team is talented but lacks senior strategic direction',
   'SEO, PPC, Content — all working in silos with no unified strategy',
 ];
 
-// Differentiators with human touch
+// Differentiators - no pricing mentioned
 const differentiators = [
-  { icon: Zap, title: 'No Corporate Nonsense', desc: 'I speak plain English, not marketing jargon. Every recommendation makes business sense.', color: '#c9a84c' },
-  { icon: PhoneCall, title: 'You Talk to ME Directly', desc: 'No account managers, no junior execs. You get my 12+ years of experience directly.', color: '#5DCAA5' },
-  { icon: TrendingUp, title: 'Results or Nothing', desc: 'I only care about metrics that impact your bottom line — leads, sales, revenue.', color: '#F0997B' },
-  { icon: Globe, title: 'Cross-Industry Genius', desc: 'IT, SaaS, Healthcare, Real Estate — I bring best practices from everywhere.', color: '#85B7EB' },
-  { icon: BarChart3, title: 'Proven Track Record', desc: '6X-7X ROAS consistently. $2M+ ad spend managed. 500K+ monthly traffic.', color: '#ED93B1' },
-  { icon: Users, title: 'Full Team Behind Me', desc: 'Designers, writers, analysts — you get a full agency\'s power at freelancer prices.', color: '#97C459' },
+  { icon: Zap, title: 'No Corporate Nonsense', desc: 'I speak plain English, not marketing jargon. Every recommendation makes business sense.' },
+  { icon: PhoneCall, title: 'You Talk to ME Directly', desc: 'No account managers, no junior execs. You get my 12+ years of experience directly.' },
+  { icon: TrendingUp, title: 'Results or Nothing', desc: 'I only care about metrics that impact your bottom line — leads, sales, revenue.' },
+  { icon: Globe, title: 'Global Experience', desc: 'Worked with businesses across 20+ countries. I understand different markets and cultures.' },
+  { icon: BarChart3, title: 'Proven Track Record', desc: '6X-7X ROAS consistently. Millions in ad spend managed. Millions in traffic generated.' },
+  { icon: Users, title: 'Full Team Behind Me', desc: 'Designers, writers, analysts — you get a full agency\'s power at freelancer flexibility.' },
 ];
 
-// Process steps with unique layout
+// Process steps
 const processSteps = [
-  { num: '01', title: 'Deep Dive Discovery', desc: 'I sit with you, understand your business, customers, and what makes you different. No templates, no assumptions.', icon: Search, color: '#c9a84c' },
-  { num: '02', title: 'Custom Strategy Blueprint', desc: 'A detailed roadmap showing exactly what we will do, why, and when you will see results.', icon: Target, color: '#5DCAA5' },
-  { num: '03', title: 'Fast Execution', desc: 'My team jumps into action. Campaigns launch, content gets created, SEO gets fixed — all moving together.', icon: RocketIcon, color: '#F0997B' },
-  { num: '04', title: 'Weekly Optimization', desc: 'Every week, we analyze data, kill what\'s not working, double down on what is. No set-and-forget.', icon: TrendingUp, color: '#85B7EB' },
-  { num: '05', title: 'Scale What Works', desc: 'Once we find winning channels, we pour fuel on the fire. More budget, more reach, more results.', icon: Zap, color: '#ED93B1' },
+  { num: '01', title: 'Deep Dive Discovery', desc: 'I sit with you, understand your business, customers, and what makes you different. No templates, no assumptions.', icon: Search },
+  { num: '02', title: 'Custom Strategy Blueprint', desc: 'A detailed roadmap showing exactly what we will do, why, and when you will see results.', icon: Target },
+  { num: '03', title: 'Fast Execution', desc: 'My team jumps into action. Campaigns launch, content gets created, SEO gets fixed — all moving together.', icon: RocketIcon },
+  { num: '04', title: 'Weekly Optimization', desc: 'Every week, we analyze data, kill what is not working, double down on what is. No set-and-forget.', icon: TrendingUp },
+  { num: '05', title: 'Scale What Works', desc: 'Once we find winning channels, we pour fuel on the fire. More budget, more reach, more results.', icon: Zap },
 ];
 
-// Engagement models
+// Engagement models - generic pricing (use calculator for exact)
 const engagements = [
   {
-    type: 'Hourly Help',
-    price: '₹1,700 / hour',
+    type: 'Hourly Consulting',
     desc: 'Need expert advice for a few hours? Perfect for audits, strategy calls, or fixing specific problems.',
     features: ['Strategy calls & reviews', 'Campaign audits', 'Team coaching', 'Zero commitment'],
     icon: Clock,
-    color: '#5DCAA5',
+    highlighted: false,
   },
   {
-    type: 'Fixed Project',
-    price: 'Custom Quote',
-    desc: 'You know exactly what you need. I give you a fixed price, clear deliverables, and a timeline.',
+    type: 'Fixed Price Projects',
+    desc: 'You know exactly what you need. Clear deliverables, fixed price, and a timeline.',
     features: ['SEO audit & strategy', 'Campaign setup', 'Website CRO', 'Clear milestones'],
     icon: Target,
-    color: '#c9a84c',
     highlighted: true,
   },
   {
     type: 'Monthly Partnership',
-    price: 'Starts ₹50K/month',
     desc: 'We work together like a team. Full execution, monthly strategy, and unlimited access to me.',
     features: ['Full campaign management', 'Dedicated team', 'Priority support', 'Monthly reporting'],
     icon: Users,
-    color: '#F0997B',
+    highlighted: false,
   },
 ];
 
-// Industries with gradient backgrounds
-const industries = [
-  { name: 'IT Services', icon: Building2, gradient: 'from-blue-500/20 to-cyan-500/20' },
-  { name: 'SaaS', icon: Cpu, gradient: 'from-purple-500/20 to-pink-500/20' },
-  { name: 'Healthcare', icon: Shield, gradient: 'from-green-500/20 to-emerald-500/20' },
-  { name: 'E-commerce', icon: DollarSign, gradient: 'from-orange-500/20 to-red-500/20' },
-  { name: 'Real Estate', icon: Building2, gradient: 'from-yellow-500/20 to-amber-500/20' },
-  { name: 'Education', icon: Star, gradient: 'from-indigo-500/20 to-blue-500/20' },
-  { name: 'Finance', icon: TrendingUp, gradient: 'from-emerald-500/20 to-teal-500/20' },
-  { name: 'B2B Companies', icon: Users, gradient: 'from-rose-500/20 to-pink-500/20' },
-  { name: 'Local Business', icon: Globe, gradient: 'from-cyan-500/20 to-sky-500/20' },
-  { name: 'Startups', icon: Zap, gradient: 'from-violet-500/20 to-purple-500/20' },
-];
-
-// FAQ with natural language
+// FAQ with global, no pricing mentioned
 const faqs = [
   { q: "Bhai, what exactly do you do?", a: "Simple bhai — I help businesses grow online. SEO, Google Ads, Social Media, everything. Whatever it takes to get you more customers and more sales." },
-  { q: "How are you different from a big agency?", a: "Agencies me tum ek number se call karte ho. Yahan tum mere se direct baat karoge. No junior account managers. 12 saal ka experience direct tumhe milega. Aur sasti bhi hai." },
+  { q: "How are you different from a big agency?", a: "Agencies me tum ek number se call karte ho. Yahan tum mere se direct baat karoge. No junior account managers. 12 saal ka experience direct tumhe milega. Aur better pricing bhi hai." },
   { q: "Which industries do you work with?", a: "IT, SaaS, Healthcare, Real Estate, E-commerce, Education, Finance — almost sab. Har industry ka alag formula hai, aur mere paas sabka experience hai." },
-  { q: "Kitna charge karte ho?", a: "Flexible hai bhai. Hourly ₹1700 se start hai. Fixed project bhi kar sakte ho. Ya monthly retainer ₹50K+ . Jo tumhare budget me aaye." },
-  { q: "Results kab dikhte hain?", a: "Google Ads me 2-3 din me leads aa sakte hain. SEO me 3-6 months lagte hain. Realistic timeline batata hu — no false promises." },
-  { q: "Startup ke saath kaam karte ho?", a: "Bilkul! Maximum startups ke saath kaam kiya hai. Limited budget me bhi results laane ka formula pata hai." },
-  { q: "Meri existing team ko manage kar sakte ho?", a: "Yes yes. Dono tarah se kaam karta hu — ya toh tumhari team ko guide karu, ya khud execution karu. Jo tumhe suit kare." },
-  { q: "NDA sign karoge?", a: "Obviously. Koi bhi sensitive details share karne se pehle NDA sign karta hu. Confidentiality is standard for me." },
+  { q: "How much do you charge?", a: "Use the cost calculator above to get an instant estimate. Every business is different, so I customize pricing based on your specific needs and goals." },
+  { q: "When will I see results?", a: "Google Ads can show leads in 2-3 days. SEO typically takes 3-6 months. I give realistic timelines — no false promises." },
+  { q: "Do you work with startups?", a: "Absolutely! I have worked with many startups. I know how to get results even with limited budgets." },
+  { q: "Can you manage my existing team?", a: "Yes yes. I work in two ways — either guide your existing team, or do the execution myself. Whatever suits you better." },
+  { q: "Do you sign NDAs?", a: "Obviously. I sign NDAs before discussing any sensitive business details. Confidentiality is standard for me." },
+  { q: "Which countries do you work with?", a: "USA, UK, Canada, Australia, India, UAE, Singapore, Germany — and many more. I understand different markets and cultures." },
+  { q: "What platforms do you advertise on?", a: "Google, Meta (Facebook/Instagram), LinkedIn, TikTok, Twitter, Pinterest, Snapchat — I choose platforms where your audience actually converts." },
 ];
 
 // FAQ Item Component
@@ -194,7 +210,6 @@ export default function Home() {
       
       {/* ========== HERO SECTION ========== */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated background elements */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#080c14] via-[#0a0f1c] to-[#080c14]" />
           <motion.div 
@@ -207,8 +222,6 @@ export default function Home() {
             transition={{ duration: 10, repeat: Infinity }}
             className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-[#c9a84c]/5 blur-[120px]"
           />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="1"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100%" height="100%" fill="url(%23grid)" /%3E%3C/svg%3E')] opacity-30" />
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 text-center">
@@ -238,7 +251,7 @@ export default function Home() {
               Digital Magic Happen
             </span>
             <br />
-            <span className="text-white/90">For Real Businesses</span>
+            <span className="text-white/90">For Businesses Worldwide</span>
           </motion.h1>
 
           <motion.p
@@ -247,9 +260,8 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-white/60 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed"
           >
-            I've helped 400+ businesses grow online — from startups to enterprises. 
-            Generated 500K+ monthly traffic, managed ₹15Cr+ in ad spend, and delivered 
-            6X-7X ROAS consistently. And now I want to help you too.
+            I have helped 400+ businesses grow online across 20+ countries — from startups to enterprises. 
+            Generated millions in revenue, managed millions in ad spend, and delivered 6X-7X ROAS consistently.
           </motion.p>
 
           <motion.div
@@ -270,7 +282,7 @@ export default function Home() {
             </a>
             <Link href="/services">
               <a className="border-2 border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300">
-                See What I Do
+                Explore Services
               </a>
             </Link>
           </motion.div>
@@ -292,7 +304,6 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
-            {/* Left side - Text Content */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -307,10 +318,10 @@ export default function Home() {
                 Why I Started Pranjal Digital?
               </h2>
               <p className="text-white/60 text-lg mb-6 leading-relaxed">
-                I saw too many businesses getting ripped off by agencies. Paying lakhs for fancy reports but getting zero results.
+                I saw too many businesses getting ripped off by agencies. Paying huge fees for fancy reports but getting zero results.
               </p>
               <p className="text-white/60 mb-6 leading-relaxed">
-                So I decided to do things differently. Direct access to an expert. Transparent pricing. Results that actually matter.
+                So I decided to do things differently. Direct access to an expert. Transparent pricing via calculator. Results that actually matter.
               </p>
               <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
                 <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2">
@@ -323,12 +334,11 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2">
                   <CheckCircle2 size={16} className="text-[#c9a84c]" />
-                  <span className="text-white/70 text-sm">6X-7X Average ROAS</span>
+                  <span className="text-white/70 text-sm">20+ Countries</span>
                 </div>
               </div>
             </motion.div>
             
-            {/* Right side - Video Player */}
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -395,26 +405,26 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* ========== TRUST BAR - Stats ========== */}
+      {/* ========== TRUST BAR ========== */}
       <section className="py-16 bg-gradient-to-r from-[#040608] to-[#080c14] border-y border-[#c9a84c]/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             <StatCard value={12} suffix="+" label="Years Experience" />
             <StatCard value={400} suffix="+" label="Happy Clients" />
-            <StatCard value={500} suffix="K+" label="Monthly Traffic" />
-            <StatCard value={2} suffix="M+" label="Ad Spend Managed" />
+            <StatCard value={20} suffix="+" label="Countries Served" />
+            <StatCard value={5} suffix="M+" label="Revenue Generated" />
             <StatCard value={7} suffix="X" label="Avg ROAS" />
           </div>
         </div>
       </section>
 
-      {/* ========== FUNNEL PYRAMID SECTION ========== */}
+      {/* ========== FUNNEL PYRAMID ========== */}
       <FunnelPyramid />
 
-      {/* ========== CALCULATOR SECTION ========== */}
+      {/* ========== COST CALCULATOR ========== */}
       <CostCalculator />
 
-      {/* ========== SERVICES - COLLAGE VIEW ========== */}
+      {/* ========== SERVICES - 14 SERVICES ========== */}
       <section className="py-24 bg-gradient-to-b from-[#080c14] to-[#040608]">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -428,39 +438,57 @@ export default function Home() {
               <span className="text-[#c9a84c] text-xs font-medium">WHAT I DO</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Services That Actually<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Move the Needle</span>
+              14 Powerful<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Digital Marketing Services</span>
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              Not just activity. Real results that show up in your bank account.
+              End-to-end marketing solutions. One expert, one team, one goal — your growth.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {services.map((service, i) => (
               <motion.div
                 key={service.name}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -5 }}
                 className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 hover:border-[#c9a84c]/40 transition-all duration-300"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#c9a84c]/10 to-transparent rounded-full blur-2xl" />
-                <div className="p-6">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <service.icon size={28} className="text-[#c9a84c]" />
+                <div className="p-5">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                    <service.icon size={22} className="text-[#c9a84c]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{service.name}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{service.desc}</p>
+                  <h3 className="text-white font-bold text-base mb-2">{service.name}</h3>
+                  <p className="text-white/50 text-xs leading-relaxed mb-3">{service.desc}</p>
+                  <Link href={service.link}>
+                    <a className="text-[#c9a84c] text-xs font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                      Learn More <ArrowRight size={12} />
+                    </a>
+                  </Link>
                 </div>
               </motion.div>
             ))}
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-10"
+          >
+            <Link href="/services">
+              <a className="inline-flex items-center gap-2 border border-[#c9a84c]/40 text-[#c9a84c] font-semibold px-6 py-3 rounded-xl hover:bg-[#c9a84c]/10 transition-all duration-300">
+                View All Services <ArrowRight size={16} />
+              </a>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      {/* ========== PAIN POINTS - Circle/Grid View ========== */}
+      {/* ========== PAIN POINTS ========== */}
       <section className="py-24 bg-[#040608] relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[#c9a84c]/5 blur-[120px]" />
@@ -512,7 +540,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== WHY CHOOSE ME - Unique Alternating Layout ========== */}
+      {/* ========== WHY CHOOSE ME ========== */}
       <section className="py-24 bg-[#080c14]">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
@@ -555,7 +583,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== PROCESS - Pyramid/Triangle Style ========== */}
+      {/* ========== PROCESS ========== */}
       <section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
@@ -630,7 +658,7 @@ export default function Home() {
               Work With Me,<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Your Way</span>
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              Choose what fits your budget and needs. No lock-in contracts. No hidden fees.
+              Choose what fits your business needs. Use the calculator above for custom pricing.
             </p>
           </motion.div>
 
@@ -654,10 +682,7 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
                     <item.icon size={22} className="text-[#c9a84c]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-1">{item.type}</h3>
-                  <div className="text-2xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent mb-3">
-                    {item.price}
-                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">{item.type}</h3>
                   <p className="text-white/50 text-sm mb-4">{item.desc}</p>
                   <ul className="space-y-2 mb-6">
                     {item.features.map((feature) => (
@@ -677,9 +702,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== INDUSTRIES - Circle/Grid View ========== */}
+      {/* ========== INDUSTRIES - 20+ INDUSTRIES ========== */}
       <section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -691,29 +716,29 @@ export default function Home() {
               <span className="text-[#c9a84c] text-xs font-medium">INDUSTRIES I SERVE</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              I've Worked Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 10+ Industries</span>
+              Worked Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 20+ Industries</span>
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              Each industry has its own playbook. And I've mastered most of them.
+              Each industry has its own playbook. And I have mastered most of them.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {industries.map((industry, i) => (
               <motion.div
                 key={industry.name}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
+                transition={{ delay: i * 0.02 }}
                 whileHover={{ scale: 1.05 }}
                 className="group"
               >
                 <div className={`relative overflow-hidden rounded-2xl p-4 text-center bg-gradient-to-br ${industry.gradient} border border-white/10 hover:border-[#c9a84c]/40 transition-all duration-300`}>
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
-                    <industry.icon size={20} className="text-[#c9a84c]" />
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform duration-300">
+                    <industry.icon size={18} className="text-[#c9a84c]" />
                   </div>
-                  <p className="text-white/80 text-sm font-medium">{industry.name}</p>
+                  <p className="text-white/80 text-xs font-medium">{industry.name}</p>
                 </div>
               </motion.div>
             ))}
@@ -756,12 +781,12 @@ export default function Home() {
               </div>
             </div>
             {[
-              { aspect: 'Cost', agency: 'High retainers + markups', me: 'Flexible from ₹1,700/hr' },
-              { aspect: 'Speed', agency: 'Slow — layers of approval', me: 'Fast & direct decisions' },
-              { aspect: 'Expertise', agency: 'Junior teams, senior oversight', me: '12+ years hands-on' },
-              { aspect: 'Access', agency: 'Account manager buffer', me: 'You work with me directly' },
-              { aspect: 'Flexibility', agency: 'Rigid contracts', me: 'Hourly, fixed, or retainer' },
-              { aspect: 'ROI Focus', agency: 'Vanity metrics', me: 'Revenue-tied KPIs only' },
+              { aspect: 'Expert Access', agency: 'Junior account managers', me: 'Work with me directly' },
+              { aspect: 'Communication', agency: 'Slow — layers of approval', me: 'Fast & direct decisions' },
+              { aspect: 'Expertise Level', agency: 'Generalist teams', me: '12+ years hands-on experience' },
+              { aspect: 'Pricing Model', agency: 'High retainers + markups', me: 'Flexible — use calculator' },
+              { aspect: 'Contract Terms', agency: 'Rigid long-term contracts', me: 'No lock-in, cancel anytime' },
+              { aspect: 'Reporting', agency: 'Vanity metrics', me: 'Revenue-tied KPIs only' },
             ].map((row, i) => (
               <div key={row.aspect} className={`grid grid-cols-3 border-t border-white/10 ${i % 2 === 0 ? 'bg-[#080c14]' : 'bg-[#040608]'}`}>
                 <div className="p-4 text-white/70 text-sm font-medium">{row.aspect}</div>
@@ -800,7 +825,7 @@ export default function Home() {
               Frequently Asked<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Questions</span>
             </h2>
             <p className="text-white/50 text-lg">
-              Everything you wanted to know. In simple Hindi-English.
+              Everything you wanted to know. In simple English.
             </p>
           </motion.div>
 
@@ -828,7 +853,7 @@ export default function Home() {
               <span className="text-[#c9a84c] text-xs font-medium">READY TO GROW?</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-5">
-              Ready to 10X Your<br />
+              Ready to Scale Your<br />
               <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">
                 Digital Marketing ROI?
               </span>
@@ -852,7 +877,7 @@ export default function Home() {
               </Link>
             </div>
             <p className="text-white/30 text-sm mt-6">
-              ⏰ 30-min free consultation • No obligation • Real advice
+              ⏰ 30-min free consultation • No obligation • Real advice • Use calculator for pricing
             </p>
           </motion.div>
         </div>
