@@ -65,7 +65,7 @@ const services = [
 
 // Pain points with better copy
 const painPoints = [
-  'You\'re burning lakhs on ads but seeing zero returns',
+  'You're burning lakhs on ads but seeing zero returns',
   'Your competitors are eating your lunch on Google every single day',
   'Your agency sends fancy reports but your pipeline is still empty',
   'You have no idea where your customers are coming from',
@@ -193,6 +193,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
       className="border border-white/10 rounded-2xl overflow-hidden bg-[#0a0f1c]"
     >
@@ -306,7 +307,7 @@ export default function Home() {
                 Book Free Strategy Call <ArrowRight size={18} className="group-hover:translate-x-1 transition" />
               </span>
             </a>
-            {/* FIXED: wouter Link with proper <a> child */}
+            {/* ✅ FIXED: wouter Link with proper anchor tag */}
             <Link href="/services">
               <a className="border-2 border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300">
                 See What I Do
@@ -327,7 +328,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== VIDEO SECTION (Moving to Top) ========== */}
+      {/* ========== VIDEO SECTION ========== */}
       <section className="py-16 md:py-24 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
@@ -474,7 +475,6 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Unique Grid Layout - Mix of square and rectangle cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, i) => (
               <motion.div
@@ -617,7 +617,6 @@ export default function Home() {
           </motion.div>
 
           <div className="relative">
-            {/* Connector line */}
             <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#c9a84c]/40 via-[#c9a84c]/20 to-transparent hidden md:block" />
             
             <div className="space-y-12">
@@ -886,7 +885,7 @@ export default function Home() {
               >
                 Book Free Strategy Call <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
               </a>
-              {/* FIXED: wouter Link with proper <a> child */}
+              {/* ✅ FIXED: wouter Link with proper anchor tag */}
               <Link href="/contact">
                 <a className="border-2 border-white/20 text-white font-semibold px-10 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 text-lg">
                   Send a Message
