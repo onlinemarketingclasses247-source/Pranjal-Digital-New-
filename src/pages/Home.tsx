@@ -325,51 +325,59 @@ function FAQItem({ q, a, index }) {
 function WorldMap() {
   return (
 <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-[#c9a84c]/30 bg-[#0b1220]">
-      {/* World Map SVG */}
-<div className="absolute inset-0">
 
-<img 
-  src="/images/world-map.svg"
-  alt="World Map"
-  className="absolute inset-0 w-full h-full object-cover opacity-80 contrast-125 brightness-110"
-/>
-</div>
+  <svg
+  viewBox="0 0 1000 500"
+  className="w-full h-full"
+>
+  {/* Background */}
+  <rect width="1000" height="500" fill="#0b1220" />
 
-      {/* Highlighted Countries (approx positions) */}
+  {/* Land shapes (clean abstract) */}
+  <path d="M100,200 L250,180 L300,250 L200,300 Z" fill="#1a2332" />
+  <path d="M300,180 L450,160 L500,250 L380,300 Z" fill="#1a2332" />
+  <path d="M500,150 L700,140 L750,260 L600,300 Z" fill="#1a2332" />
+  <path d="M750,300 L900,280 L950,400 L800,420 Z" fill="#1a2332" />
 
-<div className="absolute inset-0">
+  {/* Points */}
 
   {/* USA */}
-  <div className="absolute top-[42%] left-[23%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="220" cy="220" r="6" fill="#c9a84c">
+    <animate attributeName="r" values="4;7;4" dur="2s" repeatCount="indefinite" />
+  </circle>
 
   {/* Canada */}
-  <div className="absolute top-[30%] left-[23%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="220" cy="160" r="6" fill="#c9a84c" />
 
   {/* UK */}
-  <div className="absolute top-[36%] left-[48%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="480" cy="190" r="6" fill="#c9a84c" />
 
-  {/* Germany / France / NL */}
-  <div className="absolute top-[38%] left-[50%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  {/* Europe */}
+  <circle cx="500" cy="210" r="6" fill="#c9a84c" />
 
   {/* Sweden */}
-  <div className="absolute top-[28%] left-[52%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="520" cy="150" r="6" fill="#c9a84c" />
 
   {/* UAE */}
-  <div className="absolute top-[47%] left-[58%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="580" cy="260" r="6" fill="#c9a84c" />
 
   {/* India */}
-  <div className="absolute top-[50%] left-[63%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="630" cy="280" r="6" fill="#c9a84c" />
 
   {/* Singapore */}
-  <div className="absolute top-[60%] left-[70%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="700" cy="330" r="6" fill="#c9a84c" />
 
   {/* Japan */}
-  <div className="absolute top-[42%] left-[82%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="820" cy="220" r="6" fill="#c9a84c" />
 
   {/* Australia */}
-  <div className="absolute top-[78%] left-[80%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse" />
+  <circle cx="800" cy="420" r="6" fill="#c9a84c" />
 
-</div>
+</svg>
+
+
+
+     
 
     </div>
   );
