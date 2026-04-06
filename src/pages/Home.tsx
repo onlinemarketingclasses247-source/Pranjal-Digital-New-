@@ -11,8 +11,6 @@ import {
   Layers, Palette, Grid, Circle, Triangle, Hexagon
 } from 'lucide-react';
 
-// ✅ REMOVED: incorrect ScrollReveal import (not being used anyway)
-
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
 // Custom hook for counting animation
@@ -34,7 +32,8 @@ function useCountUp(end: number, duration: number = 2000, start: boolean = false
 
 // Animated Stat Card
 function StatCard({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const ref = useRef(null);
+  // ✅ FIXED: Proper TypeScript ref typing
+  const ref = useRef<HTMLDivElement | null>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const count = useCountUp(value, 2000, inView);
   return (
@@ -269,7 +268,6 @@ export default function Home() {
                 Book Free Strategy Call <ArrowRight size={18} className="group-hover:translate-x-1 transition" />
               </span>
             </a>
-            {/* ✅ FIXED: wouter Link with proper anchor tag */}
             <Link href="/services">
               <a className="border-2 border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300">
                 See What I Do
@@ -847,7 +845,6 @@ export default function Home() {
               >
                 Book Free Strategy Call <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
               </a>
-              {/* ✅ FIXED: wouter Link with proper anchor tag */}
               <Link href="/contact">
                 <a className="border-2 border-white/20 text-white font-semibold px-10 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 text-lg">
                   Send a Message
