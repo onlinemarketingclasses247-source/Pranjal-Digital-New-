@@ -138,9 +138,9 @@ export default function About() {
               <Globe className="text-[#c9a84c]" size={24} />
             </div>
             <div>
-              <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-1">Current Role</div>
-              <h3 className="text-white font-bold text-lg">Digital Marketing Consultant — Elevance Health</h3>
-              <p className="text-white/50 text-sm">November 2025 – Present &nbsp;|&nbsp; One of America's largest health insurance companies (formerly Anthem)</p>
+              <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-1">Why Pranjal Digital is Created? </div>
+              <h3 className="text-white font-bold text-lg">I work with the philosophy that if you grow, I grow.</h3>
+              <p className="text-white/50 text-sm">Pranjal Digital was created with a mission and vision to deliver honest digital marketing services, always prioritizing client interests and transparency over profit.</p>
             </div>
           </div>
         </ScrollReveal>
