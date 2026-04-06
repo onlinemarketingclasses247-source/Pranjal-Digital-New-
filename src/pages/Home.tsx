@@ -10,9 +10,15 @@ import {
   Sparkles, Heart, Coffee, Smile, ThumbsUp, Rocket as RocketIcon,
   Layers, Palette, Grid, Circle, Triangle, Hexagon, Instagram, Facebook,
   Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart,
-  Settings, MapPin, Activity, Radio, Facebook as FacebookLogo,
-  Instagram as InstagramLogo, Linkedin as LinkedinLogo, Amazon, Music,
-  TrendingUp as TrendingUpIcon, Newspaper, MousePointer, Layout
+  Settings, MapPin, Activity, Radio, Music, Newspaper, MousePointer, Layout,
+  ShoppingBag, // Replaces Amazon icon
+  Store, // Alternative for Amazon
+  Hash, // For additional platform icons
+  Disc3, // For music/TikTok
+  Tv, // For programmatic ads
+  MonitorPlay, // For video ads
+  Megaphone as MegaphoneIcon, // Renamed to avoid conflict
+  Newspaper as NewspaperIcon, // Renamed to avoid conflict
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -78,11 +84,11 @@ const serviceCategories = [
       { name: "Google Ads", icon: TrendingUp, desc: "Search, Display, Shopping, YouTube & PMax" },
       { name: "Meta Ads", icon: Facebook, desc: "Facebook & Instagram advertising" },
       { name: "LinkedIn Ads", icon: Linkedin, desc: "B2B lead generation & account targeting" },
-      { name: "Amazon PPC", icon: Amazon, desc: "Sponsored Products, Brands & Display" },
+      { name: "Amazon PPC", icon: ShoppingBag, desc: "Sponsored Products, Brands & Display" },
       { name: "TikTok Ads", icon: Music, desc: "Short-form video advertising" },
-      { name: "Taboola & Outbrain", icon: Newspaper, desc: "Native advertising on premium publishers" },
+      { name: "Taboola & Outbrain", icon: NewspaperIcon, desc: "Native advertising on premium publishers" },
       { name: "Reddit Ads", icon: Radio, desc: "Community-driven targeted campaigns" },
-      { name: "Programmatic Ads", icon: Layout, desc: "Automated, AI-driven display advertising" }
+      { name: "Programmatic Ads", icon: Tv, desc: "Automated, AI-driven display advertising" }
     ]
   },
   {
@@ -91,7 +97,7 @@ const serviceCategories = [
     color: "#F0997B",
     description: "Strategic content that builds authority and drives action",
     platforms: [
-      { name: "Blog & Articles", icon: Newspaper, desc: "SEO-optimized thought leadership" },
+      { name: "Blog & Articles", icon: NewspaperIcon, desc: "SEO-optimized thought leadership" },
       { name: "Video Marketing", icon: Play, desc: "YouTube, TikTok, Instagram Reels" },
       { name: "Podcast Marketing", icon: Radio, desc: "Audio content & guest appearances" },
       { name: "Infographics", icon: PieChart, desc: "Visual data storytelling" },
@@ -118,7 +124,7 @@ const serviceCategories = [
     platforms: [
       { name: "A/B Testing", icon: Activity, desc: "Data-driven experiment design" },
       { name: "Heatmaps & Analytics", icon: BarChart3, desc: "User behavior insights" },
-      { name: "Funnel Optimization", icon: TrendingUpIcon, desc: "Remove drop-off points" },
+      { name: "Funnel Optimization", icon: TrendingUp, desc: "Remove drop-off points" },
       { name: "UX Improvements", icon: Layout, desc: "Better user experience = higher conversions" }
     ]
   },
