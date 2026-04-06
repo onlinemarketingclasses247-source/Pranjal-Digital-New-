@@ -58,6 +58,10 @@ section::before {
   z-index: 0;
 }
 
+.map-3d-container {
+  position: relative;
+}
+
 section > * {
   position: relative;
   z-index: 1;
@@ -69,3 +73,52 @@ button, a {
 }
 
 
+/* ================= 3D MAP ================= */
+
+.map-3d-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  background: radial-gradient(circle at center, #0f172a, #020617);
+  perspective: 1000px;
+}
+
+/* rotating map */
+.map-3d {
+  width: 200%;
+  height: 200%;
+  background-image: url('/images/world-map-clean.png');
+  background-size: contain;
+  background-repeat: repeat-x;
+  background-position: center;
+
+  position: absolute;
+  top: -50%;
+  left: -50%;
+
+  animation: rotateMap 30s linear infinite;
+
+  transform: rotateX(25deg) rotateY(0deg);
+  opacity: 0.9;
+}
+
+/* subtle glow overlay */
+.map-3d-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, #020617 80%);
+  pointer-events: none;
+}
+
+/* animation */
+@keyframes rotateMap {
+  0% {
+    transform: rotateX(25deg) translateX(0);
+  }
+  100% {
+    transform: rotateX(25deg) translateX(-50%);
+  }
+}
