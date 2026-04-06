@@ -4,7 +4,7 @@ import {
   Search, PenTool, Globe, Target, Share2, Building2,
   Zap, Star, Users, Cpu, Mail, BarChart2, MessageSquare,
   Monitor, ArrowRight, Calendar, Play, Eye, CheckCircle,
-  TrendingUp, Settings, Rocket, ChevronDown, Plus, X
+  TrendingUp, Rocket, ChevronDown, Plus, X
 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ScrollReveal';
 
@@ -381,8 +381,8 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
   return count;
 }
 
-// ── STAT CELL ──────────────────────────────────────────────────────────────
-function StatCell({ stat, active, large }: { stat: typeof stats[0]; active: boolean; large?: boolean }) {
+// ── STAT CELL (FIXED TYPE ERROR) ──────────────────────────────────────────────
+function StatCell({ stat, active, large }: { stat: typeof stats[0] & { large?: boolean }; active: boolean; large?: boolean }) {
   const count = useCountUp(stat.num, active);
   return (
     <div className={`relative overflow-hidden bg-[#0a0f1c] p-8 transition-colors hover:bg-[#0c1220] group ${large ? 'col-span-2 flex items-center gap-10' : ''}`}>
@@ -461,10 +461,17 @@ export default function Services() {
     return () => clearInterval(timer);
   }, []);
 
-  // Trigger stats counter on scroll
+  // Trigger stats counter on scroll (with SSR safety)
   useEffect(() => {
     const el = statsRef.current;
     if (!el) return;
+    
+    // SSR safety check
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setStatsActive(true);
+      return;
+    }
+    
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setStatsActive(true); obs.disconnect(); } },
       { threshold: 0.2 }
@@ -608,4 +615,204 @@ export default function Services() {
             {specialists.map((sp, i) => {
               const Icon = sp.icon;
               return (
-                <div key={i} className="bg-[#0a0f1c] border
+                <div key={i} className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-5 hover:border-[#c9a84c]/25 transition-colors text-center">
+                  <div className="w-11 h-11 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mx-auto mb-3">
+                    <Icon size={20} className="text-[#c9a84c]" />
+                  </div>
+                  <h4 className="text-white font-semibold text-sm mb-1">{sp.title}</h4>
+                  <p className="text-white/50 text-xs leading-relaxed mb-3">{sp.desc}</p>
+                  <div className="inline-flex items-center gap-1 bg-[#c9a84c]/8 border border-[#c9a84c]/18 rounded-full px-3 py-1 text-[10px] font-bold text-[#c9a84c]">
+                    ✦ {sp.cert}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Monitoring strip */}
+          <div className="bg-[#0a0f1c] border border-[#c9a84c]/15 rounded-2xl p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 text-left">
+            <div className="w-14 h-14 rounded-full bg-[#c9a84c]/10 flex items-center justify-center shrink-0">
+              <Eye size={24} className="text-[#c9a84c]" />
+            </div>
+            <div className="flex-1">
+              <h4 className="text-white font-semibold mb-1">Personal Oversight on Every Project</h4>
+              <p className="text-white/50 text-sm">Pranjal reviews all active campaigns weekly. Nothing ships without strategic sign-off. Every anomaly is caught and corrected before it becomes a problem.</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {['Weekly Review', 'Performance Alerts', 'Monthly Strategy Call', 'Full Transparency'].map(c => (
+                <div key={c} className="bg-[#c9a84c]/8 border border-[#c9a84c]/15 rounded-lg px-3 py-1.5 text-[11px] font-semibold text-[#c9a84c]">{c}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── VIDEO ── */}
+      <section className="py-20" style={{ background: '#0d1424' }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">See It In Action</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">Multi-Funnel Marketing, Explained</h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Video placeholder */}
+            <div className="border border-white/10 rounded-2xl bg-[#0a0f1c] aspect-video flex flex-col items-center justify-center cursor-pointer hover:border-[#c9a84c]/30 transition-colors relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-radial opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'radial-gradient(ellipse at center, rgba(201,168,76,0.05) 0%, transparent 70%)' }} />
+              <div className="w-16 h-16 rounded-full bg-[#c9a84c] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Play size={24} fill="#080c14" className="text-[#080c14] ml-1" />
+              </div>
+              <p className="text-white/50 text-sm">Upload your intro video here</p>
+              <p className="text-white/25 text-xs mt-1">Replace this placeholder with your video embed</p>
+            </div>
+
+            {/* Highlights */}
+            <div>
+              <div className="flex flex-col gap-5 mb-6">
+                {videoHighlights.map((h, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/25 flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="text-[10px] font-bold text-[#c9a84c]">{h.num}</span>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold text-sm mb-1">{h.title}</h4>
+                      <p className="text-white/50 text-sm leading-relaxed">{h.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-[#c9a84c] mb-3">Services Covered</p>
+                <div className="flex flex-wrap gap-2">
+                  {servicePills.map(p => (
+                    <span key={p} className="bg-[#c9a84c]/10 border border-[#c9a84c]/18 rounded-full px-3 py-1 text-[11px] font-semibold text-[#c9a84c]">{p}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS ── */}
+      <section className="py-20 bg-[#080c14]" ref={statsRef}>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">The Numbers Don't Lie</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">Results That Speak for Themselves</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px border border-white/10 rounded-2xl overflow-hidden">
+            {stats.map((stat, i) => (
+              <StatCell key={i} stat={stat} active={statsActive} large={stat.large} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SERVICES BY FUNNEL ── */}
+      <section id="services-funnel" className="py-20 bg-[#0a0f1c]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Services by Marketing Funnel</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">From First Click to Loyal Customer</h2>
+            <p className="text-white/50 max-w-xl mx-auto text-sm">Every service maps to a specific stage in your buyer journey. No guesswork. No wasted spend.</p>
+          </div>
+
+          {funnelStages.map((stage) => (
+            <div key={stage.id} className="mb-20">
+              <div className="flex items-center gap-5 mb-4">
+                <div className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider shrink-0 ${badgeStyles[stage.badgeClass]}`}>
+                  {stage.badge}
+                </div>
+                <div className="flex-1 h-px bg-white/8" />
+                <span className="text-white/40 text-xs shrink-0">{stage.subtitle}</span>
+              </div>
+              <p className="text-white/50 text-sm mb-8 max-w-2xl">{stage.desc}</p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                {stage.services.map((srv, idx) => (
+                  <ServiceCard key={srv.name} service={srv} index={idx} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── MID CTA ── */}
+      <section className="py-24 text-center px-6" style={{ background: 'linear-gradient(180deg, #080c14 0%, #040608 100%)' }}>
+        <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-4">Ready to Grow?</p>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">Not Sure Which Service You Need?</h2>
+        <p className="text-white/50 max-w-lg mx-auto mb-10 text-sm leading-relaxed">Book a free 30-minute strategy call. I'll personally diagnose where your biggest growth opportunity is and map out exactly which services will move the needle fastest.</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-sm">
+            <Calendar size={18} /> Book Free Strategy Call
+          </a>
+          {/* FIXED: wouter Link with proper a tag */}
+          <Link href="/contact">
+            <a className="inline-flex items-center gap-2 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors text-sm">
+              Send a Message
+            </a>
+          </Link>
+        </div>
+      </section>
+
+      {/* ── FAQ (10 COMPLETE FAQS) ── */}
+      <section className="py-20 bg-[#0a0f1c]">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Common Questions</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-3">Frequently Asked Questions</h2>
+            <p className="text-white/50">Everything you need to know before we work together.</p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {faqs.map((faq, i) => (
+              <div key={i} className="bg-[#080c14] border border-white/10 rounded-2xl overflow-hidden hover:border-[#c9a84c]/20 transition-colors">
+                <button
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                >
+                  <span className="text-white font-semibold text-sm leading-snug">{faq.q}</span>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors ${openFaq === i ? 'bg-[#c9a84c]' : 'bg-[#c9a84c]/10'}`}>
+                    {openFaq === i
+                      ? <X size={13} className="text-[#080c14]" />
+                      : <Plus size={13} className="text-[#c9a84c]" />
+                    }
+                  </div>
+                </button>
+                {openFaq === i && (
+                  <div className="px-6 pb-5 border-t border-white/8">
+                    <p className="text-white/55 text-sm leading-relaxed pt-4">{faq.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ── */}
+      <section className="py-24 text-center px-6" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 50%, #040608 100%)' }}>
+        <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-4">Let's Build Something</p>
+        <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+          Ready to Stop Guessing<br />and Start Growing?
+        </h2>
+        <p className="text-white/50 max-w-lg mx-auto mb-10 leading-relaxed">
+          12+ years. 400+ clients. One strategic brain and a certified team dedicated to your growth. Let's talk about what that looks like for your business.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-10 py-4 rounded-xl hover:opacity-90 transition-opacity">
+            <Calendar size={18} /> Book Free Strategy Call
+          </a>
+          {/* FIXED: wouter Link with proper a tag */}
+          <Link href="/contact">
+            <a className="inline-flex items-center gap-2 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors">
+              Contact Me
+            </a>
+          </Link>
+        </div>
+      </section>
+
+    </div>
+  );
+}
