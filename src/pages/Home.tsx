@@ -54,9 +54,9 @@ function useCountUp(end, duration = 2000, trigger = false) {
 // Animated Stat Card with scroll trigger
 function StatCard({ value, suffix, label }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
+ const inView = useInView(ref, { once: true, amount: 0.2 });
   const [hasAnimated, setHasAnimated] = useState(false);
-  const count = useCountUp(value, 2000, inView && !hasAnimated);
+const count = useCountUp(value, 2000, true);
   
   useEffect(() => {
     if (inView && !hasAnimated) {
@@ -73,7 +73,7 @@ function StatCard({ value, suffix, label }) {
       className="text-center relative"
     >
       <div className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent mb-2">
-        {hasAnimated ? count : 0}{suffix}
+     {count}{suffix}
       </div>
       <div className="text-white/50 text-sm font-medium">{label}</div>
     </motion.div>
@@ -553,56 +553,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== RATINGS SECTION ========== */}
-      <section className="py-12 bg-gradient-to-r from-[#040608] to-[#080c14] border-y border-[#c9a84c]/10">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-8"
-          >
-            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <AwardIcon size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">TRUSTED & VERIFIED</span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white">
-              Rated <span className="text-[#c9a84c]">4.8+ Stars</span> Across Top Platforms
-            </h2>
-            <p className="text-white/50 text-sm mt-2">Real reviews from real clients worldwide — verified on each platform</p>
-          </motion.div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {ratingPlatforms.map((platform, i) => (
-              <motion.div
-                key={platform.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className={`bg-gradient-to-br ${platform.bgGradient} border border-white/10 rounded-xl p-4 text-center hover:border-[#c9a84c]/40 transition-all duration-300 backdrop-blur-sm`}
-              >
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${platform.bgGradient} flex items-center justify-center`}>
-                    <span className="text-sm font-bold" style={{ color: platform.color }}>{platform.name[0]}</span>
-                  </div>
-                  <span className="text-white font-semibold text-sm">{platform.name}</span>
-                </div>
-                <div className="flex items-center justify-center gap-1">
-                  <div className="flex">
-                    {[...Array(5)].map((_, idx) => (
-                      <Star key={idx} className={`w-3 h-3 ${idx < Math.floor(platform.rating) ? 'text-[#c9a84c] fill-[#c9a84c]' : 'text-white/20'}`} />
-                    ))}
-                  </div>
-                  <span className="text-white font-bold text-sm ml-1">{platform.rating}</span>
-                </div>
-                <div className="text-white/40 text-xs mt-1">{platform.reviews} reviews</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* ========== STATS SECTION ========== */}
       <section ref={statsRef} className="py-16 bg-gradient-to-r from-[#080c14] to-[#040608]">
