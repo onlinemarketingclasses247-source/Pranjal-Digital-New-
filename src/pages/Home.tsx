@@ -10,7 +10,8 @@ import {
   Sparkles, Heart, Coffee, Smile, ThumbsUp, Rocket as RocketIcon,
   Layers, Palette, Grid, Circle, Triangle, Hexagon
 } from 'lucide-react';
-import { ScrollReveal } from '@/components/ScrollReveal';
+
+// ✅ REMOVED: incorrect ScrollReveal import (not being used anyway)
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -65,7 +66,7 @@ const services = [
 
 // Pain points with better copy
 const painPoints = [
-  'You're burning lakhs on ads but seeing zero returns',
+  'You\'re burning lakhs on ads but seeing zero returns',
   'Your competitors are eating your lunch on Google every single day',
   'Your agency sends fancy reports but your pipeline is still empty',
   'You have no idea where your customers are coming from',
@@ -146,45 +147,6 @@ const faqs = [
   { q: "Meri existing team ko manage kar sakte ho?", a: "Yes yes. Dono tarah se kaam karta hu — ya toh tumhari team ko guide karu, ya khud execution karu. Jo tumhe suit kare." },
   { q: "NDA sign karoge?", a: "Obviously. Koi bhi sensitive details share karne se pehle NDA sign karta hu. Confidentiality is standard for me." },
 ];
-
-// Animated counter component
-function AnimatedCounter({ end, suffix, label }: { end: number; suffix: string; label: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-  
-  useEffect(() => {
-    if (inView) {
-      let start = 0;
-      const duration = 2000;
-      const increment = end / (duration / 16);
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          setCount(end);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(start));
-        }
-      }, 16);
-      return () => clearInterval(timer);
-    }
-  }, [inView, end]);
-  
-  return (
-    <motion.div 
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      className="text-center"
-    >
-      <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">
-        {count}{suffix}
-      </div>
-      <div className="text-white/50 text-sm mt-2">{label}</div>
-    </motion.div>
-  );
-}
 
 // FAQ Item Component
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
