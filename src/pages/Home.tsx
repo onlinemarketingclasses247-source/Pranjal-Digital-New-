@@ -324,46 +324,10 @@ function FAQItem({ q, a, index }) {
 
 function WorldMap() {
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-[#c9a84c]/30 bg-[#0b1220]">
+    <div className="w-full max-w-[600px] mx-auto">
 
-      <img
-        src="/images/world-map-clean.png"
-        alt="Global Presence"
-        className="w-full h-full object-contain"
-      />
-
-<div className="absolute inset-0 z-10">
-
-       {/* USA */}
-<div className="pin" style={{ top: "35%", left: "25%" }} />
-
-{/* Canada */}
-<div className="pin" style={{ top: "20%", left: "28%" }} />
-
-{/* UK */}
-<div className="pin" style={{ top: "32%", left: "50%" }} />
-
-{/* Germany / France */}
-<div className="pin" style={{ top: "36%", left: "52%" }} />
-
-{/* Sweden */}
-<div className="pin" style={{ top: "20%", left: "55%" }} />
-
-{/* UAE */}
-<div className="pin" style={{ top: "45%", left: "60%" }} />
-
-{/* India */}
-<div className="pin" style={{ top: "50%", left: "65%" }} />
-
-{/* Singapore */}
-<div className="pin" style={{ top: "60%", left: "72%" }} />
-
-{/* Japan */}
-<div className="pin" style={{ top: "35%", left: "85%" }} />
-
-{/* Australia */}
-<div className="pin" style={{ top: "75%", left: "82%" }} />
-
+      <div className="map-3d-container">
+        <div className="map-3d" />
       </div>
 
     </div>
