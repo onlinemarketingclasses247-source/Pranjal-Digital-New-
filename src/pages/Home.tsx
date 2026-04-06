@@ -819,91 +819,113 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
       </section>
 
       {/* ========== ENHANCED 3D COMPARISON TABLE ========== */}
-      <section className="py-24 bg-[#080c14]">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
-              <Award size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-medium">THE TRUTH</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Big Agency vs<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Me</span>
-            </h2>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto">
-              Why pay agency rates for junior-level work when you can work directly with a 12-year expert?
-            </p>
-          </motion.div>
+     {/* ========== PREMIUM COMPARISON SECTION ========== */}
+<section className="py-20 bg-[#080c14] relative overflow-hidden">
 
-          <div className="relative">
-            <div className="relative perspective-1000">
-              <div className="grid grid-cols-1 gap-4 transform-style-3d">
-                <div className="grid grid-cols-3 bg-gradient-to-r from-[#0a0f1c] to-[#040608] rounded-t-2xl border border-white/10 overflow-hidden shadow-xl">
-                  <div className="p-4 text-white/40 text-xs font-semibold uppercase bg-black/20">Factor</div>
-                  <div className="p-4 text-center text-white/40 text-xs font-semibold uppercase border-l border-white/10 bg-black/20">Big Agency</div>
-                  <div className="p-4 text-center border-l border-[#c9a84c]/40 bg-gradient-to-r from-[#c9a84c]/10 to-[#c9a84c]/5">
-                    <span className="text-[#c9a84c] text-xs font-semibold uppercase">Pranjal Digital</span>
-                  </div>
-                </div>
-                
-                {comparisonData.map((row, i) => (
-                  <motion.div
-                    key={row.aspect}
-                    initial={{ opacity: 0, rotateX: -15, y: 20 }}
-                    whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05, type: "spring", stiffness: 100 }}
-                    whileHover={{ 
-                      scale: 1.02, 
-                      zIndex: 20,
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-                      transition: { duration: 0.2 }
-                    }}
-                    className={`grid grid-cols-3 border border-white/10 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer ${
-                      row.major ? 'bg-gradient-to-r from-[#c9a84c]/8 to-transparent' : 'bg-[#040608]'
-                    } hover:border-[#c9a84c]/60`}
-                    style={{ transformStyle: 'preserve-3d' }}
-                  >
-                    <div className="p-4 text-white font-semibold text-sm flex items-center gap-2">
-                      <span className="text-lg">{row.major ? '⭐' : '📌'}</span>
-                      {row.aspect}
-                      {row.major && <span className="text-[#c9a84c] text-[10px] bg-[#c9a84c]/20 px-2 py-0.5 rounded-full">Major Difference</span>}
-                    </div>
-                    <div className="p-4 border-l border-white/10 flex flex-col items-center justify-center gap-1">
-                      <span className="text-2xl">{row.agencyIcon}</span>
-                      <span className="text-white/60 text-sm text-center">{row.agency}</span>
-                      <span className="text-white/30 text-[10px] text-center">{row.detail.split('.')[0]}...</span>
-                    </div>
-                    <div className="p-4 border-l border-[#c9a84c]/20 bg-gradient-to-r from-[#c9a84c]/5 to-transparent flex flex-col items-center justify-center gap-1 relative">
-                      <div className="absolute top-2 right-2">
-                        <Check size={12} className="text-[#c9a84c]" />
-                      </div>
-                      <span className="text-2xl">{row.meIcon}</span>
-                      <span className="text-white/80 text-sm font-medium text-center">{row.me}</span>
-                      <span className="text-[#c9a84c]/70 text-[10px] text-center">{row.detail.split('.')[0]}</span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+  {/* Background Glow */}
+  <div className="absolute inset-0">
+    <div className="absolute top-1/2 left-1/2 w-[700px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-[#c9a84c]/10 blur-[120px]" />
+  </div>
+
+  <div className="relative max-w-6xl mx-auto px-4">
+
+    {/* Heading */}
+    <div className="text-center mb-12">
+      <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+        Big Agency vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Me</span>
+      </h2>
+      <p className="text-white/60 max-w-xl mx-auto">
+        Same goal — growth. Completely different execution.
+      </p>
+    </div>
+
+    {/* Grid */}
+    <div className="grid md:grid-cols-2 gap-6">
+
+      {[
+        {
+          title: "Experience",
+          agency: "Junior teams (2–4 yrs avg)",
+          me: "12+ years hands-on",
+        },
+        {
+          title: "Who You Work With",
+          agency: "Account managers",
+          me: "Direct expert access",
+        },
+        {
+          title: "Communication",
+          agency: "24–72 hrs delay",
+          me: "Same-day response",
+        },
+        {
+          title: "Strategy",
+          agency: "Template based",
+          me: "Custom-built",
+        },
+        {
+          title: "Execution Speed",
+          agency: "Slow approvals",
+          me: "Fast & agile",
+        },
+        {
+          title: "Pricing",
+          agency: "High retainers",
+          me: "Flexible pricing",
+        },
+        {
+          title: "Metrics",
+          agency: "Vanity metrics",
+          me: "Revenue-focused",
+        },
+        {
+          title: "Accountability",
+          agency: "Low ownership",
+          me: "Direct responsibility",
+        },
+      ].map((item, i) => (
+
+        <div
+          key={i}
+          className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#040608] p-5 hover:border-[#c9a84c]/40 transition-all duration-300 hover:scale-[1.02]"
+        >
+
+          {/* Glow on hover */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-r from-[#c9a84c]/10 to-transparent rounded-2xl" />
+
+          {/* Title */}
+          <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">
+            {item.title}
+          </h3>
+
+          {/* Comparison */}
+          <div className="grid grid-cols-2 gap-4">
+
+            {/* Agency */}
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+              <div className="text-red-400 text-lg mb-1">✕</div>
+              <p className="text-white/60 text-xs leading-snug">
+                {item.agency}
+              </p>
             </div>
+
+            {/* Me */}
+            <div className="bg-gradient-to-br from-[#c9a84c]/20 to-transparent border border-[#c9a84c]/30 rounded-xl p-3 text-center">
+              <div className="text-[#c9a84c] text-lg mb-1">✓</div>
+              <p className="text-white/80 text-xs leading-snug font-medium">
+                {item.me}
+              </p>
+            </div>
+
           </div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mt-8"
-          >
-            <p className="text-white/40 text-sm">
-              ⭐ Major differences highlighted — these are deal-breakers that most clients don't realize until it's too late.
-            </p>
-          </motion.div>
+
         </div>
-      </section>
+      ))}
+
+    </div>
+
+  </div>
+</section>
 
       {/* ========== FAQ SECTION ========== */}
       <section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
