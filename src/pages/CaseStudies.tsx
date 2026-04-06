@@ -357,6 +357,18 @@ const NICHES = [
 
 const PER_PAGE = 6;
 
+function setMeta(description) {
+  let meta = document.querySelector("meta[name='description']");
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", description);
+}
+
 // ─── PROCESS SECTION COMPONENT (with animation) ────────────────────────────
 
 function ProcessSection() {
@@ -610,6 +622,13 @@ function CaseStudyCard({ cs, onOpen }) {
 
 export default function CaseStudies() {
   const [activeNiche, setActiveNiche] = useState("All");
+  useEffect(() => {
+  document.title = "Digital Marketing Case Studies | Pranjal Digital";
+
+  setMeta(
+    "Discover real case studies showing SEO growth, paid ads performance, and full-funnel strategies that helped businesses scale traffic, leads, and revenue."
+  );
+}, []);
   const [page, setPage] = useState(0);
   const [selectedCase, setSelectedCase] = useState(null);
 
