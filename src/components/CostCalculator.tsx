@@ -22,10 +22,10 @@ const deliverablesMap = {
   CRO: ["A/B Testing","UX Fixes","Conversion Optimization"],
   "Landing Pages": ["Design","Copy","Conversion Setup"],
   Analytics: ["GA4 Setup","Tracking","Dashboard"],
-  Strategy: ["Marketing Plan","Growth Strategy"],
+  Strategy Creation: ["Marketing Plan","Growth Strategy"],
   Funnels: ["Sales Funnels","Lead Journey"],
   YouTube: ["SEO","Video Strategy"],
-  Performance: ["Scaling","Optimization"]
+  Performance Marketing: ["Scaling","Optimization", "Google Ads", "Meta ads", "Linkedin Ads", "Programatic Ads"]
 };
 
 export default function Calculator() {
