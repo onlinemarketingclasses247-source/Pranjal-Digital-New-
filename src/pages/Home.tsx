@@ -55,14 +55,10 @@ function useCountUp(end, duration = 2000, trigger = false) {
 function StatCard({ value, suffix, label }) {
   const ref = useRef(null);
  const inView = useInView(ref, { once: true, amount: 0.2 });
-  const [hasAnimated, setHasAnimated] = useState(false);
-const count = useCountUp(value, 2000, true);
+
+const count = useCountUp(value, 2000, inView);
   
-  useEffect(() => {
-    if (inView && !hasAnimated) {
-      setHasAnimated(true);
-    }
-  }, [inView, hasAnimated]);
+  
   
   return (
     <motion.div 
