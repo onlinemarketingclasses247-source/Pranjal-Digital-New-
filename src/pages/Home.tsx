@@ -819,39 +819,51 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
       </section>
 
       {/* ========== ENHANCED 3D COMPARISON TABLE ========== */}
-     {/* ========== PREMIUM COMPARISON SECTION ========== */}
+    {/* ========== PREMIUM COMPARISON TABLE (CLEAN + HIGH-END) ========== */}
 <section className="py-20 bg-[#080c14] relative overflow-hidden">
 
   {/* Background Glow */}
   <div className="absolute inset-0">
-    <div className="absolute top-1/2 left-1/2 w-[700px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-[#c9a84c]/10 blur-[120px]" />
+    <div className="absolute top-1/2 left-1/2 w-[800px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-[#c9a84c]/10 blur-[120px]" />
   </div>
 
   <div className="relative max-w-6xl mx-auto px-4">
 
     {/* Heading */}
-    <div className="text-center mb-12">
-      <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-        Big Agency vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Me</span>
+    <div className="text-center mb-10">
+      <h2 className="text-3xl md:text-5xl font-bold text-white mb-3">
+        Big Agency vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Pranjal Digital</span>
       </h2>
-      <p className="text-white/60 max-w-xl mx-auto">
-        Same goal — growth. Completely different execution.
+      <p className="text-white/60">
+        Clear differences. No fluff. Just what impacts your growth.
       </p>
     </div>
 
-    {/* Grid */}
-    <div className="grid md:grid-cols-2 gap-6">
+    {/* Table */}
+    <div className="rounded-2xl border border-white/10 overflow-hidden backdrop-blur-xl">
 
+      {/* Header */}
+      <div className="grid grid-cols-3 bg-[#0a0f1c] text-sm font-semibold">
+        <div className="p-4 text-white/40">Factor</div>
+        <div className="p-4 text-center text-white/50 border-l border-white/10">
+          Big Agency
+        </div>
+        <div className="p-4 text-center border-l border-[#c9a84c]/30 bg-[#c9a84c]/5 text-[#c9a84c]">
+          Pranjal Digital
+        </div>
+      </div>
+
+      {/* Rows */}
       {[
         {
           title: "Experience",
-          agency: "Junior teams (2–4 yrs avg)",
-          me: "12+ years hands-on",
+          agency: "2–4 yrs avg team",
+          me: "12+ yrs hands-on",
         },
         {
-          title: "Who You Work With",
-          agency: "Account managers",
-          me: "Direct expert access",
+          title: "Who Works On Account",
+          agency: "Junior managers",
+          me: "Direct expert",
         },
         {
           title: "Communication",
@@ -860,7 +872,7 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
         },
         {
           title: "Strategy",
-          agency: "Template based",
+          agency: "Template-based",
           me: "Custom-built",
         },
         {
@@ -871,52 +883,40 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
         {
           title: "Pricing",
           agency: "High retainers",
-          me: "Flexible pricing",
+          me: "Flexible & transparent",
         },
         {
           title: "Metrics",
-          agency: "Vanity metrics",
-          me: "Revenue-focused",
+          agency: "Clicks & impressions",
+          me: "Revenue & ROI",
         },
         {
           title: "Accountability",
           agency: "Low ownership",
           me: "Direct responsibility",
         },
-      ].map((item, i) => (
+      ].map((row, i) => (
 
         <div
           key={i}
-          className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#040608] p-5 hover:border-[#c9a84c]/40 transition-all duration-300 hover:scale-[1.02]"
+          className="grid grid-cols-3 text-sm border-t border-white/10 hover:bg-white/5 transition"
         >
 
-          {/* Glow on hover */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-r from-[#c9a84c]/10 to-transparent rounded-2xl" />
+          {/* Factor */}
+          <div className="p-4 text-white font-medium">
+            {row.title}
+          </div>
 
-          {/* Title */}
-          <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">
-            {item.title}
-          </h3>
+          {/* Agency */}
+          <div className="p-4 text-center text-white/50 border-l border-white/10 flex items-center justify-center gap-2">
+            <span className="text-red-400">✕</span>
+            {row.agency}
+          </div>
 
-          {/* Comparison */}
-          <div className="grid grid-cols-2 gap-4">
-
-            {/* Agency */}
-            <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-              <div className="text-red-400 text-lg mb-1">✕</div>
-              <p className="text-white/60 text-xs leading-snug">
-                {item.agency}
-              </p>
-            </div>
-
-            {/* Me */}
-            <div className="bg-gradient-to-br from-[#c9a84c]/20 to-transparent border border-[#c9a84c]/30 rounded-xl p-3 text-center">
-              <div className="text-[#c9a84c] text-lg mb-1">✓</div>
-              <p className="text-white/80 text-xs leading-snug font-medium">
-                {item.me}
-              </p>
-            </div>
-
+          {/* Me */}
+          <div className="p-4 text-center border-l border-[#c9a84c]/20 bg-gradient-to-r from-[#c9a84c]/5 to-transparent flex items-center justify-center gap-2">
+            <span className="text-[#c9a84c]">✓</span>
+            <span className="text-white/80 font-medium">{row.me}</span>
           </div>
 
         </div>
@@ -926,7 +926,6 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
 
   </div>
 </section>
-
       {/* ========== FAQ SECTION ========== */}
       <section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
         <div className="max-w-4xl mx-auto px-4">
