@@ -326,45 +326,50 @@ function WorldMap() {
   return (
 <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-[#c9a84c]/30 bg-[#0b1220]">
       {/* World Map SVG */}
-      <div className="w-full h-full flex items-center justify-center">
-  <img 
-    src="/images/world-map.svg"
-    alt="World Map"
-    className="max-w-full max-h-full object-contain opacity-80 contrast-125 brightness-110"
-  />
+<div className="absolute inset-0">
+
+<img 
+  src="/images/world-map.svg"
+  alt="World Map"
+  className="absolute inset-0 w-full h-full object-contain opacity-80 contrast-125 brightness-110"
+/>
 </div>
 
       {/* Highlighted Countries (approx positions) */}
-      <div className="absolute inset-0">
 
-        {/* USA */}
-        <div className="absolute top-[35%] left-[18%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  <div className="absolute inset-0">
 
-        {/* Canada */}
-        <div className="absolute top-[25%] left-[18%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* USA */}
+  <div className="absolute top-[40%] left-[25%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
 
-        {/* UK */}
-        <div className="absolute top-[30%] left-[45%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* Canada */}
+  <div className="absolute top-[30%] left-[25%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
 
-        {/* Germany / France / NL / Sweden */}
-        <div className="absolute top-[32%] left-[48%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* UK */}
+  <div className="absolute top-[34%] left-[48%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
 
-        {/* UAE */}
-        <div className="absolute top-[40%] left-[58%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* Germany / France / NL */}
+  <div className="absolute top-[37%] left-[50%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
 
-        {/* India */}
-        <div className="absolute top-[45%] left-[62%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* Sweden */}
+  <div className="absolute top-[28%] left-[52%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulseshadow-[0_0_12px_#c9a84c]" />
 
-        {/* Singapore */}
-        <div className="absolute top-[52%] left-[70%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* UAE */}
+  <div className="absolute top-[45%] left-[58%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
 
-        {/* Japan */}
-        <div className="absolute top-[40%] left-[82%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* India */}
+  <div className="absolute top-[48%] left-[63%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
 
-        {/* Australia */}
-        <div className="absolute top-[70%] left-[80%] w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse" />
+  {/* Singapore */}
+  <div className="absolute top-[58%] left-[70%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
 
-      </div>
+  {/* Japan */}
+  <div className="absolute top-[40%] left-[82%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
+
+  {/* Australia */}
+  <div className="absolute top-[75%] left-[80%] w-3 h-3 bg-[#c9a84c] rounded-full shadow-[0_0_12px_#c9a84c] animate-pulse shadow-[0_0_12px_#c9a84c]" />
+
+</div>
 
     </div>
   );
