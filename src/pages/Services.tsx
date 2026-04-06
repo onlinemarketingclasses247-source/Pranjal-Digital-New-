@@ -1,4 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
+function setMeta(description) {
+  let meta = document.querySelector("meta[name='description']");
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "description");
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", description);
+}
 import { Link } from 'wouter';
 import {
   Search, PenTool, Globe, Target, Share2, Building2,
@@ -7,6 +18,8 @@ import {
   TrendingUp, Rocket, ChevronDown, Plus, X
 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ScrollReveal';
+
+
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -449,16 +462,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 // ── MAIN COMPONENT ─────────────────────────────────────────────────────────
 export default function Services() {
 
-  useEffect(() => {
-  document.title = "Digital Marketing Services | Pranjal Digital";
-
-  const meta = document.querySelector("meta[name='description']");
-  if (meta) {
-    meta.setAttribute(
-      "content",
-      "Explore SEO, Google Ads, Meta Ads, CRO, and full-funnel marketing services designed to increase traffic, generate qualified leads, and scale business growth."
-    );
-  }
+useEffect(() => {
+  setMeta(
+    "Explore SEO, Google Ads, Meta Ads, CRO, and full-funnel digital marketing services designed to increase traffic, generate leads, and drive consistent business growth."
+  );
 }, []);
   const [activeStep, setActiveStep] = useState(0);
   const [statsActive, setStatsActive] = useState(false);
