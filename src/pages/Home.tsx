@@ -324,8 +324,7 @@ function FAQItem({ q, a, index }) {
 
 function WorldMap() {
   return (
-    <div className="w-full max-w-[600px] mx-auto">
-
+<div className="w-full max-w-[500px] mx-auto scale-95">
       <div className="map-3d-container">
         <div className="map-3d" />
       </div>
@@ -472,15 +471,30 @@ export default function Home() {
             </p>
           </motion.div>
           
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-
+<div className="grid lg:grid-cols-2 gap-6 items-center">
   {/* LEFT CONTENT */}
-  <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-6">
-    <h3 className="text-[#c9a84c] font-semibold mb-4 text-sm uppercase">
+ <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+ 
+
+  {/* Glow */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[#c9a84c]/10 to-transparent opacity-40" />
+
+  <div className="relative z-10">
+
+    {/* Heading */}
+    <h3 className="text-[#c9a84c] font-semibold mb-3 text-xs uppercase tracking-wider">
       Global Clients
     </h3>
 
-    <div className="grid grid-cols-2 gap-2 text-white/70 text-sm">
+    {/* Live indicator */}
+    <div className="flex items-center gap-2 mb-4">
+      <div className="w-2 h-2 bg-[#c9a84c] rounded-full animate-pulse" />
+      <span className="text-white/50 text-xs">Active Across Multiple Markets</span>
+    </div>
+
+    {/* Countries */}
+    <div className="grid grid-cols-2 gap-3 text-white/80 text-sm mb-5">
+
       <span>🇺🇸 United States</span>
       <span>🇮🇳 India</span>
       <span>🇨🇦 Canada</span>
@@ -493,12 +507,39 @@ export default function Home() {
       <span>🇯🇵 Japan</span>
       <span>🇦🇺 Australia</span>
       <span>🇦🇪 UAE</span>
+
     </div>
 
-    <div className="mt-6 text-white/40 text-xs">
-      400+ Clients • 20+ Countries • Proven Global Experience
+    {/* Divider */}
+    <div className="border-t border-white/10 my-4" />
+
+    {/* STATS (MAIN FIX 🔥) */}
+    <div className="grid grid-cols-3 text-center">
+
+      <div>
+        <p className="text-[#c9a84c] font-bold text-xl">400+</p>
+        <p className="text-white/40 text-xs">Clients</p>
+      </div>
+
+      <div>
+        <p className="text-[#c9a84c] font-bold text-xl">20+</p>
+        <p className="text-white/40 text-xs">Countries</p>
+      </div>
+
+      <div>
+        <p className="text-[#c9a84c] font-bold text-xl">12+</p>
+        <p className="text-white/40 text-xs">Years</p>
+      </div>
+
     </div>
+
+    {/* Bottom line */}
+    <div className="mt-4 text-white/40 text-xs text-center">
+      Proven Global Experience
+    </div>
+
   </div>
+</div>
 
   {/* RIGHT MAP */}
   <WorldMap />
