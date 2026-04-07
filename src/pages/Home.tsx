@@ -2,7 +2,7 @@ import FunnelPyramid from "../components/FunnelPyramid";
 import CostCalculator from "../components/CostCalculator";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight, CheckCircle2, ChevronDown, Play, TrendingUp, Users, Globe,
   DollarSign, BarChart3, Search, Target, Share2, Building2, Cpu, Mail,
@@ -615,29 +615,22 @@ export default function Home() {
               </div>
             </motion.div>
             
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="lg:w-1/2"
-            >
-           <div className="border border-white/10 rounded-2xl overflow-hidden aspect-video w-full">
-  <iframe
-    className="w-full h-full"
-    src="https://www.youtube.com/embed/MjqcQ46ai5Y"
-    title="Pranjal Digital - My Story"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-  ></iframe>
-</div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#080c14] via-transparent to-transparent opacity-60" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-white font-medium text-sm">🎬 Watch: Who is Pranjal & Why I Started This Journey</p>
-                    <p className="text-white/40 text-xs">2 min explainer video</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+           <motion.div 
+  initial={{ opacity: 0, x: 50 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  className="lg:w-1/2"
+>
+  <div className="border border-white/10 rounded-2xl overflow-hidden aspect-video w-full">
+    <iframe
+      className="w-full h-full"
+      src="https://www.youtube.com/embed/MjqcQ46ai5Y"
+      title="Pranjal Digital - My Story"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    />
+  </div>
+</motion.div>
           </div>
         </div>
       </section>
