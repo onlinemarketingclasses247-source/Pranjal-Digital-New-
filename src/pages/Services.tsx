@@ -540,120 +540,82 @@ useEffect(() => {
 
 
 
-      {/* ── PROCESS UI (FINAL PREMIUM CLEAN) ── */}
-<section className="py-14 md:py-20 bg-[#0a0f1c] overflow-hidden">
-  <div className="max-w-7xl mx-auto px-6">
+
+      {/* ── PREMIUM CIRCULAR PROCESS (FINAL FIX) ── */}
+<section className="py-16 md:py-20 bg-[#0a0f1c] overflow-hidden">
+  <div className="max-w-6xl mx-auto px-6 text-center">
 
     {/* HEADING */}
-    <div className="text-center mb-10">
-      <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-2">
-        The Process
+    <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-2">
+      The Process
+    </p>
+    <h2 className="text-2xl md:text-4xl font-bold text-white mb-10">
+      How I Deliver Results
+    </h2>
+
+    {/* STEP INFO */}
+    <div className="mb-8">
+      <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10">
+        <span className="text-[#c9a84c] text-xs font-bold">
+          Step {activeStep + 1}
+        </span>
+        <span className="text-white text-sm">
+          {processSteps[activeStep].week}
+        </span>
+      </div>
+
+      <p className="text-white/70 text-sm mt-3 max-w-md mx-auto">
+        {processSteps[activeStep].short}
       </p>
-      <h2 className="text-2xl md:text-4xl font-bold text-white">
-        How I Deliver Results
-      </h2>
     </div>
 
-    <div className="grid md:grid-cols-3 items-center gap-6 md:gap-10">
-
-      {/* LEFT (DESKTOP ONLY) */}
-      <div className="hidden md:block">
-        <div className="bg-[#080c14] border border-white/10 rounded-xl p-5">
-          <p className="text-[#c9a84c] text-xs mb-2">
-            Step {activeStep + 1}
-          </p>
-
-          <h3 className="text-white text-lg font-semibold mb-2">
-            {processSteps[activeStep].title}
-          </h3>
-
-          <p className="text-white/60 text-sm leading-relaxed">
-            {processSteps[activeStep].desc}
-          </p>
-        </div>
-      </div>
+    {/* CIRCULAR RINGS */}
+    <div className="relative mx-auto w-[260px] h-[260px] md:w-[360px] md:h-[360px] flex items-center justify-center">
 
       {/* CENTER */}
-      <div className="flex flex-col items-center">
-
-        {/* STEP TEXT (IMPORTANT FIX FOR MOBILE) */}
-        <div className="mb-6 max-w-xs text-center">
-          <div className="px-4 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10 inline-block">
-            <span className="text-[#c9a84c] text-xs font-bold mr-2">
-              Step {activeStep + 1}
-            </span>
-            <span className="text-white text-xs">
-              {processSteps[activeStep].week}
-            </span>
-          </div>
-
-          <p className="text-white/70 text-xs mt-2 leading-snug">
-            {processSteps[activeStep].short}
-          </p>
-        </div>
-
-        {/* CIRCLE */}
-        <div className="relative w-[240px] h-[240px] md:w-[300px] md:h-[300px]">
-
-          {/* RING */}
-          <div className="absolute inset-0 rounded-full border border-white/10" />
-
-          {/* STEP NODES */}
-          {processSteps.map((step, i) => {
-            const angle = (i / processSteps.length) * 2 * Math.PI;
-          const radius = 120;
-
-            const x = radius * Math.cos(angle);
-            const y = radius * Math.sin(angle);
-
-            const isActive = i === activeStep;
-
-            return (
-              <div
-                key={i}
-                className="absolute"
-                style={{
-                  left: "50%",
-                  top: "50%",
-                  transform: `translate(${x}px, ${y}px)`
-                }}
-              >
-                <div
-                  className={`w-10 h-10 flex items-center justify-center rounded-full text-xs font-bold transition-all duration-500
-                    ${
-                      isActive
-                        ? "bg-[#c9a84c] text-[#080c14] scale-125 shadow-[0_0_25px_rgba(201,168,76,0.8)]"
-                        : "bg-white/10 text-white/40"
-                    }`}
-                >
-                  {i + 1}
-                </div>
-              </div>
-            );
-          })}
-
-        </div>
+      <div className="absolute w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#080c14] border border-[#c9a84c]/30 flex items-center justify-center text-center">
+        <span className="text-xs text-[#c9a84c] font-semibold">
+          Growth
+        </span>
       </div>
 
-      {/* RIGHT (DESKTOP ONLY) */}
-      <div className="hidden md:block">
-        <div className="bg-[#080c14] border border-[#c9a84c]/20 rounded-xl p-5">
-          <p className="text-white/40 text-xs mb-2">
-            Timeline
-          </p>
+      {/* RINGS */}
+      {processSteps.map((_, i) => {
+        const size = 100 + i * 30; // ring size
+        const isActive = i === activeStep;
 
-          <p className="text-[#c9a84c] font-semibold mb-2">
-            {processSteps[activeStep].week}
-          </p>
-
-          <p className="text-white/60 text-sm">
-            Structured execution with clear deliverables,
-            accountability, and measurable growth outcomes.
-          </p>
-        </div>
-      </div>
+        return (
+          <div
+            key={i}
+            className="absolute rounded-full border transition-all duration-700"
+            style={{
+              width: size,
+              height: size,
+              borderWidth: "2px",
+              borderColor: isActive
+                ? "#c9a84c"
+                : "rgba(255,255,255,0.08)",
+              boxShadow: isActive
+                ? "0 0 25px rgba(201,168,76,0.6)"
+                : "none",
+              transform: `scale(${isActive ? 1.05 : 1})`,
+            }}
+          />
+        );
+      })}
 
     </div>
+
+    {/* STEP TITLE */}
+    <div className="mt-10 max-w-lg mx-auto">
+      <h3 className="text-white text-lg font-semibold mb-2">
+        {processSteps[activeStep].title}
+      </h3>
+      <p className="text-white/60 text-sm">
+        {processSteps[activeStep].desc}
+      </p>
+    </div>
+
   </div>
 </section>
 
