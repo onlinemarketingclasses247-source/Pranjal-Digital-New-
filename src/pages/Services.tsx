@@ -531,169 +531,74 @@ useEffect(() => {
         </div>
       </section>
 
-    {/* ── HOW IT WORKS ── */}
-<section className="py-16 md:py-20 bg-[#0a0f1c]">
-  <div className="max-w-6xl mx-auto px-6">
-    
-    <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">
-      The Process
-    </p>
+{/* ── PROCESS (CLEAN CIRCLE UI - NO DEAD SPACE) ── */}
+<section className="py-16 bg-[#0a0f1c]">
+  <div className="max-w-5xl mx-auto px-6 text-center">
 
-    <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-      How I Deliver Results — Step by Step
-    </h2>
+    {/* TOP ACTIVE STEP */}
+    <div className="mb-10">
+      <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10">
 
-    <p className="text-white/50 max-w-xl mb-10 md:mb-12 text-sm md:text-base">
-      A transparent, stage-gated process where every phase has clear deliverables and accountability built in.
-    </p>
+        <span className="text-[#c9a84c] text-xs font-bold">
+          Step {activeStep + 1}
+        </span>
 
-    {/* Progress Bar */}
-    <div className="flex items-center gap-0 mb-12 md:mb-16 overflow-x-auto pb-2">
-      {processSteps.map((s, i) => (
-        <div
-          key={i}
-          className="flex-1 min-w-[90px] flex flex-col items-center relative cursor-pointer"
-          onClick={() => setActiveStep(i)}
-        >
-          {i < processSteps.length - 1 && (
-            <div
-              className="absolute top-5 left-1/2 w-full h-px"
-              style={{
-                background:
-                  i < activeStep ? "#c9a84c" : "rgba(255,255,255,0.1)",
-              }}
-            />
-          )}
+        <span className="text-white text-sm font-medium">
+          {processSteps[activeStep].title}
+        </span>
 
-          <div
-            className={`w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all duration-400 relative z-10 ${
-              i === activeStep
-                ? "bg-[#c9a84c] border-[#c9a84c] text-[#080c14]"
-                : i < activeStep
-                ? "bg-[#c9a84c]/20 border-[#c9a84c] text-[#c9a84c]"
-                : "bg-[#080c14] border-white/20 text-white/40"
-            }`}
-          >
-            {i + 1}
-          </div>
-
-          <p
-            className={`text-[10px] md:text-xs mt-2 text-center leading-tight ${
-              i === activeStep ? "text-white font-medium" : "text-white/40"
-            }`}
-          >
-            {s.title.split(" ")[0]}
-          </p>
-        </div>
-      ))}
-    </div>
-
-    {/* Timeline */}
-    <div className="relative">
-      
-      {/* Center Line (desktop only) */}
-      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[#c9a84c]/20 to-transparent" />
-
-      <div className="flex flex-col gap-6 md:gap-0">
-
-        {processSteps.map((step, i) => {
-          const Icon = step.icon;
-          const isLeft = i % 2 === 0;
-
-          return (
-            <div
-              key={i}
-              className="grid grid-cols-1 md:grid-cols-[1fr_60px_1fr] items-start py-4 md:py-8"
-            >
-
-              {/* LEFT SIDE */}
-              {isLeft ? (
-                <>
-                  <div className="pr-0 md:pr-10 text-left md:text-right">
-
-                    <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-[#c9a84c]/70 mb-2 bg-[#c9a84c]/8 px-3 py-1 rounded-full border border-[#c9a84c]/15">
-                      {step.week}
-                    </span>
-
-                    <div className="flex md:justify-end mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center">
-                        <Icon size={18} className="text-[#c9a84c]" />
-                      </div>
-                    </div>
-
-                    <h3 className="text-white font-bold text-base mb-2">
-                      {step.title}
-                    </h3>
-
-                    <p className="text-white/50 text-sm leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
-
-                  {/* CENTER NUMBER (desktop only) */}
-                  <div className="hidden md:flex justify-center pt-4">
-                    <div
-                      className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xs font-bold ${
-                        i === activeStep
-                          ? "bg-[#c9a84c] border-[#c9a84c] text-[#080c14]"
-                          : "bg-[#080c14] border-white/20 text-white/40"
-                      }`}
-                    >
-                      {i + 1}
-                    </div>
-                  </div>
-
-                  <div />
-                </>
-              ) : (
-                <>
-                  <div />
-
-                  {/* CENTER NUMBER */}
-                  <div className="hidden md:flex justify-center pt-4">
-                    <div
-                      className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xs font-bold ${
-                        i === activeStep
-                          ? "bg-[#c9a84c] border-[#c9a84c] text-[#080c14]"
-                          : "bg-[#080c14] border-white/20 text-white/40"
-                      }`}
-                    >
-                      {i + 1}
-                    </div>
-                  </div>
-
-                  {/* RIGHT SIDE */}
-                  <div className="pl-0 md:pl-10">
-
-                    <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-[#c9a84c]/70 mb-2 bg-[#c9a84c]/8 px-3 py-1 rounded-full border border-[#c9a84c]/15">
-                      {step.week}
-                    </span>
-
-                    <div className="mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center">
-                        <Icon size={18} className="text-[#c9a84c]" />
-                      </div>
-                    </div>
-
-                    <h3 className="text-white font-bold text-base mb-2">
-                      {step.title}
-                    </h3>
-
-                    <p className="text-white/50 text-sm leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
-                </>
-              )}
-            </div>
-          );
-        })}
+        <span className="text-white/40 text-xs">
+          {processSteps[activeStep].week}
+        </span>
 
       </div>
     </div>
+
+    {/* CIRCLE */}
+    <div className="relative w-[260px] h-[260px] md:w-[320px] md:h-[320px] mx-auto">
+
+      {/* OUTER RING */}
+      <div className="absolute inset-0 rounded-full border border-white/10" />
+
+      {processSteps.map((step, i) => {
+        const angle = (i / processSteps.length) * 2 * Math.PI;
+        const radius = 120;
+
+        const x = radius * Math.cos(angle);
+        const y = radius * Math.sin(angle);
+
+        const isActive = i === activeStep;
+
+        return (
+          <div
+            key={i}
+            className="absolute"
+            style={{
+              left: "50%",
+              top: "50%",
+              transform: `translate(${x}px, ${y}px)`,
+            }}
+          >
+            <div
+              className={`px-3 py-2 rounded-full text-xs font-semibold transition-all duration-500 whitespace-nowrap
+                ${
+                  isActive
+                    ? "bg-[#c9a84c] text-[#080c14] scale-110 shadow-lg shadow-[#c9a84c]/40"
+                    : "bg-white/10 text-white/40"
+                }
+              `}
+            >
+              {i + 1}
+            </div>
+          </div>
+        );
+      })}
+
+    </div>
+
   </div>
 </section>
-    
+
 
       {/* ── TEAM ── */}
       <section className="py-20 bg-[#080c14] text-center">
