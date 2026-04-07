@@ -623,10 +623,16 @@ export default function Home() {
               className="lg:w-1/2"
             >
              <div className="relative group cursor-pointer z-10" onClick={() => setVideoOpen(true)}>
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-300" />
-              <div className="relative rounded-2xl overflow-hidden w-full h-[220px] sm:h-[300px] md:h-[360px] bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
+             <div className="absolute -inset-1 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] rounded-2xl blur opacity-20 pointer-events-none" />
+              <div className="relative rounded-2xl overflow-hidden w-full aspect-video bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
                   <img
-  src="https://img.youtube.com/vi/MjqcQ46ai5Y/maxresdefault.jpg"
+  src="https://img.youtube.com/vi/MjqcQ46ai5Y/hqdefault.jpg"
+  onError={(e) => {
+    e.currentTarget.src = "https://img.youtube.com/vi/MjqcQ46ai5Y/0.jpg";
+  }}
+  alt="Video thumbnail"
+  className="absolute inset-0 w-full h-full object-cover"
+/>
   alt="Video thumbnail"
   className="absolute inset-0 w-full h-full object-cover"
 />
