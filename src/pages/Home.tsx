@@ -630,9 +630,7 @@ export default function Home() {
   onError={(e) => {
     e.currentTarget.src = "https://img.youtube.com/vi/MjqcQ46ai5Y/0.jpg";
   }}
-  alt="Video thumbnail"
-  className="absolute inset-0 w-full h-full object-cover"
-/>
+
   alt="Video thumbnail"
   className="absolute inset-0 w-full h-full object-cover"
 />
