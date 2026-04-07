@@ -29,43 +29,50 @@ const processSteps = [
     week: 'Week 1',
     icon: Search,
     title: 'Discovery & Deep Audit',
-    desc: 'I personally dive into your business — goals, existing assets, competitors, and market positioning. A 360° audit of your digital presence identifies hidden opportunities and critical gaps before a single rupee is spent.',
+    short: 'Understanding business, competitors, and growth gaps clearly',
+    desc: 'I personally dive into your business — goals, existing assets, competitors, and market positioning...',
   },
   {
     week: 'Week 1–2',
     icon: PenTool,
     title: 'Custom Strategy Blueprint',
-    desc: 'Based on audit findings, I architect a bespoke multi-channel strategy — funnel mapping, channel selection, budget allocation, KPI targets, and a 90-day roadmap. You get a documented plan, not a vague proposal.',
+    short: 'Building a clear roadmap for predictable scalable growth',
+    desc: 'Based on audit findings, I architect a bespoke multi-channel strategy...',
   },
   {
     week: 'Week 2–4',
     icon: Monitor,
     title: 'Specialist Team Build & Setup',
-    desc: 'The right certified specialists are assigned — SEO engineers, paid media experts, content strategists, designers. Every tool, tracking pixel, analytics dashboard, and campaign infrastructure is set up correctly from day one.',
+    short: 'Assigning experts and setting up systems properly',
+    desc: 'The right certified specialists are assigned...',
   },
   {
     week: 'Week 4',
     icon: CheckCircle,
     title: 'Launch & Go-Live',
-    desc: 'Campaigns and content go live with full tracking in place. Every launch follows a pre-flight checklist — conversion events, UTM structure, audience segments, creative variants — ensuring clean, attributable data from day one.',
+    short: 'Launching campaigns with full tracking and precision',
+    desc: 'Campaigns and content go live with full tracking...',
   },
   {
     week: 'Ongoing',
     icon: Eye,
     title: 'Close Monitoring & Reporting',
-    desc: 'I personally oversee every active project with weekly performance reviews, real-time anomaly detection, and proactive course corrections. You receive clear, jargon-free reports showing exactly what\'s working and why.',
+    short: 'Tracking performance and making real-time improvements',
+    desc: 'I personally oversee every active project...',
   },
   {
     week: 'Monthly',
     icon: TrendingUp,
     title: 'Data-Driven Optimisation',
-    desc: 'Every channel is continuously tested and refined — A/B tests, bid strategy adjustments, content updates, landing page tweaks. Decisions are made from data, not gut feel. CPA goes down. ROAS goes up.',
+    short: 'Improving results using real performance data',
+    desc: 'Every channel is continuously tested and refined...',
   },
   {
     week: 'Quarters 2+',
     icon: Rocket,
     title: 'Scale & Expand',
-    desc: 'Proven channels get scaled aggressively. New channels are added systematically. Winning creatives are turned into frameworks. The goal is compounding growth — where each month builds on the last.',
+    short: 'Scaling winning campaigns for maximum growth',
+    desc: 'Proven channels get scaled aggressively...',
   },
 ];
 
@@ -480,7 +487,7 @@ useEffect(() => {
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveStep(s => (s + 1) % processSteps.length);
-    }, 2200);
+  }, 4000);
     return () => clearInterval(timer);
   }, []);
 
@@ -532,12 +539,13 @@ useEffect(() => {
       </section>
 
 
-{/* ── ADVANCED PROCESS UI ── */}
-<section className="py-16 md:py-20 bg-[#0a0f1c] overflow-hidden">
+
+      {/* ── PROCESS UI (FINAL PREMIUM CLEAN) ── */}
+<section className="py-14 md:py-20 bg-[#0a0f1c] overflow-hidden">
   <div className="max-w-7xl mx-auto px-6">
 
     {/* HEADING */}
-    <div className="text-center mb-12">
+    <div className="text-center mb-10">
       <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-2">
         The Process
       </p>
@@ -546,12 +554,11 @@ useEffect(() => {
       </h2>
     </div>
 
-    {/* GRID */}
-    <div className="grid md:grid-cols-3 items-center gap-8">
+    <div className="grid md:grid-cols-3 items-center gap-6 md:gap-10">
 
-      {/* LEFT CONTENT (DESKTOP ONLY) */}
+      {/* LEFT (DESKTOP ONLY) */}
       <div className="hidden md:block">
-        <div className="bg-[#080c14] border border-white/10 rounded-2xl p-6">
+        <div className="bg-[#080c14] border border-white/10 rounded-xl p-5">
           <p className="text-[#c9a84c] text-xs mb-2">
             Step {activeStep + 1}
           </p>
@@ -566,43 +573,35 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* CENTER CIRCLE */}
+      {/* CENTER */}
       <div className="flex flex-col items-center">
 
-        {/* STEP INFO (MOBILE + TOP) */}
-        <div className="mb-6 text-center">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10">
-            <span className="text-[#c9a84c] text-xs font-bold">
+        {/* STEP TEXT (IMPORTANT FIX FOR MOBILE) */}
+        <div className="mb-6 max-w-xs text-center">
+          <div className="px-4 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10 inline-block">
+            <span className="text-[#c9a84c] text-xs font-bold mr-2">
               Step {activeStep + 1}
             </span>
-            <span className="text-white text-sm">
+            <span className="text-white text-xs">
               {processSteps[activeStep].week}
             </span>
           </div>
+
+          <p className="text-white/70 text-xs mt-2 leading-snug">
+            {processSteps[activeStep].short}
+          </p>
         </div>
 
         {/* CIRCLE */}
-        <div className="relative w-[260px] h-[260px] md:w-[320px] md:h-[320px]">
+        <div className="relative w-[240px] h-[240px] md:w-[300px] md:h-[300px]">
 
-          {/* OUTER RING */}
+          {/* RING */}
           <div className="absolute inset-0 rounded-full border border-white/10" />
 
-          {/* ARROW */}
-          <div
-            className="absolute left-1/2 top-1/2 origin-center transition-all duration-700"
-            style={{
-              transform: `rotate(${(activeStep / processSteps.length) * 360}deg)`
-            }}
-          >
-            <div className="w-[110px] h-[2px] bg-[#c9a84c] relative">
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-l-[10px] border-l-[#c9a84c] border-y-[6px] border-y-transparent"></div>
-            </div>
-          </div>
-
-          {/* STEPS */}
+          {/* STEP NODES */}
           {processSteps.map((step, i) => {
             const angle = (i / processSteps.length) * 2 * Math.PI;
-            const radius = 120;
+          const radius = 120;
 
             const x = radius * Math.cos(angle);
             const y = radius * Math.sin(angle);
@@ -620,10 +619,10 @@ useEffect(() => {
                 }}
               >
                 <div
-                  className={`w-9 h-9 flex items-center justify-center rounded-full text-xs font-bold transition-all duration-500
+                  className={`w-10 h-10 flex items-center justify-center rounded-full text-xs font-bold transition-all duration-500
                     ${
                       isActive
-                        ? "bg-[#c9a84c] text-[#080c14] scale-125 shadow-lg shadow-[#c9a84c]/40"
+                        ? "bg-[#c9a84c] text-[#080c14] scale-125 shadow-[0_0_25px_rgba(201,168,76,0.8)]"
                         : "bg-white/10 text-white/40"
                     }`}
                 >
@@ -636,28 +635,27 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* RIGHT CONTENT (DESKTOP ONLY) */}
+      {/* RIGHT (DESKTOP ONLY) */}
       <div className="hidden md:block">
-        <div className="bg-[#080c14] border border-[#c9a84c]/20 rounded-2xl p-6">
+        <div className="bg-[#080c14] border border-[#c9a84c]/20 rounded-xl p-5">
           <p className="text-white/40 text-xs mb-2">
             Timeline
           </p>
 
-          <p className="text-[#c9a84c] font-semibold mb-3">
+          <p className="text-[#c9a84c] font-semibold mb-2">
             {processSteps[activeStep].week}
           </p>
 
-          <div className="text-white/60 text-sm">
-            Each stage is structured with clear deliverables,
-            accountability, and measurable outcomes.
-          </div>
+          <p className="text-white/60 text-sm">
+            Structured execution with clear deliverables,
+            accountability, and measurable growth outcomes.
+          </p>
         </div>
       </div>
 
     </div>
   </div>
 </section>
-
 
 
       
