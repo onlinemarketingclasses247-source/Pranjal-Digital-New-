@@ -543,15 +543,18 @@ useEffect(() => {
 
       {/* ── PREMIUM CIRCULAR PROCESS (FINAL FIX) ── */}
 <section className="py-16 md:py-20 bg-[#0a0f1c] overflow-hidden">
- <div className="max-w-7xl mx-auto px-6">
+<div className="max-w-7xl mx-auto px-6 text-center">
 
     {/* HEADING */}
-    <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-2">
-      The Process
-    </p>
-    <h2 className="text-2xl md:text-4xl font-bold text-white mb-10">
-      How I Deliver Results
-    </h2>
+ <div className="text-center mb-12">
+  <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">
+    The Process
+  </p>
+
+  <h2 className="text-3xl md:text-5xl font-bold text-white">
+    How I Deliver Results
+  </h2>
+</div>
 
 
  
