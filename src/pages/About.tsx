@@ -114,12 +114,27 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <ScrollReveal>
             <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/20 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="serif text-8xl font-black gold-gradient mb-4">12+</div>
-                  <div className="text-white/60 text-lg">Years of mastery across<br />US, Canada & India markets</div>
-                </div>
-              </div>
+            <div className="aspect-square rounded-3xl border border-[#c9a84c]/20 overflow-hidden relative">
+
+  {/* Background Image */}
+  <img
+    src="/images/about.png"
+    alt="Pranjal Conference"
+    className="absolute inset-0 w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700"
+  />
+
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-black/60"></div>
+
+  {/* Content */}
+  <div className="relative z-10 text-center p-8">
+    <div className="serif text-8xl font-black gold-gradient mb-4">12+</div>
+    <div className="text-white/60 text-lg">
+      Years of mastery across<br />US, Canada & India markets
+    </div>
+  </div>
+
+</div>
               <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-2xl bg-[#c9a84c]/10 border border-[#c9a84c]/20 flex flex-col items-center justify-center">
                 <div className="text-2xl font-bold text-[#c9a84c]">25+</div>
                 <div className="text-white/50 text-xs text-center">Team Members</div>
