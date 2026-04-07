@@ -109,76 +109,87 @@ export default function About() {
         </div>
       </section>
 
-      {/* Story */}
-      <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <ScrollReveal>
-            <div className="relative">
-            <div className="aspect-square rounded-3xl border border-[#c9a84c]/20 overflow-hidden relative">
+  
+   {/* Story */}
+<section className="py-16 md:py-20">
+  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-  {/* Background Image */}
-  <img
-    src="/images/about.png"
-    alt="Pranjal Conference"
-    className="absolute inset-0 w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700"
-  />
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-center">
 
-  {/* Dark Overlay */}
-  <div className="absolute inset-0 bg-black/60"></div>
+      {/* LEFT IMAGE */}
+      <ScrollReveal>
+        <div className="relative">
 
-  {/* Content */}
-  <div className="relative z-10 text-center p-8">
-    <div className="serif text-8xl font-black gold-gradient mb-4">12+</div>
-    <div className="text-white/60 text-lg">
-      Years of mastery across<br />US, Canada & India markets
-    </div>
-  </div>
+          <div className="aspect-square rounded-3xl border border-[#c9a84c]/20 overflow-hidden relative">
 
-</div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-2xl bg-[#c9a84c]/10 border border-[#c9a84c]/20 flex flex-col items-center justify-center">
-                <div className="text-2xl font-bold text-[#c9a84c]">25+</div>
-                <div className="text-white/50 text-xs text-center">Team Members</div>
+            {/* Background Image */}
+            <img
+              src="/images/about.png"
+              alt="Pranjal Conference"
+              className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700"
+            />
+
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/60"></div>
+
+            {/* Content */}
+            <div className="relative z-10 text-center p-8">
+              <div className="serif text-8xl font-black gold-gradient mb-4">12+</div>
+              <div className="text-white/60 text-lg">
+                Years of mastery across<br />US, Canada & India markets
               </div>
             </div>
-          </ScrollReveal>
 
-          <ScrollReveal direction="left">
-            <h2 className="serif text-3xl font-bold text-white mb-5">Built on honesty, integrity, and strong technical expertise across marketing</h2>
-            <div className="space-y-4 text-white/60 leading-relaxed">
-              <p>
-                I started in 2012 as an IT services marketing specialist — learning the craft in one of the most competitive B2B niches in the world. While others stayed in their lane, I deliberately expanded into SaaS, Healthcare, E-commerce, Real Estate, Finance, and US Local Businesses.
-              </p>
-              <p>
-                That cross-industry exposure is my unfair advantage. Strategies that work in SaaS often translate brilliantly to healthcare tech. Conversion frameworks from US local businesses apply directly to B2B lead gen. I bring these cross-pollinated insights to every engagement.
-              </p>
-              <p>
-                Today I lead a 25-member specialist team covering SEO, PPC, content, design, and analytics — while maintaining the direct client relationships that junior-account-manager agencies can't offer.
-              </p>
-            </div>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {['IT Services', 'SaaS', 'Healthcare', 'E-commerce', 'Real Estate', 'Finance', 'B2B'].map((tag) => (
-                <span key={tag} className="text-xs border border-[#c9a84c]/30 text-[#c9a84c]/80 px-3 py-1 rounded-full">{tag}</span>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Current Role Highlight */}
-      <section className="py-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <div className="p-6 rounded-2xl border border-[#c9a84c]/30 bg-[#c9a84c]/5 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <div className="w-14 h-14 rounded-xl bg-[#c9a84c]/15 flex items-center justify-center shrink-0">
-              <Globe className="text-[#c9a84c]" size={24} />
-            </div>
-            <div>
-              <div className="text-[#c9a84c] text-xs font-semibold uppercase tracking-widest mb-1">Why Pranjal Digital was Created? </div>
-              <h3 className="text-white font-bold text-lg">I work with the philosophy that if you grow, I grow.</h3>
-              <p className="text-white/50 text-sm">Pranjal Digital was created with a clear mission and vision to deliver honest, transparent digital marketing services, where client interests always come first. Every strategy, recommendation, and execution is driven by long-term growth, trust, and results — never short-term profit.</p>
-            </div>
           </div>
-        </ScrollReveal>
-      </section>
+
+          {/* Floating Card */}
+          <div className="absolute -bottom-4 -right-4 w-28 h-28 md:w-32 md:h-32 rounded-2xl bg-[#c9a84c]/10 border border-[#c9a84c]/20 flex flex-col items-center justify-center">
+            <div className="text-xl md:text-2xl font-bold text-[#c9a84c]">25+</div>
+            <div className="text-white/50 text-xs text-center">Team Members</div>
+          </div>
+
+        </div>
+      </ScrollReveal>
+
+      {/* RIGHT CONTENT */}
+      <ScrollReveal direction="left">
+        <div>
+          <h2 className="serif text-3xl md:text-4xl font-bold text-white mb-5">
+            Built on honesty, integrity, and strong technical expertise across marketing
+          </h2>
+
+          <div className="space-y-4 text-white/60 leading-relaxed">
+            <p>
+              I started in 2012 as an IT services marketing specialist — learning the craft in one of the most competitive B2B niches in the world. While others stayed in their lane, I deliberately expanded into SaaS, Healthcare, E-commerce, Real Estate, Finance, and US Local Businesses.
+            </p>
+
+            <p>
+              That cross-industry exposure is my unfair advantage. Strategies that work in SaaS often translate brilliantly to healthcare tech. Conversion frameworks from US local businesses apply directly to B2B lead gen. I bring these cross-pollinated insights to every engagement.
+            </p>
+
+            <p>
+              Today I lead a 25-member specialist team covering SEO, PPC, content, design, and analytics — while maintaining the direct client relationships that junior-account-manager agencies can't offer.
+            </p>
+          </div>
+
+          {/* Tags */}
+          <div className="mt-6 flex flex-wrap gap-2">
+            {['IT Services', 'SaaS', 'Healthcare', 'E-commerce', 'Real Estate', 'Finance', 'B2B'].map((tag) => (
+              <span
+                key={tag}
+                className="text-xs border border-[#c9a84c]/30 text-[#c9a84c]/80 px-3 py-1 rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </ScrollReveal>
+
+    </div>
+
+  </div>
+</section>
 
       {/* Timeline */}
       <section className="py-24 bg-[#040608]">
