@@ -191,6 +191,77 @@ export default function About() {
   </div>
 </section>
 
+
+      {/* ========== MISSION & VISION ========== */}
+<section className="py-16 md:py-20 bg-gradient-to-b from-[#080c14] to-[#040608]">
+  <div className="max-w-6xl mx-auto px-4">
+
+    {/* Heading */}
+    <div className="text-center mb-12">
+      <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+        My <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Mission & Vision</span>
+      </h2>
+      <p className="text-white/60 max-w-2xl mx-auto">
+        Not just marketing. A philosophy I follow in every client relationship.
+      </p>
+    </div>
+
+    {/* Cards */}
+    <div className="grid md:grid-cols-2 gap-6">
+
+      {/* Mission */}
+      <div className="bg-[#0a0f1c] border border-[#c9a84c]/20 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+
+        <div className="absolute inset-0 bg-gradient-to-br from-[#c9a84c]/10 to-transparent opacity-40" />
+
+        <div className="relative z-10">
+          <h3 className="text-xl font-semibold text-[#c9a84c] mb-4">
+            🚀 Mission
+          </h3>
+
+          <p className="text-white/70 leading-relaxed">
+            My mission is to provide honest, transparent, and highly technical 
+            360° multi-funnel digital marketing that actually drives real business growth — 
+            not vanity metrics.
+          </p>
+
+          <p className="text-white/60 mt-4 leading-relaxed">
+            From SEO, AEO, GEO to performance marketing and AI-driven funnels — 
+            every strategy is built to generate revenue, not just traffic.
+          </p>
+        </div>
+      </div>
+
+      {/* Vision */}
+      <div className="bg-[#0a0f1c] border border-[#c9a84c]/20 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+
+        <div className="absolute inset-0 bg-gradient-to-br from-[#c9a84c]/10 to-transparent opacity-40" />
+
+        <div className="relative z-10">
+          <h3 className="text-xl font-semibold text-[#c9a84c] mb-4">
+            💡 Vision
+          </h3>
+
+          <p className="text-white/70 leading-relaxed">
+            I work with one simple mindset — <span className="text-[#c9a84c] font-semibold">if you grow, I grow.</span>
+          </p>
+
+          <p className="text-white/60 mt-4 leading-relaxed">
+            Your success, your revenue, and your profitability always come before my 
+            personal billing or charges. I believe in long-term partnerships, not short-term gains.
+          </p>
+
+          <p className="text-white/60 mt-4 leading-relaxed">
+            When you win, I win — and that is the foundation of everything I build.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
       {/* Timeline */}
       <section className="py-24 bg-[#040608]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
