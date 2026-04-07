@@ -559,7 +559,7 @@ useEffect(() => {
       <p className="text-white/70 text-sm mt-3 max-w-md mx-auto">
         {processSteps[activeStep].short}
       </p>
-    </div>
+
 
     {/* CIRCULAR RINGS */}
     {/* GRID LAYOUT */}
