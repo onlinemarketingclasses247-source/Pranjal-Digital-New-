@@ -46,6 +46,16 @@
 /* Fix section readability */
 section {
   position: relative;
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
+}
+
+/* Mobile spacing fix */
+@media (max-width: 768px) {
+  section {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
 }
 
 /* Optional: add subtle overlay to all dark sections */
@@ -56,6 +66,7 @@ section::before {
   background: rgba(0,0,0,0.15);
   pointer-events: none;
   z-index: 0;
+  height: 100%;
 }
 
 .map-3d-container {
@@ -121,4 +132,20 @@ button, a {
   100% {
     transform: rotateX(25deg) translateX(-50%);
   }
+}
+
+/* 🔥 GLOBAL SECTION GAP FIX */
+section + section {
+  margin-top: -20px;
+}
+
+@media (max-width: 768px) {
+  section + section {
+    margin-top: -30px;
+  }
+}
+
+/* Prevent accidental large spacing */
+section {
+  margin: 0 !important;
 }
