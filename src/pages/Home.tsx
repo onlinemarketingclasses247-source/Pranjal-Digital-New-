@@ -2,7 +2,7 @@ import FunnelPyramid from "../components/FunnelPyramid";
 import CostCalculator from "../components/CostCalculator";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import {
   ArrowRight, CheckCircle2, ChevronDown, Play, TrendingUp, Users, Globe,
   DollarSign, BarChart3, Search, Target, Share2, Building2, Cpu, Mail,
@@ -345,7 +345,6 @@ function WorldMap() {
   );
 }
 export default function Home() {
-  const [videoOpen, setVideoOpen] = useState(false);
   useEffect(() => {
   document.title = "Digital Marketing Consultant | Pranjal Digital";
 
@@ -622,26 +621,15 @@ export default function Home() {
               viewport={{ once: true }}
               className="lg:w-1/2"
             >
-             <div className="relative group cursor-pointer z-10" onClick={() => setVideoOpen(true)}>
-             <div className="absolute -inset-1 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] rounded-2xl blur opacity-20 pointer-events-none" />
-              <div className="relative rounded-2xl overflow-hidden w-full aspect-video bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
-                  <img
-  src="https://img.youtube.com/vi/MjqcQ46ai5Y/hqdefault.jpg"
-  onError={(e) => {
-    e.currentTarget.src = "https://img.youtube.com/vi/MjqcQ46ai5Y/0.jpg";
-  }}
-
-  alt="Video thumbnail"
-  className="absolute inset-0 w-full h-full object-cover"
-/>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div 
-                      whileHover={{ scale: 1.1 }}
-                      className="w-24 h-24 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-2xl"
-                    >
-                      <Play className="text-[#080c14] ml-1" size={40} fill="#080c14" />
-                    </motion.div>
-                  </div>
+           <div className="border border-white/10 rounded-2xl overflow-hidden aspect-video w-full">
+  <iframe
+    className="w-full h-full"
+    src="https://www.youtube.com/embed/MjqcQ46ai5Y"
+    title="Pranjal Digital - My Story"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#080c14] via-transparent to-transparent opacity-60" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="text-white font-medium text-sm">🎬 Watch: Who is Pranjal & Why I Started This Journey</p>
@@ -655,43 +643,7 @@ export default function Home() {
       </section>
 
       {/* Video Modal */}
-      <AnimatePresence>
-        {videoOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4"
-            onClick={() => setVideoOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl rounded-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setVideoOpen(false)}
-                className="absolute -top-12 right-0 text-white/70 hover:text-white transition"
-              >
-                <X size={28} />
-              </button>
-              <div className="aspect-video bg-black">
-              <iframe
-  key={videoOpen}
-  className="w-full h-full"
-  src={`https://www.youtube.com/embed/MjqcQ46ai5Y?autoplay=1&rel=0&modestbranding=1`}
-  title="Pranjal Digital - My Story"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowFullScreen
-/>
-                
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+   
 
       {/* ========== FUNNEL PYRAMID ========== */}
       <FunnelPyramid />
