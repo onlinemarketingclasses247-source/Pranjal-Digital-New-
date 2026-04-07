@@ -625,6 +625,11 @@ export default function Home() {
               <div className="relative group cursor-pointer" onClick={() => setVideoOpen(true)}>
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-300" />
                 <div className="relative rounded-2xl overflow-hidden aspect-video bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10">
+                  <img
+  src="https://img.youtube.com/vi/MjqcQ46ai5Y/maxresdefault.jpg"
+  alt="Video thumbnail"
+  className="absolute inset-0 w-full h-full object-cover"
+/>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <motion.div 
                       whileHover={{ scale: 1.1 }}
@@ -669,13 +674,15 @@ export default function Home() {
                 <X size={28} />
               </button>
               <div className="aspect-video bg-black">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                  title="Pranjal Digital - My Story"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+              <iframe
+  key={videoOpen}
+  className="w-full h-full"
+  src={`https://www.youtube.com/embed/MjqcQ46ai5Y?autoplay=1&rel=0&modestbranding=1`}
+  title="Pranjal Digital - My Story"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+/>
+                
               </div>
             </motion.div>
           </motion.div>
