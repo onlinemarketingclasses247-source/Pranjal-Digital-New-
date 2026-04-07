@@ -679,14 +679,15 @@ useEffect(() => {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Video placeholder */}
-            <div className="border border-white/10 rounded-2xl bg-[#0a0f1c] aspect-video flex flex-col items-center justify-center cursor-pointer hover:border-[#c9a84c]/30 transition-colors relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-radial opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'radial-gradient(ellipse at center, rgba(201,168,76,0.05) 0%, transparent 70%)' }} />
-              <div className="w-16 h-16 rounded-full bg-[#c9a84c] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Play size={24} fill="#080c14" className="text-[#080c14] ml-1" />
-              </div>
-              <p className="text-white/50 text-sm">Upload your intro video here</p>
-              <p className="text-white/25 text-xs mt-1">Replace this placeholder with your video embed</p>
-            </div>
+           <div className="border border-white/10 rounded-2xl overflow-hidden aspect-video">
+  <iframe
+    className="w-full h-full"
+    src="https://www.youtube.com/embed/UoZKC61hces?rel=0&modestbranding=1"
+    title="Pranjal Digital Services"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
 
             {/* Highlights */}
             <div>
