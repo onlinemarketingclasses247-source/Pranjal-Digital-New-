@@ -543,7 +543,7 @@ useEffect(() => {
 
       {/* ── PREMIUM CIRCULAR PROCESS (FINAL FIX) ── */}
 <section className="py-16 md:py-20 bg-[#0a0f1c] overflow-hidden">
-  <div className="max-w-6xl mx-auto px-6 text-center">
+ <div className="max-w-7xl mx-auto px-6">
 
     {/* HEADING */}
     <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-2">
@@ -553,8 +553,40 @@ useEffect(() => {
       How I Deliver Results
     </h2>
 
-    {/* STEP INFO */}
-    <div className="mb-8">
+
+ 
+
+      <p className="text-white/70 text-sm mt-3 max-w-md mx-auto">
+        {processSteps[activeStep].short}
+      </p>
+    </div>
+
+    {/* CIRCULAR RINGS */}
+    {/* GRID LAYOUT */}
+<div className="grid md:grid-cols-3 items-center gap-8 mt-10">
+
+  {/* LEFT CONTENT */}
+  <div className="hidden md:block">
+    <div className="bg-[#080c14] border border-white/10 rounded-2xl p-6 text-left">
+      <p className="text-[#c9a84c] text-xs mb-2">
+        Step {activeStep + 1}
+      </p>
+
+      <h3 className="text-white text-lg font-semibold mb-2">
+        {processSteps[activeStep].title}
+      </h3>
+
+      <p className="text-white/60 text-sm leading-relaxed">
+        {processSteps[activeStep].desc}
+      </p>
+    </div>
+  </div>
+
+  {/* CENTER CIRCLE */}
+  <div className="flex flex-col items-center text-center">
+
+    {/* STEP INFO (MOBILE ONLY) */}
+    <div className="mb-6 md:hidden">
       <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10">
         <span className="text-[#c9a84c] text-xs font-bold">
           Step {activeStep + 1}
@@ -564,16 +596,16 @@ useEffect(() => {
         </span>
       </div>
 
-      <p className="text-white/70 text-sm mt-3 max-w-md mx-auto">
+      <p className="text-white/70 text-sm mt-3 max-w-sm mx-auto">
         {processSteps[activeStep].short}
       </p>
     </div>
 
-    {/* CIRCULAR RINGS */}
-    <div className="relative mx-auto w-[260px] h-[260px] md:w-[360px] md:h-[360px] flex items-center justify-center">
+    {/* CIRCLE */}
+    <div className="relative w-[260px] h-[260px] md:w-[340px] md:h-[340px] flex items-center justify-center">
 
       {/* CENTER */}
-      <div className="absolute w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#080c14] border border-[#c9a84c]/30 flex items-center justify-center text-center">
+      <div className="absolute w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#080c14] border border-[#c9a84c]/30 flex items-center justify-center">
         <span className="text-xs text-[#c9a84c] font-semibold">
           Growth
         </span>
@@ -581,7 +613,7 @@ useEffect(() => {
 
       {/* RINGS */}
       {processSteps.map((_, i) => {
-        const size = 100 + i * 30; // ring size
+        const size = 100 + i * 30;
         const isActive = i === activeStep;
 
         return (
@@ -598,13 +630,33 @@ useEffect(() => {
               boxShadow: isActive
                 ? "0 0 25px rgba(201,168,76,0.6)"
                 : "none",
-              transform: `scale(${isActive ? 1.05 : 1})`,
             }}
           />
         );
       })}
 
     </div>
+  </div>
+
+  {/* RIGHT CONTENT */}
+  <div className="hidden md:block">
+    <div className="bg-[#080c14] border border-[#c9a84c]/20 rounded-2xl p-6 text-left">
+      <p className="text-white/40 text-xs mb-2">
+        Timeline
+      </p>
+
+      <p className="text-[#c9a84c] font-semibold mb-3">
+        {processSteps[activeStep].week}
+      </p>
+
+      <p className="text-white/60 text-sm">
+        Structured execution with clear deliverables, accountability,
+        and measurable growth outcomes.
+      </p>
+    </div>
+  </div>
+
+</div>
 
     {/* STEP TITLE */}
     <div className="mt-10 max-w-lg mx-auto">
