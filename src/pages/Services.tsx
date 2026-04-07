@@ -531,73 +531,137 @@ useEffect(() => {
         </div>
       </section>
 
-{/* ── PROCESS (CLEAN CIRCLE UI - NO DEAD SPACE) ── */}
-<section className="py-16 bg-[#0a0f1c]">
-  <div className="max-w-5xl mx-auto px-6 text-center">
 
-    {/* TOP ACTIVE STEP */}
-    <div className="mb-10">
-      <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10">
+{/* ── ADVANCED PROCESS UI ── */}
+<section className="py-16 md:py-20 bg-[#0a0f1c] overflow-hidden">
+  <div className="max-w-7xl mx-auto px-6">
 
-        <span className="text-[#c9a84c] text-xs font-bold">
-          Step {activeStep + 1}
-        </span>
-
-        <span className="text-white text-sm font-medium">
-          {processSteps[activeStep].title}
-        </span>
-
-        <span className="text-white/40 text-xs">
-          {processSteps[activeStep].week}
-        </span>
-
-      </div>
+    {/* HEADING */}
+    <div className="text-center mb-12">
+      <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-2">
+        The Process
+      </p>
+      <h2 className="text-2xl md:text-4xl font-bold text-white">
+        How I Deliver Results
+      </h2>
     </div>
 
-    {/* CIRCLE */}
-    <div className="relative w-[260px] h-[260px] md:w-[320px] md:h-[320px] mx-auto">
+    {/* GRID */}
+    <div className="grid md:grid-cols-3 items-center gap-8">
 
-      {/* OUTER RING */}
-      <div className="absolute inset-0 rounded-full border border-white/10" />
+      {/* LEFT CONTENT (DESKTOP ONLY) */}
+      <div className="hidden md:block">
+        <div className="bg-[#080c14] border border-white/10 rounded-2xl p-6">
+          <p className="text-[#c9a84c] text-xs mb-2">
+            Step {activeStep + 1}
+          </p>
 
-      {processSteps.map((step, i) => {
-        const angle = (i / processSteps.length) * 2 * Math.PI;
-        const radius = 120;
+          <h3 className="text-white text-lg font-semibold mb-2">
+            {processSteps[activeStep].title}
+          </h3>
 
-        const x = radius * Math.cos(angle);
-        const y = radius * Math.sin(angle);
+          <p className="text-white/60 text-sm leading-relaxed">
+            {processSteps[activeStep].desc}
+          </p>
+        </div>
+      </div>
 
-        const isActive = i === activeStep;
+      {/* CENTER CIRCLE */}
+      <div className="flex flex-col items-center">
 
-        return (
+        {/* STEP INFO (MOBILE + TOP) */}
+        <div className="mb-6 text-center">
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10">
+            <span className="text-[#c9a84c] text-xs font-bold">
+              Step {activeStep + 1}
+            </span>
+            <span className="text-white text-sm">
+              {processSteps[activeStep].week}
+            </span>
+          </div>
+        </div>
+
+        {/* CIRCLE */}
+        <div className="relative w-[260px] h-[260px] md:w-[320px] md:h-[320px]">
+
+          {/* OUTER RING */}
+          <div className="absolute inset-0 rounded-full border border-white/10" />
+
+          {/* ARROW */}
           <div
-            key={i}
-            className="absolute"
+            className="absolute left-1/2 top-1/2 origin-center transition-all duration-700"
             style={{
-              left: "50%",
-              top: "50%",
-              transform: `translate(${x}px, ${y}px)`,
+              transform: `rotate(${(activeStep / processSteps.length) * 360}deg)`
             }}
           >
-            <div
-              className={`px-3 py-2 rounded-full text-xs font-semibold transition-all duration-500 whitespace-nowrap
-                ${
-                  isActive
-                    ? "bg-[#c9a84c] text-[#080c14] scale-110 shadow-lg shadow-[#c9a84c]/40"
-                    : "bg-white/10 text-white/40"
-                }
-              `}
-            >
-              {i + 1}
+            <div className="w-[110px] h-[2px] bg-[#c9a84c] relative">
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-l-[10px] border-l-[#c9a84c] border-y-[6px] border-y-transparent"></div>
             </div>
           </div>
-        );
-      })}
+
+          {/* STEPS */}
+          {processSteps.map((step, i) => {
+            const angle = (i / processSteps.length) * 2 * Math.PI;
+            const radius = 120;
+
+            const x = radius * Math.cos(angle);
+            const y = radius * Math.sin(angle);
+
+            const isActive = i === activeStep;
+
+            return (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: "50%",
+                  top: "50%",
+                  transform: `translate(${x}px, ${y}px)`
+                }}
+              >
+                <div
+                  className={`w-9 h-9 flex items-center justify-center rounded-full text-xs font-bold transition-all duration-500
+                    ${
+                      isActive
+                        ? "bg-[#c9a84c] text-[#080c14] scale-125 shadow-lg shadow-[#c9a84c]/40"
+                        : "bg-white/10 text-white/40"
+                    }`}
+                >
+                  {i + 1}
+                </div>
+              </div>
+            );
+          })}
+
+        </div>
+      </div>
+
+      {/* RIGHT CONTENT (DESKTOP ONLY) */}
+      <div className="hidden md:block">
+        <div className="bg-[#080c14] border border-[#c9a84c]/20 rounded-2xl p-6">
+          <p className="text-white/40 text-xs mb-2">
+            Timeline
+          </p>
+
+          <p className="text-[#c9a84c] font-semibold mb-3">
+            {processSteps[activeStep].week}
+          </p>
+
+          <div className="text-white/60 text-sm">
+            Each stage is structured with clear deliverables,
+            accountability, and measurable outcomes.
+          </div>
+        </div>
+      </div>
 
     </div>
-
   </div>
 </section>
+
+
+
+      
+      
 
 
       {/* ── TEAM ── */}
