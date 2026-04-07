@@ -577,9 +577,10 @@ export default function Home() {
       </section>
 
       {/* ========== VIDEO SECTION ========== */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
+<section className="pt-12 pb-6 md:pt-16 md:pb-8 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
+        
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
+          <div className="flex flex-col lg:flex-row gap-8 items-center">
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -621,8 +622,9 @@ export default function Home() {
   viewport={{ once: true }}
   className="lg:w-1/2"
 >
-  <div className="border border-white/10 rounded-2xl overflow-hidden aspect-video w-full">
-    <iframe
+<div className="border border-white/10 rounded-2xl overflow-hidden aspect-video w-full -mb-10 md:-mb-16"> 
+  
+  <iframe
       className="w-full h-full"
       src="https://www.youtube.com/embed/MjqcQ46ai5Y"
       title="Pranjal Digital - My Story"
