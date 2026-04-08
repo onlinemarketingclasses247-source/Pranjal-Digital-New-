@@ -51,7 +51,7 @@ export default function Contact() {
 }, []);
 
 return (
-<div className="bg-[#080c14] pt-24">
+<div className="bg-[#080c14] pt-24 overflow-x-hidden">
 
 {/* Hero */}
 <section className="py-20 relative overflow-hidden">
@@ -67,9 +67,9 @@ Whether you have a clear brief or need help figuring out where to start, let's h
 </section>
 
 {/* Contact Form */}
-<section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-<ScrollReveal>
+<section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start justify-center">
+<ScrollReveal className="w-full">
 <form
 action="https://formsubmit.co/pranjallundefined@gmail.com"
 method="POST"
@@ -165,7 +165,7 @@ Send Message <ArrowRight size={18} />
 </form>
 </ScrollReveal>
 
-<div className="space-y-6">
+<div className="space-y-6 w-full">
 <ScrollReveal delay={0.1}>
 <div className="p-6 rounded-2xl bg-[#0a0f1c] border border-white/10">
 <div className="w-10 h-10 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mb-4">
