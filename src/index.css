@@ -2,368 +2,153 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= BASE STYLES ================= */
+/* ================= BASE ================= */
 
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: #0a0f1c;
 }
-
 ::-webkit-scrollbar-thumb {
   background: #c9a84c;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #d4b05c;
-}
-
-/* Focus outline */
+/* Focus */
 *:focus-visible {
   outline: 2px solid #c9a84c;
   outline-offset: 2px;
 }
 
-/* ================= BUTTONS ================= */
+/* ================= DESIGN SYSTEM ================= */
 
-button, a {
-  transition: all 0.3s ease;
+/* SECTION SYSTEM (THIS IS THE KEY FIX) */
+.section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 
-.gold-bg {
-  background: linear-gradient(135deg, #c9a84c 0%, #b8963f 100%);
-  color: #080c14;
-  font-weight: 700;
-  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.3);
+.section-tight {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
-.gold-bg:hover {
-  background: linear-gradient(135deg, #d4b05c 0%, #c9a84c 100%);
-  box-shadow: 0 15px 30px rgba(201, 168, 76, 0.4);
-  transform: translateY(-2px);
+.section-hero {
+  padding-top: 6rem;
+  padding-bottom: 4rem;
 }
 
-.gold-gradient {
-  background: linear-gradient(90deg, #c9a84c, #f5d76e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ================= 3D MAP ================= */
-
-.map-3d-container {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  background: radial-gradient(circle at center, #0f172a, #020617);
-  perspective: 1000px;
-}
-
-.map-3d {
-  width: 200%;
-  height: 200%;
-  background-image: url('/images/world-map-clean.png');
-  background-size: contain;
-  background-repeat: repeat-x;
-  background-position: center;
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  animation: rotateMap 30s linear infinite;
-  transform: rotateX(25deg) rotateY(0deg);
-  opacity: 0.9;
-}
-
-.map-3d-container::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 40%, #020617 80%);
-  pointer-events: none;
-}
-
-@keyframes rotateMap {
-  0% {
-    transform: rotateX(25deg) translateX(0);
-  }
-  100% {
-    transform: rotateX(25deg) translateX(-50%);
-  }
-}
-
-/* ================= FORCE UNIFORM SECTION SPACING ================= */
-
-/* Force ALL sections and section-like divs to have consistent spacing */
-section,
-div[class*="bg-"]:has(h1, h2, form, .grid),
-div[id*="section"],
-div[class*="section"] {
-  margin-bottom: 0.5rem !important;
-}
-
-/* Remove margin from last element */
-section:last-child,
-div[class*="bg-"]:last-child {
-  margin-bottom: 0 !important;
-}
-
-/* ================= FORCE REMOVE ALL LARGE PADDING CLASSES ================= */
-
-/* Strip all large padding from any element */
-[class*="py-8"],
-[class*="py-10"],
-[class*="py-12"],
-[class*="py-16"],
-[class*="py-20"],
-[class*="py-24"],
-[class*="py-32"],
-[class*="pt-8"],
-[class*="pt-10"],
-[class*="pt-12"],
-[class*="pt-16"],
-[class*="pt-20"],
-[class*="pt-24"],
-[class*="pt-32"],
-[class*="pb-8"],
-[class*="pb-10"],
-[class*="pb-12"],
-[class*="pb-16"],
-[class*="pb-20"],
-[class*="pb-24"],
-[class*="pb-32"] {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
-}
-
-/* Strip large margins */
-[class*="mt-8"],
-[class*="mt-10"],
-[class*="mt-12"],
-[class*="mt-16"],
-[class*="mt-20"],
-[class*="mb-8"],
-[class*="mb-10"],
-[class*="mb-12"],
-[class*="mb-16"],
-[class*="mb-20"] {
-  margin-top: 0.25rem !important;
-  margin-bottom: 0.25rem !important;
-}
-
-/* ================= RESPONSIVE ================= */
-
+/* Mobile */
 @media (max-width: 768px) {
-  section,
-  div[class*="bg-"]:has(h1, h2, form, .grid) {
-    margin-bottom: 0.25rem !important;
+  .section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
-  
-  [class*="py-8"],
-  [class*="py-10"],
-  [class*="py-12"],
-  [class*="py-16"],
-  [class*="py-20"] {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
+
+  .section-tight {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .section-hero {
+    padding-top: 5rem;
+    padding-bottom: 2.5rem;
   }
 }
 
-/* ================= HERO SECTION - SPECIAL HANDLING ================= */
+/* ================= CONTAINER ================= */
 
-/* Keep header offset for hero sections */
-.pt-24, .pt-32, .pt-20 {
-  padding-top: 5rem !important;
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
-@media (max-width: 768px) {
-  .pt-24, .pt-32, .pt-20 {
-    padding-top: 4rem !important;
-  }
-}
-
-/* ================= MOBILE RESPONSIVE DESIGN ================= */
-
-@media (max-width: 768px) {
-  
-  /* Container padding */
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  /* Heading sizes */
-  h1 {
-    font-size: 1.875rem !important;
-    line-height: 1.2 !important;
-  }
-  
-  h2 {
-    font-size: 1.5rem !important;
-    line-height: 1.3 !important;
-  }
-  
-  h3 {
-    font-size: 1.25rem !important;
-  }
-  
-  /* Stack all grids */
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-  
-  /* Full width cards */
-  .grid > div {
-    width: 100% !important;
-  }
-  
-  /* Reduce card padding */
-  .p-4, .p-5, .p-6, .p-8 {
-    padding: 0.75rem !important;
-  }
-  
-  /* Reduce gaps */
-  .gap-4, .gap-5, .gap-6, .gap-8 {
-    gap: 0.75rem !important;
-  }
-  
-  /* Full width buttons */
-  button:not(.absolute button):not(.fixed button) {
-    width: 100% !important;
-  }
-  
-  /* Better touch targets */
-  button, 
-  a,
-  input,
-  select,
-  textarea {
-    min-height: 44px;
-  }
-  
-  /* Form fields full width */
-  input, select, textarea {
-    width: 100% !important;
-    font-size: 16px !important;
-  }
-  
-  /* Stack flex rows */
-  .flex-row {
-    flex-direction: column !important;
-  }
-  
-  /* Center text on mobile */
-  .text-left, .text-right {
-    text-align: center !important;
-  }
-  
-  /* Reduce icon sizes */
-  .w-14, .h-14 {
-    width: 2rem !important;
-    height: 2rem !important;
-  }
-  
-  /* Reduce space-y spacing */
-  .space-y-4 > * + *,
-  .space-y-5 > * + *,
-  .space-y-6 > * + * {
-    margin-top: 0.5rem !important;
-  }
-  
-  /* Two column forms become single column */
-  .grid-cols-2 {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ================= TABLET RESPONSIVE ================= */
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .grid-cols-3, .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-  
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-/* ================= UTILITY ================= */
-
-.container,
-.max-w-4xl,
-.max-w-5xl,
-.max-w-6xl,
-.max-w-7xl {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 1025px) {
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
+@media (min-width: 1024px) {
+  .container-custom {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
-/* ================= PROTECT FIXED ELEMENTS ================= */
+/* ================= BUTTONS ================= */
 
-/* Ensure chat and fixed elements are not affected */
-.fixed,
-.absolute,
-.z-40,
-.z-50,
-.z-[9999],
-.z-[9998] {
-  margin-bottom: 0 !important;
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+.gold-bg {
+  background: linear-gradient(135deg, #c9a84c, #b8963f);
+  color: #080c14;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.3);
+  transition: all 0.3s ease;
 }
 
-/* ================= ADD SMALL SPACING TO SPECIFIC SECTIONS THAT NEED IT ================= */
-
-/* Add small spacing between specific elements that are too tight */
-section + section {
-  margin-top: 0.25rem !important;
+.gold-bg:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(201, 168, 76, 0.4);
 }
 
-/* For Calendly section */
-#calendly-section {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
+/* ================= TYPOGRAPHY ================= */
+
+.heading-xl {
+  font-size: 2.5rem;
+  line-height: 1.2;
 }
 
-/* For process section */
-[class*="process"],
-[class*="Process"] {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
+.heading-lg {
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+  .heading-xl {
+    font-size: 1.75rem;
+  }
+
+  .heading-lg {
+    font-size: 1.5rem;
+  }
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background: #080c14;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+/* ================= GRID FIX ================= */
+
+.grid-fix {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* ================= FORM ================= */
+
+input,
+select,
+textarea {
+  width: 100%;
+  font-size: 16px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  button {
+    width: 100%;
+    min-height: 44px;
+  }
 }
