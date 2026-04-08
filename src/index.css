@@ -104,46 +104,196 @@ button, a {
   }
 }
 
-/* ================= 1% GAP BETWEEN SECTIONS ================= */
+/* ================= MINIMAL SECTION SPACING ================= */
 
-/* Add 1% margin at top and bottom of sections */
+/* Smallest possible gap between sections - just 4px */
 section {
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-bottom: 0.25rem;
 }
 
-/* Remove margin for first and last sections */
-section:first-child {
-  margin-top: 0;
-}
-
+/* Remove bottom margin from last section */
 section:last-child {
   margin-bottom: 0;
 }
 
-/* ================= RESPONSIVE 1% GAP ================= */
-
-/* Mobile */
+/* Mobile - even tighter */
 @media (max-width: 768px) {
   section {
-    margin-top: 0.5%;
-    margin-bottom: 0.5%;
+    margin-bottom: 0.125rem;
   }
 }
 
-/* Tablet */
+/* ================= MOBILE RESPONSIVE DESIGN ================= */
+
+/* Mobile styles for all sections */
+@media (max-width: 768px) {
+  
+  /* Reduce padding on all containers */
+  .container,
+  .max-w-4xl,
+  .max-w-5xl,
+  .max-w-6xl,
+  .max-w-7xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Reduce heading sizes */
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  h3 {
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Stack grid layouts */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Make cards full width */
+  .grid-cols-1,
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Reduce card padding */
+  .p-4, .p-5, .p-6, .p-8 {
+    padding: 0.75rem !important;
+  }
+  
+  /* Reduce gap between elements */
+  .gap-4, .gap-5, .gap-6, .gap-8 {
+    gap: 0.5rem !important;
+  }
+  
+  /* Make buttons full width on mobile */
+  button:not(.absolute button),
+  .button:not(.absolute button) {
+    width: 100% !important;
+  }
+  
+  /* Reduce form input padding */
+  input, select, textarea {
+    padding: 0.5rem !important;
+    font-size: 16px !important;
+  }
+  
+  /* Stack flex layouts */
+  .flex-row {
+    flex-direction: column !important;
+  }
+  
+  /* Center text on mobile */
+  .text-left {
+    text-align: center !important;
+  }
+  
+  /* Reduce icon sizes */
+  .w-14, .h-14 {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+  
+  .w-12, .h-12 {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+  
+  /* Reduce space between stacked elements */
+  .space-y-4 > * + *,
+  .space-y-5 > * + *,
+  .space-y-6 > * + * {
+    margin-top: 0.5rem !important;
+  }
+  
+  /* Make images responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Better touch targets */
+  button, 
+  a,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+  }
+  
+  /* Stack two-column forms */
+  .grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Reduce hero section padding */
+  .pt-20, .pt-24, .pt-32 {
+    padding-top: 3rem !important;
+  }
+  
+  .pb-20, .pb-24, .pb-32 {
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Center flex items on mobile */
+  .items-start,
+  .items-end {
+    align-items: center !important;
+  }
+  
+  /* Make sure text is readable */
+  p, li, span {
+    font-size: 0.9375rem;
+  }
+  
+  /* Reduce margin on sections */
+  .mt-8, .mt-10, .mt-12, .mt-16 {
+    margin-top: 0.5rem !important;
+  }
+  
+  .mb-8, .mb-10, .mb-12, .mb-16 {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* ================= TABLET RESPONSIVE (768px - 1024px) ================= */
+
 @media (min-width: 769px) and (max-width: 1024px) {
-  section {
-    margin-top: 0.75%;
-    margin-bottom: 0.75%;
+  
+  /* Tablet grid adjustments */
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
-}
-
-/* Desktop */
-@media (min-width: 1025px) {
-  section {
-    margin-top: 1%;
-    margin-bottom: 1%;
+  
+  /* Reduce tablet padding */
+  .container,
+  .max-w-4xl,
+  .max-w-5xl,
+  .max-w-6xl,
+  .max-w-7xl {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  /* Tablet heading sizes */
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2 {
+    font-size: 2rem !important;
   }
 }
 
@@ -173,19 +323,79 @@ section:last-child {
   padding-right: 1rem;
 }
 
-/* ================= RESPONSIVE TOUCH TARGETS ================= */
+/* Desktop container padding */
+@media (min-width: 1025px) {
+  .container,
+  .max-w-4xl,
+  .max-w-5xl,
+  .max-w-6xl,
+  .max-w-7xl {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ================= FORM RESPONSIVENESS ================= */
 
 @media (max-width: 768px) {
-  button, a, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  input, select, textarea {
-    font-size: 16px !important;
-  }
-  
-  .grid-cols-2 {
+  /* Stack form fields */
+  form .grid {
     grid-template-columns: 1fr !important;
   }
+  
+  /* Make form full width */
+  form {
+    width: 100%;
+  }
+  
+  /* Reduce form spacing */
+  form .space-y-4 > * + * {
+    margin-top: 0.75rem !important;
+  }
+}
+
+/* ================= CARD RESPONSIVENESS ================= */
+
+@media (max-width: 768px) {
+  /* Stack cards vertically */
+  .grid > div {
+    margin-bottom: 1rem;
+  }
+  
+  /* Make cards full width */
+  .rounded-xl, .rounded-2xl {
+    width: 100%;
+  }
+  
+  /* Reduce card internal spacing */
+  .card-body, 
+  [class*="p-"]:not(button p) {
+    padding: 0.75rem;
+  }
+}
+
+/* ================= NAVIGATION RESPONSIVENESS ================= */
+
+@media (max-width: 768px) {
+  /* Hide desktop navigation */
+  .hidden.lg\:flex {
+    display: none !important;
+  }
+  
+  /* Show mobile menu button */
+  .lg\:hidden {
+    display: block !important;
+  }
+}
+
+/* ================= CHAT COMPONENT FIX ================= */
+
+/* Ensure chat doesn't get affected by section spacing */
+.fixed,
+.absolute,
+.z-40,
+.z-50,
+.z-[9999] {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
