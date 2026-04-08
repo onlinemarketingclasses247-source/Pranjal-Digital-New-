@@ -740,3 +740,19 @@ body {
     -webkit-text-stroke: 0px transparent;
   }
 }
+
+
+
+
+/* Emergency strikethrough fix */
+.gold-gradient {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  -webkit-text-decoration-line: none !important;
+}
+
+.gold-gradient::before,
+.gold-gradient::after {
+  display: none !important;
+  content: none !important;
+}
