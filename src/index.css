@@ -2,112 +2,137 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= VARIABLES & BASE ================= */
+/* ================= CORE FIXES ================= */
+
 :root {
-  --gold-primary: #c9a84c;
-  --gold-secondary: #b8963f;
-  --gold-light: #f5d76e;
+  --gold: #c9a84c;
+  --gold-dark: #b8963f;
   --bg-dark: #0a0f1c;
-  --section-gap: clamp(3rem, 8vw, 6rem); /* Responsive gap */
+  --header-height: 70px;
 }
 
-html {
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden; /* Prevents horizontal scroll/white lines on side */
+  background-color: var(--bg-dark);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: relative;
   scroll-behavior: smooth;
 }
 
-body {
+/* Fix for the white line at top during scroll */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-color: var(--bg-dark);
-  overflow-x: hidden;
+  z-index: -1;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+}
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { 
+  background: var(--gold); 
+  border-radius: 10px;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
+/* ================= SECTIONING & GAPS ================= */
 
-::-webkit-scrollbar-thumb {
-  background: var(--gold-primary);
-  border-radius: 4px;
-}
-
-/* ================= SECTION SPACING ================= */
-
-/* Standardizes desktop gaps while allowing mobile to breathe */
 section {
-  padding-top: var(--section-gap);
-  padding-bottom: var(--section-gap);
+  position: relative;
+  width: 100%;
+  /* Responsive vertical spacing: 4rem on mobile, 8rem on desktop */
+  padding: clamp(3rem, 10vh, 8rem) 1.25rem;
+  margin: 0 auto;
 }
 
-/* Ensure Hero section accounts for fixed Navbars */
-header + section, 
-main > section:first-of-type {
-  padding-top: clamp(6rem, 12vh, 10rem);
+/* Ensure sections don't have weird margins breaking the flow */
+section + section {
+  margin-top: 0;
 }
 
-/* ================= COMPONENTS ================= */
-
-.gold-bg {
-  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-secondary) 100%);
-  color: #080c14;
-  font-weight: 700;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.gold-bg:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.4);
-}
+/* ================= STATS & NUMBERS FIXES ================= */
 
-.gold-gradient-text {
-  background: linear-gradient(90deg, var(--gold-primary), var(--gold-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ================= STATS & NUMBERS (RESPONSIVE) ================= */
-
-/* Instead of forcing 1 column, we use auto-fit. 
-   This ensures stats look good on all screens. 
+/* This fixes the cutoff seen in your screenshots. 
+  It allows cards to wrap naturally on smaller screens.
 */
-.stats-grid {
+.stats-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1.5rem;
   width: 100%;
 }
 
-@media (max-width: 640px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on small mobile for stats */
-    gap: 1rem;
+@media (max-width: 480px) {
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tiny screens */
+    gap: 0.75rem;
   }
   
-  .stat-card h2, .stat-card .number {
-    font-size: 1.75rem !important;
+  .stat-card {
+    padding: 1rem !important;
+  }
+
+  .stat-card .text-4xl, 
+  .stat-card .text-5xl {
+    font-size: 1.75rem !important; /* Scale down giant numbers */
+    line-height: 1.2;
   }
 }
 
-/* ================= 3D MAP ================= */
+/* ================= BUTTONS & NAV FIXES ================= */
+
+.gold-bg {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  color: #080c14;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+/* Mobile Sticky Footer Fix */
+.fixed-bottom-nav {
+  z-index: 9999;
+  background: rgba(10, 15, 28, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(201, 168, 76, 0.2);
+  padding-bottom: env(safe-area-inset-bottom); /* Fix for iPhone notches */
+}
+
+/* ================= MAP & VISUALS ================= */
 
 .map-3d-container {
-  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 20px;
+  aspect-ratio: 16/9;
+  border-radius: 1rem;
   overflow: hidden;
-  border: 1px solid rgba(201, 168, 76, 0.2);
-  background: radial-gradient(circle at center, #0f172a, #020617);
-  perspective: 1000px;
+  border: 1px solid rgba(201, 168, 76, 0.1);
+  position: relative;
 }
 
 @media (max-width: 768px) {
   .map-3d-container {
-    aspect-ratio: 1 / 1; /* Square on mobile */
+    aspect-ratio: 1/1; /* Square for mobile */
   }
 }
 
@@ -115,74 +140,50 @@ main > section:first-of-type {
   width: 200%;
   height: 200%;
   background-image: url('/images/world-map-clean.png');
-  background-size: contain;
-  background-repeat: repeat-x;
+  background-size: cover;
   position: absolute;
   top: -50%;
-  animation: rotateMap 30s linear infinite;
-  transform: rotateX(20deg);
-  opacity: 0.7;
+  animation: rotateMap 40s linear infinite;
+  opacity: 0.6;
 }
 
 @keyframes rotateMap {
-  from { transform: rotateX(20deg) translateX(0); }
-  to { transform: rotateX(20deg) translateX(-50%); }
+  from { transform: rotateX(15deg) translateX(0); }
+  to { transform: rotateX(15deg) translateX(-50%); }
 }
 
-/* ================= MOBILE OPTIMIZATIONS ================= */
+/* ================= TYPOGRAPHY RESPONSIVENESS ================= */
 
-@media (max-width: 768px) {
-  /* Typography Scale */
-  h1 { font-size: 2.25rem !important; line-height: 1.2; }
-  h2 { font-size: 1.85rem !important; }
-  p { font-size: 1rem !important; }
+h1 { font-size: clamp(2rem, 8vw, 4rem); line-height: 1.1; }
+h2 { font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.2; }
+p { font-size: clamp(1rem, 2vw, 1.125rem); opacity: 0.9; }
 
-  /* Interactive Elements */
-  button, a {
-    min-height: 48px; /* High accessibility touch target */
+/* ================= UTILITY ================= */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+/* Animation specifically for desktop - disabled on mobile for performance */
+@media (min-width: 1024px) {
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
   }
+}
 
-  /* Remove hover transforms on mobile to prevent "sticky" hover states */
-  .gold-bg:hover, .card:hover {
-    transform: none !important;
+/* Fix for text alignment in hero on mobile */
+@media (max-width: 768px) {
+  .mobile-center {
+    text-align: center !important;
   }
   
-  /* Flex/Grid adjustments */
-  .mobile-stack {
-    flex-direction: column !important;
-    gap: 2rem;
+  /* Ensure images/icons don't overflow */
+  img, svg {
+    max-width: 100%;
+    height: auto;
   }
-}
-
-/* ================= ANIMATIONS ================= */
-
-.animate-fadeIn {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Floating effect for icons */
-.floating {
-  animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Shimmer effect for gold text */
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
 }
