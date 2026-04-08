@@ -29,9 +29,17 @@ function Header() {
     setMenuOpen(false);
   }, [location]);
 
+  useEffect(() => {
+  if (menuOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+}, [menuOpen]);
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
         scrolled
           ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-[#c9a84c]/20 shadow-lg'
           : 'bg-transparent'
@@ -92,38 +100,55 @@ function Header() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#080c14]/98 border-b border-[#c9a84c]/20"
+
+<AnimatePresence>
+  {menuOpen && (
+    <>
+      {/* OVERLAY */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/70 z-[9998]"
+        onClick={() => setMenuOpen(false)}
+      />
+
+      {/* MENU PANEL */}
+      <motion.div
+        initial={{ x: '100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '100%' }}
+        transition={{ duration: 0.3 }}
+        className="fixed top-0 right-0 w-full h-screen bg-[#080c14] z-[9999] flex flex-col px-6 pt-24"
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`text-lg font-medium py-4 border-b border-white/10 ${
+              location === link.href ? 'text-[#c9a84c]' : 'text-white/80'
+            }`}
           >
-            <div className="px-4 py-4 space-y-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`block text-base font-medium py-2 transition-colors ${
-                    location === link.href ? 'text-[#c9a84c]' : 'text-white/80 hover:text-[#c9a84c]'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <a
-                href={CALENDLY}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gold-bg text-[#080c14] font-semibold text-sm px-5 py-2.5 rounded-lg inline-block mt-2"
-              >
-                Book a Meeting
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {link.label}
+          </Link>
+        ))}
+
+        <a
+          href={CALENDLY}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 gold-bg text-[#080c14] font-semibold text-sm px-5 py-3 rounded-lg text-center"
+        >
+          Book a Meeting
+        </a>
+      </motion.div>
+    </>
+  )}
+</AnimatePresence>
+
+      
+      
+      
     </header>
   );
 }
