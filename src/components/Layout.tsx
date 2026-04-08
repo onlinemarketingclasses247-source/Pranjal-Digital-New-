@@ -18,6 +18,7 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
+  const isDarkHeader = location === '/services';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -40,9 +41,9 @@ function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-[#c9a84c]/20 shadow-lg'
-          : 'bg-transparent'
+       scrolled || isDarkHeader
+  ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-[#c9a84c]/20 shadow-lg'
+  : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -114,13 +115,16 @@ function Header() {
       />
 
       {/* MENU PANEL */}
-      <motion.div
-        initial={{ x: '100%' }}
-        animate={{ x: 0 }}
-        exit={{ x: '100%' }}
-        transition={{ duration: 0.3 }}
-        className="fixed top-0 right-0 w-full h-screen bg-[#080c14] z-[9999] flex flex-col px-6 pt-24"
-      >
+    <motion.div
+  className="fixed top-0 right-0 w-full h-screen bg-[#080c14] z-[9999] flex flex-col px-6 pt-20"
+>
+  {/* CLOSE BUTTON */}
+  <button
+  onClick={() => setMenuOpen(false)}
+  className="absolute top-5 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md"
+>
+  <X size={20} className="text-white" />
+</button>
         {navLinks.map((link) => (
           <Link
             key={link.href}
