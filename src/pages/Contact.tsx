@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, Video, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, Video, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Star, Phone, MapPin } from 'lucide-react';
 import { ScrollReveal } from '@/components/ScrollReveal';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -43,7 +44,7 @@ const processSteps = [
     icon: ClipboardList,
     title: 'Understand Requirements',
     description: 'We listen to your goals, challenges, and current marketing efforts to fully grasp your needs.',
-    duration: '30-45 min call'
+    duration: '30-45 min'
   },
   {
     icon: Target,
@@ -55,7 +56,7 @@ const processSteps = [
     icon: Users,
     title: 'Kick-off Discovery Call',
     description: 'Strategic discussion to align on objectives, timeline, and key success metrics.',
-    duration: '45-60 min call'
+    duration: '45-60 min'
   },
   {
     icon: FileText,
@@ -67,80 +68,13 @@ const processSteps = [
     icon: Handshake,
     title: 'Partnership Launch',
     description: 'If everything aligns perfectly, we kick off with a structured onboarding process.',
-    duration: 'Get started'
+    duration: 'Ready to start'
   }
 ];
 
-const ProcessTimeline = () => (
-  <div className="relative">
-    {/* Connecting line */}
-    <div className="absolute left-6 top-12 bottom-12 w-px bg-gradient-to-b from-[#c9a84c]/40 via-[#c9a84c]/20 to-transparent hidden md:block" />
-    
-    <div className="space-y-8">
-      {processSteps.map((step, index) => (
-        <div key={step.title} className="relative flex flex-col md:flex-row md:items-start gap-4 md:gap-6 group">
-          {/* Timeline dot/number */}
-          <div className="flex-shrink-0">
-            <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 border border-[#c9a84c]/30 flex items-center justify-center group-hover:bg-[#c9a84c]/20 transition-colors">
-              <step.icon className="text-[#c9a84c]" size={20} />
-            </div>
-          </div>
-          
-          {/* Content */}
-          <div className="flex-1 bg-[#0a0f1c] rounded-xl p-5 border border-white/10 hover:border-[#c9a84c]/30 transition-all">
-            <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-              <h4 className="text-white font-bold">
-                <span className="text-[#c9a84c] mr-2">0{index + 1}.</span>
-                {step.title}
-              </h4>
-              <span className="text-xs text-[#c9a84c] bg-[#c9a84c]/10 px-2 py-1 rounded-full">
-                {step.duration}
-              </span>
-            </div>
-            <p className="text-white/50 text-sm leading-relaxed">{step.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-const ActionCard = ({ icon: Icon, title, description, whatHappens, ctaText, ctaLink, isPrimary, onClick }) => (
-  <div className={`rounded-2xl p-6 transition-all duration-300 ${isPrimary 
-    ? 'bg-gradient-to-br from-[#c9a84c]/10 to-[#c9a84c]/5 border-2 border-[#c9a84c]/40 hover:border-[#c9a84c]/60' 
-    : 'bg-[#0a0f1c] border border-white/10 hover:border-white/20'
-  }`}>
-    <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${isPrimary ? 'bg-[#c9a84c]' : 'bg-[#c9a84c]/10'}`}>
-      <Icon size={28} className={isPrimary ? 'text-[#080c14]' : 'text-[#c9a84c]'} />
-    </div>
-    
-    <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-    <p className="text-white/60 text-sm mb-4">{description}</p>
-    
-    {/* What happens next - clear explanation */}
-    <div className="bg-black/30 rounded-lg p-4 mb-5">
-      <div className="flex items-center gap-2 mb-2">
-        <Zap size={14} className="text-[#c9a84c]" />
-        <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
-      </div>
-      <p className="text-white/70 text-sm leading-relaxed">{whatHappens}</p>
-    </div>
-    
-    <button
-      onClick={onClick}
-      className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all ${
-        isPrimary 
-          ? 'gold-bg text-[#080c14] hover:opacity-90' 
-          : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
-      }`}
-    >
-      {ctaText} <ChevronRight size={16} />
-    </button>
-  </div>
-);
-
 export default function Contact() {
   const [showCalendly, setShowCalendly] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
     document.title = "Contact Digital Marketing Consultant | Pranjal Digital";
@@ -149,315 +83,387 @@ export default function Contact() {
     );
   }, []);
 
-  const scrollToForm = () => {
-    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToCalendly = () => {
+    const element = document.getElementById('calendly-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setShowCalendly(true);
+    }
   };
 
-  const scrollToCalendly = () => {
-    document.getElementById('calendly-section')?.scrollIntoView({ behavior: 'smooth' });
-    setShowCalendly(true);
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
   };
 
   return (
     <div className="bg-[#080c14] pt-24">
 
-      {/* Hero Section with Clear Options */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#040608] to-[#080c14]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-[#c9a84c]/5 blur-[100px] pointer-events-none" />
+      {/* Hero Section with Animated Background */}
+      <section className="relative overflow-hidden py-20">
+        {/* Animated gradient orbs */}
+        <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-[#c9a84c]/5 blur-[120px] animate-pulse" />
+        <div className="absolute bottom-20 right-1/4 w-80 h-80 rounded-full bg-[#c9a84c]/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
         
         <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <p className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-3">Get In Touch</p>
-          <h1 className="serif text-4xl md:text-5xl font-bold text-white mb-5">Let's Build Something Remarkable Together</h1>
-          <p className="text-white/50 text-lg mb-8">
-            Two ways to connect — choose what works best for you
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-4 py-1.5 rounded-full mb-6">
+              <Sparkles size={14} className="text-[#c9a84c]" />
+              <span className="text-[#c9a84c] text-xs font-medium uppercase tracking-wider">Get In Touch</span>
+            </span>
+          </motion.div>
           
-          {/* Two clear options at the top */}
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            <div className="bg-[#0a0f1c]/50 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Send size={18} className="text-[#c9a84c]" />
-                <span className="text-white font-semibold">Option 1: Send a Message</span>
-              </div>
-              <p className="text-white/40 text-sm">Fill out the form → Get email response within 24h → Discovery call</p>
-            </div>
-            <div className="bg-[#c9a84c]/5 backdrop-blur-sm rounded-xl p-4 border border-[#c9a84c]/20">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Calendar size={18} className="text-[#c9a84c]" />
-                <span className="text-white font-semibold">Option 2: Book a Meeting</span>
-              </div>
-              <p className="text-white/40 text-sm">Choose a time slot → 30-min strategy call → Immediate discussion</p>
-            </div>
-          </div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+          >
+            Let's Build Something
+            <span className="gold-gradient block">Remarkable Together</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-white/60 text-lg max-w-2xl mx-auto"
+          >
+            Two ways to connect — choose what works best for you
+          </motion.p>
         </div>
       </section>
 
-      {/* Two Options Side by Side */}
-      <section className="py-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Option 1: Contact Form Card */}
-          <ScrollReveal>
-            <div className="rounded-2xl bg-[#0a0f1c] border border-white/10 overflow-hidden">
-              <div className="bg-gradient-to-r from-[#c9a84c]/20 to-transparent p-4 border-b border-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center">
-                    <MessageSquare size={20} className="text-[#c9a84c]" />
+      {/* Two Options Section - Centered Layout */}
+      <section className="py-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid lg:grid-cols-2 gap-8"
+        >
+          {/* Option 1: Send Message */}
+          <motion.div variants={fadeUp} className="group">
+            <div className="relative rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 overflow-hidden hover:border-[#c9a84c]/30 transition-all duration-500">
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              <div className="relative p-6 md:p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <MessageSquare size={24} className="text-[#c9a84c]" />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold">Send a Message</h3>
-                    <p className="text-white/40 text-xs">Get a response within 24 hours</p>
+                    <h3 className="text-xl font-bold text-white">Send a Message</h3>
+                    <p className="text-white/40 text-sm">Get a response within 24 hours</p>
                   </div>
                 </div>
-              </div>
-              
-              <div className="p-6">
-                <form
-                  action="https://formsubmit.co/pranjallundefined@gmail.com"
-                  method="POST"
-                  className="space-y-4"
-                  id="contact-form"
-                >
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_subject" value="New Lead from Website" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input type="hidden" name="_honey" style={{ display: "none" }} />
-                  <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">Full Name *</label>
-                      <input
-                        name="name"
-                        required
-                        placeholder="John Smith"
-                        className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">Email Address *</label>
-                      <input
-                        name="email"
-                        type="email"
-                        required
-                        placeholder="john@company.com"
-                        className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-white/60 text-sm mb-1.5">Company / Website</label>
-                    <input
-                      name="company"
-                      placeholder="Your company or website URL"
-                      className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">Service Interested In</label>
-                      <select
-                        name="service"
-                        className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
-                      >
-                        <option value="">Select a service...</option>
-                        {services.map((s) => (
-                          <option key={s} value={s}>{s}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">Monthly Budget</label>
-                      <select
-                        name="budget"
-                        className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-colors"
-                      >
-                        <option value="">Select budget range...</option>
-                        {budgets.map((b) => (
-                          <option key={b} value={b}>{b}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-white/60 text-sm mb-1.5">Your Message *</label>
-                    <textarea
-                      name="message"
-                      required
-                      rows={4}
-                      placeholder="Tell me about your business, current challenges, and what you're looking to achieve..."
-                      className="w-full bg-[#080c14] border border-white/15 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#c9a84c]/50 placeholder:text-white/30 transition-colors resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full gold-bg text-[#080c14] font-bold py-3 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                <div className="space-y-6">
+                  {/* Enhanced Form - Same source fields but better styled */}
+                  <form
+                    action="https://formsubmit.co/pranjallundefined@gmail.com"
+                    method="POST"
+                    className="space-y-5"
                   >
-                    Send Message <Send size={16} />
-                  </button>
-                </form>
-              </div>
-            </div>
-          </ScrollReveal>
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="hidden" name="_subject" value="New Lead from Website" />
+                    <input type="hidden" name="_template" value="table" />
+                    <input type="hidden" name="_honey" style={{ display: "none" }} />
+                    <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
 
-          {/* Option 2: Book Meeting Card */}
-          <ScrollReveal delay={0.1}>
-            <div className="rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-transparent border-2 border-[#c9a84c]/30 overflow-hidden">
-              <div className="bg-gradient-to-r from-[#c9a84c]/30 to-transparent p-4 border-b border-[#c9a84c]/20">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/30 flex items-center justify-center">
-                    <Calendar size={20} className="text-[#c9a84c]" />
-                  </div>
-                  <div>
-                    <h3 className="text-white font-bold">Book a Meeting</h3>
-                    <p className="text-[#c9a84c]/70 text-xs">30-min free strategy call</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <div className="space-y-4">
-                  {/* Benefits of booking a meeting */}
-                  <div className="bg-black/30 rounded-lg p-4">
-                    <p className="text-white/70 text-sm mb-3">✨ Why book a meeting:</p>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2 text-white/60 text-sm">
-                        <CheckCircle2 size={14} className="text-[#c9a84c]" />
-                        Immediate conversation about your goals
-                      </li>
-                      <li className="flex items-center gap-2 text-white/60 text-sm">
-                        <CheckCircle2 size={14} className="text-[#c9a84c]" />
-                        Real-time answers to your questions
-                      </li>
-                      <li className="flex items-center gap-2 text-white/60 text-sm">
-                        <CheckCircle2 size={14} className="text-[#c9a84c]" />
-                        No form filling — just direct discussion
-                      </li>
-                      <li className="flex items-center gap-2 text-white/60 text-sm">
-                        <CheckCircle2 size={14} className="text-[#c9a84c]" />
-                        Get preliminary recommendations on the spot
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-[#c9a84c]/10 rounded-lg p-4">
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="group/input">
+                        <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Full Name *</label>
+                        <input
+                          name="name"
+                          required
+                          placeholder="John Smith"
+                          className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 placeholder:text-white/20 transition-all"
+                        />
+                      </div>
+                      <div className="group/input">
+                        <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Email Address *</label>
+                        <input
+                          name="email"
+                          type="email"
+                          required
+                          placeholder="john@company.com"
+                          className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 placeholder:text-white/20 transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="group/input">
+                      <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Company / Website</label>
+                      <input
+                        name="company"
+                        placeholder="Your company or website URL"
+                        className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 placeholder:text-white/20 transition-all"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="group/input">
+                        <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Service Interested In</label>
+                        <select
+                          name="service"
+                          className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
+                        >
+                          <option value="">Select a service...</option>
+                          {services.map((s) => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="group/input">
+                        <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Monthly Budget</label>
+                        <select
+                          name="budget"
+                          className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
+                        >
+                          <option value="">Select budget range...</option>
+                          {budgets.map((b) => (
+                            <option key={b} value={b}>{b}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="group/input">
+                      <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Your Message *</label>
+                      <textarea
+                        name="message"
+                        required
+                        rows={4}
+                        placeholder="Tell me about your business, current challenges, and what you're looking to achieve..."
+                        className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 placeholder:text-white/20 transition-all resize-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                    >
+                      Send Message 
+                      <Send size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </form>
+
+                  {/* What happens next */}
+                  <div className="mt-6 pt-6 border-t border-white/10">
+                    <div className="flex items-center gap-2 mb-3">
                       <Zap size={14} className="text-[#c9a84c]" />
                       <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
                     </div>
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Choose a time slot → Join the video/audio call → Discuss your business goals → Get immediate feedback → Receive follow-up proposal within 48 hours
-                    </p>
+                    <div className="space-y-2 text-sm text-white/60">
+                      <p>✓ Form submitted → Email confirmation</p>
+                      <p>✓ Response within 24 hours</p>
+                      <p>✓ Discovery call scheduled</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Option 2: Book Meeting */}
+          <motion.div variants={fadeUp} className="group">
+            <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
+              
+              <div className="relative p-6 md:p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-[#c9a84c]/25">
+                    <Calendar size={24} className="text-[#080c14]" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Book a Meeting</h3>
+                    <p className="text-[#c9a84c]/70 text-sm">30-min free strategy call</p>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Benefits */}
+                  <div className="bg-black/30 rounded-xl p-5">
+                    <p className="text-white font-semibold mb-4 text-sm">✨ Why book a meeting:</p>
+                    <div className="space-y-3">
+                      {[
+                        'Immediate conversation about your goals',
+                        'Real-time answers to your questions',
+                        'No form filling — direct discussion',
+                        'Get preliminary recommendations instantly'
+                      ].map((benefit, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <CheckCircle2 size={14} className="text-[#c9a84c] shrink-0" />
+                          <span className="text-white/60 text-sm">{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* What happens next */}
+                  <div className="bg-[#c9a84c]/10 rounded-xl p-5 border border-[#c9a84c]/20">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Zap size={14} className="text-[#c9a84c]" />
+                      <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
+                    </div>
+                    <div className="space-y-2 text-sm text-white/60">
+                      <p>✓ Choose a time slot that works for you</p>
+                      <p>✓ Join the video/audio call</p>
+                      <p>✓ Discuss your business goals</p>
+                      <p>✓ Get immediate feedback & proposal within 48h</p>
+                    </div>
                   </div>
 
                   <button
                     onClick={scrollToCalendly}
-                    className="w-full gold-bg text-[#080c14] font-bold py-3 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                    className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                   >
-                    Book Your Free Call <Calendar size={16} />
+                    Book Your Free Call 
+                    <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </div>
             </div>
-          </ScrollReveal>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* Side Information Section */}
+      {/* Contact Info Row */}
       <section className="py-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-3 gap-6">
-          <ScrollReveal delay={0.2}>
-            <div className="p-5 rounded-xl bg-[#0a0f1c] border border-white/10">
-              <Mail className="text-[#c9a84c] mb-3" size={22} />
-              <h4 className="text-white font-semibold mb-1">Email Support</h4>
-              <p className="text-white/40 text-sm">info@pranjaldigital.com</p>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
+          {[
+            { icon: Mail, title: "Email", value: "info@pranjaldigital.com", delay: 0 },
+            { icon: Clock, title: "Response Time", value: "Within 24 hours", delay: 0.1 },
+            { icon: Globe, title: "Markets Served", value: "US, Canada, India & Global", delay: 0.2 }
+          ].map((item, idx) => (
+            <div key={item.title} className="group p-6 rounded-xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-300 text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <item.icon size={20} className="text-[#c9a84c]" />
+              </div>
+              <h4 className="text-white font-semibold mb-1">{item.title}</h4>
+              <p className="text-white/50 text-sm">{item.value}</p>
             </div>
-          </ScrollReveal>
-          
-          <ScrollReveal delay={0.25}>
-            <div className="p-5 rounded-xl bg-[#0a0f1c] border border-white/10">
-              <Clock className="text-[#c9a84c] mb-3" size={22} />
-              <h4 className="text-white font-semibold mb-1">Response Time</h4>
-              <p className="text-white/40 text-sm">Within 24 hours, usually faster</p>
-            </div>
-          </ScrollReveal>
-          
-          <ScrollReveal delay={0.3}>
-            <div className="p-5 rounded-xl bg-[#0a0f1c] border border-white/10">
-              <Globe className="text-[#c9a84c] mb-3" size={22} />
-              <h4 className="text-white font-semibold mb-1">Markets Served</h4>
-              <p className="text-white/40 text-sm">US, Canada, India & Global</p>
-            </div>
-          </ScrollReveal>
-        </div>
+          ))}
+        </motion.div>
       </section>
 
       {/* Calendly Section */}
-      <section id="calendly-section" className="py-12 bg-[#040608]">
+      <section id="calendly-section" className="py-12 bg-gradient-to-b from-[#040608] to-[#080c14]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          {showCalendly ? (
-            <ScrollReveal>
-              <div className="rounded-2xl overflow-hidden border border-white/10">
-                <iframe
-                  src={CALENDLY}
-                  width="100%"
-                  height="700"
-                  frameBorder="0"
-                  title="Book a Meeting with Pranjal Digital"
-                  className="bg-white"
-                />
-              </div>
-            </ScrollReveal>
-          ) : (
-            <div className="text-center">
-              <p className="text-white/40 text-sm">Click "Book Your Free Call" above to see available time slots</p>
-            </div>
+          {showCalendly && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="rounded-2xl overflow-hidden border border-[#c9a84c]/20 shadow-2xl shadow-[#c9a84c]/10"
+            >
+              <iframe
+                src={CALENDLY}
+                width="100%"
+                height="700"
+                frameBorder="0"
+                title="Book a Meeting with Pranjal Digital"
+                className="bg-white"
+              />
+            </motion.div>
           )}
         </div>
       </section>
 
-      {/* Process Section - Bottom */}
+      {/* Process Section */}
       <section className="py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-4 py-2 rounded-full mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-4 py-2 rounded-full mb-6">
             <Shield size={16} className="text-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-sm font-medium">Our Promise</span>
+            <span className="text-[#c9a84c] text-sm font-medium">Our Process</span>
           </div>
-          <h2 className="serif text-3xl md:text-4xl font-bold text-white mb-4">How We Handle Your Inquiry</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How We Handle Your Inquiry</h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            From first contact to partnership — a transparent, no-pressure process designed for your success
+            From first contact to partnership — a transparent, no-pressure process
           </p>
-        </ScrollReveal>
+        </motion.div>
 
-        <ProcessTimeline />
-
-        {/* Trust badges */}
-        <ScrollReveal delay={0.3}>
-          <div className="mt-12 pt-8 border-t border-white/10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-white">400+</p>
-                <p className="text-white/40 text-sm">Clients Served</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">24h</p>
-                <p className="text-white/40 text-sm">Response Guarantee</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">Free</p>
-                <p className="text-white/40 text-sm">Strategy Call & Audit</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">NDA</p>
-                <p className="text-white/40 text-sm">Signed on Request</p>
-              </div>
-            </div>
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-[#c9a84c]/40 via-[#c9a84c]/20 to-transparent hidden md:block" />
+          
+          <div className="space-y-6">
+            {processSteps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="relative flex flex-col md:flex-row gap-4 group"
+              >
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <step.icon className="text-[#c9a84c]" size={20} />
+                  </div>
+                </div>
+                <div className="flex-1 bg-gradient-to-r from-[#0a0f1c] to-transparent rounded-xl p-5 border border-white/5 hover:border-[#c9a84c]/20 transition-all">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h4 className="text-white font-bold">
+                      <span className="text-[#c9a84c] mr-2">0{index + 1}.</span>
+                      {step.title}
+                    </h4>
+                    <span className="text-xs text-[#c9a84c] bg-[#c9a84c]/10 px-3 py-1 rounded-full">
+                      {step.duration}
+                    </span>
+                  </div>
+                  <p className="text-white/50 text-sm leading-relaxed">{step.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        </ScrollReveal>
+        </div>
+
+        {/* Trust Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 pt-8 border-t border-white/10"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { number: "400+", label: "Clients Served" },
+              { number: "24h", label: "Response Guarantee" },
+              { number: "Free", label: "Strategy Call & Audit" },
+              { number: "✓", label: "NDA on Request" }
+            ].map((stat, idx) => (
+              <div key={idx} className="p-4 rounded-xl bg-[#0a0f1c]/50 border border-white/5">
+                <p className="text-2xl md:text-3xl font-bold gold-gradient mb-1">{stat.number}</p>
+                <p className="text-white/40 text-sm">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </section>
     </div>
   );
