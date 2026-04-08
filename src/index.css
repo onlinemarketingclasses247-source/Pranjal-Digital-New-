@@ -33,7 +33,7 @@
     background: var(--gold-hover);
   }
 
-  /* Base Spacing & Typography */
+  /* Standardized Section Spacing */
   section {
     @apply mb-8 md:mb-16 lg:mb-20 last:mb-0;
   }
@@ -43,12 +43,12 @@
 }
 
 @layer components {
-  /* ================= BUTTONS ================= */
+  /* ================= BUTTONS & GRADIENTS ================= */
   .gold-bg {
     background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
     color: #080c14;
     box-shadow: 0 10px 25px rgba(201, 168, 76, 0.3);
-    @apply font-bold transition-all duration-300;
+    @apply font-bold transition-all duration-300 flex items-center justify-center;
   }
 
   .gold-bg:hover {
@@ -66,7 +66,9 @@
 
   /* ================= 3D MAP ================= */
   .map-3d-container {
-    @apply relative w-full aspect-square rounded-2xl overflow-hidden border border-gold-primary/30;
+    @apply relative w-full aspect-square rounded-2xl overflow-hidden;
+    /* Replacing @apply border-gold-primary/30 with standard CSS to fix build error */
+    border: 1px solid rgba(201, 168, 76, 0.3);
     background: radial-gradient(circle at center, #0f172a, var(--bg-deep));
     perspective: 1000px;
   }
@@ -86,6 +88,11 @@
     @apply absolute inset-0 pointer-events-none;
     background: radial-gradient(circle at center, transparent 40%, var(--bg-deep) 80%);
   }
+
+  /* Responsive Spacing Utilities */
+  .section-padding {
+    @apply py-12 md:py-20 lg:py-24;
+  }
 }
 
 /* ================= ANIMATIONS ================= */
@@ -99,76 +106,56 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
-}
-
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* Auto-apply fade in to sections */
+section {
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
-/* Apply base animations */
-section { animation: fadeIn 0.6s ease-out; }
-
-/* ================= MOBILE RESPONSIVENESS & SPACING ================= */
+/* ================= MOBILE FIXES ================= */
 @media (max-width: 768px) {
-  /* Force containers to have consistent padding */
+  /* Fix padding issues on small screens */
   .container, [class*="max-w-"] {
-    @apply px-5 !important;
+    @apply px-6 !important;
   }
 
-  /* Grid: Force 1 column on mobile */
+  /* Ensure all grid layouts stack properly */
   .grid-cols-2, .grid-cols-3, .grid-cols-4 {
     @apply grid-cols-1 !important;
+    @apply gap-6 !important;
   }
 
-  /* Buttons: Easier to tap on mobile */
-  button:not(.nav-only), a.btn {
-    @apply w-full min-h-[48px] flex items-center justify-center !important;
+  /* Better mobile buttons */
+  button, a.btn {
+    @apply w-full min-h-[48px] !important;
   }
 
-  /* Padding Top for Hero sections to avoid overlap with fixed nav */
-  .pt-24, .pt-32, .pt-20 {
+  /* Adjust Hero Padding */
+  .pt-24, .pt-32 {
     @apply pt-20 !important;
   }
 
-  /* Performance: Disable hover transforms on touch screens */
+  /* Performance: Disable hover movement on mobile */
   .gold-bg:hover, .card:hover {
     @apply transform-none !important;
   }
 }
 
-/* Tablet: Adjust grids to 2 columns */
+/* Tablet adjustments */
 @media (min-width: 769px) and (max-width: 1024px) {
   .grid-cols-3, .grid-cols-4 {
     @apply grid-cols-2 !important;
   }
 }
 
-/* Ultra Wide Support */
-@media (min-width: 1921px) {
-  body { zoom: 1.1; }
-  .container { @apply max-w-[1600px] mx-auto; }
-}
-
-/* Protection for Fixed Elements */
-.fixed, .absolute {
-  @apply mb-0 mt-0 !important;
-}
-
-/* Accessibility */
+/* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
   }
 }
