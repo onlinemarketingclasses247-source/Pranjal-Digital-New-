@@ -822,7 +822,3 @@ body {
 
 
 
-/* Prevent white bounce on scroll (mobile) */
-html, body {
-  overscroll-behavior: none;
-}
