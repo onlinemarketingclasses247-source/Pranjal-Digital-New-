@@ -359,7 +359,7 @@ return (
 <div className="bg-[#080c14] overflow-hidden">
 
 {/* ========== HERO SECTION ========== */}
-<section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden">
+<section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden pb-24">
 <div className="absolute inset-0">
 <div className="absolute inset-0 bg-gradient-to-br from-[#080c14] via-[#0a0f1c] to-[#080c14]" />
 <motion.div
@@ -424,14 +424,14 @@ className="flex flex-col sm:flex-row items-center justify-center gap-4"
 href={CALENDLY}
 target="_blank"
 rel="noopener noreferrer"
-className="group relative overflow-hidden bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-[#c9a84c]/30"
+className="w-full sm:w-auto text-center group relative overflow-hidden bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-[#c9a84c]/30"
 >
 <span className="relative z-10 flex items-center gap-2">
 Book Free Strategy Call <ArrowRight size={18} className="group-hover:translate-x-1 transition" />
 </span>
 </a>
 <Link href="/services">
-<a className="border-2 border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300">
+<a className="w-full sm:w-auto text-center border-2 border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300">
 Explore Services
 </a>
 </Link>
@@ -997,7 +997,7 @@ Digital Marketing ROI?
 <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
 Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on how to grow your business.
 </p>
-<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+<div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mx-auto mt-6">
 <a
 href={CALENDLY}
 target="_blank"
