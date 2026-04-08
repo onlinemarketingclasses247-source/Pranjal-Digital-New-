@@ -4,7 +4,6 @@
 
 /* ================= BASE STYLES ================= */
 
-/* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
 }
@@ -28,19 +27,18 @@ html {
   background: #d4b05c;
 }
 
-/* Focus outline for accessibility */
+/* Focus outline */
 *:focus-visible {
   outline: 2px solid #c9a84c;
   outline-offset: 2px;
 }
 
-/* ================= BUTTONS & LINKS ================= */
+/* ================= BUTTONS ================= */
 
 button, a {
   transition: all 0.3s ease;
 }
 
-/* Gold button styling */
 .gold-bg {
   background: linear-gradient(135deg, #c9a84c 0%, #b8963f 100%);
   color: #080c14;
@@ -54,7 +52,6 @@ button, a {
   transform: translateY(-2px);
 }
 
-/* Gold gradient text */
 .gold-gradient {
   background: linear-gradient(90deg, #c9a84c, #f5d76e);
   -webkit-background-clip: text;
@@ -107,30 +104,29 @@ button, a {
   }
 }
 
-/* ================= UTILITY OVERRIDES ================= */
+/* ================= SECTION SPACING - NO EXTRA MARGINS ================= */
 
-/* Section styling - NO forced padding or margins */
 section {
   position: relative;
 }
 
-/* Ensure content has proper z-index */
 section > * {
   position: relative;
   z-index: 1;
 }
 
-/* ================= RESPONSIVE ================= */
+/* Remove ALL automatic margins between sections */
+section + section {
+  margin-top: 0;
+}
 
+/* Mobile - no extra spacing */
 @media (max-width: 768px) {
-  /* No forced section margins */
   section + section {
     margin-top: 0;
   }
   
-  /* Better touch targets for mobile */
-  button, 
-  a {
+  button, a {
     min-height: 44px;
   }
 }
