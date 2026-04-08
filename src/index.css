@@ -104,56 +104,48 @@ button, a {
   }
 }
 
-/* ================= SECTION SPACING ONLY ================= */
+/* ================= SECTION SPACING ONLY - TARGETING MAIN CONTENT ONLY ================= */
 
-/* ONLY control spacing between sections - NOT inside them */
-section {
-  margin-bottom: 2rem;
+/* Only target direct children of main that are sections or section-like containers */
+main > section,
+main > div > section,
+main > div:not(.fixed):not(.absolute) {
+  margin-bottom: 1.5rem;
 }
 
-/* Last section shouldn't have extra margin */
-section:last-child {
+/* Last element shouldn't have extra margin */
+main > section:last-child,
+main > div > section:last-child {
   margin-bottom: 0;
 }
 
-/* Remove default padding overrides - let components handle their own spacing */
-/* No padding overrides - keep original component styles */
+/* EXCLUDE fixed and absolute positioned elements (like chat) */
+.fixed,
+.absolute,
+.z-40,
+.z-50,
+.z-[9999] {
+  margin-bottom: 0 !important;
+}
 
 /* ================= RESPONSIVE SECTION SPACING ================= */
 
-/* Mobile - smaller gap between sections */
+/* Mobile - smaller gap */
 @media (max-width: 768px) {
-  section {
-    margin-bottom: 1.25rem;
+  main > section,
+  main > div > section,
+  main > div:not(.fixed):not(.absolute) {
+    margin-bottom: 1rem;
   }
 }
 
-/* Tablet - medium gap */
-@media (min-width: 769px) and (max-width: 1024px) {
-  section {
+/* Desktop - moderate gap */
+@media (min-width: 769px) {
+  main > section,
+  main > div > section,
+  main > div:not(.fixed):not(.absolute) {
     margin-bottom: 1.5rem;
   }
-}
-
-/* Desktop - comfortable gap */
-@media (min-width: 1025px) {
-  section {
-    margin-bottom: 2rem;
-  }
-}
-
-/* Large desktop - slightly larger gap */
-@media (min-width: 1440px) {
-  section {
-    margin-bottom: 2.5rem;
-  }
-}
-
-/* ================= HERO SECTION HANDLING ================= */
-
-/* Hero sections need space for header - preserve their padding */
-section:first-of-type {
-  margin-top: 0;
 }
 
 /* ================= UTILITY CLASSES ================= */
