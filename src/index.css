@@ -104,10 +104,12 @@ button, a {
   }
 }
 
-/* ================= SECTION SPACING - NO EXTRA MARGINS ================= */
+/* ================= SECTION SPACING ================= */
 
 section {
   position: relative;
+  padding-top: 48px;
+  padding-bottom: 48px;
 }
 
 section > * {
@@ -115,149 +117,14 @@ section > * {
   z-index: 1;
 }
 
-/* Remove ALL automatic margins between sections */
-section + section {
-  margin-top: 0;
-}
-
-/* Mobile - no extra spacing */
+/* Mobile spacing */
 @media (max-width: 768px) {
-  section + section {
-    margin-top: 0;
+  section {
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
   
   button, a {
     min-height: 44px;
   }
-}
-
-/* 🔥 FIX DOUBLE SECTION GAP */
-section {
-  padding-top: 48px !important;
-  padding-bottom: 48px !important;
-}
-@media (max-width: 768px) {
-  section {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-  }
-}
-
-
-/* ================= GLOBAL LAYOUT FIX (FINAL OVERRIDE) ================= */
-
-/* 1. CONTROL SECTION SPACING (remove big vertical gaps) */
-section {
-  padding-top: 48px !important;
-  padding-bottom: 48px !important;
-}
-
-/* Mobile tighter */
-@media (max-width: 768px) {
-  section {
-    padding-top: 32px !important;
-    padding-bottom: 32px !important;
-  }
-}
-
-/* 2. FIX CONTAINER WIDTH (remove side empty space) */
-.max-w-4xl,
-.max-w-5xl,
-.max-w-6xl {
-  max-width: 1200px !important; /* equivalent to max-w-7xl */
-}
-
-/* Ensure centering */
-[class*="max-w"] {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* 3. REDUCE CARD / BOX DEAD SPACE */
-.p-8 {
-  padding: 1.25rem !important; /* ~p-5 */
-}
-
-.p-10 {
-  padding: 1.5rem !important; /* ~p-6 */
-}
-
-/* Mobile even tighter */
-@media (max-width: 768px) {
-  .p-8,
-  .p-10 {
-    padding: 1rem !important;
-  }
-}
-
-/* 4. FIX GRID GAPS */
-.gap-8 {
-  gap: 1.25rem !important;
-}
-
-.gap-10 {
-  gap: 1.5rem !important;
-}
-
-/* 5. FIX LARGE HEADING SPACING */
-.mb-20 {
-  margin-bottom: 3rem !important;
-}
-
-.mb-16 {
-  margin-bottom: 2.5rem !important;
-}
-
-.mb-12 {
-  margin-bottom: 2rem !important;
-}
-
-/* 6. PREVENT EXTRA EMPTY SPACE IN SECTIONS */
-section > div {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* 7. REMOVE RANDOM EXTRA HEIGHT ISSUES */
-section {
-  min-height: auto !important;
-}
-
-/* 8. FIX CARD HEIGHT EXPANSION */
-.rounded-xl,
-.rounded-2xl {
-  height: auto !important;
-}
-
-/* 9. IMPROVE VISUAL DENSITY */
-p {
-  line-height: 1.6;
-}
-
-/* 10. OPTIONAL: REMOVE OVER-EMPTY HERO SPACING */
-h1, h2 {
-  margin-bottom: 1rem;
-}
-
-
-/* 🚀 GLOBAL SPACING FIX */
-section {
-  min-height: auto !important;
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
-}
-
-/* reduce mobile spacing */
-@media (max-width: 768px) {
-  section {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
-}
-
-/* prevent vertical centering gaps */
-.flex.items-center.justify-center {
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
 }
