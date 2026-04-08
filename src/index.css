@@ -1,3 +1,10 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #020617;
+  overflow-x: hidden;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -755,4 +762,25 @@ body {
 .gold-gradient::after {
   display: none !important;
   content: none !important;
+}
+
+
+
+
+
+/* ================= FINAL WHITE LINE FIX ================= */
+
+/* Ensure no white gap anywhere */
+html, body, #root {
+  background-color: #020617 !important;
+}
+
+/* Prevent any layout overflow creating lines */
+body {
+  overflow-x: hidden;
+}
+
+/* Fix possible 1px rendering gaps */
+* {
+  box-sizing: border-box;
 }
