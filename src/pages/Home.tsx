@@ -359,7 +359,7 @@ return (
 <div className="bg-[#080c14] overflow-hidden">
 
 {/* ========== HERO SECTION ========== */}
-<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+<section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden">
 <div className="absolute inset-0">
 <div className="absolute inset-0 bg-gradient-to-br from-[#080c14] via-[#0a0f1c] to-[#080c14]" />
 <motion.div
@@ -374,7 +374,7 @@ className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-[#c
 />
 </div>
 
-<div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 text-center">
+<div className="relative z-10 max-w-6xl mx-auto px-4 pt-20 md:pt-28 text-center">
 <motion.div
 initial={{ opacity: 0, y: -20 }}
 animate={{ opacity: 1, y: 0 }}
@@ -441,7 +441,7 @@ Explore Services
 initial={{ opacity: 0 }}
 animate={{ opacity: 1 }}
 transition={{ delay: 1.5 }}
-className="absolute bottom-8 left-1/2 -translate-x-1/2"
+
 >
 <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
 <ChevronDown size={28} className="text-white/30" />
