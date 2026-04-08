@@ -431,7 +431,7 @@ Book Free Strategy Call <ArrowRight size={18} className="group-hover:translate-x
 </span>
 </a>
 <Link href="/services">
-<a className="w-auto text-center border border-white/30 bg-white/5 backdrop-blur-sm px-8 py-4 rounded-xl text-white font-semibold hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 mt-2 sm:mt-0"
+  <a className="w-auto text-center border border-white/30 bg-white/5 backdrop-blur-sm px-8 py-4 rounded-xl text-white font-semibold hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 mt-2 sm:mt-0">
 Explore Services
 </a>
 </Link>
