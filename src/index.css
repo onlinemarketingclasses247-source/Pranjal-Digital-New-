@@ -609,61 +609,63 @@ margin-top: 0 !important;
 
 
 
-/* ================= GLOBAL TEXT VISIBILITY FIX ================= */
 
-/* Strong readable default text */
+
+/* ================= PREMIUM COLOR FIX ================= */
+
+/* Base text system */
 body {
-  color: #e6edf3; /* soft white for readability */
+  color: #EAF1FF; /* clean soft white */
   background-color: #020617;
 }
 
-/* Headings pop clearly */
+/* Headings - sharp & premium */
 h1, h2, h3, h4, h5, h6 {
-  color: #ffffff;
-  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  font-weight: 700;
 }
 
-/* Paragraph readability */
+/* Paragraphs */
 p {
-  color: #cbd5e1;
-  line-height: 1.7;
+  color: #B8C2D9; /* readable, not dull */
 }
 
-/* Muted text still visible */
+/* Secondary text */
 .text-gray-400,
 .text-gray-500,
 .text-gray-600 {
-  color: #94a3b8 !important;
-}
-
-/* Links visibility */
-a {
-  color: #f5d76e;
-}
-
-a:hover {
-  color: #ffffff;
+  color: #8A94A6 !important;
 }
 
 
-/* ================= SECTION SEPARATION ================= */
+/* ================= TRUE GOLD FIX ================= */
 
-/* Give sections subtle separation */
-section {
-  position: relative;
-  z-index: 1;
+/* Real premium gold (not muddy yellow) */
+.gold-bg {
+  background: linear-gradient(135deg, #FFD700 0%, #C9A84C 40%, #B8963F 100%);
+  color: #020617;
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.25);
 }
 
-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.015);
-  pointer-events: none;
+/* Hover gold = brighter */
+.gold-bg:hover {
+  background: linear-gradient(135deg, #FFE55C 0%, #FFD700 50%, #C9A84C 100%);
+  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.35);
+}
+
+/* Gold text (IMPORTANT FIX) */
+.gold-gradient {
+  background: linear-gradient(90deg, #FFD700, #FFF3A3, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  
+  /* THIS fixes dull look */
+  filter: brightness(1.2) contrast(1.1);
 }
 
 
-/* ================= CARD VISIBILITY FIX ================= */
+/* ================= CARD CONTRAST FIX ================= */
 
 .card,
 .rounded-xl,
@@ -671,110 +673,82 @@ section::before {
 .bg-[#080c14],
 .bg-[#0a0f1c],
 .bg-[#0f172a] {
-  background: rgba(15, 23, 42, 0.85) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(201, 168, 76, 0.15);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(10, 15, 28, 0.9) !important;
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Hover = more separation */
+/* Hover = premium glow */
 .card:hover,
 .rounded-xl:hover,
 .rounded-2xl:hover {
-  border-color: rgba(201, 168, 76, 0.4);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 215, 0, 0.35);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
 }
 
 
-/* ================= INPUT / FORM VISIBILITY ================= */
+/* ================= INPUT FIX ================= */
 
 input,
 textarea,
 select {
   background: #020617 !important;
-  border: 1px solid rgba(201, 168, 76, 0.25);
-  color: #ffffff;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  color: #FFFFFF;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #64748b;
+  color: #6B7280;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: #c9a84c;
-  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.2);
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
 }
 
 
-/* ================= BUTTON VISIBILITY ================= */
+/* ================= LINK + CTA ================= */
 
-button {
-  font-weight: 600;
-  letter-spacing: 0.02em;
+a {
+  color: #FFD700;
 }
 
-/* Secondary buttons */
-.btn-outline {
-  border: 1px solid rgba(201, 168, 76, 0.4);
-  color: #f5d76e;
-  background: transparent;
-}
-
-.btn-outline:hover {
-  background: rgba(201, 168, 76, 0.1);
-  color: #ffffff;
+a:hover {
+  color: #FFF3A3;
 }
 
 
-/* ================= TEXT OVER BACKGROUND FIX ================= */
+/* ================= TEXT VISIBILITY BOOST ================= */
 
-/* Prevent text blending into gradients/images */
-.text-shadow {
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+/* Prevent washed-out UI */
+[class*="text-"] {
+  opacity: 1 !important;
 }
 
-/* Apply automatically to important text */
-h1, h2, h3 {
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-
-/* ================= BACKGROUND OVERLAY FIX ================= */
-
-/* Adds contrast layer over noisy backgrounds */
-.bg-overlay {
+/* Add subtle contrast boost */
+section {
   position: relative;
 }
 
-.bg-overlay::after {
+section::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(2, 6, 23, 0.6);
+  background: rgba(255, 255, 255, 0.01);
   pointer-events: none;
 }
 
 
-/* ================= GOLD TEXT VISIBILITY FIX ================= */
+/* ================= HERO TEXT FIX ================= */
 
-.gold-gradient {
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+/* Fix text over gradients/images */
+h1, h2, h3 {
+  text-shadow: 0 3px 12px rgba(0,0,0,0.6);
 }
 
-
-/* ================= IMAGE / ICON VISIBILITY ================= */
-
-img, svg {
-  filter: brightness(1.05) contrast(1.05);
-}
-
-
-/* ================= FORCE CONTRAST FIX (IMPORTANT) ================= */
-
-/* Prevent faded Tailwind text classes */
-[class*="text-"] {
-  opacity: 1 !important;
+p {
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
