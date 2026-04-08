@@ -606,3 +606,99 @@ svg {
   margin-bottom: 0 !important;
   margin-top: 0 !important;
 }
+
+
+
+
+
+
+
+
+
+
+/* ================= FINAL SPACING FIX (MASTER OVERRIDE) ================= */
+
+/* 1. REMOVE random vertical spacing stacking */
+section {
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* 2. CONTROL spacing via container instead */
+.section-spacing {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+  .section-spacing {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+/* 3. HERO FIX (very important) */
+.section-hero {
+  padding-top: 90px !important; /* compensate fixed navbar */
+  padding-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+  .section-hero {
+    padding-top: 80px !important;
+    padding-bottom: 40px;
+  }
+}
+
+/* 4. REMOVE broken Tailwind overrides */
+.pt-24,
+.pt-32,
+.pt-20,
+.py-20,
+.py-24,
+.py-28 {
+  padding-top: unset !important;
+  padding-bottom: unset !important;
+}
+
+/* 5. FIX unwanted gaps from nested divs */
+section > div {
+  margin-top: 0 !important;
+}
+
+/* 6. PREVENT accidental empty space */
+section:empty {
+  display: none;
+}
+
+/* 7. FIX cards pushing space */
+.rounded-xl,
+.rounded-2xl {
+  margin-bottom: 0 !important;
+}
+
+/* 8. REMOVE accidental large spacing */
+.mt-20, .mt-24, .mt-28, .mt-32 {
+  margin-top: 0 !important;
+}
+
+.mb-20, .mb-24, .mb-28, .mb-32 {
+  margin-bottom: 0 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
