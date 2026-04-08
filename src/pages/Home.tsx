@@ -418,7 +418,7 @@ Generated millions in revenue, managed millions in ad spend, and delivered 6X-7X
 initial={{ opacity: 0, y: 20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.7, delay: 0.4 }}
-className="flex flex-col sm:flex-row items-center justify-center gap-4"
+className="flex flex-col items-stretch w-full max-w-xs mx-auto mt-8 space-y-4"
 >
 <a
 href={CALENDLY}
@@ -431,7 +431,7 @@ Book Free Strategy Call <ArrowRight size={18} className="group-hover:translate-x
 </span>
 </a>
 <Link href="/services">
-  <a className="w-auto text-center border border-white/30 bg-white/5 backdrop-blur-sm px-8 py-4 rounded-xl text-white font-semibold hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 mt-2 sm:mt-0">
+  <a className="w-full text-center border border-white/40 bg-white/5 px-8 py-4 rounded-xl text-white font-semibold transition-all duration-300">
 Explore Services
 </a>
 </Link>
@@ -997,7 +997,7 @@ Digital Marketing ROI?
 <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
 Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on how to grow your business.
 </p>
-<div className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full max-w-xs mx-auto mt-6">
+<div className="flex flex-col items-stretch w-full max-w-xs mx-auto mt-8 space-y-4">
 <a
 href={CALENDLY}
 target="_blank"
