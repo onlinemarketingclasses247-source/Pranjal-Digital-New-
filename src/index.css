@@ -680,65 +680,63 @@ margin-top: 0 !important;
 
 
 
-/* ================= FIX: PREVENT INITIAL LOAD STRIKETHROUGH/FLASH ================= */
+/* ================= FIX: PRANJAL DIGITAL STRIKETHROUGH ISSUE ================= */
 
-/* Prevent any pseudo-elements from showing during initial load */
-button::after,
-a::after,
-.gold-bg::after,
-.gold-gradient::after {
-  display: none !important;
-}
-
-/* Ensure gold gradient text renders correctly from the start */
+/* Force fix for gold-gradient text - this is the main culprit */
 .gold-gradient {
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
   -webkit-background-clip: text !important;
   color: transparent !important;
-}
-
-/* Force proper rendering on page load - prevents flicker/strikethrough */
-body {
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Hide any unwanted lines that might appear on headings */
-h1, h2, h3, h4, h5, h6,
-.gold-gradient,
-.shimmer-text {
   text-decoration: none !important;
   text-decoration-line: none !important;
-  -webkit-text-decoration-line: none !important;
+  display: inline-block !important;
 }
 
-/* Fix for any potential ::before or ::after that might create lines */
-[class*="gold"]::before,
-[class*="gold"]::after,
-h1::before,
-h2::before,
-h3::before,
+/* Remove any possible text decoration from all heading elements */
+h1, h2, h3, h4, h5, h6,
+h1 span, h2 span, h3 span, h4 span, h5 span, h6 span,
+.gold-gradient, .shimmer-text {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+}
+
+/* Specifically target the header logo text */
+header .gold-gradient,
+a .gold-gradient,
+[class*="gold-gradient"] {
+  text-decoration: none !important;
+  background: linear-gradient(90deg, #c9a84c, #f5d76e) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Prevent Framer Motion from causing text decoration during animations */
+[data-framer] *, 
+[motion] *,
+.animate-* {
+  text-decoration: none !important;
+}
+
+/* Ensure no pseudo-elements create lines */
 .gold-gradient::before,
-.gold-gradient::after {
+.gold-gradient::after,
+header::before,
+header::after {
   content: none !important;
   display: none !important;
 }
 
-/* Ensure smooth initial paint */
-html {
+/* Force proper rendering on initial paint */
+body {
   visibility: visible;
+  opacity: 1;
 }
 
-/* Prevent animation flicker on page load */
-.no-flicker {
-  animation: none !important;
-  transition: none !important;
-}
-
-/* Optional: Add a small delay to animations to ensure proper render */
-@media not (prefers-reduced-motion) {
-  .animate-on-load {
-    animation-fill-mode: both;
+/* Fix for potential Chrome rendering bug */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .gold-gradient {
+    -webkit-text-stroke: 0px transparent;
   }
 }
