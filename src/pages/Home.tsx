@@ -261,8 +261,8 @@ export default function Home() {
   return (
     <div className="bg-[#080c14] overflow-hidden">
       {/* ========== HERO SECTION ========== */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
+<section className="relative min-h-[85vh] flex items-start justify-center overflow-hidden pt-10 lg:pt-16">      
+  <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#080c14] via-[#0a0f1c] to-[#080c14]" />
           <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
@@ -276,7 +276,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 text-center">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 py-24 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -355,12 +355,12 @@ export default function Home() {
       {/* ========== STATS SECTION ========== */}
       <section ref={statsRef} className="py-20 bg-gradient-to-r from-[#080c14] to-[#040608]">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-            <StatCard value={12} suffix="+" label="Years Experience" />
-            <StatCard value={400} suffix="+" label="Happy Clients" />
-            <StatCard value={20} suffix="+" label="Countries Served" />
-            <StatCard value={5} suffix="M+" label="Revenue Generated" />
-            <StatCard value={7} suffix="X" label="Avg ROAS" />
+          <div className="stats-grid">
+          <div className="stat-card"><StatCard value={12} suffix="+" label="Years Experience" /></div>
+<div className="stat-card"><StatCard value={400} suffix="+" label="Happy Clients" /></div>
+<div className="stat-card"><StatCard value={20} suffix="+" label="Countries Served" /></div>
+<div className="stat-card"><StatCard value={5} suffix="M+" label="Revenue Generated" /></div>
+<div className="stat-card"><StatCard value={7} suffix="X" label="Avg ROAS" /></div>
           </div>
         </div>
       </section>
