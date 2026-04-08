@@ -2,145 +2,123 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= THE WHITE LINE & OVERFLOW FIX ================= */
+/* ================= PREVENT WHITE LINE & OVERFLOW ================= */
 :root {
   --bg-dark: #0a0f1c;
-  --gold: #c9a84c;
-  --gold-gradient: linear-gradient(135deg, #c9a84c 0%, #f5d76e 100%);
+  --gold-light: #f5d76e;
+  --gold-main: #c9a84c;
+  --gold-dark: #8a6d2d;
 }
 
 html {
-  background-color: var(--bg-dark); /* Prevents the white flash/line */
+  background-color: var(--bg-dark); /* Forces browser canvas to match site */
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--bg-dark);
-  color: white;
-  overflow-x: hidden;
+  color: #ffffff;
+  overflow-x: hidden; /* Stops horizontal bleed */
   margin: 0;
   padding: 0;
-  /* Fixes white line during pull-to-refresh on mobile */
-  overscroll-behavior-y: none; 
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ================= SECTION SPACING (MOBILE FIRST) ================= */
-
-/* Reduced gaps for mobile, larger for desktop */
-section {
-  padding-top: clamp(2rem, 5vh, 5rem);
-  padding-bottom: clamp(2rem, 5vh, 5rem);
-  width: 100%;
-  position: relative;
-}
-
-/* Fix Hero section top padding */
-.hero-pt {
-  padding-top: clamp(5rem, 10vh, 8rem) !important;
-}
-
-/* ================= PRANJAL GOLD TEXT FIX ================= */
-
-.gold-text, 
-.gold-gradient-text {
-  background: var(--gold-gradient);
+/* ================= 3D GOLDEN PRANJAL ================= */
+.pranjal-3d {
+  background: linear-gradient(to bottom, var(--gold-light) 0%, var(--gold-main) 50%, var(--gold-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: var(--gold); /* Fallback */
+  font-weight: 800;
   display: inline-block;
+  /* 3D Depth Shadow */
+  filter: drop-shadow(0px 1px 0px #8a6d2d) 
+          drop-shadow(0px 2px 0px #755b24)
+          drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
 }
 
-/* ================= STATS SECTION FIX (IMAGE 1000516904) ================= */
-
-/* This grid allows 2 items per row on mobile so they don't disappear */
-.stats-grid {
+/* ================= STATS SECTION GAP FIX ================= */
+.stats-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 1rem;
-  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem; /* Tightens the gap on mobile */
+  padding: 1.5rem 0;
+  height: auto !important; /* Removes huge dead space */
+  min-height: 0 !important;
 }
 
-@media (min-width: 1024px) {
-  .stats-grid {
-    grid-template-columns: repeat(3, 1fr);
+@media (min-width: 768px) {
+  .stats-container {
     gap: 2.5rem;
+    padding: 3rem 0;
   }
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(201, 168, 76, 0.2);
-  border-radius: 1rem;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  height: auto; /* Prevents stretching */
+  padding: 1.25rem !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto !important;
 }
 
-/* Force numbers to be visible gold */
-.stat-number {
-  color: var(--gold) !important;
-  font-weight: 800;
-  font-size: clamp(1.5rem, 6vw, 2.5rem);
-  margin-bottom: 0.5rem;
+/* ================= EXPLAINER TEXT READABILITY ================= */
+.explainer-text, 
+section p {
+  color: #ccd6f6 !important; /* Lighter slate for better contrast */
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  opacity: 1 !important; /* Ensure it's not fading into bg */
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================= FUNNEL (TOFU/BOFU) RESPONSIVENESS ================= */
+.funnel-step {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  margin: 0.5rem 0;
   display: block;
+  overflow-wrap: break-word;
 }
 
-.stat-label {
-  color: #94a3b8; /* Slate-400 */
-  font-size: 0.875rem;
-  line-height: 1.2;
-}
-
-/* ================= BUTTONS (IMAGE 1000516901) ================= */
-
-.gold-bg {
-  background: var(--gold-gradient) !important;
-  color: #080c14 !important;
-  font-weight: 700;
-  border-radius: 0.75rem;
-  transition: transform 0.2s ease;
-}
-
-/* Fix mobile buttons stacking/spacing */
-@media (max-width: 640px) {
-  .button-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-  }
-}
-
-/* ================= NAV BAR LINE FIX ================= */
-
-nav, header {
-  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
-  background: rgba(10, 15, 28, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-/* ================= UTILITY ================= */
-
-.container-tight {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* Fix for the hidden text in Image 1000516903 */
-.progress-container {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-.progress-bar {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+/* Ensure container doesn't overflow */
+.funnel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+  width: 100%;
   overflow: hidden;
 }
 
-.progress-fill {
-  height: 100%;
-  background: var(--gold);
+/* ================= SITEWIDE SECTION SPACING ================= */
+section {
+  padding: 3rem 1.25rem; /* Standardized spacing */
+  width: 100%;
+  position: relative;
+}
+
+/* Fix for the Top Navigation white space during load */
+nav {
+  background: rgba(10, 15, 28, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+/* ================= BUTTONS & UI ================= */
+.gold-button {
+  background: linear-gradient(135deg, var(--gold-main) 0%, var(--gold-dark) 100%);
+  color: #000 !important;
+  font-weight: 700;
+  box-shadow: 0 4px 14px 0 rgba(201, 168, 76, 0.3);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.gold-button:active {
+  transform: scale(0.96);
 }
