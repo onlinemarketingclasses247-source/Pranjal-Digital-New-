@@ -104,284 +104,173 @@ button, a {
   }
 }
 
-/* ================= SECTION SPACING ================= */
+/* ================= MOBILE FIXES - ONLY WHAT'S NECESSARY ================= */
 
-section {
-  margin-bottom: 1.5rem;
-}
-
-section:last-child {
-  margin-bottom: 0;
-}
-
-/* ================= COMPLETE MOBILE FIX - OVERRIDE EVERYTHING ================= */
-
+/* Fix for mobile - target only problem areas */
 @media (max-width: 768px) {
   
-  /* Fix section margins */
-  section {
-    margin-bottom: 0.5rem !important;
+  /* Fix hamburger menu position - keep it at top right */
+  .lg\:hidden {
+    display: block !important;
+    position: absolute !important;
+    right: 0.5rem !important;
+    top: 0.5rem !important;
   }
   
-  /* Fix ALL large padding classes */
-  [class*="py-8"],
-  [class*="py-10"],
-  [class*="py-12"],
-  [class*="py-16"],
-  [class*="py-20"],
-  [class*="py-24"],
-  [class*="py-32"],
-  [class*="pt-8"],
-  [class*="pt-10"],
-  [class*="pt-12"],
-  [class*="pt-16"],
-  [class*="pt-20"],
-  [class*="pt-24"],
-  [class*="pt-32"],
-  [class*="pb-8"],
-  [class*="pb-10"],
-  [class*="pb-12"],
-  [class*="pb-16"],
-  [class*="pb-20"],
-  [class*="pb-24"],
-  [class*="pb-32"] {
+  /* Fix header spacing */
+  header {
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
   }
   
-  /* Fix hero section - reduce top padding */
-  [class*="pt-20"], [class*="pt-24"], [class*="pt-32"] {
+  /* Fix hero section spacing */
+  .pt-24, .pt-32, .pt-20, [class*="pt-2"]:not(.pt-2) {
+    padding-top: 3.5rem !important;
+  }
+  
+  /* Reduce padding on all sections */
+  section {
     padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
   
-  /* Fix ALL large margins */
-  [class*="mt-8"],
-  [class*="mt-10"],
-  [class*="mt-12"],
-  [class*="mt-16"],
-  [class*="mt-20"],
-  [class*="mt-24"],
-  [class*="mb-8"],
-  [class*="mb-10"],
-  [class*="mb-12"],
-  [class*="mb-16"],
-  [class*="mb-20"],
-  [class*="mb-24"] {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
+  /* Fix stat/number sections - remove dead space */
+  .grid {
+    gap: 0.75rem !important;
   }
   
-  /* Fix stat numbers - prevent overlapping */
+  /* Make stat cards compact */
+  .rounded-xl, .rounded-2xl {
+    padding: 0.75rem !important;
+  }
+  
+  /* Reduce font size for stats */
   .text-4xl, .text-5xl, .text-6xl, .text-7xl {
     font-size: 1.5rem !important;
-    line-height: 1.2 !important;
   }
   
-  /* Fix stat cards - prevent overlapping */
-  .grid > div {
-    margin-bottom: 0.5rem !important;
-  }
-  
-  /* Fix all grid layouts to single column */
-  .grid {
-    grid-template-columns: 1fr !important;
-    gap: 0.5rem !important;
-  }
-  
-  /* Fix card padding */
-  .p-4, .p-5, .p-6, .p-8, .p-10 {
-    padding: 0.5rem !important;
-  }
-  
-  /* Fix heading spacing */
-  h1 {
-    font-size: 1.5rem !important;
-    margin-bottom: 0.25rem !important;
-    line-height: 1.2 !important;
-  }
-  
-  h2 {
-    font-size: 1.25rem !important;
-    margin-bottom: 0.25rem !important;
-    line-height: 1.3 !important;
-  }
-  
-  h3 {
-    font-size: 1rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-  
-  /* Fix paragraph spacing */
-  p {
-    margin-bottom: 0.25rem !important;
-    line-height: 1.4 !important;
-  }
-  
-  /* Fix space-y spacing */
-  [class*="space-y-"] > * + * {
+  /* Reduce margins on stat cards */
+  [class*="mb-"], [class*="mt-"] {
     margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
   }
   
-  /* Fix gap classes */
-  [class*="gap-"] {
-    gap: 0.5rem !important;
-  }
-  
-  /* Fix flex gaps */
-  [class*="space-x-"] > * + * {
-    margin-left: 0.25rem !important;
-  }
-  
-  /* Full width buttons */
-  button:not(.absolute):not(.fixed):not(.no-full-width) {
-    width: 100% !important;
-    padding: 0.5rem !important;
-  }
-  
-  /* Center text on mobile */
-  .text-left, .text-right {
-    text-align: center !important;
-  }
-  
-  /* Reduce icon sizes */
-  .w-14, .h-14 {
-    width: 2rem !important;
-    height: 2rem !important;
-  }
-  
-  .w-12, .h-12 {
-    width: 1.75rem !important;
-    height: 1.75rem !important;
-  }
-  
-  .w-16, .h-16 {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-  }
-  
-  /* Fix form elements */
-  input, select, textarea {
-    font-size: 16px !important;
-    padding: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-  
-  /* Better touch targets */
-  button, a, input, select, textarea {
-    min-height: 44px;
+  /* Keep 2 column layout for stats on medium mobile */
+  .stats-grid, .grid-cols-2:has(.rounded-xl) {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
   
   /* Fix container padding */
-  .container,
-  [class*="max-w-"] {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
+  .container, [class*="max-w-"] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
   
-  /* Fix overlapping stat blocks */
-  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
-    grid-template-columns: 1fr !important;
-  }
-  
-  /* Fix stat card internal spacing */
-  .rounded-xl, .rounded-2xl {
-    padding: 0.5rem !important;
-  }
-  
-  /* Remove extra space at section start */
-  section:first-of-type {
-    margin-top: 0 !important;
-    padding-top: 0.5rem !important;
-  }
-  
-  /* Fix hero section header spacing */
-  header + section,
-  .pt-24, .pt-32, .pt-20 {
-    padding-top: 3.5rem !important;
-  }
-}
-
-/* Extra small devices (320px - 480px) */
-@media (max-width: 480px) {
-  section {
-    margin-bottom: 0.25rem !important;
-  }
-  
+  /* Reduce heading sizes */
   h1 {
-    font-size: 1.25rem !important;
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
   }
   
   h2 {
-    font-size: 1rem !important;
+    font-size: 1.35rem !important;
+    margin-bottom: 0.5rem !important;
   }
   
-  .text-4xl, .text-5xl, .text-6xl {
+  /* Fix space between sections */
+  section + section {
+    margin-top: 0.5rem !important;
+  }
+  
+  /* Fix form spacing */
+  input, select, textarea {
+    margin-bottom: 0.5rem !important;
+    padding: 0.5rem !important;
+  }
+  
+  /* Make buttons full width on mobile except menu button */
+  button:not(.lg\\:hidden):not(.absolute) {
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Fix icon sizes */
+  .w-14, .h-14 {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+}
+
+/* Small mobile - extra fixes */
+@media (max-width: 480px) {
+  /* Keep stats in 2 columns on very small screens */
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  /* Reduce padding further */
+  section {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  
+  /* Smaller heading */
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
     font-size: 1.25rem !important;
   }
   
-  [class*="py-"] {
-    padding-top: 0.25rem !important;
-    padding-bottom: 0.25rem !important;
-  }
-  
-  header + section,
+  /* Fix hero padding */
   .pt-24, .pt-32, .pt-20 {
     padding-top: 3rem !important;
   }
   
-  .container, [class*="max-w-"] {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+  /* Tighter stat cards */
+  .rounded-xl, .rounded-2xl {
+    padding: 0.5rem !important;
+  }
+  
+  /* Smaller stat numbers */
+  .text-4xl, .text-5xl, .text-6xl {
+    font-size: 1.25rem !important;
   }
 }
 
-/* Medium mobile (481px - 768px) */
+/* Medium mobile - keep stats readable */
 @media (min-width: 481px) and (max-width: 768px) {
-  section {
-    margin-bottom: 0.5rem !important;
-  }
-  
-  h1 {
-    font-size: 1.5rem !important;
-  }
-  
-  h2 {
-    font-size: 1.25rem !important;
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
   
   .text-4xl, .text-5xl, .text-6xl {
     font-size: 1.5rem !important;
   }
-  
-  header + section,
-  .pt-24, .pt-32, .pt-20 {
-    padding-top: 3.5rem !important;
-  }
 }
 
-/* Tablet (769px - 1024px) */
+/* Tablet - keep original layout mostly */
 @media (min-width: 769px) and (max-width: 1024px) {
   section {
-    margin-bottom: 1rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
   }
   
-  .grid-cols-3, .grid-cols-4 {
+  .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
   
-  h1 {
-    font-size: 2rem !important;
-  }
-  
-  h2 {
-    font-size: 1.5rem !important;
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 
-/* Desktop */
+/* Desktop - keep as is but improve slightly */
 @media (min-width: 1025px) {
   section {
-    margin-bottom: 1.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
   
   .container, [class*="max-w-"] {
@@ -393,7 +282,13 @@ section:last-child {
 /* Large Desktop */
 @media (min-width: 1440px) {
   section {
-    margin-bottom: 2rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  
+  .container, [class*="max-w-"] {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }
 
@@ -443,17 +338,6 @@ section:last-child {
   }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes glowPulse {
   0% {
     box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4);
@@ -484,15 +368,6 @@ section:last-child {
   }
   100% {
     background-position: 200% 0;
-  }
-}
-
-@keyframes rotateSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
 
@@ -534,22 +409,6 @@ svg {
   -webkit-text-fill-color: transparent;
 }
 
-.rotate-slow {
-  animation: rotateSlow 20s linear infinite;
-}
-
-.stagger-children > * {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -583,6 +442,4 @@ svg {
 .z-[9998] {
   margin-bottom: 0 !important;
   margin-top: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
 }
