@@ -511,8 +511,7 @@ useEffect(() => {
   }, []);
 
   return (
-    <div className="bg-[#080c14] pt-24" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-
+<div className="bg-[#080c14]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       {/* ── HERO ── */}
      <section className="py-20 text-center relative overflow-hidden z-0" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 100%)' }}>
 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%)' }} />
