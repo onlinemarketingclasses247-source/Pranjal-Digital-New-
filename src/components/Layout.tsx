@@ -8,7 +8,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
   { href: '/about', label: 'About' },
-   { href: '/case-studies', label: 'Case Studies' },
+  { href: '/case-studies', label: 'Case Studies' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -31,19 +31,19 @@ function Header() {
   }, [location]);
 
   useEffect(() => {
-  if (menuOpen) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
-}, [menuOpen]);
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [menuOpen]);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
-       scrolled || isDarkHeader
-  ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-[#c9a84c]/20 shadow-lg'
-  : 'bg-transparent'
+        scrolled || isDarkHeader
+          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-[#c9a84c]/20 shadow-lg'
+          : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,93 +70,85 @@ function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
+            {/* CONTACT BUTTON */}
+            <Link
+              href="/contact"
+              className="border border-[#c9a84c]/40 text-[#c9a84c] font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-[#c9a84c]/10 transition"
+            >
+              Contact Us
+            </Link>
 
-  {/* CONTACT BUTTON */}
-  <Link
-    href="/contact"
-    className="border border-[#c9a84c]/40 text-[#c9a84c] font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-[#c9a84c]/10 transition"
-  >
-    Contact Us
-  </Link>
+            {/* BOOK A MEETING */}
+            <a
+              href={CALENDLY}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gold-bg text-[#080c14] font-semibold text-sm px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Book a Meeting
+            </a>
+          </div>
 
-  {/* BOOK A MEETING */}
-  <a
-    href={CALENDLY}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="gold-bg text-[#080c14] font-semibold text-sm px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity"
-  >
-    Book a Meeting
-  </a>
-
-</div>
-
-      
-<button
-  className="lg:hidden absolute right-4 top-4 z-[10000] p-2 rounded-full bg-[#080c14] border border-[#c9a84c]/30 shadow-lg"         
-  onClick={() => setMenuOpen((v) => !v)}
+          <button
+            className="lg:hidden absolute right-4 top-4 z-[10000] p-2 rounded-full bg-[#080c14] border border-[#c9a84c]/30 shadow-lg"
+            onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-           {menuOpen 
-  ? <X size={22} className="text-white" /> 
-  : <Menu size={22} className="text-white" />
-}
+            {menuOpen
+              ? <X size={22} className="text-white" />
+              : <Menu size={22} className="text-white" />
+            }
           </button>
         </div>
       </div>
 
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            {/* OVERLAY */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/70 z-[9998]"
+              onClick={() => setMenuOpen(false)}
+            />
 
-<AnimatePresence>
-  {menuOpen && (
-    <>
-      {/* OVERLAY */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/70 z-[9998]"
-        onClick={() => setMenuOpen(false)}
-      />
+            {/* MENU PANEL */}
+            <motion.div
+              className="fixed top-0 right-0 w-full h-screen bg-[#080c14] z-[9999] flex flex-col px-6 pt-20"
+            >
+              {/* CLOSE BUTTON */}
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="absolute top-5 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md"
+              >
+                <X size={20} className="text-white" />
+              </button>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-lg font-medium py-4 border-b border-white/10 ${
+                    location === link.href ? 'text-[#c9a84c]' : 'text-white/80'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
 
-      {/* MENU PANEL */}
-    <motion.div
-  className="fixed top-0 right-0 w-full h-screen bg-[#080c14] z-[9999] flex flex-col px-6 pt-20"
->
-  {/* CLOSE BUTTON */}
-  <button
-  onClick={() => setMenuOpen(false)}
-  className="absolute top-5 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md"
->
-  <X size={20} className="text-white" />
-</button>
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`text-lg font-medium py-4 border-b border-white/10 ${
-              location === link.href ? 'text-[#c9a84c]' : 'text-white/80'
-            }`}
-          >
-            {link.label}
-          </Link>
-        ))}
-
-        <a
-          href={CALENDLY}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 gold-bg text-[#080c14] font-semibold text-sm px-5 py-3 rounded-lg text-center"
-        >
-          Book a Meeting
-        </a>
-      </motion.div>
-    </>
-  )}
-</AnimatePresence>
-
-      
-      
-      
+              <a
+                href={CALENDLY}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 gold-bg text-[#080c14] font-semibold text-sm px-5 py-3 rounded-lg text-center"
+              >
+                Book a Meeting
+              </a>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
@@ -175,61 +167,54 @@ function Footer() {
               Driving Real Results Through Data-Driven Marketing. 12+ years of expertise across US, Canada, and India markets.
             </p>
             <div className="flex gap-4 mt-5">
-             <div className="flex gap-4 mt-5">
-  <a
-    href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
-  >
-    LinkedIn
-  </a>
-
-  <a
-    href="https://x.com/Pranjaldigitl"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
-  >
-    X
-  </a>
-
-  <a
-    href="https://www.youtube.com/@PranjalSharmaDigital"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
-  >
-    YouTube
-  </a>
-</div>
+              <a
+                href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://x.com/Pranjaldigitl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
+              >
+                X
+              </a>
+              <a
+                href="https://www.youtube.com/@PranjalSharmaDigital"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/40 hover:text-[#c9a84c] text-xs font-medium transition-colors"
+              >
+                YouTube
+              </a>
             </div>
           </div>
 
           <div>
             <div className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-4">Navigation</div>
             <ul className="space-y-2.5">
-  {navLinks.map((link) => (
-    <li key={link.href}>
-      <Link href={link.href} className="text-white/50 hover:text-white text-sm transition-colors">
-        {link.label}
-      </Link>
-    </li>
-  ))}
-
-  {/* ✅ ADD THESE */}
-  <li>
-    <Link href="/terms-of-service" className="text-white/50 hover:text-white text-sm transition-colors">
-      Terms of Service
-    </Link>
-  </li>
-
-  <li>
-    <Link href="/privacy-policy" className="text-white/50 hover:text-white text-sm transition-colors">
-      Privacy Policy
-    </Link>
-  </li>
-</ul>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-white/50 hover:text-white text-sm transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/terms-of-service" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
           </div>
 
           <div>
@@ -282,9 +267,9 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-[#080c14] flex flex-col">
       <Header />
-      <main className="flex-1 pb-20 lg:pb-0">
+      <main className="flex-1">
         {children}
       </main>
       <Footer />
