@@ -789,7 +789,6 @@ body {
 
 
 
-
 /* ================= HARD BACKGROUND FIX ================= */
 
 html {
@@ -798,7 +797,7 @@ html {
 
 body {
   background-color: #020617 !important;
-  overscroll-behavior-y: none; /* KEY FIX */
+  /* Removed overscroll-behavior restrictions to restore scrolling */
 }
 
 #root {
@@ -809,6 +808,15 @@ body {
 /* Ensure ALL main wrappers stay dark */
 main, section, div {
   background-color: inherit;
+}
+
+/* Keep dark background on scroll bounce areas */
+html {
+  overscroll-behavior-y: auto;
+}
+
+body {
+  overscroll-behavior-y: auto;
 }
 
 
