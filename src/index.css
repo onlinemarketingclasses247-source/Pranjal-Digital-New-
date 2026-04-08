@@ -104,16 +104,12 @@ button, a {
   }
 }
 
-/* ================= SECTION PADDING - KEEP ORIGINAL ================= */
+/* ================= 1.5% GAP BETWEEN SECTIONS ================= */
 
-/* Keep original padding from components, don't override */
-/* REMOVED the padding overrides that were stripping spacing */
-
-/* ================= 5% GAP BETWEEN SECTIONS ================= */
-
-/* Add 5% margin between sections - this is the key fix */
+/* Add 1.5% margin between sections */
 section {
-  margin-bottom: 5%;
+  margin-top: 0;
+  margin-bottom: 1.5%;
 }
 
 /* Last section shouldn't have margin at bottom */
@@ -121,44 +117,44 @@ section:last-child {
   margin-bottom: 0;
 }
 
-/* Also target div containers that act as sections */
-div[class*="bg-"]:has(section) {
-  margin-bottom: 5%;
+/* First section shouldn't have margin at top */
+section:first-child {
+  margin-top: 0;
 }
 
-/* ================= RESPONSIVE 5% GAP ================= */
+/* ================= RESPONSIVE GAPS ================= */
 
-/* Mobile - 4% gap (slightly smaller for mobile) */
+/* Mobile - 1% gap (slightly smaller for mobile) */
 @media (max-width: 768px) {
   section {
-    margin-bottom: 4%;
+    margin-bottom: 1%;
   }
 }
 
-/* Tablet - 5% gap */
+/* Tablet - 1.25% gap */
 @media (min-width: 769px) and (max-width: 1024px) {
   section {
-    margin-bottom: 5%;
+    margin-bottom: 1.25%;
   }
 }
 
-/* Desktop - 5% gap */
+/* Desktop - 1.5% gap */
 @media (min-width: 1025px) {
   section {
-    margin-bottom: 5%;
+    margin-bottom: 1.5%;
   }
 }
 
-/* Large desktop - 6% gap for better breathing */
+/* Large desktop - 2% gap */
 @media (min-width: 1440px) {
   section {
-    margin-bottom: 6%;
+    margin-bottom: 2%;
   }
 }
 
-/* ================= HERO SECTION HANDLING ================= */
+/* ================= HERO SECTION - KEEP HEADER OFFSET ================= */
 
-/* Hero sections need space for header */
+/* Keep original padding from components, don't override */
 .pt-24, .pt-32, .pt-20 {
   padding-top: 5rem !important;
 }
