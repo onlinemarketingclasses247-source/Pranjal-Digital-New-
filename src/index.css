@@ -104,101 +104,31 @@ button, a {
   }
 }
 
-/* ================= FORCE UNIFORM SECTION SPACING ================= */
+/* ================= MINIMAL SECTION SPACING ================= */
 
-/* Force ALL sections and section-like divs to have consistent spacing */
-section,
-div[class*="bg-"]:has(h1, h2, form, .grid),
-div[id*="section"],
-div[class*="section"] {
-  margin-bottom: 0.5rem !important;
+/* Smallest possible gap between sections - just 4px */
+section {
+  margin-bottom: 0.25rem;
 }
 
-/* Remove margin from last element */
-section:last-child,
-div[class*="bg-"]:last-child {
-  margin-bottom: 0 !important;
+/* Remove bottom margin from last section */
+section:last-child {
+  margin-bottom: 0;
 }
 
-/* ================= FORCE REMOVE ALL LARGE PADDING CLASSES ================= */
-
-/* Strip all large padding from any element */
-[class*="py-8"],
-[class*="py-10"],
-[class*="py-12"],
-[class*="py-16"],
-[class*="py-20"],
-[class*="py-24"],
-[class*="py-32"],
-[class*="pt-8"],
-[class*="pt-10"],
-[class*="pt-12"],
-[class*="pt-16"],
-[class*="pt-20"],
-[class*="pt-24"],
-[class*="pt-32"],
-[class*="pb-8"],
-[class*="pb-10"],
-[class*="pb-12"],
-[class*="pb-16"],
-[class*="pb-20"],
-[class*="pb-24"],
-[class*="pb-32"] {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
-}
-
-/* Strip large margins */
-[class*="mt-8"],
-[class*="mt-10"],
-[class*="mt-12"],
-[class*="mt-16"],
-[class*="mt-20"],
-[class*="mb-8"],
-[class*="mb-10"],
-[class*="mb-12"],
-[class*="mb-16"],
-[class*="mb-20"] {
-  margin-top: 0.25rem !important;
-  margin-bottom: 0.25rem !important;
-}
-
-/* ================= RESPONSIVE ================= */
-
+/* Mobile - even tighter */
 @media (max-width: 768px) {
-  section,
-  div[class*="bg-"]:has(h1, h2, form, .grid) {
-    margin-bottom: 0.25rem !important;
-  }
-  
-  [class*="py-8"],
-  [class*="py-10"],
-  [class*="py-12"],
-  [class*="py-16"],
-  [class*="py-20"] {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
-  }
-}
-
-/* ================= HERO SECTION - SPECIAL HANDLING ================= */
-
-/* Keep header offset for hero sections */
-.pt-24, .pt-32, .pt-20 {
-  padding-top: 5rem !important;
-}
-
-@media (max-width: 768px) {
-  .pt-24, .pt-32, .pt-20 {
-    padding-top: 4rem !important;
+  section {
+    margin-bottom: 0.125rem;
   }
 }
 
 /* ================= MOBILE RESPONSIVE DESIGN ================= */
 
+/* Mobile styles for all sections */
 @media (max-width: 768px) {
   
-  /* Container padding */
+  /* Reduce padding on all containers */
   .container,
   .max-w-4xl,
   .max-w-5xl,
@@ -208,9 +138,9 @@ div[class*="bg-"]:last-child {
     padding-right: 1rem;
   }
   
-  /* Heading sizes */
+  /* Reduce heading sizes */
   h1 {
-    font-size: 1.875rem !important;
+    font-size: 2rem !important;
     line-height: 1.2 !important;
   }
   
@@ -221,16 +151,20 @@ div[class*="bg-"]:last-child {
   
   h3 {
     font-size: 1.25rem !important;
+    line-height: 1.4 !important;
   }
   
-  /* Stack all grids */
+  /* Stack grid layouts */
   .grid {
     grid-template-columns: 1fr !important;
   }
   
-  /* Full width cards */
-  .grid > div {
-    width: 100% !important;
+  /* Make cards full width */
+  .grid-cols-1,
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
   }
   
   /* Reduce card padding */
@@ -238,67 +172,112 @@ div[class*="bg-"]:last-child {
     padding: 0.75rem !important;
   }
   
-  /* Reduce gaps */
+  /* Reduce gap between elements */
   .gap-4, .gap-5, .gap-6, .gap-8 {
-    gap: 0.75rem !important;
+    gap: 0.5rem !important;
   }
   
-  /* Full width buttons */
-  button:not(.absolute button):not(.fixed button) {
+  /* Make buttons full width on mobile */
+  button:not(.absolute button),
+  .button:not(.absolute button) {
     width: 100% !important;
   }
   
-  /* Better touch targets */
-  button, 
-  a,
-  input,
-  select,
-  textarea {
-    min-height: 44px;
-  }
-  
-  /* Form fields full width */
+  /* Reduce form input padding */
   input, select, textarea {
-    width: 100% !important;
+    padding: 0.5rem !important;
     font-size: 16px !important;
   }
   
-  /* Stack flex rows */
+  /* Stack flex layouts */
   .flex-row {
     flex-direction: column !important;
   }
   
   /* Center text on mobile */
-  .text-left, .text-right {
+  .text-left {
     text-align: center !important;
   }
   
   /* Reduce icon sizes */
   .w-14, .h-14 {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+  
+  .w-12, .h-12 {
     width: 2rem !important;
     height: 2rem !important;
   }
   
-  /* Reduce space-y spacing */
+  /* Reduce space between stacked elements */
   .space-y-4 > * + *,
   .space-y-5 > * + *,
   .space-y-6 > * + * {
     margin-top: 0.5rem !important;
   }
   
-  /* Two column forms become single column */
+  /* Make images responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Better touch targets */
+  button, 
+  a,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+  }
+  
+  /* Stack two-column forms */
   .grid-cols-2 {
     grid-template-columns: 1fr !important;
   }
+  
+  /* Reduce hero section padding */
+  .pt-20, .pt-24, .pt-32 {
+    padding-top: 3rem !important;
+  }
+  
+  .pb-20, .pb-24, .pb-32 {
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Center flex items on mobile */
+  .items-start,
+  .items-end {
+    align-items: center !important;
+  }
+  
+  /* Make sure text is readable */
+  p, li, span {
+    font-size: 0.9375rem;
+  }
+  
+  /* Reduce margin on sections */
+  .mt-8, .mt-10, .mt-12, .mt-16 {
+    margin-top: 0.5rem !important;
+  }
+  
+  .mb-8, .mb-10, .mb-12, .mb-16 {
+    margin-bottom: 0.5rem !important;
+  }
 }
 
-/* ================= TABLET RESPONSIVE ================= */
+/* ================= TABLET RESPONSIVE (768px - 1024px) ================= */
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .grid-cols-3, .grid-cols-4 {
+  
+  /* Tablet grid adjustments */
+  .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
   
+  /* Reduce tablet padding */
   .container,
   .max-w-4xl,
   .max-w-5xl,
@@ -306,6 +285,28 @@ div[class*="bg-"]:last-child {
   .max-w-7xl {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+  
+  /* Tablet heading sizes */
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2 {
+    font-size: 2rem !important;
+  }
+}
+
+/* ================= HERO SECTION HANDLING ================= */
+
+/* Hero sections need space for header offset */
+.pt-24, .pt-32, .pt-20 {
+  padding-top: 5rem !important;
+}
+
+@media (max-width: 768px) {
+  .pt-24, .pt-32, .pt-20 {
+    padding-top: 4rem !important;
   }
 }
 
@@ -322,6 +323,7 @@ div[class*="bg-"]:last-child {
   padding-right: 1rem;
 }
 
+/* Desktop container padding */
 @media (min-width: 1025px) {
   .container,
   .max-w-4xl,
@@ -333,37 +335,67 @@ div[class*="bg-"]:last-child {
   }
 }
 
-/* ================= PROTECT FIXED ELEMENTS ================= */
+/* ================= FORM RESPONSIVENESS ================= */
 
-/* Ensure chat and fixed elements are not affected */
+@media (max-width: 768px) {
+  /* Stack form fields */
+  form .grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Make form full width */
+  form {
+    width: 100%;
+  }
+  
+  /* Reduce form spacing */
+  form .space-y-4 > * + * {
+    margin-top: 0.75rem !important;
+  }
+}
+
+/* ================= CARD RESPONSIVENESS ================= */
+
+@media (max-width: 768px) {
+  /* Stack cards vertically */
+  .grid > div {
+    margin-bottom: 1rem;
+  }
+  
+  /* Make cards full width */
+  .rounded-xl, .rounded-2xl {
+    width: 100%;
+  }
+  
+  /* Reduce card internal spacing */
+  .card-body, 
+  [class*="p-"]:not(button p) {
+    padding: 0.75rem;
+  }
+}
+
+/* ================= NAVIGATION RESPONSIVENESS ================= */
+
+@media (max-width: 768px) {
+  /* Hide desktop navigation */
+  .hidden.lg\:flex {
+    display: none !important;
+  }
+  
+  /* Show mobile menu button */
+  .lg\:hidden {
+    display: block !important;
+  }
+}
+
+/* ================= CHAT COMPONENT FIX ================= */
+
+/* Ensure chat doesn't get affected by section spacing */
 .fixed,
 .absolute,
 .z-40,
 .z-50,
-.z-[9999],
-.z-[9998] {
+.z-[9999] {
   margin-bottom: 0 !important;
   margin-top: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-/* ================= ADD SMALL SPACING TO SPECIFIC SECTIONS THAT NEED IT ================= */
-
-/* Add small spacing between specific elements that are too tight */
-section + section {
-  margin-top: 0.25rem !important;
-}
-
-/* For Calendly section */
-#calendly-section {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
-}
-
-/* For process section */
-[class*="process"],
-[class*="Process"] {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
 }
