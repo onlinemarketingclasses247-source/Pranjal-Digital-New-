@@ -91,12 +91,15 @@ function Header() {
 
 </div>
 
-          <button
-            className="lg:hidden text-white p-2"
-            onClick={() => setMenuOpen((v) => !v)}
+        <button
+className="lg:hidden p-2 rounded-full bg-[#080c14]/80 backdrop-blur-md border border-[#c9a84c]/20 shadow-md"
+          onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+           {menuOpen 
+  ? <X size={22} className="text-white" /> 
+  : <Menu size={22} className="text-white" />
+}
           </button>
         </div>
       </div>
