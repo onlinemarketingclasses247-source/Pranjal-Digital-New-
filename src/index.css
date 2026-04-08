@@ -693,7 +693,75 @@ section:empty {
 
 
 
+/* ================= UNIVERSAL SPACING FIX (NO JSX CHANGE NEEDED) ================= */
 
+/* 1. Kill all unpredictable section spacing */
+section {
+  margin: 0 !important;
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
+}
+
+/* 2. Mobile tighter spacing */
+@media (max-width: 768px) {
+  section {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
+/* 3. Fix hero (top gap under navbar) */
+section:first-of-type {
+  padding-top: 100px !important;
+}
+
+@media (max-width: 768px) {
+  section:first-of-type {
+    padding-top: 85px !important;
+  }
+}
+
+/* 4. Remove Tailwind spacing conflicts */
+[class*="py-"],
+[class*="pt-"],
+[class*="pb-"] {
+  padding-top: unset !important;
+  padding-bottom: unset !important;
+}
+
+/* 5. Remove margin stacking inside sections */
+section * {
+  margin-top: 0 !important;
+}
+
+/* 6. Prevent cards adding spacing */
+.rounded-xl,
+.rounded-2xl,
+.card {
+  margin: 0 !important;
+}
+
+/* 7. Fix grids creating hidden gaps */
+.grid {
+  gap: 20px !important;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    gap: 16px !important;
+  }
+}
+
+/* 8. Remove large spacing utilities */
+.mt-20, .mt-24, .mt-28, .mt-32,
+.mb-20, .mb-24, .mb-28, .mb-32 {
+  margin: 0 !important;
+}
+
+/* 9. Fix empty spacing blocks */
+div:empty {
+  display: none;
+}
 
 
 
