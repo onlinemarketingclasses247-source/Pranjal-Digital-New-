@@ -130,3 +130,16 @@ section + section {
     min-height: 44px;
   }
 }
+
+/* 🔥 FIX DOUBLE SECTION GAP */
+section {
+  padding-top: 48px !important;
+  padding-bottom: 48px !important;
+}
+@media (max-width: 768px) {
+  section {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
