@@ -686,6 +686,216 @@ margin-top: 0 !important;
 
 
 
+/* ================= FINAL OVERRIDE FIX (FORCE CLEAN UI) ================= */
+
+/* ---------- REMOVE DEAD SPACE COMPLETELY ---------- */
+section {
+  margin: 0 !important;
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
+/* Remove internal spacing stacking */
+section > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ---------- CONTAINER WIDTH FIX (REMOVE SIDE DEAD SPACE) ---------- */
+.container,
+.max-w-7xl {
+  max-width: 1200px !important;
+}
+
+.max-w-6xl {
+  max-width: 1000px !important;
+}
+
+.max-w-5xl {
+  max-width: 900px !important;
+}
+
+/* ---------- TEXT CLARITY (STRONGER + CLEAN) ---------- */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+p, span, li {
+  color: rgba(255,255,255,0.85) !important;
+  text-shadow: none !important;
+}
+
+.text-muted,
+.text-gray-400,
+.text-gray-500 {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+/* ---------- BUTTON FIX (MOBILE + DESKTOP CLEAN) ---------- */
+button, a.button, .btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  button, a.button, .btn {
+    width: 100% !important;
+  }
+}
+
+/* ---------- STATS / NUMBERS SECTION FIX ---------- */
+/* This is CRITICAL for your design */
+
+.stats, 
+.stats-section,
+[class*="stat"],
+[class*="number"] {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem !important;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .stats, 
+  .stats-section,
+  [class*="stat"],
+  [class*="number"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats, 
+  .stats-section,
+  [class*="stat"],
+  [class*="number"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Individual stat block */
+.stat-item, 
+.stat-card {
+  padding: 1rem !important;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+}
+
+/* Big numbers */
+.stat-item h3,
+.stat-card h3 {
+  font-size: 1.75rem !important;
+  font-weight: 700;
+}
+
+/* ---------- GRID + FLEX CLEANUP ---------- */
+.grid {
+  gap: 1.5rem !important;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    gap: 1rem !important;
+  }
+}
+
+/* Force proper stacking */
+.flex {
+  gap: 1rem;
+}
+
+/* ---------- REMOVE TRANSFORM GAPS ---------- */
+.rounded-xl:hover,
+.rounded-2xl:hover,
+.card:hover {
+  transform: none !important;
+}
+
+/* ---------- HERO SPACING FIX ---------- */
+.hero-section {
+  padding-top: 6rem !important;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding-top: 5rem !important;
+  }
+}
+
+/* ---------- IMAGE + ICON SCALE FIX ---------- */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+svg {
+  max-width: 100%;
+}
+
+/* ---------- FINAL MOBILE FONT FIX ---------- */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px !important;
+  }
+
+  h1 {
+    font-size: 1.9rem !important;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+  }
+
+  h3 {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* ---------- REMOVE RANDOM EXTRA SPACING ---------- */
+div:empty {
+  display: none !important;
+}
+
+/* ---------- ENSURE NO HORIZONTAL SCROLL ---------- */
+html, body {
+  overflow-x: hidden !important;
+}
+
+/* ---------- FIX OVERFLOW FROM ANIMATIONS ---------- */
+section, div {
+  overflow-x: clip;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
