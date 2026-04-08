@@ -104,53 +104,62 @@ button, a {
   }
 }
 
-/* ================= SECTION SPACING ONLY - TARGETING MAIN CONTENT ONLY ================= */
+/* ================= FORCE REDUCE SECTION PADDING ================= */
 
-/* Only target direct children of main that are sections or section-like containers */
-main > section,
-main > div > section,
-main > div:not(.fixed):not(.absolute) {
-  margin-bottom: 1.5rem;
+/* Override all large padding classes */
+.py-8, .py-10, .py-12, .py-16, .py-20, .py-24, .py-32,
+.pt-8, .pt-10, .pt-12, .pt-16, .pt-20, .pt-24, .pt-32,
+.pb-8, .pb-10, .pb-12, .pb-16, .pb-20, .pb-24, .pb-32 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 
-/* Last element shouldn't have extra margin */
-main > section:last-child,
-main > div > section:last-child {
-  margin-bottom: 0;
+/* Specific overrides for common section containers */
+div[class*="py-"],
+section[class*="py-"] {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 
-/* EXCLUDE fixed and absolute positioned elements (like chat) */
-.fixed,
-.absolute,
-.z-40,
-.z-50,
-.z-[9999] {
-  margin-bottom: 0 !important;
+/* Reduce margins on common spacing classes */
+.mt-8, .mt-10, .mt-12, .mt-16, .mt-20,
+.mb-8, .mb-10, .mb-12, .mb-16, .mb-20 {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
-/* ================= RESPONSIVE SECTION SPACING ================= */
+/* Remove extra space between sections */
+section + section,
+div + section,
+section + div {
+  margin-top: 0 !important;
+}
 
-/* Mobile - smaller gap */
+/* ================= RESPONSIVE ================= */
+
 @media (max-width: 768px) {
-  main > section,
-  main > div > section,
-  main > div:not(.fixed):not(.absolute) {
-    margin-bottom: 1rem;
+  .py-8, .py-10, .py-12, .py-16, .py-20,
+  .pt-8, .pt-10, .pt-12, .pt-16, .pt-20,
+  .pb-8, .pb-10, .pb-12, .pb-16, .pb-20 {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
   }
 }
 
-/* Desktop - moderate gap */
-@media (min-width: 769px) {
-  main > section,
-  main > div > section,
-  main > div:not(.fixed):not(.absolute) {
-    margin-bottom: 1.5rem;
+/* ================= HERO SECTION - KEEP HEADER OFFSET ================= */
+
+.pt-24, .pt-32, .pt-20 {
+  padding-top: 5rem !important;
+}
+
+@media (max-width: 768px) {
+  .pt-24, .pt-32, .pt-20 {
+    padding-top: 4rem !important;
   }
 }
 
-/* ================= UTILITY CLASSES ================= */
+/* ================= UTILITY ================= */
 
-/* Container centering */
 .container,
 .max-w-4xl,
 .max-w-5xl,
@@ -158,26 +167,12 @@ main > div > section:last-child {
 .max-w-7xl {
   margin-left: auto;
   margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-/* Responsive container padding */
 @media (max-width: 768px) {
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-/* ================= RESPONSIVE TOUCH TARGETS ================= */
-
-@media (max-width: 768px) {
-  button, 
-  a,
-  [role="button"] {
+  button, a, [role="button"] {
     min-height: 44px;
     min-width: 44px;
   }
@@ -186,28 +181,44 @@ main > div > section:last-child {
     font-size: 16px !important;
   }
   
-  /* Stack form fields on mobile */
   .grid-cols-2 {
     grid-template-columns: 1fr !important;
   }
 }
 
-/* ================= TIGHTER SECTION SPACING ================= */
 
-/* Only target direct children of main */
-main > section,
-main > div:not(.fixed):not(.absolute):not(.z-40):not(.z-50):not(.z-\[9999\]) {
-  margin-bottom: 0.75rem;
+/* ================= EMERGENCY - STRIP ALL LARGE PADDING ================= */
+
+/* Target all divs and sections with large padding */
+div[class*="py-8"],
+div[class*="py-10"],
+div[class*="py-12"],
+div[class*="py-16"],
+div[class*="py-20"],
+div[class*="py-24"],
+div[class*="py-32"],
+section[class*="py-8"],
+section[class*="py-10"],
+section[class*="py-12"],
+section[class*="py-16"],
+section[class*="py-20"],
+section[class*="py-24"],
+section[class*="py-32"] {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 
-main > section:last-child {
-  margin-bottom: 0;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  main > section,
-  main > div:not(.fixed):not(.absolute):not(.z-40):not(.z-50):not(.z-\[9999\]) {
-    margin-bottom: 0.5rem;
-  }
+/* Target all elements with large margins */
+[class*="mb-8"],
+[class*="mb-10"],
+[class*="mb-12"],
+[class*="mb-16"],
+[class*="mb-20"],
+[class*="mt-8"],
+[class*="mt-10"],
+[class*="mt-12"],
+[class*="mt-16"],
+[class*="mt-20"] {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
 }
