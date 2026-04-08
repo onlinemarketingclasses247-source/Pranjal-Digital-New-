@@ -37,7 +37,8 @@ export default function Contact() {
   }, []);
 
   return (
-<div className="bg-[#080c14] pt-24">
+<div className="bg-[#080c14] pt-24 flex justify-center">
+  <div className="w-full max-w-7xl">
 
 {/* ================= TOP DECISION ================= */}
 <section className="py-20 max-w-6xl mx-auto px-4">
@@ -66,6 +67,7 @@ Submit → Analysis → Strategy → Growth 🚀
 Open Form
 </button>
 
+  </div>
 </div>
 
 {/* BOOK MEETING */}
