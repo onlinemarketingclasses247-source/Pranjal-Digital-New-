@@ -70,15 +70,12 @@ function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
-            {/* CONTACT BUTTON */}
             <Link
               href="/contact"
               className="border border-[#c9a84c]/40 text-[#c9a84c] font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-[#c9a84c]/10 transition"
             >
               Contact Us
             </Link>
-
-            {/* BOOK A MEETING */}
             <a
               href={CALENDLY}
               target="_blank"
@@ -94,10 +91,7 @@ function Header() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-            {menuOpen
-              ? <X size={22} className="text-white" />
-              : <Menu size={22} className="text-white" />
-            }
+            {menuOpen ? <X size={22} className="text-white" /> : <Menu size={22} className="text-white" />}
           </button>
         </div>
       </div>
@@ -105,7 +99,6 @@ function Header() {
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* OVERLAY */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -113,12 +106,7 @@ function Header() {
               className="fixed inset-0 bg-black/70 z-[9998]"
               onClick={() => setMenuOpen(false)}
             />
-
-            {/* MENU PANEL */}
-            <motion.div
-              className="fixed top-0 right-0 w-full h-screen bg-[#080c14] z-[9999] flex flex-col px-6 pt-20"
-            >
-              {/* CLOSE BUTTON */}
+            <motion.div className="fixed top-0 right-0 w-full h-screen bg-[#080c14] z-[9999] flex flex-col px-6 pt-20">
               <button
                 onClick={() => setMenuOpen(false)}
                 className="absolute top-5 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md"
@@ -136,7 +124,6 @@ function Header() {
                   {link.label}
                 </Link>
               ))}
-
               <a
                 href={CALENDLY}
                 target="_blank"
@@ -155,9 +142,9 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="bg-[#040608] border-t border-[#c9a84c]/10 pt-16 pb-8">
+    <footer className="bg-[#040608] border-t border-[#c9a84c]/10 pt-12 pb-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
             <div className="text-2xl font-bold mb-3">
               <span className="gold-gradient">Pranjal</span>
@@ -166,7 +153,7 @@ function Footer() {
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
               Driving Real Results Through Data-Driven Marketing. 12+ years of expertise across US, Canada, and India markets.
             </p>
-            <div className="flex gap-4 mt-5">
+            <div className="flex gap-4 mt-4">
               <a
                 href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/"
                 target="_blank"
@@ -195,8 +182,8 @@ function Footer() {
           </div>
 
           <div>
-            <div className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-4">Navigation</div>
-            <ul className="space-y-2.5">
+            <div className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-3">Navigation</div>
+            <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-white/50 hover:text-white text-sm transition-colors">
@@ -218,8 +205,8 @@ function Footer() {
           </div>
 
           <div>
-            <div className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-4">Services</div>
-            <ul className="space-y-2.5">
+            <div className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-3">Services</div>
+            <ul className="space-y-2">
               {['SEO', 'Google PPC', 'Meta Ads', 'B2B Marketing', 'SaaS Marketing', 'Email Marketing'].map((s) => (
                 <li key={s}>
                   <Link href="/services" className="text-white/50 hover:text-white text-sm transition-colors">
@@ -231,7 +218,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/30 text-xs">© 2025 Pranjal Digital. All Rights Reserved.</p>
           <p className="text-white/30 text-xs">info@pranjaldigital.com</p>
         </div>
