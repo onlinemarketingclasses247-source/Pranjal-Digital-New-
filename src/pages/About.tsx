@@ -120,30 +120,36 @@ export default function About() {
       <ScrollReveal>
         <div className="relative">
 
-          <div className="aspect-square rounded-3xl border border-[#c9a84c]/20 overflow-hidden relative">
-
+<div className="rounded-3xl border border-[#c9a84c]/20 overflow-hidden">
             {/* Background Image */}
-            <img
-              src="/images/about.png"
-              alt="Pranjal Conference"
-              className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700"
-            />
+       <img
+  src="/images/about.png"
+  alt="Pranjal Conference"
+  className="w-full h-[320px] md:h-[450px] object-cover"
+ />
+  <div className="mt-6 text-center">
+  <div className="text-5xl font-bold gold-gradient">12+</div>
+
+  <p className="text-white/70 mt-2 text-sm leading-relaxed">
+    Years of mastery across US, Canada & India markets
+  </p>
+
+  <div className="mt-4 inline-block border border-[#c9a84c]/30 px-4 py-2 rounded-lg">
+    <span className="text-[#c9a84c] font-semibold">25+</span>
+    <span className="text-white/70 text-sm ml-2">Team Members</span>
+  </div>
+</div>
 
             {/* Dark Overlay */}
             <div className="absolute inset-0 bg-black/60"></div>
 
-            {/* Content */}
-            <div className="relative z-10 text-center p-8">
-              <div className="serif text-8xl font-black gold-gradient mb-4">12+</div>
-              <div className="text-white/60 text-lg">
-                Years of mastery across<br />US, Canada & India markets
-              </div>
-            </div>
+        
+        
 
           </div>
 
           {/* Floating Card */}
-          <div className="absolute -bottom-4 -right-4 w-28 h-28 md:w-32 md:h-32 rounded-2xl bg-[#c9a84c]/10 border border-[#c9a84c]/20 flex flex-col items-center justify-center">
+        
             <div className="text-xl md:text-2xl font-bold text-[#c9a84c]">25+</div>
             <div className="text-white/50 text-xs text-center">Team Members</div>
           </div>
