@@ -111,7 +111,7 @@ export default function About() {
 
   
    {/* Story */}
-<section className="py-16 md:py-20">
+<section className="py-12 md:py-16">
   <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-center">
@@ -188,7 +188,7 @@ export default function About() {
 
 
       {/* ========== MISSION & VISION ========== */}
-<section className="py-16 md:py-20 bg-gradient-to-b from-[#080c14] to-[#040608]">
+<section className="py-10 md:py-14 bg-gradient-to-b from-[#080c14] to-[#040608]">
   <div className="max-w-6xl mx-auto px-4">
 
     {/* Heading */}
@@ -323,7 +323,7 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {workModels.map((m, i) => (
               <ScrollReveal key={m.type} delay={i * 0.15}>
-                <div className="p-8 rounded-2xl bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/20 transition-colors h-full">
+                <div className="p-8 rounded-2xl bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/20 transition-colors">
                   <h3 className="serif text-2xl font-bold text-white mb-3">{m.type}</h3>
                   <p className="text-white/50 mb-6 text-sm leading-relaxed">{m.desc}</p>
                   <ul className="space-y-3">
