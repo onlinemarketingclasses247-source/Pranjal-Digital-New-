@@ -514,9 +514,9 @@ useEffect(() => {
     <div className="bg-[#080c14] pt-24" style={{ fontFamily: "'DM Sans', sans-serif" }}>
 
       {/* ── HERO ── */}
-      <section className="py-20 text-center relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 100%)' }}>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%)' }} />
-        <div className="relative max-w-4xl mx-auto px-6">
+     <section className="py-20 text-center relative overflow-hidden z-0" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 100%)' }}>
+<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%)' }} />
+  <div className="relative z-10 max-w-4xl mx-auto px-6">
           <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-4">Full-Service Digital Marketing</p>
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-5">
             End-to-End Digital Marketing<br />
