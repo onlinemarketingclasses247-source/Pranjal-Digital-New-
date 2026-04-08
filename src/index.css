@@ -673,3 +673,72 @@ margin-right: auto;
 margin-bottom: 0 !important;
 margin-top: 0 !important;
 }
+
+
+
+
+
+
+
+/* ================= FIX: PREVENT INITIAL LOAD STRIKETHROUGH/FLASH ================= */
+
+/* Prevent any pseudo-elements from showing during initial load */
+button::after,
+a::after,
+.gold-bg::after,
+.gold-gradient::after {
+  display: none !important;
+}
+
+/* Ensure gold gradient text renders correctly from the start */
+.gold-gradient {
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Force proper rendering on page load - prevents flicker/strikethrough */
+body {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Hide any unwanted lines that might appear on headings */
+h1, h2, h3, h4, h5, h6,
+.gold-gradient,
+.shimmer-text {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  -webkit-text-decoration-line: none !important;
+}
+
+/* Fix for any potential ::before or ::after that might create lines */
+[class*="gold"]::before,
+[class*="gold"]::after,
+h1::before,
+h2::before,
+h3::before,
+.gold-gradient::before,
+.gold-gradient::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Ensure smooth initial paint */
+html {
+  visibility: visible;
+}
+
+/* Prevent animation flicker on page load */
+.no-flicker {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Optional: Add a small delay to animations to ensure proper render */
+@media not (prefers-reduced-motion) {
+  .animate-on-load {
+    animation-fill-mode: both;
+  }
+}
