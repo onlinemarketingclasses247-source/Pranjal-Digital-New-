@@ -260,9 +260,9 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-[#020617] flex flex-col">
+    <div className="min-h-screen bg-[#020617] flex flex-col pb-20 lg:pb-0">
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 pt-16 lg:pt-20">
         {children}
       </main>
       <Footer />
