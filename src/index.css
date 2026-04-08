@@ -191,3 +191,23 @@ main > div > section:last-child {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ================= TIGHTER SECTION SPACING ================= */
+
+/* Only target direct children of main */
+main > section,
+main > div:not(.fixed):not(.absolute):not(.z-40):not(.z-50):not(.z-\[9999\]) {
+  margin-bottom: 0.75rem;
+}
+
+main > section:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  main > section,
+  main > div:not(.fixed):not(.absolute):not(.z-40):not(.z-50):not(.z-\[9999\]) {
+    margin-bottom: 0.5rem;
+  }
+}
