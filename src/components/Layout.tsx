@@ -47,7 +47,7 @@ function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-16 lg:h-20 relative">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold tracking-tight">
               <span className="gold-gradient">Pranjal</span>
@@ -92,8 +92,9 @@ function Header() {
 </div>
 
         <button
-className="lg:hidden p-2 rounded-full bg-[#080c14]/80 backdrop-blur-md border border-[#c9a84c]/20 shadow-md"
-          onClick={() => setMenuOpen((v) => !v)}
+<button
+  className="lg:hidden absolute right-4 top-4 z-[10000] p-2 rounded-full bg-[#080c14] border border-[#c9a84c]/30 shadow-lg"         
+  onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
            {menuOpen 
