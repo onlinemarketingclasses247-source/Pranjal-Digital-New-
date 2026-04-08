@@ -39,12 +39,18 @@ function Header() {
   }, [menuOpen]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
-        scrolled || isDarkHeader
-          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-white/5 shadow-lg'
-          : 'bg-transparent'
-      }`}
+ <header
+  className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
+    scrolled || isDarkHeader
+      ? 'bg-[#080c14] backdrop-blur-md shadow-lg'
+      : 'bg-transparent'
+  }`}
+  style={{
+    top: scrolled || isDarkHeader ? '0' : '-1px',
+    paddingTop: scrolled || isDarkHeader ? '0' : '1px',
+    borderBottom: scrolled || isDarkHeader ? '1px solid rgba(201, 168, 76, 0.1)' : 'none'
+  }}
+>
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20 relative">
