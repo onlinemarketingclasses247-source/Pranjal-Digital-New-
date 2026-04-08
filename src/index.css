@@ -2,61 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= BASE STYLES ================= */
+/* ================= VARIABLES & BASE ================= */
+:root {
+  --gold-primary: #c9a84c;
+  --gold-secondary: #b8963f;
+  --gold-light: #f5d76e;
+  --bg-dark: #0a0f1c;
+  --section-gap: clamp(3rem, 8vw, 6rem); /* Responsive gap */
+}
 
 html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: var(--bg-dark);
+  overflow-x: hidden;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0f1c;
+  background: var(--bg-dark);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c9a84c;
+  background: var(--gold-primary);
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #d4b05c;
+/* ================= SECTION SPACING ================= */
+
+/* Standardizes desktop gaps while allowing mobile to breathe */
+section {
+  padding-top: var(--section-gap);
+  padding-bottom: var(--section-gap);
 }
 
-/* Focus outline */
-*:focus-visible {
-  outline: 2px solid #c9a84c;
-  outline-offset: 2px;
+/* Ensure Hero section accounts for fixed Navbars */
+header + section, 
+main > section:first-of-type {
+  padding-top: clamp(6rem, 12vh, 10rem);
 }
 
-/* ================= BUTTONS ================= */
-
-button, a {
-  transition: all 0.3s ease;
-}
+/* ================= COMPONENTS ================= */
 
 .gold-bg {
-  background: linear-gradient(135deg, #c9a84c 0%, #b8963f 100%);
+  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-secondary) 100%);
   color: #080c14;
   font-weight: 700;
-  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gold-bg:hover {
-  background: linear-gradient(135deg, #d4b05c 0%, #c9a84c 100%);
-  box-shadow: 0 15px 30px rgba(201, 168, 76, 0.4);
   transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.4);
 }
 
-.gold-gradient {
-  background: linear-gradient(90deg, #c9a84c, #f5d76e);
+.gold-gradient-text {
+  background: linear-gradient(90deg, var(--gold-primary), var(--gold-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ================= STATS & NUMBERS (RESPONSIVE) ================= */
+
+/* Instead of forcing 1 column, we use auto-fit. 
+   This ensures stats look good on all screens. 
+*/
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on small mobile for stats */
+    gap: 1rem;
+  }
+  
+  .stat-card h2, .stat-card .number {
+    font-size: 1.75rem !important;
+  }
 }
 
 /* ================= 3D MAP ================= */
@@ -64,12 +97,18 @@ button, a {
 .map-3d-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 9;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(201, 168, 76, 0.3);
+  border: 1px solid rgba(201, 168, 76, 0.2);
   background: radial-gradient(circle at center, #0f172a, #020617);
   perspective: 1000px;
+}
+
+@media (max-width: 768px) {
+  .map-3d-container {
+    aspect-ratio: 1 / 1; /* Square on mobile */
+  }
 }
 
 .map-3d {
@@ -78,368 +117,72 @@ button, a {
   background-image: url('/images/world-map-clean.png');
   background-size: contain;
   background-repeat: repeat-x;
-  background-position: center;
   position: absolute;
   top: -50%;
-  left: -50%;
   animation: rotateMap 30s linear infinite;
-  transform: rotateX(25deg) rotateY(0deg);
-  opacity: 0.9;
-}
-
-.map-3d-container::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 40%, #020617 80%);
-  pointer-events: none;
+  transform: rotateX(20deg);
+  opacity: 0.7;
 }
 
 @keyframes rotateMap {
-  0% {
-    transform: rotateX(25deg) translateX(0);
-  }
-  100% {
-    transform: rotateX(25deg) translateX(-50%);
-  }
+  from { transform: rotateX(20deg) translateX(0); }
+  to { transform: rotateX(20deg) translateX(-50%); }
 }
 
-/* ================= MOBILE FIXES - ONLY WHAT'S NECESSARY ================= */
+/* ================= MOBILE OPTIMIZATIONS ================= */
 
-/* Fix for mobile - target only problem areas */
 @media (max-width: 768px) {
-  
-  /* Fix hamburger menu position - keep it at top right */
-  .lg\:hidden {
-    display: block !important;
-    position: absolute !important;
-    right: 0.5rem !important;
-    top: 0.5rem !important;
-  }
-  
-  /* Fix header spacing */
-  header {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  }
-  
-  /* Fix hero section spacing */
-  .pt-24, .pt-32, .pt-20, [class*="pt-2"]:not(.pt-2) {
-    padding-top: 3.5rem !important;
-  }
-  
-  /* Reduce padding on all sections */
-  section {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-  }
-  
-  /* Fix stat/number sections - remove dead space */
-  .grid {
-    gap: 0.75rem !important;
-  }
-  
-  /* Make stat cards compact */
-  .rounded-xl, .rounded-2xl {
-    padding: 0.75rem !important;
-  }
-  
-  /* Reduce font size for stats */
-  .text-4xl, .text-5xl, .text-6xl, .text-7xl {
-    font-size: 1.5rem !important;
-  }
-  
-  /* Reduce margins on stat cards */
-  [class*="mb-"], [class*="mt-"] {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-  
-  /* Keep 2 column layout for stats on medium mobile */
-  .stats-grid, .grid-cols-2:has(.rounded-xl) {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-  
-  /* Fix container padding */
-  .container, [class*="max-w-"] {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-  
-  /* Reduce heading sizes */
-  h1 {
-    font-size: 1.75rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-  
-  h2 {
-    font-size: 1.35rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-  
-  /* Fix space between sections */
-  section + section {
-    margin-top: 0.5rem !important;
-  }
-  
-  /* Fix form spacing */
-  input, select, textarea {
-    margin-bottom: 0.5rem !important;
-    padding: 0.5rem !important;
-  }
-  
-  /* Make buttons full width on mobile except menu button */
-  button:not(.lg\\:hidden):not(.absolute) {
-    width: 100% !important;
-    margin-bottom: 0.5rem !important;
-  }
-  
-  /* Fix icon sizes */
-  .w-14, .h-14 {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-  }
-}
+  /* Typography Scale */
+  h1 { font-size: 2.25rem !important; line-height: 1.2; }
+  h2 { font-size: 1.85rem !important; }
+  p { font-size: 1rem !important; }
 
-/* Small mobile - extra fixes */
-@media (max-width: 480px) {
-  /* Keep stats in 2 columns on very small screens */
-  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
+  /* Interactive Elements */
+  button, a {
+    min-height: 48px; /* High accessibility touch target */
   }
-  
-  /* Reduce padding further */
-  section {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
-  }
-  
-  /* Smaller heading */
-  h1 {
-    font-size: 1.5rem !important;
-  }
-  
-  h2 {
-    font-size: 1.25rem !important;
-  }
-  
-  /* Fix hero padding */
-  .pt-24, .pt-32, .pt-20 {
-    padding-top: 3rem !important;
-  }
-  
-  /* Tighter stat cards */
-  .rounded-xl, .rounded-2xl {
-    padding: 0.5rem !important;
-  }
-  
-  /* Smaller stat numbers */
-  .text-4xl, .text-5xl, .text-6xl {
-    font-size: 1.25rem !important;
-  }
-}
 
-/* Medium mobile - keep stats readable */
-@media (min-width: 481px) and (max-width: 768px) {
-  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
+  /* Remove hover transforms on mobile to prevent "sticky" hover states */
+  .gold-bg:hover, .card:hover {
+    transform: none !important;
   }
   
-  .text-4xl, .text-5xl, .text-6xl {
-    font-size: 1.5rem !important;
-  }
-}
-
-/* Tablet - keep original layout mostly */
-@media (min-width: 769px) and (max-width: 1024px) {
-  section {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
-  }
-  
-  .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-  
-  .grid-cols-3 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
-/* Desktop - keep as is but improve slightly */
-@media (min-width: 1025px) {
-  section {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
-  
-  .container, [class*="max-w-"] {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-/* Large Desktop */
-@media (min-width: 1440px) {
-  section {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-  }
-  
-  .container, [class*="max-w-"] {
-    padding-left: 3rem;
-    padding-right: 3rem;
+  /* Flex/Grid adjustments */
+  .mobile-stack {
+    flex-direction: column !important;
+    gap: 2rem;
   }
 }
 
 /* ================= ANIMATIONS ================= */
 
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes glowPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(201, 168, 76, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(201, 168, 76, 0);
-  }
+/* Floating effect for icons */
+.floating {
+  animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Shimmer effect for gold text */
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Apply animations */
-section {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.rounded-xl, .rounded-2xl, .card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.rounded-xl:hover, .rounded-2xl:hover, .card:hover {
-  transform: translateY(-4px);
-}
-
-svg {
-  transition: all 0.3s ease;
-}
-
-.group:hover svg {
-  transform: scale(1.1);
-}
-
-.gold-bg {
-  animation: glowPulse 2s infinite;
-}
-
-.hero-icon, .floating {
-  animation: float 3s ease-in-out infinite;
-}
-
-.shimmer-text {
-  background: linear-gradient(90deg, #c9a84c, #f5d76e, #c9a84c);
-  background-size: 200% auto;
-  animation: shimmer 2s linear infinite;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .rounded-xl:hover, .rounded-2xl:hover, .card:hover {
-    transform: none;
-  }
-  
-  .gold-bg {
-    animation: none;
-  }
-  
-  .floating {
-    animation: none;
-  }
-}
-
-/* ================= PROTECT FIXED ELEMENTS ================= */
-
-.fixed,
-.absolute,
-.z-40,
-.z-50,
-.z-[9999],
-.z-[9998] {
-  margin-bottom: 0 !important;
-  margin-top: 0 !important;
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
