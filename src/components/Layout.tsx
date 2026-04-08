@@ -51,7 +51,7 @@ function Header() {
     borderBottom: scrolled || isDarkHeader ? '1px solid rgba(201, 168, 76, 0.1)' : 'none'
   }}
 >
-    >
+    
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20 relative">
           <Link href="/" className="flex items-center gap-2">
