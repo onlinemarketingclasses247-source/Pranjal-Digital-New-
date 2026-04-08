@@ -430,7 +430,8 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   const Icon = service.icon;
   return (
     <ScrollReveal delay={index * 0.05}>
-      <div className="bg-[#080c14] border border-white/10 rounded-2xl p-7 hover:border-[#c9a84c]/25 transition-colors flex flex-col h-full">
+      className="bg-[#080c14] border border-white/10 rounded-2xl p-5 hover:border-[#c9a84c]/25 transition-colors flex flex-col"
+        
         <div className="flex items-center gap-4 mb-5">
           <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center shrink-0">
             <Icon className="text-[#c9a84c]" size={22} />
@@ -513,7 +514,7 @@ useEffect(() => {
   return (
 <div className="bg-[#080c14]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       {/* ── HERO ── */}
-     <section className="py-20 text-center relative overflow-hidden z-0" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 100%)' }}>
+     <section className="py-12 md:py-16 text-center relative overflow-hidden z-0" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 100%)' }}>
 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none z-0" style={{ background: 'radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%)' }} />
   <div className="relative z-10 max-w-4xl mx-auto px-6">
           <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-4">Full-Service Digital Marketing</p>
@@ -541,7 +542,7 @@ useEffect(() => {
 
 
       {/* ── PREMIUM CIRCULAR PROCESS (FINAL FIX) ── */}
-<section className="py-16 md:py-20 bg-[#0a0f1c] overflow-hidden">
+<section className="py-16 md:py-12 md:py-16 bg-[#0a0f1c] overflow-hidden">
 <div className="max-w-7xl mx-auto px-6 text-center">
 
     {/* HEADING */}
@@ -563,7 +564,7 @@ useEffect(() => {
 
     {/* CIRCULAR RINGS */}
     {/* GRID LAYOUT */}
-<div className="grid md:grid-cols-3 items-center gap-8 mt-10">
+<div className="grid md:grid-cols-3 items-center gap-5 md:gap-6 mt-10">
 
   {/* LEFT CONTENT */}
   <div className="hidden md:block">
@@ -662,7 +663,7 @@ useEffect(() => {
 </div>
 
     {/* STEP TITLE */}
- <div className="mt-10 max-w-lg mx-auto min-h-[100px]">
+ <div className="mt-6 max-w-lg mx-auto">
       <h3 className="text-white text-lg font-semibold mb-2">
         {processSteps[activeStep].title}
       </h3>
@@ -680,11 +681,11 @@ useEffect(() => {
 
 
       {/* ── TEAM ── */}
-      <section className="py-20 bg-[#080c14] text-center">
+      <section className="py-12 md:py-16 bg-[#080c14] text-center">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Who Executes</p>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">Strategic Leadership + Specialist Execution</h2>
-          <p className="text-white/50 max-w-xl mx-auto mb-14">You get one strategic brain with full accountability — plus a team of certified specialists who are masters of their craft.</p>
+          <p className="text-white/50 max-w-xl mx-auto mb-10">You get one strategic brain with full accountability — plus a team of certified specialists who are masters of their craft.</p>
 
           {/* Org chart */}
           <div className="flex flex-col items-center mb-6">
@@ -737,13 +738,13 @@ useEffect(() => {
       </section>
 
       {/* ── VIDEO ── */}
-      <section className="py-20" style={{ background: '#0d1424' }}>
+      <section className="py-12 md:py-16" style={{ background: '#0d1424' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">See It In Action</p>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">Multi-Funnel Marketing, Explained</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
             {/* Video placeholder */}
            <div className="border border-white/10 rounded-2xl overflow-hidden aspect-video">
   <iframe
@@ -784,9 +785,9 @@ useEffect(() => {
       </section>
 
       {/* ── STATS ── */}
-      <section className="py-20 bg-[#080c14]" ref={statsRef}>
+      <section className="py-12 md:py-16 bg-[#080c14]" ref={statsRef}>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">The Numbers Don't Lie</p>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">Results That Speak for Themselves</h2>
           </div>
@@ -799,9 +800,9 @@ useEffect(() => {
       </section>
 
       {/* ── SERVICES BY FUNNEL ── */}
-      <section id="services-funnel" className="py-20 bg-[#0a0f1c]">
+      <section id="services-funnel" className="py-12 md:py-16 bg-[#0a0f1c]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Services by Marketing Funnel</p>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">From First Click to Loyal Customer</h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm">Every service maps to a specific stage in your buyer journey. No guesswork. No wasted spend.</p>
@@ -828,7 +829,7 @@ useEffect(() => {
       </section>
 
       {/* ── MID CTA ── */}
-      <section className="py-24 text-center px-6" style={{ background: 'linear-gradient(180deg, #080c14 0%, #040608 100%)' }}>
+      <section className="py-14 md:py-18 text-center px-6" style={{ background: 'linear-gradient(180deg, #080c14 0%, #040608 100%)' }}>
         <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-4">Ready to Grow?</p>
         <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">Not Sure Which Service You Need?</h2>
         <p className="text-white/50 max-w-lg mx-auto mb-10 text-sm leading-relaxed">Book a free 30-minute strategy call. I'll personally diagnose where your biggest growth opportunity is and map out exactly which services will move the needle fastest.</p>
@@ -847,9 +848,9 @@ useEffect(() => {
       </section>
 
       {/* ── FAQ (10 COMPLETE FAQS) ── */}
-      <section className="py-20 bg-[#0a0f1c]">
+      <section className="py-12 md:py-16 bg-[#0a0f1c]">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Common Questions</p>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-3">Frequently Asked Questions</h2>
             <p className="text-white/50">Everything you need to know before we work together.</p>
@@ -881,7 +882,7 @@ useEffect(() => {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="py-24 text-center px-6" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 50%, #040608 100%)' }}>
+      <section className="py-14 md:py-18 text-center px-6" style={{ background: 'linear-gradient(180deg, #040608 0%, #080c14 50%, #040608 100%)' }}>
         <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-4">Let's Build Something</p>
         <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
           Ready to Stop Guessing<br />and Start Growing?
