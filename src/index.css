@@ -104,50 +104,61 @@ button, a {
   }
 }
 
-/* ================= FORCE REDUCE SECTION PADDING ================= */
+/* ================= SECTION PADDING - KEEP ORIGINAL ================= */
 
-/* Override all large padding classes */
-.py-8, .py-10, .py-12, .py-16, .py-20, .py-24, .py-32,
-.pt-8, .pt-10, .pt-12, .pt-16, .pt-20, .pt-24, .pt-32,
-.pb-8, .pb-10, .pb-12, .pb-16, .pb-20, .pb-24, .pb-32 {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
+/* Keep original padding from components, don't override */
+/* REMOVED the padding overrides that were stripping spacing */
+
+/* ================= 5% GAP BETWEEN SECTIONS ================= */
+
+/* Add 5% margin between sections - this is the key fix */
+section {
+  margin-bottom: 5%;
 }
 
-/* Specific overrides for common section containers */
-div[class*="py-"],
-section[class*="py-"] {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
+/* Last section shouldn't have margin at bottom */
+section:last-child {
+  margin-bottom: 0;
 }
 
-/* Reduce margins on common spacing classes */
-.mt-8, .mt-10, .mt-12, .mt-16, .mt-20,
-.mb-8, .mb-10, .mb-12, .mb-16, .mb-20 {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
+/* Also target div containers that act as sections */
+div[class*="bg-"]:has(section) {
+  margin-bottom: 5%;
 }
 
-/* Remove extra space between sections */
-section + section,
-div + section,
-section + div {
-  margin-top: 0 !important;
-}
+/* ================= RESPONSIVE 5% GAP ================= */
 
-/* ================= RESPONSIVE ================= */
-
+/* Mobile - 4% gap (slightly smaller for mobile) */
 @media (max-width: 768px) {
-  .py-8, .py-10, .py-12, .py-16, .py-20,
-  .pt-8, .pt-10, .pt-12, .pt-16, .pt-20,
-  .pb-8, .pb-10, .pb-12, .pb-16, .pb-20 {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
+  section {
+    margin-bottom: 4%;
   }
 }
 
-/* ================= HERO SECTION - KEEP HEADER OFFSET ================= */
+/* Tablet - 5% gap */
+@media (min-width: 769px) and (max-width: 1024px) {
+  section {
+    margin-bottom: 5%;
+  }
+}
 
+/* Desktop - 5% gap */
+@media (min-width: 1025px) {
+  section {
+    margin-bottom: 5%;
+  }
+}
+
+/* Large desktop - 6% gap for better breathing */
+@media (min-width: 1440px) {
+  section {
+    margin-bottom: 6%;
+  }
+}
+
+/* ================= HERO SECTION HANDLING ================= */
+
+/* Hero sections need space for header */
 .pt-24, .pt-32, .pt-20 {
   padding-top: 5rem !important;
 }
@@ -171,6 +182,8 @@ section + div {
   padding-right: 1rem;
 }
 
+/* ================= RESPONSIVE TOUCH TARGETS ================= */
+
 @media (max-width: 768px) {
   button, a, [role="button"] {
     min-height: 44px;
@@ -184,41 +197,4 @@ section + div {
   .grid-cols-2 {
     grid-template-columns: 1fr !important;
   }
-}
-
-
-/* ================= EMERGENCY - STRIP ALL LARGE PADDING ================= */
-
-/* Target all divs and sections with large padding */
-div[class*="py-8"],
-div[class*="py-10"],
-div[class*="py-12"],
-div[class*="py-16"],
-div[class*="py-20"],
-div[class*="py-24"],
-div[class*="py-32"],
-section[class*="py-8"],
-section[class*="py-10"],
-section[class*="py-12"],
-section[class*="py-16"],
-section[class*="py-20"],
-section[class*="py-24"],
-section[class*="py-32"] {
-  padding-top: 0.5rem !important;
-  padding-bottom: 0.5rem !important;
-}
-
-/* Target all elements with large margins */
-[class*="mb-8"],
-[class*="mb-10"],
-[class*="mb-12"],
-[class*="mb-16"],
-[class*="mb-20"],
-[class*="mt-8"],
-[class*="mt-10"],
-[class*="mt-12"],
-[class*="mt-16"],
-[class*="mt-20"] {
-  margin-top: 0.25rem !important;
-  margin-bottom: 0.25rem !important;
 }
