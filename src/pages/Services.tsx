@@ -429,8 +429,9 @@ function StatCell({ stat, active, large }: { stat: typeof stats[0] & { large?: b
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const Icon = service.icon;
   return (
+
     <ScrollReveal delay={index * 0.05}>
-      className="bg-[#080c14] border border-white/10 rounded-2xl p-5 hover:border-[#c9a84c]/25 transition-colors flex flex-col"
+  <div className="bg-[#080c14] border border-white/10 rounded-2xl p-5 hover:border-[#c9a84c]/25 transition-colors flex flex-col">
         
         <div className="flex items-center gap-4 mb-5">
           <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center shrink-0">
