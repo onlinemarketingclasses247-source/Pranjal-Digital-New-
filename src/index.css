@@ -2,195 +2,166 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= THE "WHITE LINE" KILLER & BASE ================= */
+@layer base {
+  :root {
+    --gold-primary: #c9a84c;
+    --gold-hover: #d4b05c;
+    --gold-dark: #b8963f;
+    --bg-dark: #0a0f1c;
+    --bg-deep: #020617;
+  }
 
-:root {
-  --bg-dark: #0a0f1c;
-  --gold-primary: #c9a84c;
-  --gold-secondary: #f5d76e;
-  --gold-shadow: #8a6d2d;
-}
+  html {
+    @apply scroll-smooth;
+  }
 
-html {
-  scroll-behavior: smooth;
-  background-color: var(--bg-dark); /* Essential to prevent the white line glitch */
-  -webkit-tap-highlight-color: transparent;
-}
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
 
-body {
-  background-color: var(--bg-dark);
-  color: white;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  /* Anti-flicker properties */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  overscroll-behavior-y: none; 
-}
+  ::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+  }
 
-/* Specific fix for the "white strike" in Image 231253 */
-section, div, h1, h2 {
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
-  outline: 1px solid transparent; /* Forces the browser to paint properly */
-}
+  ::-webkit-scrollbar-thumb {
+    background: var(--gold-primary);
+    @apply rounded-full border-2 border-transparent bg-clip-padding;
+  }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-dark); }
-::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-hover);
+  }
 
-/* ================= 3D GOLDEN PRANJAL FIX ================= */
+  /* Better Typography - Fluid scaling */
+  h1 { @apply text-3xl md:text-5xl lg:text-6xl font-bold; }
+  h2 { @apply text-2xl md:text-3xl lg:text-4xl font-semibold; }
 
-/* Apply this class specifically to the word "Pranjal" */
-.pranjal-3d {
-  background: linear-gradient(to bottom, var(--gold-secondary) 0%, var(--gold-primary) 50%, var(--gold-shadow) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 800;
-  display: inline-block;
-  /* Metallic depth shadow */
-  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.5));
-  position: relative;
-}
-
-/* The "Digital" part of the logo */
-.digital-text {
-  color: #ffffff;
-  font-weight: 700;
-}
-
-/* ================= STATS SECTION FIX (NO DEAD SPACE) ================= */
-
-.stats-grid-responsive {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2x2 on mobile */
-  gap: 1rem;
-  width: 100%;
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .stats-grid-responsive {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2.5rem;
+  section {
+    @apply mb-12 md:mb-20 lg:mb-24 last:mb-0;
   }
 }
 
-.stat-card {
-  height: auto !important; /* Forces removal of dead space */
-  padding: 1.5rem 1rem !important;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(201, 168, 76, 0.15);
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+@layer components {
+  /* ================= BUTTONS & GRADIENTS ================= */
+  .gold-bg {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+    @apply text-[#080c14] font-bold transition-all duration-300 shadow-lg shadow-gold-primary/20;
+  }
+
+  .gold-bg:hover {
+    background: linear-gradient(135deg, var(--gold-hover) 0%, var(--gold-primary) 100%);
+    @apply -translate-y-0.5 shadow-xl shadow-gold-primary/30;
+  }
+
+  .gold-gradient {
+    background: linear-gradient(90deg, var(--gold-primary), #f5d76e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @apply bg-clip-text;
+  }
+
+  /* ================= 3D MAP ================= */
+  .map-3d-container {
+    @apply relative w-full aspect-square rounded-3xl overflow-hidden border border-gold-primary/30;
+    background: radial-gradient(circle at center, #0f172a, var(--bg-deep));
+    perspective: 1000px;
+  }
+
+  .map-3d {
+    @apply absolute w-[200%] h-[200%] opacity-90;
+    background: url('/images/world-map-clean.png') contain repeat-x center;
+    top: -50%;
+    left: -50%;
+    animation: rotateMap 30s linear infinite;
+    transform: rotateX(25deg);
+    will-change: transform;
+  }
+
+  .map-3d-container::after {
+    content: "";
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(circle at center, transparent 40%, var(--bg-deep) 80%);
+  }
+
+  /* ================= CARDS ================= */
+  .card-hover {
+    @apply transition-all duration-300 cubic-bezier(0.4, 0, 0.2, 1) hover:-translate-y-1;
+  }
 }
 
-/* ================= EXPLAINER TEXT READABILITY ================= */
-
-.explainer-text {
-  color: #d1d5db !important; /* Gray-300 for high contrast */
-  font-size: 0.95rem !important;
-  line-height: 1.6;
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 1.5rem auto;
-}
-
-/* ================= SECTION SPACING (BALANCED) ================= */
-
-section {
-  padding-top: clamp(2.5rem, 6vh, 6rem);
-  padding-bottom: clamp(2.5rem, 6vh, 6rem);
-  width: 100%;
-}
-
-/* ================= FUNNEL (TOFU/BOFU) FIX ================= */
-
-.funnel-container {
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 1rem;
-}
-
-.funnel-step {
-  width: 100% !important;
-  max-width: 500px !important; /* Prevents overflow */
-  margin: 0.5rem 0;
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  text-align: center;
-}
-
-/* ================= 3D MAP ================= */
-
-.map-3d-container {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1/1;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  background: radial-gradient(circle at center, #0f172a, #020617);
-  perspective: 1000px;
-}
-
-.map-3d {
-  width: 200%;
-  height: 200%;
-  background-image: url('/images/world-map-clean.png');
-  background-size: contain;
-  background-repeat: repeat-x;
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  animation: rotateMap 30s linear infinite;
-  transform: rotateX(25deg);
-  opacity: 0.8;
-}
-
+/* ================= ANIMATIONS ================= */
 @keyframes rotateMap {
-  from { transform: rotateX(25deg) translateX(0); }
-  to { transform: rotateX(25deg) translateX(-50%); }
-}
-
-/* ================= BUTTONS & ANIMATIONS ================= */
-
-.gold-bg {
-  background: linear-gradient(135deg, var(--gold-primary) 0%, #b8963f 100%) !important;
-  color: #080c14 !important;
-  font-weight: 700;
-  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.2);
-}
-
-.gold-bg:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(201, 168, 76, 0.4);
+  0% { transform: rotateX(25deg) translateX(0); }
+  100% { transform: rotateX(25deg) translateX(-50%); }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-section {
-  animation: fadeIn 0.8s ease-out forwards;
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(201, 168, 76, 0); }
 }
 
-/* Mobile Adjustments */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ================= RESPONSIVE OVERRIDES ================= */
 @media (max-width: 768px) {
-  .pt-24, .pt-32 { padding-top: 4rem !important; }
-  h1 { font-size: 1.85rem !important; }
-  h2 { font-size: 1.5rem !important; }
+  /* Spacing */
+  .container { @apply px-4; }
   
-  /* Full width buttons on mobile */
-  button:not(.nav-btn) { width: 100% !important; }
+  /* Layout forced stacking */
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Mobile-first buttons */
+  button:not(.nav-btn), .btn-full-mobile {
+    @apply w-full min-h-[48px];
+  }
+
+  /* Performance: Disable complex shadows/animations */
+  .gold-bg { animation: none; }
+  .floating { animation: none; }
+  
+  .pt-24, .pt-32 { padding-top: 4rem !important; }
+}
+
+/* Tablet refinements */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Ultra Wide Support */
+@media (min-width: 1921px) {
+  html { font-size: 18px; }
+  .container { @apply max-w-[1600px]; }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Protection for floating UI */
+.fixed, .absolute-top {
+  @apply mb-0 mt-0 !important;
 }
