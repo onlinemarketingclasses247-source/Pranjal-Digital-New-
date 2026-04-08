@@ -42,7 +42,7 @@ function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
         scrolled || isDarkHeader
-          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-[#c9a84c]/20 shadow-lg'
+          ? 'bg-[#080c14]/95 backdrop-blur-md border-b border-white/5 shadow-lg'
           : 'bg-transparent'
       }`}
     >
@@ -254,7 +254,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-[#080c14] flex flex-col">
+    <div className="min-h-screen bg-[#020617] flex flex-col">
       <Header />
       <main className="flex-1">
         {children}
