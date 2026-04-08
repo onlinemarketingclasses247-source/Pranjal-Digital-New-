@@ -752,3 +752,48 @@ h1, h2, h3 {
 p {
   text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
+
+
+
+
+
+
+/* ================= FINAL COLOR BALANCE FIX ================= */
+
+/* Fix Tailwind yellow classes overriding your gold */
+[class*="bg-yellow"] {
+  background: linear-gradient(135deg, #FFD700, #F5D76E) !important;
+  color: #020617 !important;
+}
+
+[class*="text-yellow"] {
+  color: #FFD700 !important;
+}
+
+/* Fix card blending issue */
+.card,
+.rounded-xl,
+.rounded-2xl {
+  background: rgba(6, 10, 20, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Improve text clarity inside cards */
+.card p {
+  color: #C5D0E0 !important;
+}
+
+/* Improve icon circles */
+.w-12, .h-12, .w-14, .h-14 {
+  background: rgba(255, 215, 0, 0.06) !important;
+  border: 1px solid rgba(255, 215, 0, 0.18);
+}
+
+/* Remove overly strong text shadow (causing muddy look) */
+h1, h2, h3 {
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+p {
+  text-shadow: none;
+}
