@@ -155,9 +155,9 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-[#080c14] min-h-screen">
+    <div className="bg-[#080c14]">
       {/* Hero Section */}
-      <div className="relative overflow-hidden pt-32 pb-16">
+      <div className="relative overflow-hidden pt-20 pb-10 md:pt-24 md:pb-12">
         <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-[#c9a84c]/5 blur-[120px] animate-pulse" />
         <div className="absolute bottom-20 right-1/4 w-80 h-80 rounded-full bg-[#c9a84c]/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
         
