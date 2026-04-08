@@ -331,9 +331,7 @@ zoom: 1.1;
 /* Small Mobile */
 @media (max-width: 480px) {
 /* Stack all grids */
-.grid {
-grid-template-columns: 1fr !important;
-}
+
 
 /* Full width buttons */
 button:not(.absolute button):not(.fixed button) {
@@ -646,17 +644,7 @@ animation: none;
 }
 }
 
-/* ================= HERO SECTION ================= */
 
-.pt-24, .pt-32, .pt-20 {
-padding-top: 5rem !important;
-}
-
-@media (max-width: 768px) {
-.pt-24, .pt-32, .pt-20 {
-padding-top: 4rem !important;
-}
-}
 
 /* ================= UTILITY ================= */
 
