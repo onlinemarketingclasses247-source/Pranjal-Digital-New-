@@ -43,12 +43,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Fix section readability */
-section {
-  position: relative;
-  padding-top: 60px !important;
-  padding-bottom: 60px !important;
-}
+
 
 /* Mobile spacing fix */
 @media (max-width: 768px) {
@@ -126,9 +121,6 @@ button, a {
 }
 
 /* 🔥 GLOBAL SECTION GAP FIX */
-section + section {
-  margin-top: -20px;
-}
 
 @media (max-width: 768px) {
   section + section {
@@ -136,7 +128,7 @@ section + section {
   }
 }
 
-/* Prevent accidental large spacing */
+/* REPLACE with this clean version: */
 section {
-  margin: 0 !important;
+  position: relative;
 }
