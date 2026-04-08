@@ -1,78 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* ================= GLOBAL UI FIX ================= */
 
-/* Improve text visibility everywhere */
-.text-white\/60 {
-  color: rgba(255, 255, 255, 0.85) !important;
-}
-.text-white\/50 {
-  color: rgba(255, 255, 255, 0.75) !important;
-}
-.text-white\/40 {
-  color: rgba(255, 255, 255, 0.65) !important;
+/* ================= BASE STYLES ================= */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Fix borders visibility */
-.border-white\/10 {
-  border-color: rgba(255, 255, 255, 0.2) !important;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Improve card backgrounds */
-.bg-\[\#0a0f1c\] {
-  background-color: #0f172a !important;
+::-webkit-scrollbar-track {
+  background: #0a0f1c;
 }
 
-/* Fix CTA buttons globally */
-.gold-bg {
-  background-color: #c9a84c !important;
-  color: #000 !important;
-  font-weight: 700;
-  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.4);
+::-webkit-scrollbar-thumb {
+  background: #c9a84c;
+  border-radius: 4px;
 }
 
-.gold-bg:hover {
-  background-color: #b8963f !important;
+::-webkit-scrollbar-thumb:hover {
+  background: #d4b05c;
 }
 
-/* Improve contrast on gradients */
-.gold-gradient {
-  background: linear-gradient(90deg, #c9a84c, #f5d76e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Focus outline for accessibility */
+*:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: 2px;
 }
 
+/* ================= BUTTONS & LINKS ================= */
 
-
-/* Mobile spacing fix */
-@media (max-width: 768px) {
-  section {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-  }
-}
-
-
-
-.map-3d-container {
-  position: relative;
-}
-
-section > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Improve buttons visibility */
 button, a {
   transition: all 0.3s ease;
 }
 
+/* Gold button styling */
+.gold-bg {
+  background: linear-gradient(135deg, #c9a84c 0%, #b8963f 100%);
+  color: #080c14;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.3);
+}
+
+.gold-bg:hover {
+  background: linear-gradient(135deg, #d4b05c 0%, #c9a84c 100%);
+  box-shadow: 0 15px 30px rgba(201, 168, 76, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Gold gradient text */
+.gold-gradient {
+  background: linear-gradient(90deg, #c9a84c, #f5d76e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
 /* ================= 3D MAP ================= */
 
 .map-3d-container {
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 20px;
@@ -82,7 +75,6 @@ button, a {
   perspective: 1000px;
 }
 
-/* rotating map */
 .map-3d {
   width: 200%;
   height: 200%;
@@ -90,18 +82,14 @@ button, a {
   background-size: contain;
   background-repeat: repeat-x;
   background-position: center;
-
   position: absolute;
   top: -50%;
   left: -50%;
-
   animation: rotateMap 30s linear infinite;
-
   transform: rotateX(25deg) rotateY(0deg);
   opacity: 0.9;
 }
 
-/* subtle glow overlay */
 .map-3d-container::after {
   content: "";
   position: absolute;
@@ -110,7 +98,6 @@ button, a {
   pointer-events: none;
 }
 
-/* animation */
 @keyframes rotateMap {
   0% {
     transform: rotateX(25deg) translateX(0);
@@ -120,15 +107,30 @@ button, a {
   }
 }
 
-/* 🔥 GLOBAL SECTION GAP FIX */
+/* ================= UTILITY OVERRIDES ================= */
 
-@media (max-width: 768px) {
-  section + section {
-    margin-top: -30px;
-  }
-}
-
-/* REPLACE with this clean version: */
+/* Section styling - NO forced padding or margins */
 section {
   position: relative;
+}
+
+/* Ensure content has proper z-index */
+section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  /* No forced section margins */
+  section + section {
+    margin-top: 0;
+  }
+  
+  /* Better touch targets for mobile */
+  button, 
+  a {
+    min-height: 44px;
+  }
 }
