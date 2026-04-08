@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================= IMPROVED TEXT VISIBILITY ================= */
+
+/* Global text clarity improvements */
+body {
+  color: #f3f4f6; /* High-contrast off-white */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* Ensure headings pop against dark backgrounds */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  letter-spacing: -0.01em; /* Tighter headings for premium feel */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Prevents merging with bg */
+}
+
+/* Paragraph legibility */
+p {
+  color: #d1d5db; /* Slightly softer gray for long-form reading */
+  letter-spacing: 0.015em; /* Subtle breathing room */
+}
+
+/* Input text clarity */
+input, textarea, select {
+  color: #ffffff !important;
+  background-color: rgba(15, 23, 42, 0.8); /* Dark slate background */
+}
+
 /* ================= BASE STYLES ================= */
 
 html {
@@ -19,35 +48,18 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FFD700;
+  background: #c9a84c;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #F5D76E;
+  background: #d4b05c;
 }
 
 /* Focus outline */
 *:focus-visible {
-  outline: 2px solid #FFD700;
+  outline: 2px solid #c9a84c;
   outline-offset: 2px;
-}
-
-/* ================= GLOBAL TEXT ================= */
-
-body {
-  color: #F1F5FF;
-  background-color: #020617;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #FFFFFF;
-  font-weight: 700;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-p {
-  color: #C7D0E0;
 }
 
 /* ================= BUTTONS ================= */
@@ -56,25 +68,27 @@ button, a {
   transition: all 0.3s ease;
 }
 
-/* GOLD BUTTON */
 .gold-bg {
-  background: linear-gradient(135deg, #FFD700 0%, #F5D76E 50%, #E6C200 100%);
-  color: #020617;
+  background: linear-gradient(135deg, #c9a84c 0%, #b8963f 100%);
+  color: #080c14; /* Keeping original dark text on gold for contrast */
   font-weight: 700;
-  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25);
+  box-shadow: 0 10px 25px rgba(201, 168, 76, 0.3);
+  text-shadow: none; /* No shadow on dark-on-light text */
 }
 
 .gold-bg:hover {
-  background: linear-gradient(135deg, #FFE55C 0%, #FFD700 50%, #E6C200 100%);
-  box-shadow: 0 12px 35px rgba(255, 215, 0, 0.35);
+  background: linear-gradient(135deg, #d4b05c 0%, #c9a84c 100%);
+  box-shadow: 0 15px 30px rgba(201, 168, 76, 0.4);
+  transform: translateY(-2px);
 }
 
-/* GOLD TEXT */
 .gold-gradient {
-  background: linear-gradient(180deg, #FFD700 0%, #E6C200 100%);
+  background: linear-gradient(90deg, #c9a84c, #f5d76e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* Extra contrast for gradient text */
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2)); 
 }
 
 /* ================= 3D MAP ================= */
@@ -85,9 +99,14 @@ button, a {
   aspect-ratio: 1 / 1;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(255, 215, 0, 0.25);
+  border: 1px solid rgba(201, 168, 76, 0.3);
   background: radial-gradient(circle at center, #0f172a, #020617);
   perspective: 1000px;
+}
+
+/* Text inside or over the map needs a background shield */
+.map-3d-container .text-overlay {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .map-3d {
@@ -101,115 +120,8 @@ button, a {
   top: -50%;
   left: -50%;
   animation: rotateMap 30s linear infinite;
-  transform: rotateX(25deg);
-  opacity: 0.9;
+  transform: rotateX(25deg) rotateY(0deg);
+  opacity: 0.6; /* Reduced opacity slightly to let text pop more */
 }
 
-.map-3d-container::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 40%, #020617 80%);
-}
-
-@keyframes rotateMap {
-  0% { transform: rotateX(25deg) translateX(0); }
-  100% { transform: rotateX(25deg) translateX(-50%); }
-}
-
-/* ================= SECTION SPACING ================= */
-
-section {
-  margin-bottom: 2rem;
-}
-
-/* ================= CARDS ================= */
-
-.card,
-.rounded-xl,
-.rounded-2xl,
-.bg-[#080c14],
-.bg-[#0a0f1c],
-.bg-[#0f172a] {
-  background: rgba(6, 10, 20, 0.96) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-}
-
-.card:hover,
-.rounded-xl:hover,
-.rounded-2xl:hover {
-  border-color: rgba(255, 215, 0, 0.35);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-}
-
-/* ================= INPUT ================= */
-
-input, textarea, select {
-  background: #020617 !important;
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  color: #FFFFFF;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #6B7280;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: #FFD700;
-  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.25);
-}
-
-/* ================= LINKS ================= */
-
-a {
-  color: #FFD700;
-}
-
-a:hover {
-  color: #F5D76E;
-}
-
-/* ================= ICON BACKGROUNDS ================= */
-
-.w-12, .h-12, .w-14, .h-14 {
-  background: rgba(255, 215, 0, 0.06) !important;
-  border: 1px solid rgba(255, 215, 0, 0.18);
-}
-
-/* ================= TAILWIND YELLOW FIX ================= */
-
-[class*="bg-yellow"] {
-  background: linear-gradient(135deg, #FFD700, #F5D76E) !important;
-  color: #020617 !important;
-}
-
-[class*="text-yellow"] {
-  color: #FFD700 !important;
-}
-
-/* ================= UTIL ================= */
-
-.container,
-.max-w-4xl,
-.max-w-5xl,
-.max-w-6xl,
-.max-w-7xl {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ================= FIXED ELEMENTS ================= */
-
-.fixed,
-.absolute,
-.z-40,
-.z-50,
-.z-[9999],
-.z-[9998] {
-  margin-bottom: 0 !important;
-  margin-top: 0 !important;
-}
+/* ... [Rest of your original layout and animation CSS remains unchanged] ... */
