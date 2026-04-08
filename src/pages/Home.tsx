@@ -418,20 +418,20 @@ Generated millions in revenue, managed millions in ad spend, and delivered 6X-7X
 initial={{ opacity: 0, y: 20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.7, delay: 0.4 }}
-className="flex flex-col items-stretch w-full max-w-xs mx-auto mt-8 space-y-4"
+className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
 >
 <a
 href={CALENDLY}
 target="_blank"
 rel="noopener noreferrer"
-className="w-auto text-center group relative overflow-hidden bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-[#c9a84c]/30"
+className="group inline-flex whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
 >
 <span className="relative z-10 flex items-center gap-2">
-Book Free Strategy Call <ArrowRight size={18} className="group-hover:translate-x-1 transition" />
+Book Free Strategy Call <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-2" />
 </span>
 </a>
 <Link href="/services">
-  <a className="w-full text-center border border-white/40 bg-white/5 px-8 py-4 rounded-xl text-white font-semibold transition-all duration-300">
+  <a className="inline-flex whitespace-nowrap items-center justify-center border border-white/40 bg-white/5 px-6 sm:px-8 py-4 rounded-xl text-white font-semibold transition-all duration-300 hover:border-[#c9a84c]/60 hover:text-[#c9a84c]" >
 Explore Services
 </a>
 </Link>
