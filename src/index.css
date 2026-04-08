@@ -104,7 +104,7 @@ button, a {
   }
 }
 
-/* ================= NORMAL SECTION SPACING ================= */
+/* ================= SECTION SPACING - BALANCED ================= */
 
 section {
   margin-bottom: 2rem;
@@ -114,122 +114,125 @@ section:last-child {
   margin-bottom: 0;
 }
 
-/* ================= MOBILE DEAD SPACE FIXES ================= */
+/* ================= MOBILE FIXES - ONLY TARGET PROBLEM AREAS ================= */
 
-/* Fix for large padding on mobile */
 @media (max-width: 768px) {
-  /* Reduce all large padding classes */
-  [class*="py-8"],
-  [class*="py-10"],
-  [class*="py-12"],
-  [class*="py-16"],
-  [class*="py-20"],
-  [class*="py-24"],
-  [class*="py-32"],
-  [class*="pt-8"],
-  [class*="pt-10"],
-  [class*="pt-12"],
-  [class*="pt-16"],
-  [class*="pt-20"],
-  [class*="pt-24"],
-  [class*="pt-32"],
-  [class*="pb-8"],
-  [class*="pb-10"],
-  [class*="pb-12"],
-  [class*="pb-16"],
-  [class*="pb-20"],
-  [class*="pb-24"],
-  [class*="pb-32"] {
+  
+  /* Fix section spacing on mobile */
+  section {
+    margin-bottom: 1rem;
+  }
+  
+  /* Fix hero section - reduce top padding */
+  .pt-24, .pt-32, .pt-20 {
+    padding-top: 2rem !important;
+  }
+  
+  /* Fix stat numbers section - reduce font size and padding */
+  .text-4xl, .text-5xl, .text-6xl, .text-7xl {
+    font-size: 1.75rem !important;
+  }
+  
+  /* Fix padding on all major containers */
+  .py-8, .py-10, .py-12, .py-16, .py-20, .py-24 {
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
   
-  /* Fix for stat numbers sections */
-  .text-4xl, .text-5xl, .text-6xl, .text-7xl {
-    font-size: 2rem !important;
-  }
-  
-  /* Reduce margin on stat cards */
-  [class*="mb-8"],
-  [class*="mb-10"],
-  [class*="mb-12"],
-  [class*="mb-16"],
-  [class*="mb-20"] {
+  /* Fix margins */
+  .mb-8, .mb-10, .mb-12, .mb-16, .mb-20 {
     margin-bottom: 0.5rem !important;
   }
   
-  [class*="mt-8"],
-  [class*="mt-10"],
-  [class*="mt-12"],
-  [class*="mt-16"],
-  [class*="mt-20"] {
+  .mt-8, .mt-10, .mt-12, .mt-16, .mt-20 {
     margin-top: 0.5rem !important;
   }
   
-  /* Fix hero section spacing */
-  .pt-24, .pt-32, .pt-20 {
-    padding-top: 3rem !important;
+  /* Fix stat cards - reduce internal spacing */
+  .rounded-xl, .rounded-2xl {
+    padding: 0.5rem !important;
   }
   
-  /* Reduce gap in stat grid sections */
-  .grid {
+  /* Fix grid gaps */
+  .gap-8, .gap-10, .gap-12 {
     gap: 0.75rem !important;
   }
   
-  /* Make stat cards more compact */
-  .rounded-xl, .rounded-2xl {
-    padding: 0.75rem !important;
-  }
-  
-  /* Reduce space between stacked elements */
+  /* Fix space between stacked elements */
   .space-y-4 > * + *,
   .space-y-5 > * + *,
   .space-y-6 > * + *,
-  .space-y-8 > * + *,
-  .space-y-10 > * + * {
+  .space-y-8 > * + * {
     margin-top: 0.5rem !important;
+  }
+  
+  /* Fix heading spacing */
+  h1 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  h3 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  
+  /* Fix paragraph spacing */
+  p {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Make all grids single column */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Full width buttons */
+  button:not(.absolute):not(.fixed) {
+    width: 100% !important;
+  }
+  
+  /* Center text on mobile */
+  .text-left, .text-right {
+    text-align: center !important;
+  }
+  
+  /* Reduce icon sizes */
+  .w-14, .h-14 {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+  
+  .w-12, .h-12 {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+  }
+  
+  /* Fix form fields */
+  input, select, textarea {
+    font-size: 16px !important;
+    padding: 0.5rem !important;
+  }
+  
+  /* Better touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
   }
 }
 
-/* Extra small mobile (320px - 480px) - even tighter */
+/* Extra small devices */
 @media (max-width: 480px) {
-  [class*="py-8"],
-  [class*="py-10"],
-  [class*="py-12"],
-  [class*="py-16"],
-  [class*="py-20"] {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
+  section {
+    margin-bottom: 0.75rem;
   }
   
   .pt-24, .pt-32, .pt-20 {
-    padding-top: 2.5rem !important;
-  }
-  
-  .text-4xl, .text-5xl, .text-6xl {
-    font-size: 1.5rem !important;
-  }
-  
-  section {
-    margin-bottom: 1rem;
-  }
-}
-
-/* ================= RESPONSIVE BREAKPOINTS ================= */
-
-/* Small Mobile (320px - 480px) */
-@media (max-width: 480px) {
-  section {
-    margin-bottom: 1rem;
-  }
-  
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-top: 1.5rem !important;
   }
   
   h1 {
@@ -240,197 +243,51 @@ section:last-child {
     font-size: 1.25rem !important;
   }
   
-  .p-4, .p-5, .p-6, .p-8 {
-    padding: 0.5rem !important;
-  }
-}
-
-/* Medium Mobile (481px - 768px) */
-@media (min-width: 481px) and (max-width: 768px) {
-  section {
-    margin-bottom: 1.25rem;
-  }
-  
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  h1 {
-    font-size: 1.75rem !important;
-  }
-  
-  h2 {
+  .text-4xl, .text-5xl, .text-6xl {
     font-size: 1.5rem !important;
   }
 }
 
-/* Tablet (769px - 1024px) */
+/* Tablet devices */
 @media (min-width: 769px) and (max-width: 1024px) {
   section {
     margin-bottom: 1.5rem;
-  }
-  
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-  
-  h1 {
-    font-size: 2.25rem !important;
-  }
-  
-  h2 {
-    font-size: 1.875rem !important;
-  }
-}
-
-/* Small Laptop (1025px - 1280px) */
-@media (min-width: 1025px) and (max-width: 1280px) {
-  section {
-    margin-bottom: 1.75rem;
-  }
-  
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-/* Desktop (1281px - 1440px) */
-@media (min-width: 1281px) and (max-width: 1440px) {
-  section {
-    margin-bottom: 2rem;
-  }
-}
-
-/* Large Desktop (1441px - 1920px) */
-@media (min-width: 1441px) and (max-width: 1920px) {
-  section {
-    margin-bottom: 2.25rem;
-  }
-  
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-}
-
-/* Ultra Wide (1921px and above) */
-@media (min-width: 1921px) {
-  section {
-    margin-bottom: 2.5rem;
-  }
-  
-  .container,
-  .max-w-4xl,
-  .max-w-5xl,
-  .max-w-6xl,
-  .max-w-7xl {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-}
-
-/* ================= MOBILE RESPONSIVE LAYOUTS ================= */
-
-/* Small Mobile */
-@media (max-width: 480px) {
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-  
-  button:not(.absolute button):not(.fixed button) {
-    width: 100% !important;
-  }
-  
-  .flex-row {
-    flex-direction: column !important;
-  }
-  
-  .text-left, .text-right {
-    text-align: center !important;
-  }
-  
-  .gap-4, .gap-5, .gap-6, .gap-8 {
-    gap: 0.5rem !important;
-  }
-  
-  button, a, input, select, textarea {
-    min-height: 44px;
-  }
-  
-  input, select, textarea {
-    width: 100% !important;
-    font-size: 16px !important;
-  }
-  
-  .grid-cols-2 {
-    grid-template-columns: 1fr !important;
-  }
-  
-  .w-14, .h-14 {
-    width: 2rem !important;
-    height: 2rem !important;
-  }
-  
-  .w-12, .h-12 {
-    width: 1.75rem !important;
-    height: 1.75rem !important;
-  }
-}
-
-/* Medium Mobile */
-@media (min-width: 481px) and (max-width: 768px) {
-  .grid-cols-2 {
-    grid-template-columns: 1fr !important;
   }
   
   .grid-cols-3, .grid-cols-4 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
   
-  button:not(.absolute button):not(.fixed button) {
-    width: 100% !important;
+  h1 {
+    font-size: 2rem !important;
   }
   
-  input, select, textarea {
-    font-size: 16px !important;
-  }
-  
-  .gap-4, .gap-5, .gap-6, .gap-8 {
-    gap: 0.75rem !important;
+  h2 {
+    font-size: 1.75rem !important;
   }
 }
 
-/* Tablet */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .grid-cols-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
+/* Desktop */
+@media (min-width: 1025px) {
+  section {
+    margin-bottom: 2rem;
   }
   
-  .grid-cols-3 {
-    grid-template-columns: repeat(3, 1fr) !important;
+  .container, .max-w-4xl, .max-w-5xl, .max-w-6xl, .max-w-7xl {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  section {
+    margin-bottom: 2.5rem;
   }
   
-  .gap-4, .gap-5, .gap-6, .gap-8 {
-    gap: 1rem !important;
+  .container, .max-w-4xl, .max-w-5xl, .max-w-6xl, .max-w-7xl {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }
 
@@ -533,6 +390,7 @@ section:last-child {
   }
 }
 
+/* Apply animations */
 section {
   animation: fadeIn 0.6s ease-out;
 }
@@ -610,9 +468,7 @@ svg {
 .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -631,18 +487,6 @@ svg {
   
   .floating {
     animation: none;
-  }
-}
-
-/* ================= HERO SECTION ================= */
-
-.pt-24, .pt-32, .pt-20 {
-  padding-top: 5rem !important;
-}
-
-@media (max-width: 768px) {
-  .pt-24, .pt-32, .pt-20 {
-    padding-top: 3rem !important;
   }
 }
 
@@ -668,3 +512,10 @@ svg {
   margin-bottom: 0 !important;
   margin-top: 0 !important;
 }
+
+/* ================= DEBUG - UNCOMMENT TO SEE ISSUES ================= */
+/* 
+section {
+  outline: 1px solid red !important;
+}
+*/
