@@ -116,46 +116,35 @@ export default function About() {
 
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-center">
 
+
       {/* LEFT IMAGE */}
-      <ScrollReveal>
-        <div className="relative">
+    <ScrollReveal>
+  <div>
+    {/* IMAGE */}
+    <div className="rounded-3xl border border-[#c9a84c]/20 overflow-hidden">
+      <img
+        src="/images/about.png"
+        alt="Pranjal Conference"
+        className="w-full h-[320px] md:h-[450px] object-cover"
+      />
+    </div>
 
-<div className="rounded-3xl border border-[#c9a84c]/20 overflow-hidden">
-            {/* Background Image */}
-       <img
-  src="/images/about.png"
-  alt="Pranjal Conference"
-  className="w-full h-[320px] md:h-[450px] object-cover"
- />
-  <div className="mt-6 text-center">
-  <div className="text-5xl font-bold gold-gradient">12+</div>
+    {/* TEXT BELOW IMAGE */}
+    <div className="mt-6 text-center">
+      <div className="text-5xl font-bold gold-gradient">12+</div>
 
-  <p className="text-white/70 mt-2 text-sm leading-relaxed">
-    Years of mastery across US, Canada & India markets
-  </p>
+      <p className="text-white/70 mt-2 text-sm leading-relaxed">
+        Years of mastery across US, Canada & India markets
+      </p>
 
-  <div className="mt-4 inline-block border border-[#c9a84c]/30 px-4 py-2 rounded-lg">
-    <span className="text-[#c9a84c] font-semibold">25+</span>
-    <span className="text-white/70 text-sm ml-2">Team Members</span>
+      <div className="mt-4 inline-block border border-[#c9a84c]/30 px-4 py-2 rounded-lg">
+        <span className="text-[#c9a84c] font-semibold">25+</span>
+        <span className="text-white/70 text-sm ml-2">Team Members</span>
+      </div>
+    </div>
   </div>
-</div>
+</ScrollReveal>
 
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/60"></div>
-
-        
-        
-
-          </div>
-
-          {/* Floating Card */}
-        
-            <div className="text-xl md:text-2xl font-bold text-[#c9a84c]">25+</div>
-            <div className="text-white/50 text-xs text-center">Team Members</div>
-          </div>
-
-        </div>
-      </ScrollReveal>
 
       {/* RIGHT CONTENT */}
       <ScrollReveal direction="left">
