@@ -51,7 +51,7 @@ export default function Contact() {
 }, []);
 
 return (
-<div className="bg-[#080c14] pt-24 overflow-x-hidden">
+<div className="bg-[#080c14] pt-24">
 
 {/* Hero */}
 <section className="py-20 relative overflow-hidden">
