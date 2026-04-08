@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -43,33 +43,85 @@ const processSteps = [
     icon: ClipboardList,
     title: 'Understand Requirements',
     description: 'We listen to your goals, challenges, and current marketing efforts to fully grasp your needs.',
-    duration: '30-45 min'
+    duration: '30-45 min',
+    color: 'from-blue-500/20 to-blue-500/5'
   },
   {
     icon: Target,
     title: 'Analyze & Research',
     description: 'Deep dive into your market, competitors, and current performance to identify opportunities.',
-    duration: '1-2 days'
+    duration: '1-2 days',
+    color: 'from-purple-500/20 to-purple-500/5'
   },
   {
     icon: Users,
     title: 'Kick-off Discovery Call',
     description: 'Strategic discussion to align on objectives, timeline, and key success metrics.',
-    duration: '45-60 min'
+    duration: '45-60 min',
+    color: 'from-green-500/20 to-green-500/5'
   },
   {
     icon: FileText,
     title: 'Free Proposal & Audit',
     description: 'Comprehensive proposal with actionable insights and a no-obligation audit of your current strategy.',
-    duration: '3-5 days'
+    duration: '3-5 days',
+    color: 'from-orange-500/20 to-orange-500/5'
   },
   {
     icon: Handshake,
     title: 'Partnership Launch',
     description: 'If everything aligns perfectly, we kick off with a structured onboarding process.',
-    duration: 'Ready to start'
+    duration: 'Ready to start',
+    color: 'from-[#c9a84c]/30 to-[#c9a84c]/10'
   }
 ];
+
+// Pulsing icon component for Send Message
+const PulsingIcon = ({ Icon, size = 24 }) => {
+  return (
+    <div className="relative">
+      <div className="absolute inset-0 rounded-full bg-[#c9a84c] animate-ping opacity-75" style={{ animationDuration: '1.5s' }} />
+      <div className="absolute inset-0 rounded-full bg-[#c9a84c] animate-pulse opacity-50" style={{ animationDuration: '1.5s' }} />
+      <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center shadow-lg shadow-[#c9a84c]/25">
+        <Icon size={size} className="text-[#080c14]" />
+      </div>
+    </div>
+  );
+};
+
+// Shaking phone icon component for Book Meeting
+const ShakingPhoneIcon = () => {
+  const [isShaking, setIsShaking] = useState(true);
+  const [showPhone, setShowPhone] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsShaking(true);
+      setShowPhone(false);
+      setTimeout(() => {
+        setShowPhone(true);
+        setTimeout(() => setIsShaking(false), 500);
+      }, 300);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative">
+      <motion.div
+        animate={isShaking ? {
+          rotate: [0, -10, 10, -10, 10, 0],
+          x: [0, -2, 2, -2, 2, 0]
+        } : {}}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center shadow-lg shadow-[#c9a84c]/25"
+      >
+        {showPhone ? <Phone size={24} className="text-[#080c14]" /> : <Calendar size={24} className="text-[#080c14]" />}
+      </motion.div>
+    </div>
+  );
+};
 
 export default function Contact() {
   const [showCalendly, setShowCalendly] = useState(false);
@@ -105,7 +157,7 @@ export default function Contact() {
   return (
     <div className="bg-[#080c14] min-h-screen">
       {/* Hero Section */}
-      <div className="relative overflow-hidden pt-32 pb-20">
+      <div className="relative overflow-hidden pt-32 pb-16">
         <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-[#c9a84c]/5 blur-[120px] animate-pulse" />
         <div className="absolute bottom-20 right-1/4 w-80 h-80 rounded-full bg-[#c9a84c]/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
         
@@ -143,7 +195,7 @@ export default function Contact() {
       </div>
 
       {/* Two Options Section */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div 
           variants={staggerContainer}
           initial="hidden"
@@ -158,9 +210,7 @@ export default function Contact() {
               
               <div className="relative p-6 md:p-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <MessageSquare size={24} className="text-[#c9a84c]" />
-                  </div>
+                  <PulsingIcon Icon={MessageSquare} size={24} />
                   <div>
                     <h3 className="text-xl font-bold text-white">Send a Message</h3>
                     <p className="text-white/40 text-sm">Get a response within 24 hours</p>
@@ -262,9 +312,9 @@ export default function Contact() {
                     <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
                   </div>
                   <div className="space-y-2 text-sm text-white/60">
-                    <p>✓ Form submitted → Email confirmation</p>
-                    <p>✓ Response within 24 hours</p>
-                    <p>✓ Discovery call scheduled</p>
+                    <p className="flex items-center gap-2">✓ Form submitted → Email confirmation</p>
+                    <p className="flex items-center gap-2">✓ Response within 24 hours</p>
+                    <p className="flex items-center gap-2">✓ Discovery call scheduled</p>
                   </div>
                 </div>
               </div>
@@ -278,9 +328,7 @@ export default function Contact() {
               
               <div className="relative p-6 md:p-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-[#c9a84c]/25">
-                    <Calendar size={24} className="text-[#080c14]" />
-                  </div>
+                  <ShakingPhoneIcon />
                   <div>
                     <h3 className="text-xl font-bold text-white">Book a Meeting</h3>
                     <p className="text-[#c9a84c]/70 text-sm">30-min free strategy call</p>
@@ -311,10 +359,10 @@ export default function Contact() {
                       <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
                     </div>
                     <div className="space-y-2 text-sm text-white/60">
-                      <p>✓ Choose a time slot that works for you</p>
-                      <p>✓ Join the video/audio call</p>
-                      <p>✓ Discuss your business goals</p>
-                      <p>✓ Get immediate feedback & proposal within 48h</p>
+                      <p className="flex items-center gap-2">✓ Choose a time slot that works for you</p>
+                      <p className="flex items-center gap-2">✓ Join the video/audio call</p>
+                      <p className="flex items-center gap-2">✓ Discuss your business goals</p>
+                      <p className="flex items-center gap-2">✓ Get immediate feedback & proposal within 48h</p>
                     </div>
                   </div>
 
@@ -325,6 +373,11 @@ export default function Contact() {
                     Book Your Free Call 
                     <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
+
+                  {/* Added explainer text below button */}
+                  <div className="text-center pt-2">
+                    <p className="text-white/30 text-xs">No credit card required • Cancel anytime • 100% free consultation</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -332,7 +385,7 @@ export default function Contact() {
         </motion.div>
       </div>
 
-      {/* Contact Info Row */}
+      {/* Contact Info Row - Redesigned with illustrations */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -340,24 +393,49 @@ export default function Contact() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
-          {[
-            { icon: Mail, title: "Email", value: "info@pranjaldigital.com" },
-            { icon: Clock, title: "Response Time", value: "Within 24 hours" },
-            { icon: Globe, title: "Markets Served", value: "US, Canada, India & Global" }
-          ].map((item) => (
-            <div key={item.title} className="group p-6 rounded-xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-300 text-center">
-              <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <item.icon size={20} className="text-[#c9a84c]" />
+          {/* Email Card */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-500">
+            <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
+            <div className="relative p-6 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Mail size={28} className="text-[#c9a84c]" />
               </div>
-              <h4 className="text-white font-semibold mb-1">{item.title}</h4>
-              <p className="text-white/50 text-sm">{item.value}</p>
+              <h4 className="text-white font-bold text-lg mb-2">Email Us</h4>
+              <p className="text-[#c9a84c] text-sm font-mono mb-3">info@pranjaldigital.com</p>
+              <p className="text-white/40 text-xs">We reply within 24 hours</p>
             </div>
-          ))}
+          </div>
+
+          {/* Response Time Card */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-500">
+            <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
+            <div className="relative p-6 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Clock size={28} className="text-[#c9a84c]" />
+              </div>
+              <h4 className="text-white font-bold text-lg mb-2">Fast Response</h4>
+              <p className="text-2xl font-bold text-[#c9a84c] mb-2">Within 24h</p>
+              <p className="text-white/40 text-xs">Usually much faster</p>
+            </div>
+          </div>
+
+          {/* Markets Served Card */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-500">
+            <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
+            <div className="relative p-6 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Globe size={28} className="text-[#c9a84c]" />
+              </div>
+              <h4 className="text-white font-bold text-lg mb-2">Global Reach</h4>
+              <p className="text-[#c9a84c] text-sm font-semibold mb-2">US • Canada • India</p>
+              <p className="text-white/40 text-xs">11+ countries served</p>
+            </div>
+          </div>
         </motion.div>
       </div>
 
       {/* Calendly Section */}
-      <div id="calendly-section" className="bg-gradient-to-b from-[#040608] to-[#080c14] py-12">
+      <div id="calendly-section" className="bg-gradient-to-b from-[#040608] to-[#080c14] py-12 mt-4">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {showCalendly && (
             <motion.div
@@ -378,13 +456,13 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Process Section */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      {/* Process Section - Reduced gap */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-2">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-4 py-2 rounded-full mb-6">
             <Shield size={16} className="text-[#c9a84c]" />
@@ -392,58 +470,72 @@ export default function Contact() {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How We Handle Your Inquiry</h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            From first contact to partnership — a transparent, no-pressure process
+            From first contact to partnership — a transparent, no-pressure process designed for your success
           </p>
         </motion.div>
 
-        <div className="space-y-6">
-          {processSteps.map((step, index) => (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="relative flex flex-col md:flex-row gap-4 group"
-            >
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <step.icon className="text-[#c9a84c]" size={20} />
+        {/* Process Timeline with better visual design */}
+        <div className="relative">
+          {/* Animated connecting line */}
+          <div className="absolute left-6 top-8 bottom-8 w-0.5 bg-gradient-to-b from-[#c9a84c] via-[#c9a84c]/50 to-transparent hidden md:block" />
+          
+          <div className="space-y-4">
+            {processSteps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="relative flex flex-col md:flex-row gap-4 group"
+              >
+                {/* Step number badge */}
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <step.icon className="text-[#c9a84c]" size={20} />
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#c9a84c] flex items-center justify-center text-[10px] font-bold text-[#080c14]">
+                      {index + 1}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex-1 bg-gradient-to-r from-[#0a0f1c] to-transparent rounded-xl p-5 border border-white/5 hover:border-[#c9a84c]/20 transition-all">
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                  <h4 className="text-white font-bold">
-                    <span className="text-[#c9a84c] mr-2">0{index + 1}.</span>
-                    {step.title}
-                  </h4>
-                  <span className="text-xs text-[#c9a84c] bg-[#c9a84c]/10 px-3 py-1 rounded-full">
-                    {step.duration}
-                  </span>
+                
+                <div className="flex-1 bg-gradient-to-r from-[#0a0f1c] via-[#0a0f1c]/80 to-transparent rounded-xl p-5 border border-white/5 hover:border-[#c9a84c]/20 transition-all duration-300 group-hover:transform group-hover:translate-x-1">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h4 className="text-white font-bold text-lg">{step.title}</h4>
+                    <span className="text-xs text-[#c9a84c] bg-[#c9a84c]/10 px-3 py-1 rounded-full font-mono">
+                      ⏱ {step.duration}
+                    </span>
+                  </div>
+                  <p className="text-white/50 text-sm leading-relaxed">{step.description}</p>
                 </div>
-                <p className="text-white/50 text-sm leading-relaxed">{step.description}</p>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
 
-        {/* Trust Section */}
+        {/* Trust Section - Compact design */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 pt-8 border-t border-white/10"
+          className="mt-12 pt-8 border-t border-white/10"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { number: "400+", label: "Clients Served" },
-              { number: "24h", label: "Response Guarantee" },
-              { number: "Free", label: "Strategy Call & Audit" },
-              { number: "✓", label: "NDA on Request" }
+              { icon: Award, number: "400+", label: "Clients Served", color: "from-amber-500/20 to-amber-500/5" },
+              { icon: Headphones, number: "24h", label: "Response Guarantee", color: "from-blue-500/20 to-blue-500/5" },
+              { icon: TrendingUp, number: "Free", label: "Strategy Call & Audit", color: "from-green-500/20 to-green-500/5" },
+              { icon: Shield, number: "✓", label: "NDA on Request", color: "from-purple-500/20 to-purple-500/5" }
             ].map((stat, idx) => (
-              <div key={idx} className="p-4 rounded-xl bg-[#0a0f1c]/50 border border-white/5">
-                <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent mb-1">{stat.number}</p>
-                <p className="text-white/40 text-sm">{stat.label}</p>
+              <div key={idx} className="group p-4 rounded-xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/5 hover:border-[#c9a84c]/20 transition-all duration-300 text-center">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <stat.icon size={18} className="text-[#c9a84c]" />
+                </div>
+                <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent mb-1">{stat.number}</p>
+                <p className="text-white/40 text-xs">{stat.label}</p>
               </div>
             ))}
           </div>
