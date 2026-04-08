@@ -13,26 +13,59 @@
   <body>
 
 
+
+
 <script>
   (function() {
     // Force remove any strikethrough on gold elements immediately
     var style = document.createElement('style');
-    style.textContent = '.gold-gradient { text-decoration: none !important; text-decoration-line: none !important; }';
+    style.textContent = `
+      .gold-gradient, 
+      .gold-gradient *,
+      [class*="gold-gradient"] {
+        text-decoration: none !important;
+        text-decoration-line: none !important;
+        -webkit-text-decoration-line: none !important;
+        text-decoration-thickness: 0 !important;
+      }
+    `;
     document.head.appendChild(style);
     
-    // Monitor for DOM changes and fix any strikethrough
+    // Monitor for DOM changes and fix any strikethrough (including computed styles)
     var observer = new MutationObserver(function() {
       var goldElements = document.querySelectorAll('.gold-gradient');
       goldElements.forEach(function(el) {
-        if (el.style.textDecoration === 'line-through') {
+        // Check both inline AND computed styles
+        var computedStyle = window.getComputedStyle(el);
+        if (computedStyle.textDecorationLine === 'line-through' || 
+            computedStyle.textDecoration === 'line-through' ||
+            el.style.textDecoration === 'line-through') {
+          
+          // Force remove via multiple methods
           el.style.textDecoration = 'none';
+          el.style.textDecorationLine = 'none';
+          el.style.webkitTextDecorationLine = 'none';
+          
+          // Also force on parent if needed
+          if (el.parentElement) {
+            el.parentElement.style.textDecoration = 'none';
+          }
         }
       });
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // Start observing once body exists
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+      document.addEventListener('DOMContentLoaded', function() {
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    }
   })();
 </script>
 
+    
 
 
     
