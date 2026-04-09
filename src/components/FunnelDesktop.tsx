@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const CALENDLY = "https://calendly.com/YOUR-LINK"; // 🔥 CHANGE THIS
+
 const stages = [
   {
     title: "TOFU — Awareness",
@@ -117,36 +119,33 @@ export default function FunnelDesktop() {
           <div className="w-[420px] h-[30px] bg-[#c9a84c]/30 blur-xl rounded-full animate-pulse mt-4" />
         </div>
 
-        {/* DEEP EXPLANATION GRID */}
+        {/* EXPLANATION GRID */}
         <div className="grid grid-cols-3 gap-8 text-left mb-20">
 
           <div>
             <h4 className="text-[#c9a84c] font-semibold mb-2">Traffic Layer</h4>
             <p className="text-white/60 text-sm">
-              We don’t just drive traffic — we filter intent using creatives,
-              targeting, and messaging to bring the right audience.
+              We filter intent using targeting, creatives, and messaging — not just traffic volume.
             </p>
           </div>
 
           <div>
             <h4 className="text-[#c9a84c] font-semibold mb-2">Conversion Layer</h4>
             <p className="text-white/60 text-sm">
-              Every click is directed into a system designed to convert —
-              landing pages, offers, and behavioral triggers.
+              Every click enters a structured system designed to convert.
             </p>
           </div>
 
           <div>
             <h4 className="text-[#c9a84c] font-semibold mb-2">Revenue Layer</h4>
             <p className="text-white/60 text-sm">
-              Real profit comes after conversion — retention, upsells,
-              and scaling systems are where growth compounds.
+              Real profit comes from retention, upsells, and scaling systems.
             </p>
           </div>
 
         </div>
 
-        {/* BOTTOM CTA SECTION (NO EMPTY SPACE) */}
+        {/* CTA */}
         <div className="bg-gradient-to-r from-[#0a0f1c] to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-8">
 
           <h3 className="text-white text-2xl font-semibold mb-3">
@@ -161,7 +160,7 @@ export default function FunnelDesktop() {
             href={CALENDLY}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-3 bg-[#c9a84c] text-[#040608] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity"
+            className="inline-flex items-center justify-center gap-3 bg-[#c9a84c] text-[#040608] font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:opacity-90 transition-opacity w-full sm:w-auto"
           >
             Book Free Strategy Call
           </a>
