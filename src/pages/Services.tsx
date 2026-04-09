@@ -406,13 +406,16 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
 function StatCell({ stat, active, large }: { stat: typeof stats[0] & { large?: boolean }; active: boolean; large?: boolean }) {
   const count = useCountUp(stat.num, active);
 
-  return (
-    <div
-<div
-  className={`relative overflow-hidden bg-[#0a0f1c] p-5 md:p-8 min-h-[180px] md:min-h-[220px] transition-colors hover:bg-[#0c1220] group ${    
-    large ? 'col-span-1 md:col-span-2 flex flex-col md:flex-row md:items-center gap-4 md:gap-10' : ''
-      }`}
-    >
+return (
+  <div
+    className={`relative overflow-hidden bg-[#0a0f1c] p-5 md:p-8 min-h-[180px] md:min-h-[220px] transition-colors hover:bg-[#0c1220] group ${
+      large
+        ? 'col-span-1 md:col-span-2 flex flex-col md:flex-row md:items-center gap-4 md:gap-10'
+        : ''
+    }`}
+  >
+
+  
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
         style={{
