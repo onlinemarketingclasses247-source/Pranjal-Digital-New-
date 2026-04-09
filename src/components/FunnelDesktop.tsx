@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const CALENDLY = "https://calendly.com/YOUR-LINK"; // 🔥 CHANGE THIS
+const CALENDLY = "https://calendly.com/pranjaldigital-info/30min"; // 🔥 CHANGE THIS
 
 const stages = [
   {
