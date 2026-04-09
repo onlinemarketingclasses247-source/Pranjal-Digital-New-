@@ -453,7 +453,6 @@ transition={{ delay: 1.5 }}
 
 
 
-
 {/* Desktop Stats */}
 <div className="hidden md:block">
   <section ref={statsRef} className="py-16 bg-gradient-to-r from-[#080c14] to-[#040608]">
@@ -468,6 +467,7 @@ transition={{ delay: 1.5 }}
     </div>
   </section>
 </div>
+
 
 {/* Mobile Stats */}
 <MobileStats />
