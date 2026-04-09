@@ -1,6 +1,7 @@
 import FunnelDesktop from "../components/FunnelDesktop";
 import FunnelMobile from "../components/FunnelMobile";
-import MobileStats from "../components/MobileStats";
+import StatsDesktop from "../components/StatsDesktop";
+import StatsMobile from "../components/StatsMobile";
 import CostCalculator from "../components/CostCalculator";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
@@ -32,17 +33,6 @@ document.head.appendChild(meta);
 meta.setAttribute("content", description);
 }
 
-// Rating platforms with proper logos (using brand colors and custom designs)
-const ratingPlatforms = [
-{ name: 'Google', rating: 4.9, reviews: 85, color: '#4285F4', bgGradient: 'from-blue-500/20 to-blue-600/10' },
-{ name: 'Clutch', rating: 4.8, reviews: 42, color: '#4B3B2B', bgGradient: 'from-amber-800/20 to-amber-900/10' },
-{ name: 'G2', rating: 4.7, reviews: 38, color: '#FF6C2D', bgGradient: 'from-orange-500/20 to-orange-600/10' },
-{ name: 'Trustpilot', rating: 4.6, reviews: 56, color: '#00B67A', bgGradient: 'from-green-500/20 to-green-600/10' },
-{ name: 'Glassdoor', rating: 4.5, reviews: 28, color: '#00A162', bgGradient: 'from-teal-500/20 to-teal-600/10' },
-{ name: 'Yelp', rating: 4.5, reviews: 22, color: '#D32323', bgGradient: 'from-red-500/20 to-red-600/10' },
-{ name: 'UpCity', rating: 4.9, reviews: 45, color: '#00A651', bgGradient: 'from-green-500/20 to-green-600/10' },
-{ name: 'GoodFirms', rating: 4.7, reviews: 31, color: '#F26522', bgGradient: 'from-orange-500/20 to-orange-600/10' },
-];
 
 // Custom hook for counting animation with scroll trigger
 function useCountUp(end, duration = 2000, trigger = false) {
@@ -65,30 +55,6 @@ return () => cancelAnimationFrame(animationFrame);
 return count;
 }
 
-// Animated Stat Card with scroll trigger
-function StatCard({ value, suffix, label }) {
-const ref = useRef(null);
-const inView = useInView(ref, { once: true, amount: 0.2 });
-
-const count = useCountUp(value, 2000, inView);
-
-
-
-return (
-<motion.div
-ref={ref}
-initial={{ opacity: 0, y: 30 }}
-animate={inView ? { opacity: 1, y: 0 } : {}}
-transition={{ duration: 0.5 }}
-className="text-center relative"
->
-<div className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent mb-2">
-{count}{suffix}
-</div>
-<div className="text-white/50 text-sm font-medium">{label}</div>
-</motion.div>
-);
-}
 
 
 
@@ -452,26 +418,8 @@ transition={{ delay: 1.5 }}
 </div>
 </section>
 
-<div className="relative z-20">
-  <MobileStats />
-</div>
-
-{/* Desktop Stats */}
-<div className="hidden md:block">
-  <section ref={statsRef} className="py-16 bg-gradient-to-r from-[#080c14] to-[#040608]">
-    <div className="max-w-7xl mx-auto px-4">
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-        <StatCard value={12} suffix="+" label="Years Experience" />
-        <StatCard value={400} suffix="+" label="Happy Clients" />
-        <StatCard value={20} suffix="+" label="Countries Served" />
-        <StatCard value={5} suffix="M+" label="Revenue Generated" />
-        <StatCard value={7} suffix="X" label="Avg ROAS" />
-      </div>
-    </div>
-  </section>
-</div>
-
-
+<StatsDesktop />
+<StatsMobile />
 
 
 {/* ========== GLOBAL PRESENCE SECTION ========== */}
