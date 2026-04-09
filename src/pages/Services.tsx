@@ -532,15 +532,14 @@ useEffect(() => {
   href={CALENDLY}
   target="_blank"
   rel="noopener noreferrer"
-  className="inline-flex w-auto max-w-[280px] items-center justify-center gap-2 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
->
+ className="inline-flex items-center justify-center gap-2 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-auto"
   Book a Free Strategy Call
   <ArrowRight size={16} />
 </a>
             
          <a
   href="#services-funnel"
-  className="inline-flex w-auto max-w-[280px] items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors"
+className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors w-full sm:w-auto"
 >
   Explore Services
   <ChevronDown size={16} />
@@ -848,12 +847,12 @@ useEffect(() => {
         <p className="text-white/50 max-w-lg mx-auto mb-10 text-sm leading-relaxed">Book a free 30-minute strategy call. I'll personally diagnose where your biggest growth opportunity is and map out exactly which services will move the needle fastest.</p>
    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center">
           <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-sm">
+            className="inline-flex items-center justify-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:opacity-90 transition-opacity text-sm w-full sm:w-auto"
             <Calendar size={18} /> Book Free Strategy Call
           </a>
           {/* FIXED: wouter Link with proper a tag */}
           <Link href="/contact">
-            <a className="inline-flex items-center gap-2 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors text-sm">
+            className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors text-sm w-full sm:w-auto"
               Send a Message
             </a>
           </Link>
