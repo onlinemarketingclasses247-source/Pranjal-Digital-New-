@@ -469,20 +469,67 @@ Global Clients
 </div>
 
 {/* Countries */}
-<div className="grid grid-cols-2 gap-3 text-white/80 text-sm mb-5">
+<div className="grid grid-cols-2 gap-x-4 gap-y-2 text-white/80 text-xs sm:text-sm mb-4">
 
-<span>🇺🇸 United States</span>
-<span>🇮🇳 India</span>
-<span>🇨🇦 Canada</span>
-<span>🇬🇧 United Kingdom</span>
-<span>🇩🇪 Germany</span>
-<span>🇫🇷 France</span>
-<span>🇳🇱 Netherlands</span>
-<span>🇸🇪 Sweden</span>
-<span>🇸🇬 Singapore</span>
-<span>🇯🇵 Japan</span>
-<span>🇦🇺 Australia</span>
-<span>🇦🇪 UAE</span>
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇺🇸</span>
+    <span>United States</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇮🇳</span>
+    <span>India</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇨🇦</span>
+    <span>Canada</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇬🇧</span>
+    <span>United Kingdom</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇩🇪</span>
+    <span>Germany</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇫🇷</span>
+    <span>France</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇳🇱</span>
+    <span>Netherlands</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇸🇪</span>
+    <span>Sweden</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇸🇬</span>
+    <span>Singapore</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇯🇵</span>
+    <span>Japan</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇦🇺</span>
+    <span>Australia</span>
+  </div>
+
+  <div className="flex items-center gap-2 whitespace-nowrap">
+    <span>🇦🇪</span>
+    <span>UAE</span>
+  </div>
 
 </div>
 
