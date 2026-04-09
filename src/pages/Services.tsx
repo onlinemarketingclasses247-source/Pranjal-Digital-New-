@@ -847,10 +847,17 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
         <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">Not Sure Which Service You Need?</h2>
         <p className="text-white/50 max-w-lg mx-auto mb-10 text-sm leading-relaxed">Book a free 30-minute strategy call. I'll personally diagnose where your biggest growth opportunity is and map out exactly which services will move the needle fastest.</p>
    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center">
-          <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:opacity-90 transition-opacity text-sm w-full sm:w-auto"
-            <Calendar size={18} /> Book Free Strategy Call
-          </a>
+     
+<a
+  href={CALENDLY}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center justify-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:opacity-90 transition-opacity text-sm w-full sm:w-auto"
+>
+  <Calendar size={18} />
+  Book Free Strategy Call
+</a>
+        
           {/* FIXED: wouter Link with proper a tag */}
           <Link href="/contact">
             className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors text-sm w-full sm:w-auto"
