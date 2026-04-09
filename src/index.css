@@ -606,8 +606,7 @@ margin-top: 0 !important;
 }
 
 
-/* Add this to your global.css */
-section:empty, 
-div:empty {
+/* Hides any section that has padding but no text/children */
+section:not(:has(*)) {
   display: none !important;
 }
