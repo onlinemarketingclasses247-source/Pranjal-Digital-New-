@@ -606,7 +606,8 @@ margin-top: 0 !important;
 }
 
 
-
-* {
-  outline: 1px solid red !important;
+/* Add this to your global.css */
+section:empty, 
+div:empty {
+  display: none !important;
 }
