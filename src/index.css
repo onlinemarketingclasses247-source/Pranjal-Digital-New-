@@ -281,9 +281,9 @@ width: 100% !important;
 font-size: 16px !important;
 }
 
-/* Two column forms become single */
-.grid-cols-2 {
-grid-template-columns: 1fr !important;
+/* Two column FORMS only become single */
+form .grid-cols-2 {
+  grid-template-columns: 1fr !important;
 }
 
 /* Reduce icon sizes */
@@ -300,9 +300,10 @@ height: 2rem !important;
 
 /* Medium Mobile */
 @media (min-width: 481px) and (max-width: 768px) {
-/* 2 column grids become 1 column */
-.grid-cols-2 {
-grid-template-columns: 1fr !important;
+
+  /* Only forms should become 1 column */
+form .grid-cols-2 {
+  grid-template-columns: 1fr !important;
 }
 
 /* 3-4 column grids become 2 columns */
