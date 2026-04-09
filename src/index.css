@@ -596,13 +596,7 @@ margin-bottom: 0 !important;
 margin-top: 0 !important;
 }
 
-/* Better "Ghost" Killer: Hides sections unless they contain actual visible elements */
-section:not(:has(p, h1, h2, h3, img, button, a, canvas, svg)) {
-  display: none !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
+
 
 
 
