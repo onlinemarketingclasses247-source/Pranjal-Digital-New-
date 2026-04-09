@@ -327,7 +327,8 @@ return (
 <div className="bg-[#080c14] overflow-hidden">
 
 {/* ========== HERO SECTION ========== */}
-<section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden pb-24">
+<section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden pb-10 md:pb-24">
+  
 <div className="absolute inset-0 pointer-events-none">
 <div className="absolute inset-0 bg-gradient-to-br from-[#080c14] via-[#0a0f1c] to-[#080c14]" />
 <motion.div
