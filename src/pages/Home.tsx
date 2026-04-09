@@ -1,4 +1,5 @@
 import FunnelPyramid from "../components/FunnelPyramid";
+import MobileStats from "../components/MobileStats";
 import CostCalculator from "../components/CostCalculator";
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
@@ -452,18 +453,24 @@ transition={{ delay: 1.5 }}
 
 
 
-{/* ========== STATS SECTION ========== */}
-<section ref={statsRef} className="py-16 bg-gradient-to-r from-[#080c14] to-[#040608]">
-<div className="max-w-7xl mx-auto px-4">
-<div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-<StatCard value={12} suffix="+" label="Years Experience" />
-<StatCard value={400} suffix="+" label="Happy Clients" />
-<StatCard value={20} suffix="+" label="Countries Served" />
-<StatCard value={5} suffix="M+" label="Revenue Generated" />
-<StatCard value={7} suffix="X" label="Avg ROAS" />
+
+{/* Desktop Stats */}
+<div className="hidden md:block">
+  <section ref={statsRef} className="py-16 bg-gradient-to-r from-[#080c14] to-[#040608]">
+    <div className="max-w-7xl mx-auto px-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+        <StatCard value={12} suffix="+" label="Years Experience" />
+        <StatCard value={400} suffix="+" label="Happy Clients" />
+        <StatCard value={20} suffix="+" label="Countries Served" />
+        <StatCard value={5} suffix="M+" label="Revenue Generated" />
+        <StatCard value={7} suffix="X" label="Avg ROAS" />
+      </div>
+    </div>
+  </section>
 </div>
-</div>
-</section>
+
+{/* Mobile Stats */}
+<MobileStats />
 
 {/* ========== GLOBAL PRESENCE SECTION ========== */}
 <section className="py-16 bg-gradient-to-b from-[#040608] to-[#080c14]">
