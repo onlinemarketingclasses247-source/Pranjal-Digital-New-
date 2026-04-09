@@ -226,7 +226,8 @@ export default function Contact() {
                   <input type="hidden" name="_subject" value="New Lead from Website" />
                   <input type="hidden" name="_template" value="table" />
                   <input type="hidden" name="_honey" style={{ display: "none" }} />
-                  <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
+                   <input type="hidden" name="_template" value="table" />
+                   <input type="hidden" name="_captcha" value="false" />  
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
