@@ -361,7 +361,7 @@ return (
 
 {/* ========== HERO SECTION ========== */}
 <section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden pb-24">
-<div className="absolute inset-0">
+<div className="absolute inset-0 pointer-events-none">
 <div className="absolute inset-0 bg-gradient-to-br from-[#080c14] via-[#0a0f1c] to-[#080c14]" />
 <motion.div
 animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
@@ -451,7 +451,9 @@ transition={{ delay: 1.5 }}
 </div>
 </section>
 
-
+<div className="relative z-20">
+  <MobileStats />
+</div>
 
 {/* Desktop Stats */}
 <div className="hidden md:block">
@@ -469,8 +471,7 @@ transition={{ delay: 1.5 }}
 </div>
 
 
-{/* Mobile Stats */}
-<MobileStats />
+
 
 {/* ========== GLOBAL PRESENCE SECTION ========== */}
 <section className="py-16 bg-gradient-to-b from-[#040608] to-[#080c14]">
