@@ -24,57 +24,38 @@ import { ScrollReveal } from '@/components/ScrollReveal';
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
 // ── PROCESS STEPS ──────────────────────────────────────────────────────────
+
 const processSteps = [
   {
-    week: 'Week 1',
-    icon: Search,
-    title: 'Discovery & Deep Audit',
-    short: 'Understanding business, competitors, and growth gaps clearly',
-    desc: 'I personally dive into your business — goals, existing assets, competitors, and market positioning...',
+    title: "Discovery & Audit",
+    desc: "Deep audit of business and performance.",
+    detailed:
+      "We start with a deep audit of your business, funnels, campaigns, and analytics to identify gaps, inefficiencies, and scalable growth opportunities.",
+    week: "Week 1",
   },
   {
-    week: 'Week 1–2',
-    icon: PenTool,
-    title: 'Custom Strategy Blueprint',
-    short: 'Building a clear roadmap for predictable scalable growth',
-    desc: 'Based on audit findings, I architect a bespoke multi-channel strategy...',
+    title: "Strategy & Funnel Design",
+    desc: "Building a roadmap for scalable growth.",
+    detailed:
+      "Based on insights, we design a complete funnel including acquisition channels, messaging, landing pages, and conversion flow aligned with your goals.",
+    week: "Week 1–2",
   },
   {
-    week: 'Week 2–4',
-    icon: Monitor,
-    title: 'Specialist Team Build & Setup',
-    short: 'Assigning experts and setting up systems properly',
-    desc: 'The right certified specialists are assigned...',
+    title: "Execution & Build",
+    desc: "Setting up campaigns and tracking systems.",
+    detailed:
+      "We build campaigns, landing pages, and tracking systems to ensure accurate data, optimized performance, and a strong conversion foundation.",
+    week: "Week 2–3",
   },
   {
-    week: 'Week 4',
-    icon: CheckCircle,
-    title: 'Launch & Go-Live',
-    short: 'Launching campaigns with full tracking and precision',
-    desc: 'Campaigns and content go live with full tracking...',
-  },
-  {
-    week: 'Ongoing',
-    icon: Eye,
-    title: 'Close Monitoring & Reporting',
-    short: 'Tracking performance and making real-time improvements',
-    desc: 'I personally oversee every active project...',
-  },
-  {
-    week: 'Monthly',
-    icon: TrendingUp,
-    title: 'Data-Driven Optimisation',
-    short: 'Improving results using real performance data',
-    desc: 'Every channel is continuously tested and refined...',
-  },
-  {
-    week: 'Quarters 2+',
-    icon: Rocket,
-    title: 'Scale & Expand',
-    short: 'Scaling winning campaigns for maximum growth',
-    desc: 'Proven channels get scaled aggressively...',
+    title: "Launch & Go-Live",
+    desc: "Campaigns go live with monitoring.",
+    detailed:
+      "Campaigns go live with full tracking, conversion monitoring, and continuous optimisation to scale performance and maximize ROI.",
+    week: "Week 4",
   },
 ];
+
 
 // ── SPECIALIST TEAM ────────────────────────────────────────────────────────
 const specialists = [
@@ -617,13 +598,17 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
         Step {activeStep + 1}
       </p>
 
-      <h3 className="text-white text-lg font-semibold mb-2">
-        {processSteps[activeStep].title}
-      </h3>
+   <h3 className="text-white text-base md:text-lg font-semibold mb-2">
+  {processSteps[activeStep].title}
+</h3>
 
-      <p className="text-white/60 text-sm leading-relaxed">
-        {processSteps[activeStep].desc}
-      </p>
+<p className="text-[#c9a84c] text-[11px] md:text-xs font-semibold mb-2">
+  What Happens Here
+</p>
+
+<p className="text-white/60 text-xs md:text-sm leading-relaxed break-words">
+  {processSteps[activeStep].desc}
+</p>
     </div>
   </div>
 
@@ -705,14 +690,20 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
 
     {/* STEP TITLE */}
 
-  <div className="mt-6 max-w-lg mx-auto min-h-[120px] md:min-h-[140px] flex flex-col justify-center">
-  <h3 className="text-white text-lg font-semibold mb-2">
+ <div className="mt-6 md:mt-8 max-w-lg md:max-w-2xl mx-auto px-4 md:px-0 flex flex-col justify-center">
+
+  <p className="text-[#c9a84c] text-[11px] md:text-xs font-bold uppercase tracking-widest mb-2 text-center">
+    How This Stage Works
+  </p>
+
+  <h3 className="text-white text-base md:text-xl font-semibold mb-3 text-center">
     {processSteps[activeStep].title}
   </h3>
 
-  <p className="text-white/60 text-sm leading-relaxed">
-    {processSteps[activeStep].desc}
+  <p className="text-white/70 text-xs md:text-sm leading-relaxed text-center break-words">
+    {processSteps[activeStep].detailed}
   </p>
+
 </div>
 
   </div>
