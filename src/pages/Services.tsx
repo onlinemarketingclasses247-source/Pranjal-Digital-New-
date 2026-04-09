@@ -402,28 +402,55 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
 }
 
 // ── STAT CELL (FIXED TYPE ERROR) ──────────────────────────────────────────────
+
 function StatCell({ stat, active, large }: { stat: typeof stats[0] & { large?: boolean }; active: boolean; large?: boolean }) {
   const count = useCountUp(stat.num, active);
+
   return (
-    <div className={`relative overflow-hidden bg-[#0a0f1c] p-8 transition-colors hover:bg-[#0c1220] group ${large ? 'col-span-2 flex items-center gap-10' : ''}`}>
-      <div className="absolute inset-0 bg-gradient-radial pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.06) 0%, transparent 60%)' }} />
-      <div className={large ? 'flex-1' : ''}>
-        <span className="block font-serif text-5xl font-black text-[#c9a84c] leading-none mb-2 group-hover:text-[#e8c46a] transition-colors">
+    <div
+      className={`relative overflow-hidden bg-[#0a0f1c] p-5 md:p-8 transition-colors hover:bg-[#0c1220] group ${
+        large ? 'col-span-1 md:col-span-2 flex flex-col md:flex-row md:items-center gap-4 md:gap-10' : ''
+      }`}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
+        style={{
+          background: 'radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.06) 0%, transparent 60%)'
+        }}
+      />
+
+      <div className={`${large ? 'flex-1' : ''}`}>
+        <span className="block font-serif text-3xl md:text-5xl font-black text-[#c9a84c] leading-none mb-2 transition-colors">
           {count}{stat.suffix}
         </span>
-        <div className="text-sm font-semibold text-white mb-1">{stat.label}</div>
-        <div className="text-xs text-white/50 leading-relaxed">{stat.desc}</div>
-        <div className="mt-4 h-0.5 bg-white/10 rounded overflow-hidden">
+
+        <div className="text-sm font-semibold text-white mb-1">
+          {stat.label}
+        </div>
+
+        <div className="text-xs text-white/50 leading-relaxed line-clamp-3 md:line-clamp-none">
+          {stat.desc}
+        </div>
+
+        <div className="mt-3 md:mt-4 h-[2px] bg-white/10 rounded overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-[#c9a84c] to-[#e8c46a] rounded transition-all duration-1000"
             style={{ width: active ? `${stat.pct}%` : '0%' }}
           />
         </div>
       </div>
-      {large && <div className="font-serif text-8xl font-black text-[#c9a84c]/5 leading-none select-none pointer-events-none">{stat.num}+</div>}
+
+      {large && (
+        <div className="hidden md:block font-serif text-8xl font-black text-[#c9a84c]/5 leading-none select-none pointer-events-none">
+          {stat.num}+
+        </div>
+      )}
     </div>
   );
 }
+
+
+
 
 // ── SERVICE CARD (UPDATED WITH SCROLL REVEAL) ───────────────────────────────────────────
 function ServiceCard({ service, index }: { service: Service; index: number }) {
@@ -555,7 +582,7 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
 
 
       {/* ── PREMIUM CIRCULAR PROCESS (FINAL FIX) ── */}
-<section className="py-16 md:py-12 md:py-16 bg-[#0a0f1c] overflow-hidden">
+  <section className="py-10 md:py-16 bg-[#0a0f1c] overflow-hidden">
 <div className="max-w-7xl mx-auto px-6 text-center">
 
     {/* HEADING */}
@@ -601,8 +628,7 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
 
     {/* STEP INFO (MOBILE ONLY) */}
 
-    <div className="mb-6 md:hidden h-[90px] flex flex-col justify-center overflow-hidden">
-
+<div className="mb-4 md:hidden flex flex-col justify-center">
   <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10 mx-auto">
     <span className="text-[#c9a84c] text-xs font-bold">
       Step {activeStep + 1}
@@ -798,13 +824,13 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
       </section>
 
       {/* ── STATS ── */}
-      <section className="py-12 md:py-16 bg-[#080c14]" ref={statsRef}>
+      <section className="py-8 md:py-16 bg-[#080c14]" ref={statsRef}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-10">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">The Numbers Don't Lie</p>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">Results That Speak for Themselves</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px border border-white/10 rounded-2xl overflow-hidden">
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-px border border-white/10 rounded-2xl overflow-hidden">
             {stats.map((stat, i) => (
               <StatCell key={i} stat={stat} active={statsActive} large={stat.large} />
             ))}
