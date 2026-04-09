@@ -408,8 +408,9 @@ function StatCell({ stat, active, large }: { stat: typeof stats[0] & { large?: b
 
   return (
     <div
-      className={`relative overflow-hidden bg-[#0a0f1c] p-5 md:p-8 transition-colors hover:bg-[#0c1220] group ${
-        large ? 'col-span-1 md:col-span-2 flex flex-col md:flex-row md:items-center gap-4 md:gap-10' : ''
+<div
+  className={`relative overflow-hidden bg-[#0a0f1c] p-5 md:p-8 min-h-[180px] md:min-h-[220px] transition-colors hover:bg-[#0c1220] group ${    
+    large ? 'col-span-1 md:col-span-2 flex flex-col md:flex-row md:items-center gap-4 md:gap-10' : ''
       }`}
     >
       <div
@@ -582,7 +583,7 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
 
 
       {/* ── PREMIUM CIRCULAR PROCESS (FINAL FIX) ── */}
-  <section className="py-10 md:py-16 bg-[#0a0f1c] overflow-hidden">
+<section className="py-8 md:py-12 bg-[#0a0f1c] overflow-hidden">
 <div className="max-w-7xl mx-auto px-6 text-center">
 
     {/* HEADING */}
@@ -628,7 +629,7 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
 
     {/* STEP INFO (MOBILE ONLY) */}
 
-<div className="mb-4 md:hidden flex flex-col justify-center">
+<div className="mb-4 md:hidden min-h-[90px] flex flex-col justify-center">
   <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#c9a84c]/30 bg-[#c9a84c]/10 mx-auto">
     <span className="text-[#c9a84c] text-xs font-bold">
       Step {activeStep + 1}
@@ -638,15 +639,13 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
     </span>
   </div>
 
-  <p className="text-white/70 text-sm mt-2 max-w-sm mx-auto leading-relaxed">
+  <p className="text-white/70 text-sm mt-2 max-w-sm mx-auto leading-relaxed text-center">
     {processSteps[activeStep].short}
   </p>
-
 </div>
 
     {/* CIRCLE */}
-    <div className="relative w-[260px] h-[260px] md:w-[340px] md:h-[340px] flex items-center justify-center">
-
+<div className="relative w-full max-w-[260px] h-[260px] md:max-w-[340px] md:h-[340px] flex items-center justify-center">
       {/* CENTER */}
       <div className="absolute w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#080c14] border border-[#c9a84c]/30 flex items-center justify-center">
         <span className="text-xs text-[#c9a84c] font-semibold">
@@ -702,14 +701,16 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
 </div>
 
     {/* STEP TITLE */}
- <div className="mt-6 max-w-lg mx-auto">
-      <h3 className="text-white text-lg font-semibold mb-2">
-        {processSteps[activeStep].title}
-      </h3>
-      <p className="text-white/60 text-sm">
-        {processSteps[activeStep].desc}
-      </p>
-    </div>
+
+  <div className="mt-6 max-w-lg mx-auto min-h-[120px] md:min-h-[140px] flex flex-col justify-center">
+  <h3 className="text-white text-lg font-semibold mb-2">
+    {processSteps[activeStep].title}
+  </h3>
+
+  <p className="text-white/60 text-sm leading-relaxed">
+    {processSteps[activeStep].desc}
+  </p>
+</div>
 
   </div>
 </section>
@@ -824,13 +825,13 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
       </section>
 
       {/* ── STATS ── */}
-      <section className="py-8 md:py-16 bg-[#080c14]" ref={statsRef}>
+  <section className="py-6 md:py-12 bg-[#080c14]" ref={statsRef}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-10">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">The Numbers Don't Lie</p>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">Results That Speak for Themselves</h2>
           </div>
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-px border border-white/10 rounded-2xl overflow-hidden">
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-px border border-white/10 rounded-2xl overflow-hidden">
             {stats.map((stat, i) => (
               <StatCell key={i} stat={stat} active={statsActive} large={stat.large} />
             ))}
