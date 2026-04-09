@@ -601,13 +601,4 @@ margin-top: 0 !important;
 
 
 
-/* Force-hide any container that has no meaningful content */
-section:not(:has(p, h1, h2, h3, img, button, a, canvas, svg)),
-div:not(:has(p, h1, h2, h3, img, button, a, canvas, svg, section)) {
-  display: none !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  visibility: hidden;
-}
 
