@@ -1,4 +1,5 @@
-import FunnelPyramid from "../components/FunnelPyramid";
+import FunnelDesktop from "../components/FunnelDesktop";
+import FunnelMobile from "../components/FunnelMobile";
 import MobileStats from "../components/MobileStats";
 import CostCalculator from "../components/CostCalculator";
 import React, { useEffect, useRef, useState } from 'react';
@@ -647,9 +648,9 @@ allowFullScreen
 
 {/* Video Modal */}
 
-
-{/* ========== FUNNEL PYRAMID ========== */}
-<FunnelPyramid />
+{/* ========== FUNNEL SECTION ========== */}
+<FunnelDesktop />
+<FunnelMobile />
 
 {/* ========== COST CALCULATOR ========== */}
 <CostCalculator />
