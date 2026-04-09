@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 
-const stats = [
+type Stat = {
+  value: string;
+  label: string;
+};
+
+const stats: Stat[] = [
   { value: "12+", label: "Years Experience" },
   { value: "400+", label: "Happy Clients" },
   { value: "20+", label: "Countries Served" },
@@ -9,18 +14,17 @@ const stats = [
   { value: "25+", label: "Team Members" },
 ];
 
-export default function MobileStats() {
+export default function MobileStats(): JSX.Element {
   return (
     <section className="py-10 bg-gradient-to-r from-[#080c14] to-[#040608] md:hidden">
       <div className="max-w-md mx-auto px-4">
-
         <div className="grid grid-cols-2 gap-y-6 gap-x-4">
           {stats.map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.1 }}
               className="text-center"
             >
@@ -33,7 +37,6 @@ export default function MobileStats() {
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );
