@@ -526,15 +526,27 @@ useEffect(() => {
           <p className="text-white/50 text-lg max-w-2xl mx-auto mb-10">
             14 specialized services, one strategic brain, a certified team of specialists — all aligned toward a single goal: measurable business growth.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#c9a84c] text-[#080c14] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-sm">
-              Book a Free Strategy Call <ArrowRight size={16} />
-            </a>
-            <a href="#services-funnel"
-              className="inline-flex items-center gap-2 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors text-sm">
-              Explore Services <ChevronDown size={16} />
-            </a>
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center">
+            
+        <a
+  href={CALENDLY}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex w-auto max-w-[280px] items-center justify-center gap-2 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
+>
+  Book a Free Strategy Call
+  <ArrowRight size={16} />
+</a>
+            
+         <a
+  href="#services-funnel"
+  className="inline-flex w-auto max-w-[280px] items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors"
+>
+  Explore Services
+  <ChevronDown size={16} />
+</a>
+
+            
           </div>
         </div>
       </section>
@@ -834,7 +846,7 @@ useEffect(() => {
         <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-4">Ready to Grow?</p>
         <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">Not Sure Which Service You Need?</h2>
         <p className="text-white/50 max-w-lg mx-auto mb-10 text-sm leading-relaxed">Book a free 30-minute strategy call. I'll personally diagnose where your biggest growth opportunity is and map out exactly which services will move the needle fastest.</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+   <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center">
           <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-sm">
             <Calendar size={18} /> Book Free Strategy Call
@@ -892,6 +904,7 @@ useEffect(() => {
           12+ years. 400+ clients. One strategic brain and a certified team dedicated to your growth. Let's talk about what that looks like for your business.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          
           <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-10 py-4 rounded-xl hover:opacity-90 transition-opacity">
             <Calendar size={18} /> Book Free Strategy Call
@@ -901,6 +914,7 @@ useEffect(() => {
             <a className="inline-flex items-center gap-2 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors">
               Contact Me
             </a>
+            
           </Link>
         </div>
       </section>
