@@ -604,3 +604,9 @@ margin-right: auto;
 margin-bottom: 0 !important;
 margin-top: 0 !important;
 }
+
+
+
+* {
+  outline: 1px solid red !important;
+}
