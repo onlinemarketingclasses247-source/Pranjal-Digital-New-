@@ -16,7 +16,7 @@ const stats: Stat[] = [
 
 export default function MobileStats(): JSX.Element {
   return (
-    <section className="py-10 bg-red-500 md:hidden">
+    <section className="py-10 bg-gradient-to-r from-[#080c14] to-[#040608] md:hidden">
       <div className="w-full max-w-sm mx-auto px-3">
         <div className="grid grid-cols-2 gap-4">
           {stats.map((stat, i) => (
