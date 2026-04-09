@@ -859,11 +859,11 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
 </a>
         
           {/* FIXED: wouter Link with proper a tag */}
-          <Link href="/contact">
-            className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors text-sm w-full sm:w-auto"
-              Send a Message
-            </a>
-          </Link>
+         <Link href="/contact">
+  <a className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors text-sm w-full sm:w-auto">
+    Send a Message
+  </a>
+</Link>
         </div>
       </section>
 
@@ -910,12 +910,17 @@ className="inline-flex items-center justify-center gap-2 border border-white/20 
         <p className="text-white/50 max-w-lg mx-auto mb-10 leading-relaxed">
           12+ years. 400+ clients. One strategic brain and a certified team dedicated to your growth. Let's talk about what that looks like for your business.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+<div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center">          
+     <a
+  href={CALENDLY}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center justify-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-10 py-3 sm:py-4 rounded-xl hover:opacity-90 transition-opacity w-full sm:w-auto"
+>
+  <Calendar size={18} />
+  Book Free Strategy Call
+</a>
           
-          <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-[#c9a84c] text-[#080c14] font-bold px-10 py-4 rounded-xl hover:opacity-90 transition-opacity">
-            <Calendar size={18} /> Book Free Strategy Call
-          </a>
           {/* FIXED: wouter Link with proper a tag */}
           <Link href="/contact">
             <a className="inline-flex items-center gap-2 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-colors">
