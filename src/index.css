@@ -345,9 +345,7 @@ form .grid-cols-2 {
 grid-template-columns: repeat(2, 1fr) !important;
 }
 
-button:not(.absolute button):not(.fixed button) {
-width: 100% !important;
-}
+
 
 input, select, textarea {
 font-size: 16px !important;
@@ -634,6 +632,37 @@ margin-top: 0 !important;
 
 
 
+
+
+/* ================= SAFE BUTTON SYSTEM ================= */
+
+button,
+a {
+  width: auto;
+}
+
+.btn-full {
+  width: 100% !important;
+}
+
+.flex > button,
+.flex > a {
+  align-self: center;
+}
+
+/* ================= FINAL MOBILE FIXES ================= */
+
+html, body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 640px) {
+  .rounded-xl,
+  .rounded-2xl {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
 
 
 
