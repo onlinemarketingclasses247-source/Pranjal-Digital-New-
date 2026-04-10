@@ -6,13 +6,16 @@ export default function ChatPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const [showIcon, setShowIcon] = useState(false);
-  const [isShaking, setIsShaking] = useState(false);
   const [closed, setClosed] = useState(false);
-  const [metricIndex, setMetricIndex] = useState(0);
+  const [index, setIndex] = useState(0);
 
-  const metrics = ["Leads", "Sales", "Revenue", "Growth"];
+  const content = [
+    { title: "More Leads", sub: "Get consistent qualified leads" },
+    { title: "More Sales", sub: "Convert traffic into revenue" },
+    { title: "More Revenue", sub: "Scale profit predictably" },
+    { title: "More Growth", sub: "Build long-term systems" },
+  ];
 
-  // Desktop only
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 768);
     check();
@@ -20,25 +23,16 @@ export default function ChatPopup() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Session control
   useEffect(() => {
     const closedSession = sessionStorage.getItem("chatClosed");
     if (closedSession === "true") setClosed(true);
   }, []);
 
-  // Delay + shake + open
   useEffect(() => {
     if (!isDesktop || closed) return;
 
-    const t1 = setTimeout(() => {
-      setShowIcon(true);
-      setIsShaking(true);
-    }, 8000);
-
-    const t2 = setTimeout(() => {
-      setIsShaking(false);
-      setIsOpen(true);
-    }, 16000);
+    const t1 = setTimeout(() => setShowIcon(true), 6000);
+    const t2 = setTimeout(() => setIsOpen(true), 12000);
 
     return () => {
       clearTimeout(t1);
@@ -46,11 +40,11 @@ export default function ChatPopup() {
     };
   }, [isDesktop, closed]);
 
-  // Rotate metrics (VISIBLE CHANGE)
+  // ROTATING CONTENT EVERY 1s
   useEffect(() => {
     const interval = setInterval(() => {
-      setMetricIndex((prev) => (prev + 1) % metrics.length);
-    }, 1200);
+      setIndex((prev) => (prev + 1) % content.length);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -65,24 +59,20 @@ export default function ChatPopup() {
 
   return (
     <>
-      {/* AI ICON */}
+      {/* ICON */}
       {!isOpen && showIcon && (
-        <motion.div
+        <div
           onClick={() => setIsOpen(true)}
-          animate={isShaking ? { x: [0, -5, 5, -4, 4, -3, 3, 0] } : {}}
-          transition={{ duration: 0.6, repeat: isShaking ? Infinity : 0 }}
           className="fixed bottom-5 right-5 z-[9999] cursor-pointer"
         >
-          <div className="relative w-12 h-12 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg">
+          <motion.div
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 1, repeat: Infinity }}
+            className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg"
+          >
             <span className="text-[#080c14] font-bold">AI</span>
-
-            <motion.div
-              className="absolute inset-0 rounded-full border border-[#c9a84c]"
-              animate={{ scale: [1, 1.5, 1], opacity: [0.6, 0, 0.6] }}
-              transition={{ duration: 1.2, repeat: Infinity }}
-            />
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       )}
 
       {/* POPUP */}
@@ -94,12 +84,12 @@ export default function ChatPopup() {
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             className="fixed bottom-5 right-5 z-[9999]"
           >
-            <div className="relative w-[320px] bg-[#0a0f1c] border border-[#c9a84c]/50 rounded-xl shadow-2xl overflow-hidden">
+            <div className="relative w-[340px] bg-[#0a0f1c] border border-[#c9a84c]/60 rounded-xl shadow-2xl overflow-hidden">
 
-              {/* CLOSE */}
+              {/* CLOSE BUTTON (FIXED) */}
               <button
                 onClick={handleClose}
-                className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl z-50"
+                className="absolute top-2 right-2 w-9 h-9 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl z-50"
               >
                 <X size={20} />
               </button>
@@ -107,38 +97,51 @@ export default function ChatPopup() {
               {/* CONTENT */}
               <div className="p-4 flex flex-col gap-3">
 
-                {/* IMAGE (BIG + PREMIUM) */}
+                {/* BIG IMAGE */}
                 <div className="flex justify-center">
                   <motion.div
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 1.2, repeat: Infinity }}
+                    animate={{ scale: [1, 1.08, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
                     className="relative"
                   >
                     <img
                       src="/images/about.png"
                       alt="Pranjal"
-                      className="w-20 h-20 rounded-full object-cover border-2 border-[#c9a84c]"
-                    />
-                    <motion.div
-                      className="absolute inset-0 rounded-full border border-[#c9a84c]"
-                      animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
-                      transition={{ duration: 1.4, repeat: Infinity }}
+                      className="w-24 h-24 rounded-full object-cover border-2 border-[#c9a84c]"
                     />
                   </motion.div>
                 </div>
 
-                {/* HEADLINE */}
-                <div className="text-center">
-                  <p className="text-white font-semibold text-base leading-tight">
-                    Want More{" "}
-                    <span className="text-[#c9a84c]">
-                      {metrics[metricIndex]}
-                    </span>
-                    ?
+                {/* DYNAMIC TEXT */}
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center"
+                >
+                  <p className="text-white font-bold text-lg leading-tight">
+                    Want {content[index].title}?
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
-                    I help businesses scale with proven strategies that convert.
+                  <p className="text-white/60 text-sm leading-tight mt-1">
+                    {content[index].sub}
                   </p>
+                </motion.div>
+
+                {/* STATS GRID (NO DEAD SPACE) */}
+                <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="bg-[#111827] rounded-md py-2">
+                    <p className="text-[#c9a84c] font-bold">400+</p>
+                    <p className="text-white/50">Clients</p>
+                  </div>
+                  <div className="bg-[#111827] rounded-md py-2">
+                    <p className="text-[#c9a84c] font-bold">7X</p>
+                    <p className="text-white/50">ROAS</p>
+                  </div>
+                  <div className="bg-[#111827] rounded-md py-2">
+                    <p className="text-[#c9a84c] font-bold">5M+</p>
+                    <p className="text-white/50">Revenue</p>
+                  </div>
                 </div>
 
                 {/* CTA */}
