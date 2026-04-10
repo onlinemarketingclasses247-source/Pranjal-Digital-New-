@@ -8,6 +8,7 @@ export default function ChatPopup() {
   const [showIcon, setShowIcon] = useState(false);
   const [closed, setClosed] = useState(false);
   const [index, setIndex] = useState(0);
+  const [isShaking, setIsShaking] = useState(false);
 
   const content = [
     { title: "More Leads", sub: "Get consistent inbound leads" },
@@ -34,20 +35,20 @@ useEffect(() => {
   if (!isDesktop || closed) return;
 
   // Step 1: Show icon after 10s
-  const t1 = setTimeout(() => {
-    setShowIcon(true);
-    setIsShaking(true);
-  }, 10000);
+const t1 = setTimeout(() => {
+  setShowIcon(true);
+  setIsShaking(true);
+}, 10000);
 
-  // Step 2: Stop shaking after 6s
-  const t2 = setTimeout(() => {
-    setIsShaking(false);
-  }, 16000);
+// Stop shaking after 6 seconds
+const t2 = setTimeout(() => {
+  setIsShaking(false);
+}, 16000);
 
-  // Step 3: Open popup after shake
-  const t3 = setTimeout(() => {
-    setIsOpen(true);
-  }, 16000);
+// Open popup AFTER shaking finishes
+const t3 = setTimeout(() => {
+  setIsOpen(true);
+}, 16500); // small delay AFTER shake
 
   return () => {
     clearTimeout(t1);
