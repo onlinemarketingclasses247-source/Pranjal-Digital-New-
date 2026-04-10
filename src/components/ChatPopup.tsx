@@ -29,17 +29,34 @@ export default function ChatPopup() {
     if (closedSession === "true") setClosed(true);
   }, []);
 
-  useEffect(() => {
-    if (!isDesktop || closed) return;
 
-    const t1 = setTimeout(() => setShowIcon(true), 6000);
-    const t2 = setTimeout(() => setIsOpen(true), 12000);
+useEffect(() => {
+  if (!isDesktop || closed) return;
 
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, [isDesktop, closed]);
+  // Step 1: Show icon after 10s
+  const t1 = setTimeout(() => {
+    setShowIcon(true);
+    setIsShaking(true);
+  }, 10000);
+
+  // Step 2: Stop shaking after 6s
+  const t2 = setTimeout(() => {
+    setIsShaking(false);
+  }, 16000);
+
+  // Step 3: Open popup after shake
+  const t3 = setTimeout(() => {
+    setIsOpen(true);
+  }, 16000);
+
+  return () => {
+    clearTimeout(t1);
+    clearTimeout(t2);
+    clearTimeout(t3);
+  };
+}, [isDesktop, closed]);
+
+  
 
   // TEXT CHANGE EVERY 1 SEC
   useEffect(() => {
@@ -60,6 +77,45 @@ export default function ChatPopup() {
 
   return (
     <>
+
+
+{!isOpen && showIcon && (
+  <motion.div
+    onClick={() => setIsOpen(true)}
+    animate={
+      isShaking
+        ? { x: [0, -6, 6, -5, 5, -3, 3, 0] }
+        : {}
+    }
+    transition={{
+      duration: 0.6,
+      repeat: isShaking ? Infinity : 0,
+    }}
+    className="fixed bottom-6 right-6 z-[9999] cursor-pointer"
+  >
+    <div className="relative w-14 h-14 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-xl">
+
+      {/* AI TEXT */}
+      <span className="text-[#080c14] font-bold text-sm">
+        AI
+      </span>
+
+      {/* PULSE RING */}
+      <motion.div
+        className="absolute inset-0 rounded-full border border-[#c9a84c]"
+        animate={{
+          scale: [1, 1.5, 1],
+          opacity: [0.6, 0, 0.6],
+        }}
+        transition={{
+          duration: 1.2,
+          repeat: Infinity,
+        }}
+      />
+    </div>
+  </motion.div>
+)}
+      
       <AnimatePresence>
         {isOpen && (
           <motion.div
