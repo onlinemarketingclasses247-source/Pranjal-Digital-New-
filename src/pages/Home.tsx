@@ -1002,26 +1002,35 @@ Digital Marketing ROI?
 <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
 Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on how to grow your business.
 </p>
+
+
+
 <div className="flex flex-col w-full max-w-md mx-auto mt-8 gap-4 px-4 sm:px-0">
 
-<a
-  href={CALENDLY}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="group w-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-6 py-4 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-[#c9a84c]/30 flex items-center justify-center gap-2 text-lg"
->
-  Book Free Strategy Call
-  <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
-</a>
-  
-<Link href="/contact">
-  <a className="w-full border-2 border-white/20 text-white font-semibold px-6 py-4 rounded-xl hover:border-[#c9a84c]/60 hover:text-[#c9a84c] transition-all duration-300 text-lg text-center">
-    Send a Message
+  <a
+    href={CALENDLY}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-full text-center bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold py-4 rounded-xl flex items-center justify-center gap-2 text-lg"
+  >
+    Book Free Strategy Call
+    <ArrowRight size={20} />
   </a>
-</Link>
+
+  <Link href="/contact">
+    <a className="w-full text-center border border-white/30 text-white font-semibold py-4 rounded-xl flex items-center justify-center text-lg">
+      Send a Message
+    </a>
+  </Link>
+
+</div>
+
+
 
   
-</div>
+
+
+  
 <p className="text-white/30 text-sm mt-6">
 ⏰ 30-min free consultation • No obligation • Real advice • Use calculator for pricing
 </p>
