@@ -276,11 +276,26 @@ a {
   }
 }
 
-/* Prevent flex stretch issues */
-.flex > button,
-.flex > a {
-  align-self: center;
+
+/* ================= SAFE BUTTON SYSTEM ================= */
+
+button,
+a {
+  width: auto;
 }
+
+/* Only use when needed */
+.btn-full {
+  width: 100% !important;
+}
+
+/* FIX: only prevent stretch in column layouts */
+.flex-col > button,
+.flex-col > a {
+  width: auto;
+}
+
+  
 
 /* Fix: if you WANT stacked layout, use class (not global override) */
 .mobile-stack {
@@ -664,5 +679,15 @@ html, body {
   }
 }
 
+
+
+
+
+/* ================= FIX BOTTOM CTA BUTTONS ================= */
+
+.fixed .grid button,
+.fixed .grid a {
+  width: 100% !important;
+}
 
 
