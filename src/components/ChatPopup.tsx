@@ -11,11 +11,12 @@ export default function ChatPopup() {
 
   const content = [
     { title: "More Leads", sub: "Get consistent qualified leads" },
-    { title: "More Sales", sub: "Convert traffic into revenue" },
-    { title: "More Revenue", sub: "Scale profit predictably" },
-    { title: "More Growth", sub: "Build long-term systems" },
+    { title: "More Sales", sub: "Turn traffic into paying customers" },
+    { title: "More Revenue", sub: "Scale your business profitably" },
+    { title: "More Growth", sub: "Build systems that compound" },
   ];
 
+  // Desktop only
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 768);
     check();
@@ -23,16 +24,18 @@ export default function ChatPopup() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Session close
   useEffect(() => {
     const closedSession = sessionStorage.getItem("chatClosed");
     if (closedSession === "true") setClosed(true);
   }, []);
 
+  // Delay show
   useEffect(() => {
     if (!isDesktop || closed) return;
 
-    const t1 = setTimeout(() => setShowIcon(true), 6000);
-    const t2 = setTimeout(() => setIsOpen(true), 12000);
+    const t1 = setTimeout(() => setShowIcon(true), 5000);
+    const t2 = setTimeout(() => setIsOpen(true), 11000);
 
     return () => {
       clearTimeout(t1);
@@ -40,11 +43,11 @@ export default function ChatPopup() {
     };
   }, [isDesktop, closed]);
 
-  // ROTATING CONTENT EVERY 1s
+  // Rotate text
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % content.length);
-    }, 1000);
+    }, 1400);
     return () => clearInterval(interval);
   }, []);
 
@@ -66,9 +69,9 @@ export default function ChatPopup() {
           className="fixed bottom-5 right-5 z-[9999] cursor-pointer"
         >
           <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
+            animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 1, repeat: Infinity }}
-            className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg"
+            className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-xl"
           >
             <span className="text-[#080c14] font-bold">AI</span>
           </motion.div>
@@ -81,79 +84,88 @@ export default function ChatPopup() {
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            exit={{ opacity: 0, y: 20 }}
             className="fixed bottom-5 right-5 z-[9999]"
           >
-            <div className="relative w-[340px] bg-[#0a0f1c] border border-[#c9a84c]/60 rounded-xl shadow-2xl overflow-hidden">
+            <div className="relative w-[340px] bg-gradient-to-b from-[#0a0f1c] to-[#060a14] border border-[#c9a84c]/50 rounded-xl shadow-2xl p-4">
 
-              {/* CLOSE BUTTON (FIXED) */}
+              {/* CLOSE BUTTON (VISIBLE FIXED) */}
               <button
                 onClick={handleClose}
-                className="absolute top-2 right-2 w-9 h-9 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl z-50"
+                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg z-50"
               >
-                <X size={20} />
+                <X size={16} />
               </button>
 
-              {/* CONTENT */}
-              <div className="p-4 flex flex-col gap-3">
+              {/* IMAGE + RIPPLE */}
+              <div className="flex justify-center mb-2">
+                <div className="relative">
 
-                {/* BIG IMAGE */}
-                <div className="flex justify-center">
+                  {/* GOLD RIPPLE */}
                   <motion.div
-                    animate={{ scale: [1, 1.08, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                    className="relative"
-                  >
-                    <img
-                      src="/images/about.png"
-                      alt="Pranjal"
-                      className="w-24 h-24 rounded-full object-cover border-2 border-[#c9a84c]"
-                    />
-                  </motion.div>
+                    className="absolute inset-0 rounded-full border border-[#c9a84c]"
+                    animate={{
+                      scale: [1, 1.6, 1],
+                      opacity: [0.6, 0, 0.6],
+                    }}
+                    transition={{ duration: 1.2, repeat: Infinity }}
+                  />
+
+                  {/* IMAGE */}
+                  <img
+                    src="/images/about.png"
+                    alt="Pranjal"
+                    className="w-24 h-24 rounded-full object-cover border-2 border-[#c9a84c] relative z-10"
+                  />
                 </div>
-
-                {/* DYNAMIC TEXT */}
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-center"
-                >
-                  <p className="text-white font-bold text-lg leading-tight">
-                    Want {content[index].title}?
-                  </p>
-                  <p className="text-white/60 text-sm leading-tight mt-1">
-                    {content[index].sub}
-                  </p>
-                </motion.div>
-
-                {/* STATS GRID (NO DEAD SPACE) */}
-                <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                  <div className="bg-[#111827] rounded-md py-2">
-                    <p className="text-[#c9a84c] font-bold">400+</p>
-                    <p className="text-white/50">Clients</p>
-                  </div>
-                  <div className="bg-[#111827] rounded-md py-2">
-                    <p className="text-[#c9a84c] font-bold">7X</p>
-                    <p className="text-white/50">ROAS</p>
-                  </div>
-                  <div className="bg-[#111827] rounded-md py-2">
-                    <p className="text-[#c9a84c] font-bold">5M+</p>
-                    <p className="text-white/50">Revenue</p>
-                  </div>
-                </div>
-
-                {/* CTA */}
-                <a
-                  href="/contact"
-                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold py-3 rounded-lg text-sm hover:scale-[1.03] transition"
-                >
-                  Contact Pranjal
-                  <ArrowRight size={16} />
-                </a>
-
               </div>
+
+              {/* TEXT */}
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="text-center"
+              >
+                <p className="text-white font-bold text-lg tracking-tight">
+                  Want{" "}
+                  <span className="text-[#c9a84c]">
+                    {content[index].title}
+                  </span>
+                  ?
+                </p>
+
+                <p className="text-white/60 text-sm leading-tight mt-1">
+                  {content[index].sub}
+                </p>
+              </motion.div>
+
+              {/* STATS (TIGHT, NO DEAD SPACE) */}
+              <div className="grid grid-cols-3 gap-2 mt-3 text-center text-xs">
+                <div className="bg-[#111827] rounded-md py-2">
+                  <p className="text-[#c9a84c] font-bold">400+</p>
+                  <p className="text-white/40">Clients</p>
+                </div>
+                <div className="bg-[#111827] rounded-md py-2">
+                  <p className="text-[#c9a84c] font-bold">7X</p>
+                  <p className="text-white/40">ROAS</p>
+                </div>
+                <div className="bg-[#111827] rounded-md py-2">
+                  <p className="text-[#c9a84c] font-bold">5M+</p>
+                  <p className="text-white/40">Revenue</p>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <a
+                href="/contact"
+                className="mt-3 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold py-3 rounded-lg text-sm hover:scale-[1.04] transition"
+              >
+                Contact Pranjal
+                <ArrowRight size={16} />
+              </a>
+
             </div>
           </motion.div>
         )}
