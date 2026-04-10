@@ -10,12 +10,13 @@ export default function ChatPopup() {
   const [index, setIndex] = useState(0);
 
   const content = [
-    { title: "More Leads", sub: "Get consistent qualified leads" },
-    { title: "More Sales", sub: "Convert traffic into revenue" },
-    { title: "More Revenue", sub: "Scale profit predictably" },
+    { title: "More Leads", sub: "Get consistent inbound leads" },
+    { title: "More Sales", sub: "Convert visitors into clients" },
+    { title: "More Revenue", sub: "Scale your business profitably" },
     { title: "More Growth", sub: "Build long-term systems" },
   ];
 
+  // KEEP YOUR WORKING LOGIC
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 768);
     check();
@@ -40,7 +41,7 @@ export default function ChatPopup() {
     };
   }, [isDesktop, closed]);
 
-  // ROTATING CONTENT EVERY 1s
+  // TEXT CHANGE EVERY 1 SEC
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % content.length);
@@ -59,95 +60,84 @@ export default function ChatPopup() {
 
   return (
     <>
-      {/* ICON */}
-      {!isOpen && showIcon && (
-        <div
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-5 right-5 z-[9999] cursor-pointer"
-        >
-          <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 1, repeat: Infinity }}
-            className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] flex items-center justify-center shadow-lg"
-          >
-            <span className="text-[#080c14] font-bold">AI</span>
-          </motion.div>
-        </div>
-      )}
-
-      {/* POPUP */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-5 right-5 z-[9999]"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="fixed bottom-6 right-6 z-[9999]"
           >
-            <div className="relative w-[340px] bg-[#0a0f1c] border border-[#c9a84c]/60 rounded-xl shadow-2xl overflow-hidden">
+            <div className="relative w-[340px]">
 
-              {/* CLOSE BUTTON (FIXED) */}
-              <button
-                onClick={handleClose}
-                className="absolute top-2 right-2 w-9 h-9 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl z-50"
-              >
-                <X size={20} />
-              </button>
+              {/* 🔥 TOP FLOATING IMAGE (CUT OUT STYLE) */}
+              <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20">
 
-              {/* CONTENT */}
-              <div className="p-4 flex flex-col gap-3">
-
-                {/* BIG IMAGE */}
-                <div className="flex justify-center">
+                <motion.div
+                  animate={{ scale: [1, 1.08, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="relative w-24 h-24 rounded-full"
+                >
+                  {/* GOLD RIPPLE */}
                   <motion.div
-                    animate={{ scale: [1, 1.08, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                    className="relative"
-                  >
-                    <img
-                      src="/images/about.png"
-                      alt="Pranjal"
-                      className="w-24 h-24 rounded-full object-cover border-2 border-[#c9a84c]"
-                    />
-                  </motion.div>
-                </div>
+                    className="absolute inset-0 rounded-full border border-[#c9a84c]"
+                    animate={{
+                      scale: [1, 1.8, 1],
+                      opacity: [0.6, 0, 0.6],
+                    }}
+                    transition={{ duration: 1.2, repeat: Infinity }}
+                  />
 
-                {/* DYNAMIC TEXT */}
+                  {/* IMAGE */}
+                  <img
+                    src="/images/about.png"
+                    alt="Pranjal"
+                    className="w-24 h-24 rounded-full object-cover border-2 border-[#c9a84c] relative z-10 shadow-xl"
+                  />
+                </motion.div>
+              </div>
+
+              {/* 🔥 MAIN CARD */}
+              <div className="bg-gradient-to-b from-[#0b1220] to-[#05080f] border border-[#c9a84c]/50 rounded-xl shadow-2xl pt-16 pb-4 px-4">
+
+                {/* ✅ FIXED CLOSE BUTTON (NOT CUT EVER) */}
+                <button
+                  onClick={handleClose}
+                  className="absolute top-3 right-3 w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-xl z-50"
+                >
+                  <X size={20} />
+                </button>
+
+                {/* 🔥 TEXT CONTENT */}
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                   className="text-center"
                 >
-                  <p className="text-white font-bold text-lg leading-tight">
-                    Want {content[index].title}?
+                  <p className="text-white font-bold text-lg tracking-tight">
+                    Want{" "}
+                    <span className="text-[#c9a84c]">
+                      {content[index].title}
+                    </span>
+                    ?
                   </p>
-                  <p className="text-white/60 text-sm leading-tight mt-1">
+
+                  <p className="text-white/70 text-sm mt-1 leading-tight">
                     {content[index].sub}
                   </p>
                 </motion.div>
 
-                {/* STATS GRID (NO DEAD SPACE) */}
-                <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                  <div className="bg-[#111827] rounded-md py-2">
-                    <p className="text-[#c9a84c] font-bold">400+</p>
-                    <p className="text-white/50">Clients</p>
-                  </div>
-                  <div className="bg-[#111827] rounded-md py-2">
-                    <p className="text-[#c9a84c] font-bold">7X</p>
-                    <p className="text-white/50">ROAS</p>
-                  </div>
-                  <div className="bg-[#111827] rounded-md py-2">
-                    <p className="text-[#c9a84c] font-bold">5M+</p>
-                    <p className="text-white/50">Revenue</p>
-                  </div>
+                {/* 🔥 PROOF LINE */}
+                <div className="text-center text-xs text-white/50 mt-2">
+                  400+ Clients • 7X ROAS • 5M+ Revenue
                 </div>
 
-                {/* CTA */}
+                {/* 🔥 CTA */}
                 <a
                   href="/contact"
-                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold py-3 rounded-lg text-sm hover:scale-[1.03] transition"
+                  className="mt-3 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold py-3 rounded-lg text-sm hover:scale-[1.04] transition"
                 >
                   Contact Pranjal
                   <ArrowRight size={16} />
