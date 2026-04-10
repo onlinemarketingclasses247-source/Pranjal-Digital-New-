@@ -4,7 +4,7 @@ import { X, ArrowRight } from "lucide-react";
 
 export default function ChatPopup() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [showIcon, setShowIcon] = useState(false);
   const [closed, setClosed] = useState(false);
   const [index, setIndex] = useState(0);
@@ -16,26 +16,29 @@ export default function ChatPopup() {
     { title: "More Growth", sub: "Build systems that compound" },
   ];
 
-  // Desktop only
+  // ✅ SAFE DESKTOP DETECTION (NO HYDRATION ISSUE)
   useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    if (typeof window !== "undefined") {
+      setIsDesktop(window.innerWidth >= 768);
+    }
   }, []);
 
-  // Session close
+  // ✅ SESSION CHECK
   useEffect(() => {
-    const closedSession = sessionStorage.getItem("chatClosed");
-    if (closedSession === "true") setClosed(true);
+    if (typeof window !== "undefined") {
+      const closedSession = sessionStorage.getItem("chatClosed");
+      if (closedSession === "true") {
+        setClosed(true);
+      }
+    }
   }, []);
 
-  // Delay show
+  // ✅ SHOW LOGIC (FAST FOR VISIBILITY)
   useEffect(() => {
     if (!isDesktop || closed) return;
 
-    const t1 = setTimeout(() => setShowIcon(true), 5000);
-    const t2 = setTimeout(() => setIsOpen(true), 11000);
+    const t1 = setTimeout(() => setShowIcon(true), 1000); // 1 sec
+    const t2 = setTimeout(() => setIsOpen(true), 3000); // 3 sec
 
     return () => {
       clearTimeout(t1);
@@ -43,7 +46,7 @@ export default function ChatPopup() {
     };
   }, [isDesktop, closed]);
 
-  // Rotate text
+  // ✅ ROTATING TEXT
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % content.length);
@@ -51,18 +54,23 @@ export default function ChatPopup() {
     return () => clearInterval(interval);
   }, []);
 
+  // ✅ CLOSE HANDLER (SESSION LOCK)
   const handleClose = () => {
     setIsOpen(false);
     setShowIcon(false);
     setClosed(true);
-    sessionStorage.setItem("chatClosed", "true");
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("chatClosed", "true");
+    }
   };
 
-  if (!isDesktop || closed) return null;
+  // ✅ FINAL SAFETY
+  if (closed) return null;
+  if (!isDesktop) return null;
 
   return (
     <>
-      {/* ICON */}
+      {/* 🔹 FLOATING AI ICON */}
       {!isOpen && showIcon && (
         <div
           onClick={() => setIsOpen(true)}
@@ -78,7 +86,7 @@ export default function ChatPopup() {
         </div>
       )}
 
-      {/* POPUP */}
+      {/* 🔹 POPUP */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -89,29 +97,24 @@ export default function ChatPopup() {
           >
             <div className="relative w-[340px] bg-gradient-to-b from-[#0a0f1c] to-[#060a14] border border-[#c9a84c]/50 rounded-xl shadow-2xl p-4">
 
-              {/* CLOSE BUTTON (VISIBLE FIXED) */}
+              {/* 🔴 CLOSE BUTTON (FIXED) */}
               <button
                 onClick={handleClose}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg z-50"
+                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg z-50"
               >
-                <X size={16} />
+                <X size={18} />
               </button>
 
-              {/* IMAGE + RIPPLE */}
+              {/* 🔹 IMAGE WITH PREMIUM RIPPLE */}
               <div className="flex justify-center mb-2">
                 <div className="relative">
 
-                  {/* GOLD RIPPLE */}
                   <motion.div
                     className="absolute inset-0 rounded-full border border-[#c9a84c]"
-                    animate={{
-                      scale: [1, 1.6, 1],
-                      opacity: [0.6, 0, 0.6],
-                    }}
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.6, 0, 0.6] }}
                     transition={{ duration: 1.2, repeat: Infinity }}
                   />
 
-                  {/* IMAGE */}
                   <img
                     src="/images/about.png"
                     alt="Pranjal"
@@ -120,7 +123,7 @@ export default function ChatPopup() {
                 </div>
               </div>
 
-              {/* TEXT */}
+              {/* 🔹 DYNAMIC TEXT */}
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 8 }}
@@ -141,7 +144,7 @@ export default function ChatPopup() {
                 </p>
               </motion.div>
 
-              {/* STATS (TIGHT, NO DEAD SPACE) */}
+              {/* 🔹 STATS GRID */}
               <div className="grid grid-cols-3 gap-2 mt-3 text-center text-xs">
                 <div className="bg-[#111827] rounded-md py-2">
                   <p className="text-[#c9a84c] font-bold">400+</p>
@@ -157,7 +160,7 @@ export default function ChatPopup() {
                 </div>
               </div>
 
-              {/* CTA */}
+              {/* 🔹 CTA */}
               <a
                 href="/contact"
                 className="mt-3 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold py-3 rounded-lg text-sm hover:scale-[1.04] transition"
