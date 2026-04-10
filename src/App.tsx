@@ -13,6 +13,7 @@ import CaseStudies from "@/pages/CaseStudies";
 import TermsOfService from "@/pages/TermsOfService";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import ThankYou from "@/pages/ThankYou";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -39,9 +40,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
+       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+  <ScrollToTop />
+  <Router />
+</WouterRouter>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
