@@ -250,15 +250,49 @@ zoom: 1.1;
 /* Stack all grids */
 
 
-/* Full width buttons */
-button:not(.absolute button):not(.fixed button) {
-width: 100% !important;
+
+
+
+
+  
+
+/* ================= SAFE MOBILE BUTTON SYSTEM ================= */
+
+/* Default: buttons behave normally */
+button,
+a {
+  width: auto;
 }
 
-/* Stack flex rows */
-.flex-row {
-flex-direction: column !important;
+/* Only make FULL width when explicitly needed */
+.btn-full {
+  width: 100% !important;
 }
+
+/* Mobile: allow controlled full width */
+@media (max-width: 640px) {
+  .btn-mobile-full {
+    width: 100% !important;
+  }
+}
+
+/* Prevent flex stretch issues */
+.flex > button,
+.flex > a {
+  align-self: center;
+}
+
+/* Fix: if you WANT stacked layout, use class (not global override) */
+.mobile-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+
+  
 
 /* Center text */
 .text-left, .text-right {
