@@ -45,7 +45,7 @@ export default function ChatPopup() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % content.length);
-    }, 1000);
+}, 1600);
     return () => clearInterval(interval);
   }, []);
 
@@ -78,15 +78,39 @@ export default function ChatPopup() {
                   transition={{ duration: 1, repeat: Infinity }}
                   className="relative w-24 h-24 rounded-full"
                 >
-                  {/* GOLD RIPPLE */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full border border-[#c9a84c]"
-                    animate={{
-                      scale: [1, 1.8, 1],
-                      opacity: [0.6, 0, 0.6],
-                    }}
-                    transition={{ duration: 1.2, repeat: Infinity }}
-                  />
+
+<>
+  {/* PRIMARY RIPPLE */}
+  <motion.div
+    className="absolute inset-0 rounded-full border border-[#c9a84c]"
+    animate={{
+      scale: [1, 1.4, 1.7],
+      opacity: [0.5, 0.2, 0],
+    }}
+    transition={{
+      duration: 1.6,
+      ease: "easeInOut",
+      repeat: Infinity,
+    }}
+  />
+
+  {/* SECONDARY RIPPLE (DELAYED FOR DEPTH) */}
+  <motion.div
+    className="absolute inset-0 rounded-full border border-[#c9a84c]/70"
+    animate={{
+      scale: [1, 1.4, 1.7],
+      opacity: [0.4, 0.15, 0],
+    }}
+    transition={{
+      duration: 1.6,
+      ease: "easeInOut",
+      repeat: Infinity,
+      delay: 0.8, // KEY: creates layered wave effect
+    }}
+  />
+</>
+
+                  
 
                   {/* IMAGE */}
                   <img
