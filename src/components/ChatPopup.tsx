@@ -125,12 +125,14 @@ export default function ChatPopup() {
               <div className="bg-gradient-to-b from-[#0b1220] to-[#05080f] border border-[#c9a84c]/50 rounded-xl shadow-2xl pt-16 pb-4 px-4">
 
                 {/* ✅ FIXED CLOSE BUTTON (NOT CUT EVER) */}
+
                 <button
-                  onClick={handleClose}
-                  className="absolute top-3 right-3 w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-xl z-50"
-                >
-                  <X size={20} />
-                </button>
+  onClick={handleClose}
+  className="absolute top-3 left-3 w-9 h-9 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg z-50"
+>
+  <X size={18} />
+</button>
+                
 
                 {/* 🔥 TEXT CONTENT */}
                 <motion.div
@@ -154,9 +156,32 @@ export default function ChatPopup() {
                 </motion.div>
 
                 {/* 🔥 PROOF LINE */}
-                <div className="text-center text-xs text-white/50 mt-2">
-                  400+ Clients • 7X ROAS • 5M+ Revenue
-                </div>
+
+                <div className="grid grid-cols-3 gap-2 mt-3">
+
+  {/* CLIENTS */}
+  <div className="bg-[#111827] rounded-md py-2 flex flex-col items-center justify-center text-center">
+    <span className="text-[#c9a84c] text-sm">👥</span>
+    <p className="text-[#c9a84c] font-bold text-xs">400+</p>
+    <p className="text-white/40 text-[10px]">Clients</p>
+  </div>
+
+  {/* ROAS */}
+  <div className="bg-[#111827] rounded-md py-2 flex flex-col items-center justify-center text-center">
+    <span className="text-[#c9a84c] text-sm">📈</span>
+    <p className="text-[#c9a84c] font-bold text-xs">7X</p>
+    <p className="text-white/40 text-[10px]">ROAS</p>
+  </div>
+
+  {/* REVENUE */}
+  <div className="bg-[#111827] rounded-md py-2 flex flex-col items-center justify-center text-center">
+    <span className="text-[#c9a84c] text-sm">💰</span>
+    <p className="text-[#c9a84c] font-bold text-xs">5M+</p>
+    <p className="text-white/40 text-[10px]">Revenue</p>
+  </div>
+
+</div>
+                
 
                 {/* 🔥 CTA */}
                 <a
