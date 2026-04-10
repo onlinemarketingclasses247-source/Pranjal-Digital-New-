@@ -1005,20 +1005,21 @@ Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on h
 
 
 
-<div className="flex flex-col w-full max-w-md mx-auto mt-8 gap-4 px-4 sm:px-0">
+  
+<div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8">
 
   <a
     href={CALENDLY}
     target="_blank"
     rel="noopener noreferrer"
-    className="w-full text-center bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold py-4 rounded-xl flex items-center justify-center gap-2 text-lg"
+    className="inline-flex items-center justify-center gap-2 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-auto"
   >
     Book Free Strategy Call
-    <ArrowRight size={20} />
+    <ArrowRight size={16} />
   </a>
 
   <Link href="/contact">
-    <a className="w-full text-center border border-white/30 text-white font-semibold py-4 rounded-xl flex items-center justify-center text-lg">
+    <a className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors w-full sm:w-auto">
       Send a Message
     </a>
   </Link>
