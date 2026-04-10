@@ -126,12 +126,15 @@ export default function ChatPopup() {
 
                 {/* ✅ FIXED CLOSE BUTTON (NOT CUT EVER) */}
 
-                <button
-  onClick={handleClose}
-  className="absolute top-3 left-3 w-9 h-9 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg z-50"
->
-  <X size={18} />
-</button>
+     <div className="flex items-center justify-start mb-1">
+  <button
+    onClick={handleClose}
+    className="flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-400 transition"
+  >
+    <X size={14} />
+    Close
+  </button>
+</div>
                 
 
                 {/* 🔥 TEXT CONTENT */}
