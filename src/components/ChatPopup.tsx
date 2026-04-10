@@ -6,6 +6,7 @@ export default function ChatPopup() {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [hasClosed, setHasClosed] = useState<boolean>(false);
+  const [shakeCompleted, setShakeCompleted] = useState<boolean>(false);
 
   // Check if user already closed this session
   useEffect(() => {
@@ -16,94 +17,94 @@ export default function ChatPopup() {
     }
   }, []);
 
-  // Detect mobile/desktop - COMPLETELY HIDE ON MOBILE
+  // Detect mobile/desktop - COMPLETELY HIDE ON MOBILE, SHOW ON DESKTOP
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      // If mobile, completely hide and never show
-      if (mobile) {
-        setVisible(false);
-        setHasClosed(true);
-      }
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Show popup after 8 seconds, shake for 10 seconds, then auto-expand
+  // Show popup after 10 seconds on desktop only
   useEffect(() => {
     if (hasClosed || isMobile) return;
     
-    // Show popup after 8 seconds
+    // Show popup after 10 seconds
     const showTimer = setTimeout(() => {
       setVisible(true);
+      setShakeCompleted(false);
       
-      // Auto-expand after 10 seconds of shaking
+      // Auto-expand after 10 seconds of shaking if not clicked
       const expandTimer = setTimeout(() => {
-        if (!isExpanded && visible) {
+        if (!isExpanded && visible && !shakeCompleted) {
           setIsExpanded(true);
+          setShakeCompleted(true);
         }
       }, 10000); // 10 seconds shake duration
       
       return () => clearTimeout(expandTimer);
-    }, 8000); // 8 seconds delay before showing
+    }, 10000); // 10 seconds delay before showing
 
-    return () => {
-      clearTimeout(showTimer);
-    };
-  }, [hasClosed, isMobile, isExpanded, visible]);
+    return () => clearTimeout(showTimer);
+  }, [hasClosed, isMobile, isExpanded, visible, shakeCompleted]);
 
-  // Handle close - stores in sessionStorage
+  // Handle close - stores in sessionStorage, persists across page navigation
   const handleClose = () => {
     setVisible(false);
     setHasClosed(true);
+    setIsExpanded(false);
     sessionStorage.setItem('aiPopupClosed', 'true');
   };
 
   // Manual click to expand during shake
   const handleManualExpand = () => {
-    if (!isExpanded && visible) {
+    if (!isExpanded && visible && !shakeCompleted) {
       setIsExpanded(true);
+      setShakeCompleted(true);
     }
   };
 
-  // Don't render anything on mobile or if closed
-  if (hasClosed || isMobile) return null;
+  // Don't render anything on mobile
+  if (isMobile) return null;
+  
+  // Don't render if closed in this session
+  if (hasClosed) return null;
 
   return (
     <AnimatePresence>
       {visible && (
-        <div className="fixed z-[9999] bottom-8 right-8 pointer-events-auto">
+        <div className="fixed z-[9999] bottom-6 right-6 pointer-events-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.7, y: 40, rotate: -5 }}
-            animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
-            exit={{ opacity: 0, scale: 0.5, y: 40, rotate: 5 }}
+            initial={{ opacity: 0, scale: 0.6, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.4, y: 50 }}
             transition={{ 
               type: "spring", 
-              damping: 20, 
-              stiffness: 260,
-              mass: 0.8
+              damping: 22, 
+              stiffness: 280,
+              mass: 0.7
             }}
             className="relative"
           >
             {/* Large X Close Button - Only shown when expanded */}
             {isExpanded && (
               <motion.button
-                initial={{ scale: 0, opacity: 0, rotate: -180 }}
-                animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                whileHover={{ scale: 1.15, rotate: 90, backgroundColor: "#dc2626" }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                whileHover={{ scale: 1.2, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleClose}
-                className="absolute -top-3.5 -right-3.5 w-11 h-11 rounded-full bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white flex items-center justify-center text-xl font-bold z-20 shadow-2xl border-2 border-white shadow-red-500/30 transition-all duration-300 cursor-pointer"
+                className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white flex items-center justify-center text-2xl font-bold z-20 shadow-2xl border-2 border-white cursor-pointer transition-all duration-200"
                 aria-label="Close"
               >
                 ✕
               </motion.button>
             )}
 
-            {/* Main Popup Container - Premium Glassmorphism */}
+            {/* Main Popup Container */}
             <motion.div
               initial={{ 
                 width: 70,
@@ -111,185 +112,155 @@ export default function ChatPopup() {
                 borderRadius: "2rem"
               }}
               animate={{ 
-                width: isExpanded ? 340 : 70,
+                width: isExpanded ? 360 : 70,
                 height: isExpanded ? "auto" : 70,
-                borderRadius: isExpanded ? "1.75rem" : "2rem"
+                borderRadius: isExpanded ? "1.5rem" : "2rem"
               }}
               transition={{ 
-                duration: 0.55, 
+                duration: 0.5, 
                 type: "spring", 
-                damping: 26,
-                stiffness: 300,
-                mass: 0.9
+                damping: 28,
+                stiffness: 320
               }}
-              className="relative overflow-hidden backdrop-blur-xl"
+              className="relative overflow-hidden"
               style={{
                 background: isExpanded 
-                  ? "linear-gradient(135deg, rgba(18, 24, 38, 0.95), rgba(8, 12, 22, 0.98))"
-                  : "linear-gradient(135deg, rgba(18, 24, 38, 0.95), rgba(8, 12, 22, 0.95))",
-                backdropFilter: "blur(20px)",
-                border: "1.5px solid rgba(201, 168, 76, 0.4)",
+                  ? "linear-gradient(145deg, rgba(16, 22, 35, 0.98), rgba(8, 12, 22, 0.98))"
+                  : "linear-gradient(135deg, #0f1625, #0a0e1a)",
+                backdropFilter: "blur(16px)",
+                border: "2px solid rgba(201, 168, 76, 0.5)",
                 boxShadow: isExpanded
-                  ? "0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(201, 168, 76, 0.2) inset, 0 0 30px rgba(201, 168, 76, 0.1)"
-                  : "0 20px 40px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(201, 168, 76, 0.3) inset"
+                  ? "0 25px 45px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(201, 168, 76, 0.3) inset, 0 0 25px rgba(201, 168, 76, 0.2)"
+                  : "0 15px 35px -10px rgba(0,0,0,0.5), 0 0 0 1px rgba(201, 168, 76, 0.4) inset"
               }}
             >
               {!isExpanded ? (
-                /* Premium Shaking AI Icon - 10 seconds continuous */
+                /* Shaking AI Icon State - 10 seconds continuous shake */
                 <motion.div 
                   className="w-[70px] h-[70px] flex items-center justify-center cursor-pointer relative group"
                   animate={{
-                    x: [0, -8, 8, -7, 7, -5, 5, -4, 4, -2, 2, -1, 1, 0],
-                    y: [0, -3, 2, -2, 2, -1, 1, -1, 1, 0, 0, -1, 1, 0],
-                    rotate: [0, -6, 6, -5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0]
+                    x: [0, -8, 8, -7, 7, -6, 6, -5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0],
+                    y: [0, -3, 3, -2, 2, -2, 2, -1, 1, -1, 1, 0, 0, -1, 1, 0],
+                    rotate: [0, -5, 5, -4, 4, -4, 4, -3, 3, -2, 2, -1, 1, 0]
                   }}
                   transition={{
                     duration: 10,
-                    times: [0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56, 0.63, 0.72, 0.81, 0.91, 1],
+                    times: [0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42, 0.48, 0.54, 0.6, 0.68, 0.76, 0.84, 0.92, 1],
                     ease: "easeInOut",
                     repeat: 0
                   }}
                   onClick={handleManualExpand}
-                  whileHover={{ scale: 1.08 }}
+                  whileHover={{ scale: 1.05 }}
                 >
                   <div className="relative">
-                    {/* Premium AI Text with 3D effect */}
-                    <div className="relative">
-                      <div className="text-3xl font-black bg-gradient-to-r from-white via-amber-300 to-yellow-500 bg-clip-text text-transparent tracking-tight drop-shadow-lg">
-                        AI
-                      </div>
-                      {/* Glow behind text */}
-                      <div className="absolute inset-0 blur-xl bg-amber-500/20 -z-10" />
+                    {/* Premium AI Text */}
+                    <div className="text-3xl font-black bg-gradient-to-r from-white via-amber-300 to-yellow-500 bg-clip-text text-transparent">
+                      AI
                     </div>
                     
-                    {/* Elegant orbiting rings */}
+                    {/* Pulse ring effect */}
                     <motion.div
-                      className="absolute -inset-4 rounded-full border border-amber-500/20"
-                      animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      className="absolute -inset-3 rounded-full border-2 border-amber-500/40"
+                      animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
+                      transition={{ duration: 1.8, repeat: Infinity }}
                     />
                     
-                    {/* Premium pulse effect */}
+                    {/* Status indicator */}
                     <motion.div
-                      className="absolute -inset-5 rounded-full bg-gradient-to-r from-amber-500/0 via-amber-500/10 to-amber-500/0"
-                      animate={{ scale: [1, 1.5, 1], opacity: [0, 0.3, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    
-                    {/* Status dot with glow */}
-                    <motion.div
-                      className="absolute -top-1 -right-1.5 w-2.5 h-2.5 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/50"
+                      className="absolute -top-1 -right-2 w-2.5 h-2.5 bg-green-500 rounded-full shadow-lg shadow-green-500/50"
                       animate={{ scale: [1, 1.3, 1] }}
-                      transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <div className="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-75" />
-                    </motion.div>
+                      transition={{ duration: 1.2, repeat: Infinity }}
+                    />
                     
-                    {/* Subtle hint text */}
+                    {/* Hint text during shake */}
                     <motion.div
-                      className="absolute -bottom-7 left-1/2 transform -translate-x-1/2 text-[9px] text-white/40 whitespace-nowrap font-medium tracking-wider uppercase"
-                      animate={{ opacity: [0.3, 0.8, 0.3] }}
-                      transition={{ duration: 2.5, repeat: Infinity }}
+                      className="absolute -bottom-7 left-1/2 transform -translate-x-1/2 text-[9px] text-white/50 whitespace-nowrap font-medium"
+                      animate={{ opacity: [0.4, 1, 0.4] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
                     >
-                      Ready to scale?
+                      Click to open →
                     </motion.div>
                   </div>
                 </motion.div>
               ) : (
-                /* Premium Expanded Content - Compact & Elegant */
+                /* Expanded Content - Lead Message */
                 <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
                   className="p-5 relative"
-                  style={{ width: "340px" }}
+                  style={{ width: "360px" }}
                 >
-                  {/* Premium animated gradient border */}
-                  <motion.div 
-                    className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.6 }}
-                  />
+                  {/* Premium accent line */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
                   
-                  {/* Header with AI - Elegant entrance */}
+                  {/* Header */}
                   <motion.div 
-                    initial={{ y: -5, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.1 }}
                     className="text-center mb-4"
                   >
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
-                      transition={{ delay: 0.15, type: "spring", stiffness: 200 }}
-                      className="text-3xl mb-2 inline-block"
-                    >
-                      🎯
-                    </motion.div>
-                    <h3 className="text-sm font-bold bg-gradient-to-r from-white via-amber-300 to-yellow-500 bg-clip-text text-transparent tracking-wide uppercase">
-                      Exclusive Opportunity
+                    <div className="text-4xl mb-2 inline-block">✨</div>
+                    <h3 className="text-sm font-bold bg-gradient-to-r from-white via-amber-300 to-yellow-500 bg-clip-text text-transparent uppercase tracking-wide">
+                      AI Opportunity
                     </h3>
                   </motion.div>
 
-                  {/* Main Message - Premium typography */}
+                  {/* Main Message */}
                   <motion.div
                     initial={{ y: 10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
+                    transition={{ delay: 0.15 }}
                     className="space-y-4"
                   >
-                    {/* Question with premium styling */}
-                    <div className="bg-gradient-to-br from-amber-500/10 to-yellow-500/5 rounded-xl p-3 border border-amber-500/20 backdrop-blur-sm">
-                      <p className="text-white text-sm font-semibold text-center leading-relaxed">
-                        Looking for more leads & revenue?
+                    {/* Lead Question */}
+                    <div className="bg-gradient-to-br from-amber-500/10 to-yellow-500/5 rounded-xl p-3 border border-amber-500/20">
+                      <p className="text-white text-sm font-semibold text-center">
+                        🎯 Looking for more leads & revenue?
                       </p>
                     </div>
 
-                    {/* Premium CTA Button - Contact Pranjal */}
+                    {/* Contact Button */}
                     <motion.a
                       href="https://pranjaldigital.com/contact"
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.03, boxShadow: "0 10px 30px -8px rgba(201, 168, 76, 0.4)" }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="block bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-600 hover:from-amber-500 hover:via-yellow-500 hover:to-amber-500 rounded-xl py-3 px-4 border border-amber-400/60 shadow-xl transition-all duration-300 cursor-pointer relative overflow-hidden group"
+                      className="block bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 rounded-xl py-3 px-4 border border-amber-400/60 shadow-lg transition-all duration-300 cursor-pointer"
                     >
-                      {/* Shine effect on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                      
-                      <p className="text-center text-white text-sm font-bold tracking-wide">
+                      <p className="text-center text-white text-sm font-bold">
                         Contact Pranjal Now! 🚀
                       </p>
                       <p className="text-center text-amber-100 text-[10px] opacity-80 mt-1">
-                        Free 30-min strategy call →
+                        Free strategy call →
                       </p>
                     </motion.a>
 
-                    {/* Premium trust indicators */}
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.25 }}
-                      className="flex items-center justify-center gap-4 pt-2"
-                    >
-                      {[
-                        { icon: "fa-chart-line", color: "text-emerald-400", label: "200+ Clients" },
-                        { icon: "fa-trophy", color: "text-yellow-500", label: "98% Success" },
-                        { icon: "fa-clock", color: "text-blue-400", label: "24/7 Support" }
-                      ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5">
-                          <i className={`fas ${item.icon} ${item.color} text-[10px]`} />
-                          <span className="text-[9px] text-white/40 font-medium">{item.label}</span>
-                        </div>
-                      ))}
-                    </motion.div>
+                    {/* Trust Indicators */}
+                    <div className="flex items-center justify-center gap-4 pt-2">
+                      <div className="flex items-center gap-1.5">
+                        <i className="fas fa-chart-line text-emerald-400 text-[10px]" />
+                        <span className="text-[9px] text-white/40">200+ Clients</span>
+                      </div>
+                      <div className="w-px h-3 bg-white/20" />
+                      <div className="flex items-center gap-1.5">
+                        <i className="fas fa-trophy text-yellow-500 text-[10px]" />
+                        <span className="text-[9px] text-white/40">98% Success</span>
+                      </div>
+                      <div className="w-px h-3 bg-white/20" />
+                      <div className="flex items-center gap-1.5">
+                        <i className="fas fa-clock text-blue-400 text-[10px]" />
+                        <span className="text-[9px] text-white/40">24/7 Support</span>
+                      </div>
+                    </div>
 
-                    {/* Premium footer note */}
+                    {/* Footer Note */}
                     <div className="text-center pt-1">
-                      <p className="text-[8px] text-white/30 flex items-center justify-center gap-1.5">
-                        <i className="fas fa-shield-alt text-[8px]" />
-                        <span>No obligation • Free consultation • No credit card</span>
+                      <p className="text-[8px] text-white/30 flex items-center justify-center gap-1">
+                        <i className="fas fa-shield-alt" />
+                        No obligation • Free consultation
                       </p>
                     </div>
                   </motion.div>
