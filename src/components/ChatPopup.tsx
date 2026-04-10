@@ -122,18 +122,22 @@ export default function ChatPopup() {
               </div>
 
               {/* 🔥 MAIN CARD */}
-              <div className="bg-gradient-to-b from-[#0b1220] to-[#05080f] border border-[#c9a84c]/50 rounded-xl shadow-2xl pt-16 pb-4 px-4">
 
+               <div className="relative bg-gradient-to-b from-[#0b1220] to-[#05080f] border border-[#c9a84c]/50 rounded-xl shadow-2xl pt-16 pb-4 px-4">
+              
                 {/* ✅ FIXED CLOSE BUTTON (NOT CUT EVER) */}
 
-     <div className="flex items-center justify-start mb-1">
+ <div className="absolute top-3 left-3 z-50 flex items-center gap-2">
   <button
     onClick={handleClose}
-    className="flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-400 transition"
+    className="w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg"
   >
-    <X size={14} />
-    Close
+    <X size={20} />
   </button>
+
+  <span className="text-xs text-red-400 font-medium">
+    Close
+  </span>
 </div>
                 
 
