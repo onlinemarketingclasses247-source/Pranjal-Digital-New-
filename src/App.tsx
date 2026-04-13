@@ -30,6 +30,7 @@ function Router() {
         <Route path="/contact" component={Contact} />
         <Route path="/thank-you" component={ThankYou} />
         <Route path="/ai-products" component={AIProducts} />
+        <Route path="/ai-products" component={AIProducts} />
       
         <Route path="/case-studies" component={CaseStudies} />
   <Route path="/terms-of-service" component={TermsOfService} />
