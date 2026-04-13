@@ -9,6 +9,7 @@ import Services from "@/pages/Services";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import FreeGoogleAdsCompetitorResearch from "./pages/ai-products/FreeGoogleAdsCompetitorResearch";
+import AIProducts from "./pages/AIProducts";
 
 
 import CaseStudies from "@/pages/CaseStudies";
@@ -28,6 +29,7 @@ function Router() {
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/thank-you" component={ThankYou} />
+        <Route path="/ai-products" component={AIProducts} />
       
         <Route path="/case-studies" component={CaseStudies} />
   <Route path="/terms-of-service" component={TermsOfService} />
