@@ -8,6 +8,8 @@ import Home from "@/pages/Home";
 import Services from "@/pages/Services";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
+import FreeGoogleAdsCompetitorResearch from "./pages/ai-products/FreeGoogleAdsCompetitorResearch";
+
 
 import CaseStudies from "@/pages/CaseStudies";
 import TermsOfService from "@/pages/TermsOfService";
@@ -30,6 +32,10 @@ function Router() {
         <Route path="/case-studies" component={CaseStudies} />
   <Route path="/terms-of-service" component={TermsOfService} />
 <Route path="/privacy-policy" component={PrivacyPolicy} />
+<Route
+  path="/ai-products/free-google-ads-competitor-research"
+  component={FreeGoogleAdsCompetitorResearch}
+/>        
         <Route component={NotFound} />
       </Switch>
     </Layout>
