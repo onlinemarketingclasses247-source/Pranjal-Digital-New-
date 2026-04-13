@@ -93,18 +93,7 @@ function Header() {
   }
 
   return (
-    <Link
-      key={link.href}
-      href={link.href}
-      className={`text-sm font-medium transition-colors duration-200 hover:text-[#c9a84c] ${
-        location === link.href ? 'text-[#c9a84c]' : 'text-white/80'
-      }`}
-    >
-      {link.label}
-    </Link>
-  );
-})}
-</nav>
+   
               <Link
                 key={link.href}
                 href={link.href}
