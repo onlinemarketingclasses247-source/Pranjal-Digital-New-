@@ -9,6 +9,10 @@ const navLinks = [
   { href: '/services', label: 'Services' },
   { href: '/about', label: 'About' },
   { href: '/case-studies', label: 'Case Studies' },
+
+  // ADD THIS 👇
+  { href: '/ai-products', label: 'AI Products' },
+
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -61,8 +65,42 @@ function Header() {
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+      <nav className="hidden lg:flex items-center gap-8">
+  {navLinks.map((link) => {
+    if (link.label === "AI Products") {
+      return (
+        <div key={link.href} className="relative group">
+          <button className="text-sm font-medium text-white/80 hover:text-[#c9a84c]">
+            AI Products ▾
+          </button>
+
+          <div className="absolute hidden group-hover:block bg-[#0a0f1c] mt-3 rounded-lg shadow-lg border border-white/10 z-50 min-w-[220px]">
+            
+            <Link
+              href="/ai-products/free-google-ads-competitor-research"
+              className="block px-4 py-3 text-sm text-white/80 hover:text-[#c9a84c] hover:bg-white/5"
+            >
+              Ads Intelligence Tool
+            </Link>
+
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <Link
+        key={link.href}
+        href={link.href}
+        className={`text-sm font-medium transition-colors duration-200 hover:text-[#c9a84c] ${
+          location === link.href ? 'text-[#c9a84c]' : 'text-white/80'
+        }`}
+      >
+        {link.label}
+      </Link>
+    );
+  })}
+</nav>
               <Link
                 key={link.href}
                 href={link.href}
