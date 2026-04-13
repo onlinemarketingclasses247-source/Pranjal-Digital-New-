@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 
 export default function AIProducts() {
   return (
@@ -10,7 +10,7 @@ export default function AIProducts() {
           Ads Intelligence Tool
         </h2>
 
-        <Link to="/ai-products/free-google-ads-competitor-research">
+       <Link href="/ai-products/free-google-ads-competitor-research">
           Open Tool →
         </Link>
       </div>
