@@ -7,21 +7,26 @@ declare global {
 }
 
 const FreeGoogleAdsCompetitorResearch: React.FC = () => {
-  const [company, setCompany] = useState("");
-  const [step, setStep] = useState(0);
-  const [adsText, setAdsText] = useState("");
-  const [brand, setBrand] = useState("");
-  const [adsOutput, setAdsOutput] = useState("");
-  const [keywords, setKeywords] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [company, setCompany] = useState<string>("");
+  const [step, setStep] = useState<number>(0);
+  const [adsText, setAdsText] = useState<string>("");
+  const [brand, setBrand] = useState<string>("");
+  const [adsOutput, setAdsOutput] = useState<string>("");
+  const [keywords, setKeywords] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
+  // SEO
   useEffect(() => {
-    document.title = "Free Google Ads Competitor Research | Pranjal Digital";
+    document.title =
+      "Free Google Ads Competitor Research | Pranjal Digital";
   }, []);
 
   // STEP FLOW
   const startProcess = () => {
-    if (!company) return alert("Enter competitor");
+    if (!company) {
+      alert("Enter competitor name");
+      return;
+    }
 
     setStep(1);
 
@@ -36,9 +41,9 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     setTimeout(() => setStep(3), 5000);
   };
 
-  // OCR
+  // OCR (SAFE)
   useEffect(() => {
-    const handlePaste = async (e: ClipboardEvent) => {
+    const handlePaste = async (e: any) => {
       const items = e.clipboardData?.items;
       if (!items) return;
 
@@ -47,10 +52,18 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
           const file = item.getAsFile();
           if (!file) return;
 
-          setAdsText("🔍 Extracting text...");
+          setAdsText("🔍 Extracting text from image...");
 
-          const result = await window.Tesseract.recognize(file, "eng");
-          setAdsText(result.data.text);
+          try {
+            if (typeof window !== "undefined" && window.Tesseract) {
+              const result = await window.Tesseract.recognize(file, "eng");
+              setAdsText(result?.data?.text || "No text found");
+            } else {
+              setAdsText("❌ OCR not loaded. Refresh page.");
+            }
+          } catch (err) {
+            setAdsText("❌ Failed to read image");
+          }
         }
       }
     };
@@ -59,23 +72,29 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // AI
+  // GEMINI AI (SAFE)
   const generateAds = async () => {
-    if (!brand) return alert("Enter brand");
+    if (!brand) {
+      alert("Enter your brand name");
+      return;
+    }
 
     setLoading(true);
 
-    const res = await fetch(
-      "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=YOUR_API_KEY",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: `
+    try {
+      const res = await fetch(
+        "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyBYOmGaUQ3ZAlk3Ft5v9JuWXDp3-DRojA8",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `
 Rewrite this Google Ad professionally.
 
 Brand: ${brand}
@@ -91,28 +110,43 @@ DESCRIPTIONS (3)
 CTA
 ---
 KEYWORDS (10)
-                  `,
-                },
-              ],
-            },
-          ],
-        }),
+                    `,
+                  },
+                ],
+              },
+            ],
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      const text =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "No AI response";
+
+      let adsPart = text;
+      let keywordPart = "";
+
+      if (text.includes("---")) {
+        const parts = text.split("---");
+        adsPart = parts[0];
+        keywordPart = parts[1];
       }
-    );
 
-    const data = await res.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-
-    const [adsPart, keywordPart] = text.split("---");
-
-    setAdsOutput(adsPart || "");
-    setKeywords(keywordPart || "");
-    setLoading(false);
+      setAdsOutput(adsPart);
+      setKeywords(keywordPart);
+    } catch (err) {
+      setAdsOutput("❌ Error generating ads");
+      setKeywords("");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#080c14] text-white p-6">
-      
+
       {/* HERO */}
       <div className="max-w-3xl mx-auto text-center mt-20">
         <h1 className="text-4xl font-bold mb-4">
@@ -120,7 +154,7 @@ KEYWORDS (10)
         </h1>
 
         <p className="text-gray-400 mb-6">
-          Find competitor ads, extract copy, and generate better ads using AI
+          Analyze competitor ads and generate better ads using AI
         </p>
 
         <input
@@ -140,10 +174,10 @@ KEYWORDS (10)
 
       {/* STEPS */}
       {step > 0 && (
-        <div className="max-w-2xl mx-auto mt-10 space-y-3 text-center">
+        <div className="max-w-2xl mx-auto mt-10 text-center space-y-2">
           {step >= 1 && <p>🔗 Opening Ads Library...</p>}
-          {step >= 2 && <p>📸 Screenshot competitor ads</p>}
-          {step >= 3 && <p>📋 Paste screenshot (Ctrl + V)</p>}
+          {step >= 2 && <p>📸 Take screenshot of ads</p>}
+          {step >= 3 && <p>📋 Paste screenshot here (Ctrl + V)</p>}
         </div>
       )}
 
@@ -151,9 +185,7 @@ KEYWORDS (10)
       {step >= 3 && (
         <div className="max-w-2xl mx-auto mt-10">
           <div className="border border-dashed border-gray-500 p-6 rounded-xl text-center">
-            <p className="text-gray-400">
-              Paste screenshot here (Ctrl + V)
-            </p>
+            Paste screenshot here (Ctrl + V)
           </div>
         </div>
       )}
@@ -170,7 +202,7 @@ KEYWORDS (10)
         </div>
       )}
 
-      {/* BRAND */}
+      {/* BRAND INPUT */}
       {adsText && (
         <div className="max-w-2xl mx-auto mt-4">
           <input
@@ -192,8 +224,7 @@ KEYWORDS (10)
       {/* OUTPUT */}
       {(adsOutput || keywords) && (
         <div className="max-w-5xl mx-auto mt-10 grid md:grid-cols-2 gap-6">
-          
-          {/* ADS */}
+
           <div className="bg-[#0a0f1c] p-6 rounded-xl">
             <h3 className="font-bold mb-3">Ad Copy</h3>
             <pre className="whitespace-pre-wrap text-sm">
@@ -201,7 +232,6 @@ KEYWORDS (10)
             </pre>
           </div>
 
-          {/* KEYWORDS */}
           <div className="bg-[#0a0f1c] p-6 rounded-xl">
             <h3 className="font-bold mb-3">Keywords</h3>
             <pre className="whitespace-pre-wrap text-sm">
