@@ -7,15 +7,15 @@ declare global {
 }
 
 const FreeGoogleAdsCompetitorResearch: React.FC = () => {
-  const [company, setCompany] = useState<string>("");
-  const [step, setStep] = useState<number>(0);
-  const [adsText, setAdsText] = useState<string>("");
-  const [brand, setBrand] = useState<string>("");
-  const [adsOutput, setAdsOutput] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [company, setCompany] = useState("");
+  const [step, setStep] = useState(0);
+  const [adsText, setAdsText] = useState("");
+  const [brand, setBrand] = useState("");
+  const [adsOutput, setAdsOutput] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    document.title = "Google Ads Competitor Research Tool";
+    document.title = "Google Ads Competitor Intelligence Tool";
   }, []);
 
   const startProcess = () => {
@@ -63,53 +63,63 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ✅ WORKING AI (NO API KEY)
+  // ✅ WORKING AI (OpenRouter FIXED)
   const generateAds = async () => {
     if (!brand) return alert("Enter your brand");
 
     setLoading(true);
 
     try {
-      const prompt = `
-You are a Google Ads expert.
+      const cleanedText = adsText.replace(/\n+/g, " ").slice(0, 1500);
+
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization:
+            "Bearer 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",
+          "Content-Type": "application/json",
+          "HTTP-Referer": window.location.origin,
+          "X-Title": "Ads Intelligence Tool"
+        },
+        body: JSON.stringify({
+          model: "openchat/openchat-7b",
+          messages: [
+            {
+              role: "user",
+              content: `
+You are a senior Google Ads strategist.
 
 Brand: ${brand}
 Competitor: ${company}
 
 Competitor Ads:
-${adsText}
+${cleanedText}
 
-Generate:
-1. 5 Headlines
-2. 5 Descriptions
-3. Keywords:
-   - Exact
-   - Phrase
-   - Broad
-`;
+Give structured output:
 
-      const res = await fetch(
-        "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            inputs: prompt
-          })
-        }
-      );
+HEADLINES (5)
+DESCRIPTIONS (5)
+
+KEYWORDS:
+- Exact
+- Phrase
+- Broad
+
+Also:
+- 2 ad angles
+- 1 growth strategy
+`
+            }
+          ]
+        })
+      });
 
       const data = await res.json();
-
       console.log("AI RESPONSE:", data);
 
-      const output =
-        data?.[0]?.generated_text ||
-        "⚠️ AI loading or rate limited. Try again.";
+      const output = data?.choices?.[0]?.message?.content;
 
-      setAdsOutput(output);
+      setAdsOutput(output || "❌ No response from AI");
 
     } catch (err) {
       console.error(err);
@@ -124,32 +134,70 @@ Generate:
 
       {/* HERO */}
       <div className="max-w-6xl mx-auto text-center py-20 px-6">
-        <h1 className="text-5xl font-bold">
-          Turn Competitor Ads Into{" "}
-          <span className="text-yellow-400">
-            High-Converting Campaigns
-          </span>
+        <h1 className="text-5xl font-bold leading-tight">
+          Real-Time Google Ads Intelligence  
+          <span className="text-yellow-400"> (Not Crawler Data)</span>
         </h1>
 
-        <p className="mt-6 text-gray-400 max-w-3xl mx-auto">
-          Get real ads directly from Google Ads Transparency Center.
-          Analyze gaps and generate better ads using AI.
+        <p className="mt-6 text-gray-400 max-w-3xl mx-auto text-lg">
+          Traditional tools like SEMrush, Ahrefs, and SpyFu rely on crawlers — 
+          meaning the data is delayed, incomplete, and often outdated.
+        </p>
+
+        <p className="mt-4 text-gray-300 max-w-3xl mx-auto">
+          This tool pulls **live ads directly from Google Ads Transparency Center**, 
+          extracts insights using AI, and generates **better-performing ad copies and keyword strategies instantly.**
         </p>
 
         {/* VIDEO */}
         <div className="mt-12 flex justify-center">
-          <div className="aspect-square w-full max-w-[360px] bg-black rounded-xl flex items-center justify-center text-gray-500">
-            YouTube Video
+          <div className="w-[320px] h-[320px] rounded-xl bg-black border border-yellow-500/30 flex items-center justify-center text-gray-500">
+            YouTube Demo
           </div>
         </div>
 
         <div className="mt-6 text-sm text-gray-500">
-          ✔ Real Data ✔ AI Powered ✔ No Crawlers
+          ✔ Live Google Data ✔ AI Powered ✔ No Crawlers ✔ Real Insights
         </div>
       </div>
 
-      {/* INPUT */}
-      <div className="max-w-3xl mx-auto mt-10 px-6 text-center">
+      {/* COMPARISON */}
+      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-6">
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl border border-red-500/20">
+          <h3 className="text-red-400 font-semibold mb-2">❌ Crawler-Based Tools</h3>
+          <ul className="text-sm text-gray-400 space-y-2">
+            <li>• Data delayed by days/weeks</li>
+            <li>• Misses many ads</li>
+            <li>• No real messaging insight</li>
+            <li>• Incomplete keyword intelligence</li>
+          </ul>
+        </div>
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl border border-green-500/20">
+          <h3 className="text-green-400 font-semibold mb-2">✅ This Tool</h3>
+          <ul className="text-sm text-gray-400 space-y-2">
+            <li>• Real-time ads from Google</li>
+            <li>• Complete competitor visibility</li>
+            <li>• AI-driven messaging insights</li>
+            <li>• Instant ad + keyword generation</li>
+          </ul>
+        </div>
+
+      </div>
+
+      {/* FEATURES */}
+      <div className="max-w-6xl mx-auto mt-16 px-6 grid md:grid-cols-4 gap-6 text-center">
+
+        <div className="bg-[#0a0f1c] p-5 rounded-xl">AI Headlines</div>
+        <div className="bg-[#0a0f1c] p-5 rounded-xl">Ad Copy</div>
+        <div className="bg-[#0a0f1c] p-5 rounded-xl">Keyword Strategy</div>
+        <div className="bg-[#0a0f1c] p-5 rounded-xl">Competitor Gaps</div>
+
+      </div>
+
+      {/* TOOL */}
+      <div className="max-w-3xl mx-auto mt-16 px-6 text-center">
 
         <input
           value={company}
@@ -164,11 +212,12 @@ Generate:
         >
           Start Analysis
         </button>
+
       </div>
 
       {step >= 3 && (
-        <div className="max-w-2xl mx-auto mt-6 border p-6 text-center">
-          Paste screenshot (Ctrl + V)
+        <div className="max-w-2xl mx-auto mt-6 border border-dashed border-gray-600 p-6 text-center rounded-xl">
+          📸 Paste screenshot (Ctrl + V)
         </div>
       )}
 
@@ -203,9 +252,17 @@ Generate:
 
       {adsOutput && (
         <div className="max-w-5xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
-          <pre className="whitespace-pre-wrap">{adsOutput}</pre>
+          <h2 className="text-xl mb-4">AI Output</h2>
+          <pre className="whitespace-pre-wrap text-gray-300">
+            {adsOutput}
+          </pre>
         </div>
       )}
+
+      <div className="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
+        Built by Pranjal Digital • AI Marketing Tools
+      </div>
+
     </div>
   );
 };
