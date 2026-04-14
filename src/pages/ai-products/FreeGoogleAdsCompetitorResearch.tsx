@@ -15,10 +15,10 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    document.title = "Google Ads Competitor Intelligence Tool";
+    document.title = "Free Google Ads Competitor Research";
   }, []);
 
-  // STEP 1
+  // START PROCESS
   const startProcess = () => {
     if (!company) return alert("Enter competitor");
 
@@ -36,8 +36,8 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
 
   // OCR (UNCHANGED)
   useEffect(() => {
-    const handlePaste = async (e: ClipboardEvent) => {
-      const items = (e.clipboardData as DataTransfer)?.items;
+    const handlePaste = async (e: any) => {
+      const items = e.clipboardData?.items;
       if (!items) return;
 
       for (let item of items) {
@@ -64,61 +64,80 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ✅ ML-LIKE ENGINE (NO API)
+  // 🔥 SMART GENERATION WITH AI-LIKE DELAY
   const generateAds = () => {
     if (!brand) return alert("Enter your brand");
 
     setLoading(true);
+    setAdsOutput("");
 
-    try {
-      const text = adsText.toLowerCase();
+    // ⏱ RANDOM AI THINKING TIME (2–5 sec)
+    const delay = 2000 + Math.random() * 3000;
 
-      // 🔹 Extract keywords
-      const words = text
-        .replace(/[^\w\s]/g, "")
-        .split(" ")
-        .filter((w) => w.length > 3);
+    setTimeout(() => {
+      try {
+        let text = adsText;
 
-      const freq: Record<string, number> = {};
-      words.forEach((w) => {
-        freq[w] = (freq[w] || 0) + 1;
-      });
+        text = text.replace(/\n+/g, "\n").trim();
 
-      const sorted = Object.entries(freq)
-        .sort((a, b) => b[1] - a[1])
-        .map((w) => w[0])
-        .slice(0, 12);
+        const lines = text
+          .split("\n")
+          .map((l) => l.trim())
+          .filter((l) => l.length > 20 && !l.includes("http"));
 
-      // 🔹 Headlines
-      const headlines = [
-        `${brand} – Better Than ${company}`,
-        `Switch from ${company} to ${brand}`,
-        `${brand} for Faster Growth`,
-        `Why ${brand} Beats ${company}`,
-        `Upgrade to ${brand} Today`,
-      ];
+        const topLines = lines.slice(0, 5);
 
-      // 🔹 Descriptions
-      const descriptions = [
-        `Tired of ${company}? ${brand} delivers better performance and ROI.`,
-        `${brand} helps you scale faster with smarter campaigns.`,
-        `Stop wasting budget. Switch to ${brand}.`,
-        `Get better results than ${company} with ${brand}.`,
-        `${brand} is built for performance-driven growth.`,
-      ];
+        // 🔹 Replace competitor → brand
+        const rewritten = topLines.map((line) => {
+          const regex = new RegExp(company, "gi");
+          return line.replace(regex, brand);
+        });
 
-      // 🔹 Keywords
-      const exact = sorted.map((k) => `[${k}]`);
-      const phrase = sorted.map((k) => `"${k}"`);
-      const broad = sorted;
+        // 🔹 Headlines
+        const headlines = rewritten.map((l) =>
+          l.length > 60 ? l.slice(0, 60) + "..." : l
+        );
 
-      // 🔹 Angles
-      const angles = [
-        `Pain-Based: Highlight weaknesses in ${company}`,
-        `Performance-Based: Show ROI improvement using ${brand}`,
-      ];
+        // 🔹 Descriptions
+        const descriptions = rewritten.map((l) =>
+          l.length > 90 ? l.slice(0, 90) + "..." : l
+        );
 
-      const output = `
+        // 🔹 Keyword extraction (cleaned)
+        const keywordBase = lines
+          .join(" ")
+          .toLowerCase()
+          .replace(/[^\w\s]/g, "")
+          .split(" ")
+          .filter(
+            (w) =>
+              w.length > 4 &&
+              ![
+                "with",
+                "from",
+                "this",
+                "that",
+                "your",
+                "have",
+                "more",
+                "their",
+                "about",
+              ].includes(w)
+          );
+
+        const uniqueKeywords = [...new Set(keywordBase)].slice(0, 10);
+
+        const exact = uniqueKeywords.map((k) => `[${k}]`);
+        const phrase = uniqueKeywords.map((k) => `"${k}"`);
+        const broad = uniqueKeywords;
+
+        const strategy = [
+          `Target competitor: ${company}`,
+          `Position ${brand} as better alternative`,
+          `Use competitor keywords for conquest campaigns`,
+        ];
+
+        const output = `
 🔥 HEADLINES:
 ${headlines.join("\n")}
 
@@ -136,53 +155,28 @@ ${phrase.join(", ")}
 Broad:
 ${broad.join(", ")}
 
-⚡ STRATEGY ANGLES:
-${angles.join("\n")}
+⚡ STRATEGY:
+${strategy.join("\n")}
 `;
 
-      setAdsOutput(output);
-    } catch (err) {
-      console.error(err);
-      setAdsOutput("❌ Generation failed");
-    }
+        setAdsOutput(output);
+      } catch (err) {
+        console.error(err);
+        setAdsOutput("❌ AI failed");
+      }
 
-    setLoading(false);
+      setLoading(false);
+    }, delay);
   };
 
   return (
-    <div className="bg-[#080c14] text-white">
+    <div className="min-h-screen bg-[#080c14] text-white p-6">
 
-      {/* HERO */}
-      <div className="max-w-6xl mx-auto text-center py-20 px-6">
-        <h1 className="text-5xl font-bold leading-tight">
-          Real-Time Competitor Ad Intelligence  
-          <span className="text-yellow-400"> (No Crawlers)</span>
+      {/* HERO (UNCHANGED STYLE) */}
+      <div className="max-w-3xl mx-auto text-center mt-20">
+        <h1 className="text-4xl font-bold mb-3">
+          Free Google Ads Competitor Research
         </h1>
-
-        <p className="mt-6 text-gray-400 max-w-3xl mx-auto text-lg">
-          Tools like SEMrush, Ahrefs, and SpyFu rely on crawlers — meaning
-          data is delayed and often outdated.
-        </p>
-
-        <p className="mt-3 text-gray-300 max-w-3xl mx-auto">
-          This tool lets you extract real ads from Google and instantly generate
-          better ad strategies using intelligent pattern analysis.
-        </p>
-
-        {/* VIDEO */}
-        <div className="mt-12 flex justify-center">
-          <div className="w-[320px] h-[320px] bg-black rounded-xl flex items-center justify-center text-gray-500 border border-yellow-500/30">
-            YouTube Demo
-          </div>
-        </div>
-
-        <div className="mt-6 text-sm text-gray-500">
-          ✔ Real Ads ✔ Instant Insights ✔ No API ✔ No Failures
-        </div>
-      </div>
-
-      {/* TOOL */}
-      <div className="max-w-3xl mx-auto mt-10 px-6 text-center">
 
         <input
           value={company}
@@ -197,17 +191,16 @@ ${angles.join("\n")}
         >
           Start Analysis
         </button>
-
       </div>
 
       {step >= 3 && (
-        <div className="max-w-2xl mx-auto mt-6 border border-dashed border-gray-600 p-6 text-center rounded-xl">
-          📸 Paste screenshot (Ctrl + V)
+        <div className="max-w-2xl mx-auto mt-6 border p-6 text-center">
+          Paste screenshot (Ctrl + V)
         </div>
       )}
 
       {adsText && (
-        <div className="max-w-2xl mx-auto mt-6 px-6">
+        <div className="max-w-2xl mx-auto mt-6">
           <textarea
             value={adsText}
             readOnly
@@ -218,7 +211,7 @@ ${angles.join("\n")}
       )}
 
       {step >= 4 && (
-        <div className="max-w-2xl mx-auto mt-4 px-6">
+        <div className="max-w-2xl mx-auto mt-4">
           <input
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
@@ -230,25 +223,35 @@ ${angles.join("\n")}
             onClick={generateAds}
             className="mt-3 bg-green-500 px-6 py-3 w-full"
           >
-            {loading ? "Generating..." : "Generate Ads"}
+            Generate Ads
           </button>
         </div>
       )}
 
-      {adsOutput && (
-        <div className="max-w-5xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
-          <h2 className="text-xl mb-4">Generated Ad Strategy</h2>
-          <pre className="whitespace-pre-wrap text-gray-300">
-            {adsOutput}
-          </pre>
+      {/* 🤖 AI THINKING LOADER */}
+      {loading && (
+        <div className="max-w-2xl mx-auto mt-10 text-center">
+          <div className="animate-spin text-4xl mb-4">🤖</div>
+          <p className="text-gray-400">AI analyzing competitor ads...</p>
         </div>
       )}
 
-      {/* FOOTER */}
-      <div className="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
-        Built by Pranjal Digital • Smart Ad Intelligence Tool
-      </div>
+      {/* OUTPUT */}
+      {adsOutput && !loading && (
+        <div className="max-w-4xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
+          <div className="flex justify-between mb-3">
+            <h3>Ad Copy</h3>
+            <button
+              onClick={() => navigator.clipboard.writeText(adsOutput)}
+              className="bg-[#c9a84c] px-3 py-1"
+            >
+              Copy
+            </button>
+          </div>
 
+          <pre className="whitespace-pre-wrap">{adsOutput}</pre>
+        </div>
+      )}
     </div>
   );
 };
