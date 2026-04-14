@@ -25,7 +25,6 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     document.title = "Free Google Ads Competitor Research | Pranjal Digital";
   }, []);
 
-  // STEP FLOW
   const startProcess = () => {
     if (!company) return alert("Enter competitor");
 
@@ -61,7 +60,7 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
               setAdsText(result?.data?.text || "No text found");
               setStep(4);
             } else {
-              setAdsText("OCR not loaded. Refresh page.");
+              setAdsText("OCR not loaded");
             }
           } catch {
             setAdsText("Error reading image");
@@ -74,43 +73,11 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // AI GENERATION (FIXED)
+  // AI FIXED
   const generateAds = async () => {
     if (!brand) return alert("Enter your brand");
 
     setLoading(true);
-
-    const prompt = `
-You are a Google Ads expert.
-
-Rewrite the ad professionally.
-
-Brand: ${brand}
-Competitor: ${company}
-
-Ad:
-${adsText}
-
-STRICT FORMAT:
-
-HEADLINES:
-1.
-2.
-3.
-4.
-5.
-
-DESCRIPTIONS:
-1.
-2.
-3.
-
-CTA:
-(one line)
-
-KEYWORDS:
-comma separated list (10 keywords)
-`;
 
     try {
       const res = await fetch(
@@ -123,7 +90,40 @@ comma separated list (10 keywords)
           body: JSON.stringify({
             contents: [
               {
-                parts: [{ text: prompt }]
+                parts: [
+                  {
+                    text: `You are a Google Ads expert.
+
+Rewrite the following ad into HIGH CONVERTING Google Ads copy.
+
+Brand: ${brand}
+Competitor: ${company}
+
+Ad Content:
+${adsText}
+
+Return EXACT FORMAT:
+
+HEADLINES:
+- headline 1
+- headline 2
+- headline 3
+- headline 4
+- headline 5
+
+DESCRIPTIONS:
+- description 1
+- description 2
+- description 3
+
+CTA:
+- one strong CTA
+
+KEYWORDS:
+- keyword1, keyword2, keyword3, keyword4, keyword5, keyword6, keyword7, keyword8, keyword9, keyword10
+`
+                  }
+                ]
               }
             ]
           })
@@ -132,16 +132,23 @@ comma separated list (10 keywords)
 
       const data = await res.json();
 
-      const text =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-        "No response from AI";
+      console.log("Gemini response:", data);
 
-      setAdsOutput(text);
-    } catch {
+      const text =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (!text) {
+        setAdsOutput("❌ No response from AI. Try again.");
+      } else {
+        setAdsOutput(text);
+      }
+
+    } catch (err) {
+      console.error(err);
       setAdsOutput("❌ Error generating ads");
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -172,7 +179,7 @@ comma separated list (10 keywords)
         </button>
       </div>
 
-      {/* STEP PROGRESS */}
+      {/* STEP UI */}
       {step > 0 && (
         <div className="max-w-3xl mx-auto mt-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
@@ -194,17 +201,15 @@ comma separated list (10 keywords)
 
       {/* INSTRUCTIONS */}
       {step >= 2 && (
-        <div className="max-w-2xl mx-auto mt-8 text-center text-gray-400">
-          Step 1: Open ads library → Step 2: Filter ads → Step 3: Copy image → Step 4: Paste below
+        <div className="text-center mt-6 text-gray-400">
+          Copy ad screenshot → Paste below (Ctrl + V)
         </div>
       )}
 
-      {/* PASTE BOX */}
+      {/* PASTE */}
       {step >= 3 && (
-        <div className="max-w-2xl mx-auto mt-6">
-          <div className="border border-dashed border-gray-500 p-6 rounded-xl text-center">
-            Paste screenshot here (Ctrl + V)
-          </div>
+        <div className="max-w-2xl mx-auto mt-6 border border-dashed p-6 text-center rounded-xl">
+          Paste screenshot here (Ctrl + V)
         </div>
       )}
 
@@ -220,13 +225,13 @@ comma separated list (10 keywords)
         </div>
       )}
 
-      {/* BRAND INPUT */}
+      {/* BRAND */}
       {step >= 4 && (
         <div className="max-w-2xl mx-auto mt-4">
           <input
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
-            placeholder="Enter your brand name"
+            placeholder="Enter your brand"
             className="w-full p-3 text-black rounded-lg"
           />
 
@@ -236,37 +241,29 @@ comma separated list (10 keywords)
           >
             {loading ? "Generating..." : "Generate Ads"}
           </button>
-
-          {adsOutput && (
-            <p className="text-green-400 text-center mt-3">
-              ✅ Ads generated successfully
-            </p>
-          )}
         </div>
       )}
 
       {/* OUTPUT */}
       {adsOutput && (
-        <div className="max-w-5xl mx-auto mt-10">
+        <div className="max-w-5xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
 
-          <div className="bg-[#0a0f1c] p-6 rounded-xl">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="font-bold">Ad Copy</h3>
-              <button
-                onClick={() => navigator.clipboard.writeText(adsOutput)}
-                className="text-sm bg-[#c9a84c] px-3 py-1 rounded"
-              >
-                Copy
-              </button>
-            </div>
-
-            <pre className="whitespace-pre-wrap text-sm">
-              {adsOutput}
-            </pre>
+          <div className="flex justify-between mb-3">
+            <h3 className="font-bold">Ad Copy</h3>
+            <button
+              onClick={() => navigator.clipboard.writeText(adsOutput)}
+              className="bg-[#c9a84c] px-3 py-1 rounded text-sm"
+            >
+              Copy
+            </button>
           </div>
 
+          <pre className="whitespace-pre-wrap text-sm">
+            {adsOutput}
+          </pre>
         </div>
       )}
+
     </div>
   );
 };
