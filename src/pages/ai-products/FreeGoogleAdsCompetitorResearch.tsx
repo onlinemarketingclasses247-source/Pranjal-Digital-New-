@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-declare global {
-  interface Window {
-    Tesseract: any;
-  }
-}
-
-const FreeGoogleAdsCompetitorResearch: React.FC = () => {
+const FreeGoogleAdsCompetitorResearch = () => {
   const [company, setCompany] = useState("");
   const [step, setStep] = useState(0);
   const [adsText, setAdsText] = useState("");
@@ -15,7 +9,7 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    document.title = "Free Google Ads Competitor Research | Pranjal Digital";
+    document.title = "Google Ads Competitor Research Tool";
   }, []);
 
   const startProcess = () => {
@@ -34,74 +28,129 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     setTimeout(() => setStep(3), 4000);
   };
 
-  // OCR
-  useEffect(() => {
-    const handlePaste = async (e: any) => {
-      const items = e.clipboardData?.items;
-      if (!items) return;
+  const generateAds = async () => {
+    if (!brand) return alert("Enter your brand");
 
-      for (let item of items) {
-        if (item.type.includes("image")) {
-          const file = item.getAsFile();
-          if (!file) return;
+    setLoading(true);
 
-          setAdsText("🔍 Reading screenshot...");
+    try {
+      const res = await fetch("/api/generateAds", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          brand,
+          company,
+          adsText,
+        }),
+      });
 
-          try {
-            if (window.Tesseract) {
-              const result = await window.Tesseract.recognize(file, "eng");
-              setAdsText(result?.data?.text || "No text found");
-              setStep(4);
-            }
-          } catch {
-            setAdsText("Error reading image");
-          }
-        }
-      }
-    };
+      const data = await res.json();
 
-    document.addEventListener("paste", handlePaste);
-    return () => document.removeEventListener("paste", handlePaste);
-  }, []);
+      setAdsOutput(
+        data?.choices?.[0]?.message?.content || "No response from API"
+      );
+    } catch (error) {
+      console.error(error);
+      setAdsOutput("❌ API failed");
+    }
 
-  // ✅ FIXED GEMINI CALL
-const generateAds = async () => {
-  if (!brand) return alert("Enter your brand");
-
-  setLoading(true);
-
-  try {
-    const res = await fetch("/api/generateAds", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        brand,
-        company,
-        adsText,
-      }),
-    });
-
-    const data = await res.json();
-
-    setAdsOutput(data.text);
-
-  } catch (error) {
-    console.error(error);
-    setAdsOutput("❌ API failed");
-  }
-
-  setLoading(false);
-};
+    setLoading(false);
+  };
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-white p-6">
+    <div className="bg-[#080c14] text-white">
 
-      <div className="max-w-3xl mx-auto text-center mt-20">
-        <h1 className="text-4xl font-bold mb-3">
-          Free Google Ads Competitor Research
+      {/* HERO */}
+      <div className="max-w-5xl mx-auto text-center py-20 px-6">
+        <h1 className="text-5xl font-bold">
+          Google Ads Competitor Research Tool
         </h1>
+
+        <p className="mt-4 text-gray-400 text-lg">
+          Get real competitor ads directly from Google — not outdated crawler data.
+          Analyze, decode, and generate high-converting ads instantly.
+        </p>
+
+        {/* VIDEO */}
+        <div className="mt-10 border border-gray-700 rounded-xl overflow-hidden">
+          <div className="h-[300px] flex items-center justify-center bg-black text-gray-500">
+            YouTube Embed Here
+          </div>
+        </div>
+      </div>
+
+      {/* PROBLEM + ADVANTAGE */}
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 px-6">
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          <h3 className="text-xl font-semibold mb-3">❌ The Problem</h3>
+          <p className="text-gray-400">
+            SEMrush, Ahrefs, SpyFu rely on crawlers → outdated & incomplete data.
+          </p>
+        </div>
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          <h3 className="text-xl font-semibold mb-3">✅ Our Advantage</h3>
+          <p className="text-gray-400">
+            We fetch real-time ads directly from Google Ads Transparency Center.
+          </p>
+        </div>
+
+      </div>
+
+      {/* HOW IT WORKS */}
+      <div className="max-w-5xl mx-auto text-center mt-20 px-6">
+        <h2 className="text-3xl font-bold mb-10">How It Works</h2>
+
+        <div className="grid md:grid-cols-3 gap-6">
+
+          <div className="bg-[#0a0f1c] p-6 rounded-xl">
+            <h4 className="font-semibold mb-2">1. Fetch Ads</h4>
+            <p className="text-gray-400 text-sm">
+              Pull real ads from Google Transparency Center
+            </p>
+          </div>
+
+          <div className="bg-[#0a0f1c] p-6 rounded-xl">
+            <h4 className="font-semibold mb-2">2. Image Parsing</h4>
+            <p className="text-gray-400 text-sm">
+              Extract data using OCR engine
+            </p>
+          </div>
+
+          <div className="bg-[#0a0f1c] p-6 rounded-xl">
+            <h4 className="font-semibold mb-2">3. AI Optimization</h4>
+            <p className="text-gray-400 text-sm">
+              Generate better ads + keywords instantly
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      {/* FEATURES */}
+      <div className="max-w-5xl mx-auto mt-20 px-6 grid md:grid-cols-2 gap-6">
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          <h3 className="font-semibold mb-3">🔥 AI Ad Copy Generator</h3>
+          <p className="text-gray-400 text-sm">
+            Headlines, descriptions, multiple variations instantly.
+          </p>
+        </div>
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          <h3 className="font-semibold mb-3">🎯 Keyword Suggestions</h3>
+          <p className="text-gray-400 text-sm">
+            Phrase, exact, broad match keywords generated automatically.
+          </p>
+        </div>
+
+      </div>
+
+      {/* TOOL SECTION */}
+      <div className="max-w-3xl mx-auto mt-20 px-6 text-center">
 
         <input
           value={company}
@@ -116,6 +165,7 @@ const generateAds = async () => {
         >
           Start Analysis
         </button>
+
       </div>
 
       {step >= 3 && (
@@ -125,7 +175,7 @@ const generateAds = async () => {
       )}
 
       {adsText && (
-        <div className="max-w-2xl mx-auto mt-6">
+        <div className="max-w-2xl mx-auto mt-6 px-6">
           <textarea
             value={adsText}
             readOnly
@@ -136,7 +186,7 @@ const generateAds = async () => {
       )}
 
       {step >= 4 && (
-        <div className="max-w-2xl mx-auto mt-4">
+        <div className="max-w-2xl mx-auto mt-4 px-6">
           <input
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
@@ -154,7 +204,7 @@ const generateAds = async () => {
       )}
 
       {adsOutput && (
-        <div className="max-w-4xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
+        <div className="max-w-4xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl px-6">
 
           <div className="flex justify-between mb-3">
             <h3>Ad Copy</h3>
@@ -169,6 +219,12 @@ const generateAds = async () => {
           <pre className="whitespace-pre-wrap">{adsOutput}</pre>
         </div>
       )}
+
+      {/* FOOTER */}
+      <div className="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
+        Built by Pranjal Digital • Premium AI Marketing Tools
+      </div>
+
     </div>
   );
 };
