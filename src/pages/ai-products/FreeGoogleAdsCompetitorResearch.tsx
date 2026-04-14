@@ -24,10 +24,27 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
 
-  const OPENROUTER_API_KEY = "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";
+  // ============================================
+  // 🔑 READ ENVIRONMENT VARIABLES (Added in Vercel/Platform)
+  // ============================================
+  
+  // These match the variable names you added:
+  // OPEN_ROUTER_KEY and HF_API_KEY
+  const OPENROUTER_API_KEY = process.env.OPEN_ROUTER_KEY || "";
+  const HF_API_KEY = process.env.HF_API_KEY || "";
+  
+  // ============================================
+  // AI PROVIDER SELECTION
+  // ============================================
+  const [aiProvider, setAiProvider] = useState<"openrouter" | "huggingface">("openrouter");
 
   useEffect(() => {
     document.title = "Google Ads Competitor Intelligence - Real-Time Ad Analysis";
+    window.scrollTo(0, 0);
+    
+    // Debug: Check if keys are loaded (remove in production)
+    console.log("OpenRouter Key loaded:", !!OPENROUTER_API_KEY);
+    console.log("HuggingFace Key loaded:", !!HF_API_KEY);
   }, []);
 
   const startProcess = () => {
@@ -74,161 +91,186 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     const prompt = `Create Google Ads copy for brand: "${brand}"
 
 Based on this competitor ad text:
-"${adsText}"
+"${adsText.substring(0, 800)}"
 
 STRICT RULES:
-- NEVER mention or reference the competitor name anywhere
-- ONLY use the brand name: "${brand}"
-- Keep the same value propositions and benefits
-- Follow all Google Ads policies (no all caps, no excessive punctuation, no clickbait)
+- NEVER mention competitor name
+- ONLY use brand: "${brand}"
+- Follow Google Ads policies (no all caps, no clickbait, no excessive punctuation)
 
-Generate EXACT JSON format (no other text, no markdown):
-
+Return ONLY valid JSON (no markdown, no extra text):
 {
   "ads": [
     {
       "type": "responsive_search",
-      "headlines": [
-        "${brand} Best Solution",
-        "Save Time With ${brand}",
-        "${brand} Trusted Platform",
-        "Get More Results Today",
-        "Try ${brand} Free Now",
-        "${brand} Pro Grade",
-        "Better Way To Work",
-        "${brand} Experts Hub",
-        "Join ${brand} Today",
-        "${brand} Success Kit"
-      ],
-      "descriptions": [
-        "${brand} helps businesses achieve better results. Start your free trial today and see the difference.",
-        "Join thousands of happy customers using ${brand} for their daily operations. Get started now."
-      ],
+      "headlines": ["${brand} Best", "Save With ${brand}", "Get ${brand} Now", "Try ${brand} Free", "${brand} Pro", "${brand} Works", "${brand} Guide", "${brand} Tips", "${brand} Demo", "${brand} Pricing"],
+      "descriptions": ["${brand} helps you achieve better results. Start free trial today.", "Join thousands using ${brand} for success."],
       "displayPaths": ["${brand.toLowerCase()}", "go"]
     },
     {
       "type": "responsive_display",
-      "headlines": [
-        "${brand} Platform",
-        "Smart Solution",
-        "Grow With ${brand}",
-        "Trusted Choice",
-        "${brand} Works"
-      ],
-      "longHeadline": "${brand} - The smarter way to grow your business",
-      "descriptions": [
-        "Get started with ${brand} today. Easy setup, powerful features, amazing results.",
-        "${brand} helps you achieve more in less time. Join thousands of successful businesses."
-      ],
+      "headlines": ["${brand} Platform", "Smart ${brand}", "Grow With ${brand}", "Trusted ${brand}", "${brand} Pro"],
+      "longHeadline": "${brand} - The smarter way to grow",
+      "descriptions": ["Get started with ${brand} today. Easy to use.", "${brand} helps you achieve more."],
       "businessName": "${brand}"
     },
     {
       "type": "performance_max",
-      "headlines": [
-        "${brand} Official",
-        "Best ${brand} Deals",
-        "${brand} Pro Grade",
-        "Save With ${brand}",
-        "${brand} Premium",
-        "${brand} Guide",
-        "Learn ${brand}",
-        "${brand} Tips",
-        "${brand} Review",
-        "${brand} Demo",
-        "${brand} Pricing",
-        "Get ${brand} Now"
-      ],
-      "descriptions": [
-        "Discover why ${brand} is the top choice for businesses worldwide. Get started today.",
-        "Compare ${brand} features and pricing. Get the best value for your money.",
-        "Join the ${brand} community and start seeing real results in days.",
-        "${brand} offers everything you need to succeed in one platform."
-      ],
-      "longHeadline": "${brand} - Complete solution for modern businesses"
+      "headlines": ["${brand} Official", "${brand} Pro", "Save With ${brand}", "${brand} Premium", "${brand} Guide", "Learn ${brand}", "${brand} Tips", "${brand} Review", "${brand} Demo", "${brand} Pricing", "Get ${brand}", "Best ${brand}"],
+      "descriptions": ["${brand} is the top choice for businesses.", "Join ${brand} community today.", "${brand} offers everything you need.", "Start with ${brand} now."],
+      "longHeadline": "${brand} - Complete business solution"
     }
   ]
-}
+}`;
 
-CHARACTER LIMITS (STRICT):
-- Headlines: MAX 30 characters each
-- Descriptions: MAX 90 characters each
-- Display paths: MAX 15 characters each
-- Long headline: MAX 90 characters
-- Business name: MAX 25 characters
-
-Return ONLY the JSON object. No explanations, no markdown formatting.`;
-
-    try {
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": window.location.origin,
-          "X-Title": "Google Ads Competitor Tool"
-        },
-        body: JSON.stringify({
-          model: "qwen/qwen3.6-plus-preview:free",
-          messages: [
-            {
-              role: "system",
-              content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names, only the user's brand name. Follow character limits strictly."
-            },
-            {
-              role: "user",
-              content: prompt
-            }
-          ],
-          temperature: 0.7,
-          max_tokens: 2000,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error("API Error:", response.status, errorData);
-        throw new Error(`AI Service Error: ${response.status}. Please try again.`);
-      }
-
-      const data = await response.json();
-      const content = data.choices?.[0]?.message?.content;
-      
-      if (!content) {
-        throw new Error("No response from AI service");
-      }
-      
-      // Clean the response - remove any markdown
-      let cleanContent = content.trim();
-      if (cleanContent.startsWith('```json')) {
-        cleanContent = cleanContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
-      }
-      if (cleanContent.startsWith('```')) {
-        cleanContent = cleanContent.replace(/```\n?/g, '');
-      }
-      
-      const parsed = JSON.parse(cleanContent);
-      const ads = parsed.ads || parsed;
-      
-      // Validate and ensure character limits, remove any competitor mentions
-      return ads.map((ad: any) => ({
-        type: ad.type,
-        headlines: ad.headlines.slice(0, 15).map((h: string) => {
-          let cleaned = h.replace(new RegExp(competitor, 'gi'), '');
-          return cleaned.substring(0, 30);
-        }),
-        descriptions: ad.descriptions.slice(0, 5).map((d: string) => {
-          let cleaned = d.replace(new RegExp(competitor, 'gi'), '');
-          return cleaned.substring(0, 90);
-        }),
-        displayPaths: ad.displayPaths?.slice(0, 2).map((p: string) => p.substring(0, 15)),
-        businessName: ad.businessName?.substring(0, 25),
-        longHeadline: ad.longHeadline?.substring(0, 90),
-      }));
-      
-    } catch (error) {
-      console.error("AI generation error:", error);
-      throw new Error(`AI Service Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    if (aiProvider === "openrouter") {
+      return await callOpenRouter(prompt);
+    } else {
+      return await callHuggingFace(prompt);
     }
+  };
+
+  // ============================================
+  // OPENROUTER API CALL
+  // ============================================
+  const callOpenRouter = async (prompt: string): Promise<AdSuggestion[]> => {
+    if (!OPENROUTER_API_KEY) {
+      throw new Error("OpenRouter API key not configured. Please add OPEN_ROUTER_KEY in environment variables.");
+    }
+    
+    console.log("Using OpenRouter AI...");
+    
+    // List of free OpenRouter models
+    const freeModels = [
+      "qwen/qwen3.6-plus-preview:free",
+      "meta-llama/llama-3.3-70b-instruct:free",
+      "nvidia/nemotron-3-super:free",
+      "openrouter/free"
+    ];
+    
+    let lastError = null;
+    
+    for (const model of freeModels) {
+      try {
+        console.log(`Trying model: ${model}`);
+        
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+            "Content-Type": "application/json",
+            "HTTP-Referer": window.location.origin,
+            "X-Title": "Google Ads Competitor Tool"
+          },
+          body: JSON.stringify({
+            model: model,
+            messages: [
+              {
+                role: "system",
+                content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names. Follow character limits strictly."
+              },
+              {
+                role: "user",
+                content: prompt
+              }
+            ],
+            temperature: 0.7,
+            max_tokens: 2000,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const content = data.choices?.[0]?.message?.content;
+          
+          if (content) {
+            let cleanContent = content.trim();
+            if (cleanContent.startsWith('```json')) {
+              cleanContent = cleanContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+            }
+            if (cleanContent.startsWith('```')) {
+              cleanContent = cleanContent.replace(/```\n?/g, '');
+            }
+            
+            const parsed = JSON.parse(cleanContent);
+            const ads = parsed.ads || parsed;
+            console.log(`Success with model: ${model}`);
+            return formatAds(ads);
+          }
+        } else {
+          const errorText = await response.text();
+          console.warn(`Model ${model} failed:`, response.status);
+          lastError = `Model ${model} failed: ${response.status}`;
+        }
+      } catch (err) {
+        console.warn(`Error with model ${model}:`, err);
+        lastError = err;
+      }
+    }
+    
+    throw new Error(`OpenRouter API Error: All models failed. ${lastError}`);
+  };
+
+  // ============================================
+  // HUGGING FACE API CALL
+  // ============================================
+  const callHuggingFace = async (prompt: string): Promise<AdSuggestion[]> => {
+    if (!HF_API_KEY) {
+      throw new Error("Hugging Face API key not configured. Please add HF_API_KEY in environment variables.");
+    }
+    
+    console.log("Using Hugging Face AI...");
+    
+    const response = await fetch("https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${HF_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        inputs: `<|begin_of_text|><|start_header_id|>user<|end_header_id|>
+${prompt}
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>`,
+        parameters: {
+          max_new_tokens: 2000,
+          temperature: 0.7,
+          return_full_text: false,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Hugging Face Error:", response.status, errorData);
+      throw new Error(`Hugging Face API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const generatedText = data[0]?.generated_text || "";
+    
+    const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error("No JSON found in response");
+    
+    const parsed = JSON.parse(jsonMatch[0]);
+    const ads = parsed.ads || parsed;
+    return formatAds(ads);
+  };
+
+  const formatAds = (ads: any[]): AdSuggestion[] => {
+    return ads.map((ad: any) => ({
+      type: ad.type,
+      headlines: ad.headlines.slice(0, 15).map((h: string) => {
+        let cleaned = h.replace(new RegExp(competitor, 'gi'), '');
+        return cleaned.substring(0, 30);
+      }),
+      descriptions: ad.descriptions.slice(0, 5).map((d: string) => {
+        let cleaned = d.replace(new RegExp(competitor, 'gi'), '');
+        return cleaned.substring(0, 90);
+      }),
+      displayPaths: ad.displayPaths?.slice(0, 2).map((p: string) => p.substring(0, 15)),
+      businessName: ad.businessName?.substring(0, 25),
+      longHeadline: ad.longHeadline?.substring(0, 90),
+    }));
   };
 
   const generateAds = async () => {
@@ -262,6 +304,16 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
 
   const getCharacterCount = (text: string): number => text.length;
 
+  const resetToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setStep(0);
+    setCompetitor("");
+    setAdsText("");
+    setBrand("");
+    setOutput([]);
+    setError("");
+  };
+
   return (
     <div className="bg-[#080c14] text-white min-h-screen">
       {/* Hero Section */}
@@ -274,6 +326,40 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
         <p className="text-xl text-gray-300 max-w-3xl mx-auto">
           Stop using outdated crawler tools. Get LIVE competitor ad data directly from Google's Transparency Center + AI-powered ad generation.
         </p>
+      </div>
+
+      {/* AI Provider Selector */}
+      <div className="max-w-4xl mx-auto px-6 mb-8">
+        <div className="bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+          <label className="block text-sm text-gray-400 mb-2">🤖 AI Provider:</label>
+          <div className="flex gap-4">
+            <button
+              onClick={() => setAiProvider("openrouter")}
+              className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                aiProvider === "openrouter"
+                  ? "bg-yellow-500 text-black"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              }`}
+            >
+              OpenRouter
+            </button>
+            <button
+              onClick={() => setAiProvider("huggingface")}
+              className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                aiProvider === "huggingface"
+                  ? "bg-yellow-500 text-black"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              }`}
+            >
+              Hugging Face
+            </button>
+          </div>
+          <p className="text-xs text-gray-500 mt-2">
+            {aiProvider === "openrouter" 
+              ? "Using OpenRouter with free models (Qwen, Llama, Nemotron)" 
+              : "Using Hugging Face with Llama 3 model"}
+          </p>
+        </div>
       </div>
 
       {/* Video Section */}
@@ -414,8 +500,7 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
           {/* Error Message */}
           {error && (
             <div className="mt-4 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-200 text-center">
-              <div className="font-semibold mb-1">❌ {error}</div>
-              <div className="text-sm mt-2">Using OpenRouter Free Model: Qwen 3.6 Plus</div>
+              <div className="font-semibold mb-1">⚠️ {error}</div>
             </div>
           )}
         </div>
@@ -431,17 +516,16 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
             <div className="mt-4 w-full bg-gray-700 rounded-full h-2 overflow-hidden">
               <div className="bg-yellow-400 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
             </div>
-            <p className="text-xs text-gray-600 mt-4">Powered by OpenRouter • Qwen 3.6 Plus (Free)</p>
           </div>
         </div>
       )}
 
-      {/* Results - AI Only */}
+      {/* Results */}
       {output.length > 0 && !loading && (
         <div className="max-w-4xl mx-auto px-6 pb-20">
           <div className="text-center mb-8">
             <div className="inline-block bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm mb-4">
-              ✨ Generated by Qwen 3.6 Plus AI (OpenRouter)
+              ✨ AI Generated Ads
             </div>
             <h2 className="text-3xl font-bold">🎯 Your Winning Ads Are Ready</h2>
             <p className="text-gray-400 mt-2">Google Ads compliant • Ready to launch</p>
@@ -541,11 +625,11 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
           
           <div className="bg-blue-900/30 p-6 rounded-xl text-center border border-blue-500/30">
             <p className="text-blue-300">
-              🚀 These ads were generated by Qwen 3.6 Plus AI based on competitor analysis. 
+              🚀 These ads were generated by AI based on competitor analysis. 
               Create multiple variations and let Google's AI find the best performing combinations.
             </p>
             <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={resetToTop}
               className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg text-sm hover:bg-blue-600 transition"
             >
               Analyze Another Competitor →
@@ -556,7 +640,7 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
 
       {/* Footer */}
       <div className="text-center text-gray-500 py-10 border-t border-gray-800">
-        <p>© 2025 - Real Google Ads Intelligence • Powered by OpenRouter Qwen 3.6 Plus (Free)</p>
+        <p>© 2025 - Real Google Ads Intelligence • Powered by AI</p>
         <p className="text-xs mt-2">Better than SEMrush, SpyFu & Ahrefs for real-time Google Ads competitor research</p>
       </div>
     </div>
