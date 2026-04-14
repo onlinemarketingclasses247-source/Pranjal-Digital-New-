@@ -12,7 +12,6 @@ const FreeGoogleAdsCompetitorResearch = () => {
     document.title = "Google Ads Competitor Research Tool";
   }, []);
 
-  // STEP 1: OPEN GOOGLE ADS
   const startProcess = () => {
     if (!company) return alert("Enter competitor");
 
@@ -29,7 +28,7 @@ const FreeGoogleAdsCompetitorResearch = () => {
     setTimeout(() => setStep(3), 4000);
   };
 
-  // ✅ OCR (UNCHANGED AS REQUESTED)
+  // OCR (UNCHANGED)
   useEffect(() => {
     const handlePaste = async (e) => {
       const items = e.clipboardData?.items;
@@ -59,7 +58,7 @@ const FreeGoogleAdsCompetitorResearch = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ✅ AI GENERATION (NO BACKEND)
+  // ✅ AI FUNCTION (WORKING)
   const generateAds = async () => {
     if (!brand) return alert("Enter your brand");
 
@@ -68,24 +67,22 @@ const FreeGoogleAdsCompetitorResearch = () => {
     try {
       const cleanedText = adsText
         .replace(/\n+/g, " ")
-        .slice(0, 3000);
+        .slice(0, 2000);
 
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           Authorization:
-            "Bearer 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",
+            "Bearer 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",
           "Content-Type": "application/json",
-          "HTTP-Referer": "https://pranjaldigital.com",
-          "X-Title": "Ads AI Tool",
         },
         body: JSON.stringify({
-          model: "mistralai/mixtral-8x7b-instruct",
+          model: "mistralai/mistral-7b-instruct",
           messages: [
             {
               role: "user",
               content: `
-You are a senior Google Ads strategist managing $1M/month.
+Act like a senior Google Ads strategist managing high-budget campaigns.
 
 Brand: ${brand}
 Competitor: ${company}
@@ -97,34 +94,43 @@ TASK:
 
 1. Identify:
 - Messaging gaps
-- Weak CTAs
+- Weak positioning
 - Missed opportunities
 
 2. Generate:
 
 HEADLINES (5)
+- High CTR
+- Emotional + ROI focused
+
 DESCRIPTIONS (5)
+- Pain → Solution → CTA
 
 3. KEYWORDS:
-- Exact Match
-- Phrase Match
-- Broad Match
 
-4. Add:
-- 2 creative ad angles
+Exact Match:
+Phrase Match:
+Broad Match:
+
+4. BONUS:
+- 2 unique ad angles
 - 1 aggressive growth strategy
 
-Make output structured, creative, and conversion-focused.
-              `,
-            },
-          ],
+Keep output structured, creative, and conversion-focused.
+`
+            }
+          ]
         }),
       });
 
       const data = await res.json();
+
+      console.log("AI RESPONSE:", data);
+
       const output = data?.choices?.[0]?.message?.content;
 
-      setAdsOutput(output || "No response from AI");
+      setAdsOutput(output || "❌ No response from AI");
+
     } catch (err) {
       console.error(err);
       setAdsOutput("❌ AI failed");
@@ -142,27 +148,26 @@ Make output structured, creative, and conversion-focused.
           Google Ads Competitor Research Tool
         </h1>
 
-        <p className="mt-6 text-gray-400 text-lg leading-relaxed max-w-3xl mx-auto">
+        <p className="mt-6 text-gray-400 text-lg max-w-3xl mx-auto">
           Get real competitor ads directly from Google Ads Transparency Center.
-          Analyze gaps, extract insights, and generate high-converting ad copies
-          and keyword strategies using AI.
+          Analyze gaps, decode strategies, and generate high-converting ads using AI.
         </p>
-
-        {/* VIDEO */}
-        <div className="mt-10 flex justify-center">
-          <div className="aspect-square w-full max-w-[360px] rounded-xl overflow-hidden border border-yellow-500/30 shadow-[0_0_30px_rgba(201,168,76,0.2)]">
-            <div className="w-full h-full flex items-center justify-center bg-black text-gray-500">
-              YouTube Video
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 text-sm text-gray-500">
-          ✔ Real Google Data &nbsp;&nbsp; ✔ AI Powered &nbsp;&nbsp; ✔ No Crawlers
-        </div>
       </div>
 
-      {/* TOOL */}
+      {/* FEATURES */}
+      <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-6">
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          ❌ Outdated tools rely on crawlers → inaccurate data
+        </div>
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          ✅ We use real Google ads → live market insights
+        </div>
+
+      </div>
+
+      {/* INPUT */}
       <div className="max-w-3xl mx-auto mt-10 px-6 text-center">
 
         <input
@@ -217,27 +222,17 @@ Make output structured, creative, and conversion-focused.
       )}
 
       {adsOutput && (
-        <div className="max-w-5xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl space-y-6">
+        <div className="max-w-5xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
 
-          <h2 className="text-2xl font-semibold">AI Ad Strategy Output</h2>
+          <h2 className="text-xl mb-4">AI Ad Strategy Output</h2>
 
-          <div className="bg-[#111827] p-4 rounded-lg">
-            <pre className="whitespace-pre-wrap text-sm text-gray-300">
-              {adsOutput}
-            </pre>
-          </div>
-
-          <button
-            onClick={() => navigator.clipboard.writeText(adsOutput)}
-            className="bg-[#c9a84c] px-4 py-2 rounded"
-          >
-            Copy Full Output
-          </button>
+          <pre className="whitespace-pre-wrap text-sm text-gray-300">
+            {adsOutput}
+          </pre>
 
         </div>
       )}
 
-      {/* FOOTER */}
       <div className="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
         Built by Pranjal Digital • AI Marketing Tools
       </div>
