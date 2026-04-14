@@ -65,72 +65,35 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   }, []);
 
   // ✅ FIXED GEMINI CALL
-  const generateAds = async () => {
-    if (!brand) return alert("Enter your brand");
+ const generateAds = async () => {
+  if (!brand) return alert("Enter your brand");
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBYOmGaUQ3ZAlk3Ft5v9JuWXDp3-DRojA8",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: "user",
-                parts: [
-                  {
-                    text: `You are a Google Ads expert.
+  try {
+    const res = await fetch("/api/generateAds", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        brand,
+        company,
+        adsText,
+      }),
+    });
 
-Rewrite this ad into HIGH CONVERTING Google Ads copy.
+    const data = await res.json();
 
-Brand: ${brand}
-Competitor: ${company}
+    setAdsOutput(data.text || "❌ No response from AI");
 
-Ad:
-${adsText}
+  } catch (error) {
+    console.error(error);
+    setAdsOutput("❌ API failed");
+  }
 
-Return:
-
-HEADLINES (5)
-DESCRIPTIONS (3)
-CTA
-KEYWORDS (10)`
-                  }
-                ]
-              }
-            ],
-            generationConfig: {
-              temperature: 0.7,
-              maxOutputTokens: 800
-            }
-          })
-        }
-      );
-
-      const data = await res.json();
-      console.log("FULL RESPONSE:", data);
-
-      const text =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-      if (!text || text.length < 10) {
-        setAdsOutput("❌ AI failed. Try again.");
-      } else {
-        setAdsOutput(text);
-      }
-
-    } catch (err) {
-      console.error(err);
-      setAdsOutput("❌ API error. Check console.");
-    }
-
-    setLoading(false);
-  };
+  setLoading(false);
+};
 
   return (
     <div className="min-h-screen bg-[#080c14] text-white p-6">
