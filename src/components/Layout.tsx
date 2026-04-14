@@ -9,134 +9,134 @@ const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
 
 function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [location] = useLocation();
+const [scrolled, setScrolled] = useState(false);
+const [menuOpen, setMenuOpen] = useState(false);
+const [location] = useLocation();
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+useEffect(() => {
+const onScroll = () => setScrolled(window.scrollY > 30);
+window.addEventListener('scroll', onScroll);
+return () => window.removeEventListener('scroll', onScroll);
+}, []);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location]);
+useEffect(() => {
+setMenuOpen(false);
+}, [location]);
 
-  return (
-    <>
-      {/* HEADER */}
-<header className={`fixed top-0 left-0 right-0 z-[99999] transition-all duration-300 ${scrolled ? 'bg-[#080c14] shadow-lg' : 'bg-transparent'}`}>        
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+return (
+<>
+{/* HEADER */}
+<header className={`fixed top-0 left-0 right-0 z-[99999] transition-all duration-300 ${scrolled ? 'bg-[#080c14] shadow-lg' : 'bg-transparent'}`}>
+<div className="max-w-7xl mx-auto px-4">
+<div className="flex items-center justify-between h-16 lg:h-20">
 
-            {/* LOGO */}
-            <Link href="/">
-              <span className="text-2xl font-bold">
-                <span className="gold-gradient">Pranjal</span>
-                <span className="text-white"> Digital</span>
-              </span>
-            </Link>
+{/* LOGO */}
+<Link href="/">
+<span className="text-2xl font-bold">
+<span className="gold-gradient">Pranjal</span>
+<span className="text-white"> Digital</span>
+</span>
+</Link>
 
-            {/* DESKTOP NAV */}
-            <nav className="hidden lg:flex items-center gap-8">
+{/* DESKTOP NAV */}
+<nav className="hidden lg:flex items-center gap-8">
 
-              <Link href="/" className="text-white/80 hover:text-[#c9a84c]">Home</Link>
-              <Link href="/services" className="text-white/80 hover:text-[#c9a84c]">Services</Link>
-              <Link href="/about" className="text-white/80 hover:text-[#c9a84c]">About</Link>
-              <Link href="/case-studies" className="text-white/80 hover:text-[#c9a84c]">Case Studies</Link>
+<Link href="/" className="text-white/80 hover:text-[#c9a84c]">Home</Link>
+<Link href="/services" className="text-white/80 hover:text-[#c9a84c]">Services</Link>
+<Link href="/about" className="text-white/80 hover:text-[#c9a84c]">About</Link>
+<Link href="/case-studies" className="text-white/80 hover:text-[#c9a84c]">Case Studies</Link>
 
-              {/* DROPDOWN */}
-              <div className="relative group">
-                <span className="text-white/80 hover:text-[#c9a84c] cursor-pointer">
-                  AI Products ▾
-                </span>
+{/* DROPDOWN */}
+<div className="relative group">
+<span className="text-white/80 hover:text-[#c9a84c] cursor-pointer">
+AI Products ▾
+</span>
 
-                <div className="absolute top-full pt-2 hidden group-hover:block z-[9999]">
-                  <div className="bg-[#0a0f1c] rounded-lg shadow-lg border border-white/10 min-w-[220px]">
-                    <Link
-                      href="/ai-products/free-google-ads-competitor-research"
-                      className="block px-4 py-3 text-sm text-white/80 hover:text-[#c9a84c] hover:bg-white/5"
-                    >
-                      Ads Intelligence Tool
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <Link href="/contact" className="text-white/80 hover:text-[#c9a84c]">Contact</Link>
-            </nav>
-
-            {/* BUTTONS */}
-            <div className="hidden lg:flex gap-3">
-              <Link href="/contact" className="border border-[#c9a84c] text-[#c9a84c] px-4 py-2 rounded-lg">
-                Contact
-              </Link>
-
-              <a href={CALENDLY} target="_blank" className="gold-bg px-4 py-2 rounded-lg text-[#080c14]">
-                Book Meeting
-              </a>
-            </div>
-
-            {/* MOBILE BUTTON */}
-
-
-     <button 
-  className="lg:hidden text-white z-[99999] p-2"
-  onClick={() => setMenuOpen(prev => !prev)}
+<div className="absolute top-full pt-2 hidden group-hover:block z-[9999]">
+<div className="bg-[#0a0f1c] rounded-lg shadow-lg border border-white/10 min-w-[220px]">
+<Link
+href="/ai-products/free-google-ads-competitor-research"
+className="block px-4 py-3 text-sm text-white/80 hover:text-[#c9a84c] hover:bg-white/5"
 >
-  {menuOpen ? <X size={28} /> : <Menu size={28} />}
+Ads Intelligence Tool
+</Link>
+</div>
+</div>
+</div>
+
+<Link href="/contact" className="text-white/80 hover:text-[#c9a84c]">Contact</Link>
+</nav>
+
+{/* BUTTONS */}
+<div className="hidden lg:flex gap-3">
+<Link href="/contact" className="border border-[#c9a84c] text-[#c9a84c] px-4 py-2 rounded-lg">
+Contact
+</Link>
+
+<a href={CALENDLY} target="_blank" className="gold-bg px-4 py-2 rounded-lg text-[#080c14]">
+Book Meeting
+</a>
+</div>
+
+{/* MOBILE BUTTON */}
+
+
+<button
+className="lg:hidden text-white z-[99999] p-2"
+onClick={() => setMenuOpen(!menuOpen)}
+>
+{menuOpen ? <X size={28} /> : <Menu size={28} />}
 </button>
 
-          </div>
-        </div>
+</div>
+</div>
 
-      </header>
+</header>
 
-      {/* MOBILE MENU (OUTSIDE HEADER) */}
-      <AnimatePresence mode="wait">
-        {menuOpen && (
-    
-          <motion.div 
-  className="fixed inset-0 bg-[#020617] z-[9999] p-6 flex flex-col"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
+{/* MOBILE MENU (OUTSIDE HEADER) */}
+<AnimatePresence>
+{menuOpen && (
 
-          {/* ✅ ADD THIS BLOCK */}
-  <div className="flex justify-end">
-    <button onClick={() => setMenuOpen(false)} className="text-white">
-      <X size={32} />
-    </button>
-  </div>
+<motion.div
+className="fixed inset-0 bg-[#020617] z-[2147483647] p-6 flex flex-col"
+initial={{ opacity: 0 }}
+animate={{ opacity: 1 }}
+exit={{ opacity: 0 }}
+>
+
+{/* ✅ ADD THIS BLOCK */}
+<div className="flex justify-end">
+<button onClick={() => setMenuOpen(false)} className="text-white">
+<X size={32} />
+</button>
+</div>
 
 
 
-            
-            <div className="flex flex-col gap-6 mt-16 text-white text-xl font-medium text-center">
 
-              <Link href="/" className="text-white hover:text-[#c9a84c]">Home</Link>
-              <Link href="/services" className="text-white hover:text-[#c9a84c]">Services</Link>
-              <Link href="/about" className="text-white hover:text-[#c9a84c]">About</Link>
-              <Link href="/case-studies" className="text-white hover:text-[#c9a84c]">Case Studies</Link>
+<div className="flex flex-col gap-6 mt-16 text-white text-xl font-medium text-center">
 
-              <Link href="/ai-products/free-google-ads-competitor-research" className="text-white hover:text-[#c9a84c]">
-                Ads Intelligence Tool
-              </Link>
+<Link href="/" className="text-white hover:text-[#c9a84c]">Home</Link>
+<Link href="/services" className="text-white hover:text-[#c9a84c]">Services</Link>
+<Link href="/about" className="text-white hover:text-[#c9a84c]">About</Link>
+<Link href="/case-studies" className="text-white hover:text-[#c9a84c]">Case Studies</Link>
 
-              <Link href="/contact" className="text-white hover:text-[#c9a84c]">Contact</Link>
+<Link href="/ai-products/free-google-ads-competitor-research" className="text-white hover:text-[#c9a84c]">
+Ads Intelligence Tool
+</Link>
 
-              <a href={CALENDLY} className="gold-bg text-center p-3 rounded-lg mt-4 text-[#080c14] font-semibold">
-                Book Meeting
-              </a>
+<Link href="/contact" className="text-white hover:text-[#c9a84c]">Contact</Link>
 
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
+<a href={CALENDLY} className="gold-bg text-center p-3 rounded-lg mt-4 text-[#080c14] font-semibold">
+Book Meeting
+</a>
+
+</div>
+</motion.div>
+)}
+</AnimatePresence>
+</>
+);
 }
 
 
@@ -148,20 +148,20 @@ function Header() {
 
 
 function Footer() {
-  return (
-    <footer className="bg-[#040608] text-center text-white/40 py-6">
-      © 2025 Pranjal Digital
-    </footer>
-  );
+return (
+<footer className="bg-[#040608] text-center text-white/40 py-6">
+© 2025 Pranjal Digital
+</footer>
+);
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen bg-[#020617]">
-      <Header />
-      <main className="pt-20">{children}</main>
-      <Footer />
-      <ChatPopup />
-    </div>
-  );
+return (
+<div className="min-h-screen bg-[#020617]">
+<Header />
+<main className="pt-20">{children}</main>
+<Footer />
+<ChatPopup />
+</div>
+);
 }
