@@ -71,101 +71,123 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   }, []);
 
   const generateAdsWithAI = async (): Promise<AdSuggestion[]> => {
-    const prompt = `You are a Google Ads expert. Create ad copy for MY brand based on competitor analysis.
+    // Clean and prepare the competitor text - remove any brand mentions
+    const cleanCompetitorText = adsText.replace(new RegExp(competitor, 'gi'), '[COMPETITOR]');
+    
+    const prompt = `Create Google Ads copy for brand: "${brand}"
 
-IMPORTANT RULES:
-- NEVER include the competitor name "${competitor}" in any headline or description
-- ONLY use MY brand name: "${brand}"
-- Keep the same value propositions and benefits from competitor ad
-- Rewrite everything for MY brand only
+Based on competitor ad (competitor name removed for privacy):
+"${cleanCompetitorText}"
 
-Competitor ad text: "${adsText}"
+CRITICAL RULES:
+- NEVER mention or reference the competitor name
+- ONLY use the brand name: "${brand}"
+- Keep the same value propositions and benefits
 
-My brand: "${brand}"
+Generate EXACT JSON format (no extra text):
 
-Generate 3 ad types as JSON array (STRICT character limits):
-
-1. RESPONSIVE SEARCH AD:
-   - 10 headlines (MAX 30 characters each)
-   - 3 descriptions (MAX 90 characters each)
-   - 2 display paths (MAX 15 characters each)
-
-2. RESPONSIVE DISPLAY AD:
-   - 5 headlines (MAX 30 characters each)
-   - 1 long headline (MAX 90 characters)
-   - 3 descriptions (MAX 90 characters each)
-   - Business name: "${brand}" (MAX 25 chars)
-
-3. PERFORMANCE MAX AD:
-   - 12 headlines (MAX 30 characters each)
-   - 4 descriptions (MAX 90 characters each)
-   - 1 long headline (MAX 90 characters)
-
-POLICIES (STRICT):
-- NO all caps words
-- NO excessive punctuation (!!, ???)
-- NO clickbait ("Click here", "Limited time")
-- Every word counts toward character limit
-
-Return ONLY valid JSON:
 {
   "ads": [
     {
       "type": "responsive_search",
-      "headlines": ["headline1", "headline2", ...],
-      "descriptions": ["desc1", "desc2", ...],
-      "displayPaths": ["path1", "path2"]
+      "headlines": ["${brand} Best Solution", "Save Time With ${brand}", "${brand} Trusted Platform", "Get More Results", "Try ${brand} Today", "${brand} Pro Grade", "Better Way To Work", "${brand} Experts", "Join ${brand} Now", "${brand} Success"],
+      "descriptions": ["${brand} helps businesses achieve better results. Start your free trial today.", "Join thousands of happy customers using ${brand} for their daily operations."],
+      "displayPaths": ["${brand.toLowerCase()}", "solutions"]
     },
     {
       "type": "responsive_display",
-      "headlines": ["headline1", ...],
-      "longHeadline": "long headline here",
-      "descriptions": ["desc1", ...],
+      "headlines": ["${brand} Platform", "Smart Solution", "Grow With ${brand}", "Trusted Choice", "${brand} Works"],
+      "longHeadline": "${brand} - The smarter way to grow your business",
+      "descriptions": ["Get started with ${brand} today. Easy setup, powerful features.", "${brand} helps you achieve more in less time."],
       "businessName": "${brand}"
     },
     {
       "type": "performance_max",
-      "headlines": ["headline1", ...],
-      "descriptions": ["desc1", ...],
-      "longHeadline": "long headline here"
+      "headlines": ["${brand} Official", "Best ${brand} Deals", "${brand} Pro", "Save With ${brand}", "${brand} Premium", "${brand} Guide", "Learn ${brand}", "${brand} Tips", "${brand} Review", "${brand} Demo", "${brand} Pricing", "Get ${brand}"],
+      "descriptions": ["Discover why ${brand} is the top choice for businesses worldwide.", "Compare ${brand} features and pricing. Get the best value today.", "Join the ${brand} community and start seeing results.", "${brand} offers everything you need to succeed."],
+      "longHeadline": "${brand} - Complete solution for modern businesses"
     }
   ]
-}`;
+}
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2-flash-1.1",
-        messages: [
-          {
-            role: "system",
-            content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names, only the user's brand name. Follow all character limits strictly."
-          },
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 2000,
-      }),
-    });
+CHARACTER LIMITS (STRICT):
+- Headlines: MAX 30 characters each
+- Descriptions: MAX 90 characters each  
+- Display paths: MAX 15 characters each
+- Long headline: MAX 90 characters
+- Business name: MAX 25 characters
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+Return ONLY the JSON object, no other text.`;
+
+    try {
+      console.log("Calling OpenRouter API...");
+      
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": window.location.origin,
+          "X-Title": "Google Ads Competitor Tool"
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2-flash-1.1",
+          messages: [
+            {
+              role: "system",
+              content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names. Follow character limits strictly."
+            },
+            {
+              role: "user",
+              content: prompt
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 1500,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error("API Error Response:", errorData);
+        throw new Error(`API Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("API Response:", data);
+      
+      const content = data.choices?.[0]?.message?.content;
+      
+      if (!content) {
+        throw new Error("No content in response");
+      }
+      
+      // Clean the response - remove any markdown or extra text
+      let cleanContent = content.trim();
+      if (cleanContent.startsWith('```json')) {
+        cleanContent = cleanContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+      }
+      if (cleanContent.startsWith('```')) {
+        cleanContent = cleanContent.replace(/```\n?/g, '');
+      }
+      
+      const parsed = JSON.parse(cleanContent);
+      const ads = parsed.ads || parsed;
+      
+      // Validate and clean the ads
+      return ads.map((ad: any) => ({
+        type: ad.type,
+        headlines: ad.headlines.slice(0, 15).map((h: string) => h.substring(0, 30)),
+        descriptions: ad.descriptions.slice(0, 5).map((d: string) => d.substring(0, 90)),
+        displayPaths: ad.displayPaths?.slice(0, 2).map((p: string) => p.substring(0, 15)),
+        businessName: ad.businessName?.substring(0, 25),
+        longHeadline: ad.longHeadline?.substring(0, 90),
+      }));
+      
+    } catch (error) {
+      console.error("AI generation error:", error);
+      throw error;
     }
-
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content;
-    
-    if (!content) throw new Error("No response from AI");
-    
-    const parsed = JSON.parse(content);
-    return parsed.ads || parsed;
   };
 
   const generateAds = async () => {
@@ -173,7 +195,7 @@ Return ONLY valid JSON:
       setError("Please enter your brand name");
       return;
     }
-    if (!adsText) {
+    if (!adsText || adsText === "Analyzing screenshot...") {
       setError("Please paste a screenshot of competitor ad first");
       return;
     }
@@ -184,10 +206,14 @@ Return ONLY valid JSON:
     
     try {
       const suggestions = await generateAdsWithAI();
-      setOutput(suggestions);
+      if (suggestions && suggestions.length > 0) {
+        setOutput(suggestions);
+      } else {
+        throw new Error("No ads generated");
+      }
     } catch (err) {
-      setError("AI generation failed. Please try again.");
-      console.error(err);
+      console.error("Generation error:", err);
+      setError("Unable to generate ads. Please check your internet connection and try again.");
     } finally {
       setLoading(false);
     }
@@ -311,6 +337,7 @@ Return ONLY valid JSON:
                     onChange={(e) => setAdsText(e.target.value)}
                     className="w-full p-3 rounded-xl text-black text-sm"
                     rows={3}
+                    readOnly
                   />
                 </div>
               )}
