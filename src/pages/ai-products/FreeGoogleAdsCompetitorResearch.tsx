@@ -51,7 +51,7 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
           const file = item.getAsFile();
           if (!file) return;
 
-          setAdsText("Analyzing screenshot...");
+          setAdsText("📸 Analyzing screenshot with OCR...");
 
           try {
             const result = await window.Tesseract.recognize(file, "eng");
@@ -60,7 +60,7 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
             setAdsText(extractedText);
             setStep(2);
           } catch {
-            setAdsText("Could not read image. Please try again.");
+            setAdsText("❌ Could not read image. Please try again.");
           }
         }
       }
@@ -71,40 +71,79 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   }, []);
 
   const generateAdsWithAI = async (): Promise<AdSuggestion[]> => {
-    // Clean and prepare the competitor text - remove any brand mentions
-    const cleanCompetitorText = adsText.replace(new RegExp(competitor, 'gi'), '[COMPETITOR]');
-    
     const prompt = `Create Google Ads copy for brand: "${brand}"
 
-Based on competitor ad (competitor name removed for privacy):
-"${cleanCompetitorText}"
+Based on this competitor ad text:
+"${adsText}"
 
-CRITICAL RULES:
-- NEVER mention or reference the competitor name
+STRICT RULES:
+- NEVER mention or reference the competitor name anywhere
 - ONLY use the brand name: "${brand}"
 - Keep the same value propositions and benefits
+- Follow all Google Ads policies
 
-Generate EXACT JSON format (no extra text):
+Generate EXACT JSON format (no other text, no markdown):
 
 {
   "ads": [
     {
       "type": "responsive_search",
-      "headlines": ["${brand} Best Solution", "Save Time With ${brand}", "${brand} Trusted Platform", "Get More Results", "Try ${brand} Today", "${brand} Pro Grade", "Better Way To Work", "${brand} Experts", "Join ${brand} Now", "${brand} Success"],
-      "descriptions": ["${brand} helps businesses achieve better results. Start your free trial today.", "Join thousands of happy customers using ${brand} for their daily operations."],
-      "displayPaths": ["${brand.toLowerCase()}", "solutions"]
+      "headlines": [
+        "${brand} Best Solution",
+        "Save Time With ${brand}", 
+        "${brand} Trusted Platform",
+        "Get More Results Today",
+        "Try ${brand} Free Now",
+        "${brand} Pro Grade",
+        "Better Way To Work",
+        "${brand} Experts Hub",
+        "Join ${brand} Today",
+        "${brand} Success Kit"
+      ],
+      "descriptions": [
+        "${brand} helps businesses achieve better results. Start your free trial today and see the difference.",
+        "Join thousands of happy customers using ${brand} for their daily operations. Get started now."
+      ],
+      "displayPaths": ["${brand.toLowerCase()}", "go"]
     },
     {
       "type": "responsive_display",
-      "headlines": ["${brand} Platform", "Smart Solution", "Grow With ${brand}", "Trusted Choice", "${brand} Works"],
+      "headlines": [
+        "${brand} Platform",
+        "Smart Solution",
+        "Grow With ${brand}",
+        "Trusted Choice",
+        "${brand} Works"
+      ],
       "longHeadline": "${brand} - The smarter way to grow your business",
-      "descriptions": ["Get started with ${brand} today. Easy setup, powerful features.", "${brand} helps you achieve more in less time."],
+      "descriptions": [
+        "Get started with ${brand} today. Easy setup, powerful features, amazing results.",
+        "${brand} helps you achieve more in less time. Join thousands of successful businesses."
+      ],
       "businessName": "${brand}"
     },
     {
       "type": "performance_max",
-      "headlines": ["${brand} Official", "Best ${brand} Deals", "${brand} Pro", "Save With ${brand}", "${brand} Premium", "${brand} Guide", "Learn ${brand}", "${brand} Tips", "${brand} Review", "${brand} Demo", "${brand} Pricing", "Get ${brand}"],
-      "descriptions": ["Discover why ${brand} is the top choice for businesses worldwide.", "Compare ${brand} features and pricing. Get the best value today.", "Join the ${brand} community and start seeing results.", "${brand} offers everything you need to succeed."],
+      "headlines": [
+        "${brand} Official",
+        "Best ${brand} Deals",
+        "${brand} Pro Grade",
+        "Save With ${brand}",
+        "${brand} Premium",
+        "${brand} Guide",
+        "Learn ${brand}",
+        "${brand} Tips",
+        "${brand} Review",
+        "${brand} Demo",
+        "${brand} Pricing",
+        "Get ${brand} Now"
+      ],
+      "descriptions": [
+        "Discover why ${brand} is the top choice for businesses worldwide. Get started today.",
+        "Compare ${brand} features and pricing. Get the best value for your money.",
+        "Join the ${brand} community and start seeing real results in days.",
+        "${brand} offers everything you need to succeed in one platform."
+      ],
       "longHeadline": "${brand} - Complete solution for modern businesses"
     }
   ]
@@ -112,82 +151,78 @@ Generate EXACT JSON format (no extra text):
 
 CHARACTER LIMITS (STRICT):
 - Headlines: MAX 30 characters each
-- Descriptions: MAX 90 characters each  
+- Descriptions: MAX 90 characters each
 - Display paths: MAX 15 characters each
 - Long headline: MAX 90 characters
 - Business name: MAX 25 characters
 
-Return ONLY the JSON object, no other text.`;
+Return ONLY the JSON object. No explanations, no markdown formatting.`;
 
-    try {
-      console.log("Calling OpenRouter API...");
-      
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": window.location.origin,
-          "X-Title": "Google Ads Competitor Tool"
-        },
-        body: JSON.stringify({
-          model: "google/gemini-2-flash-1.1",
-          messages: [
-            {
-              role: "system",
-              content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names. Follow character limits strictly."
-            },
-            {
-              role: "user",
-              content: prompt
-            }
-          ],
-          temperature: 0.7,
-          max_tokens: 1500,
-        }),
-      });
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": window.location.origin,
+        "X-Title": "Google Ads Competitor Tool"
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2-flash-1.1",
+        messages: [
+          {
+            role: "system",
+            content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names, only the user's brand name. Follow character limits strictly."
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 1500,
+      }),
+    });
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error("API Error Response:", errorData);
-        throw new Error(`API Error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("API Response:", data);
-      
-      const content = data.choices?.[0]?.message?.content;
-      
-      if (!content) {
-        throw new Error("No content in response");
-      }
-      
-      // Clean the response - remove any markdown or extra text
-      let cleanContent = content.trim();
-      if (cleanContent.startsWith('```json')) {
-        cleanContent = cleanContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
-      }
-      if (cleanContent.startsWith('```')) {
-        cleanContent = cleanContent.replace(/```\n?/g, '');
-      }
-      
-      const parsed = JSON.parse(cleanContent);
-      const ads = parsed.ads || parsed;
-      
-      // Validate and clean the ads
-      return ads.map((ad: any) => ({
-        type: ad.type,
-        headlines: ad.headlines.slice(0, 15).map((h: string) => h.substring(0, 30)),
-        descriptions: ad.descriptions.slice(0, 5).map((d: string) => d.substring(0, 90)),
-        displayPaths: ad.displayPaths?.slice(0, 2).map((p: string) => p.substring(0, 15)),
-        businessName: ad.businessName?.substring(0, 25),
-        longHeadline: ad.longHeadline?.substring(0, 90),
-      }));
-      
-    } catch (error) {
-      console.error("AI generation error:", error);
-      throw error;
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("API Error:", response.status, errorData);
+      throw new Error(`AI Service Error: ${response.status}. Please try again.`);
     }
+
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    
+    if (!content) {
+      throw new Error("No response from AI service");
+    }
+    
+    // Clean the response - remove any markdown
+    let cleanContent = content.trim();
+    if (cleanContent.startsWith('```json')) {
+      cleanContent = cleanContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+    }
+    if (cleanContent.startsWith('```')) {
+      cleanContent = cleanContent.replace(/```\n?/g, '');
+    }
+    
+    const parsed = JSON.parse(cleanContent);
+    const ads = parsed.ads || parsed;
+    
+    // Validate and ensure character limits
+    return ads.map((ad: any) => ({
+      type: ad.type,
+      headlines: ad.headlines.slice(0, 15).map((h: string) => {
+        let cleaned = h.replace(new RegExp(competitor, 'gi'), '');
+        return cleaned.substring(0, 30);
+      }),
+      descriptions: ad.descriptions.slice(0, 5).map((d: string) => {
+        let cleaned = d.replace(new RegExp(competitor, 'gi'), '');
+        return cleaned.substring(0, 90);
+      }),
+      displayPaths: ad.displayPaths?.slice(0, 2).map((p: string) => p.substring(0, 15)),
+      businessName: ad.businessName?.substring(0, 25),
+      longHeadline: ad.longHeadline?.substring(0, 90),
+    }));
   };
 
   const generateAds = async () => {
@@ -195,8 +230,8 @@ Return ONLY the JSON object, no other text.`;
       setError("Please enter your brand name");
       return;
     }
-    if (!adsText || adsText === "Analyzing screenshot...") {
-      setError("Please paste a screenshot of competitor ad first");
+    if (!adsText || adsText.includes("Analyzing") || adsText.includes("Could not read")) {
+      setError("Please paste a valid screenshot of competitor ad first");
       return;
     }
     
@@ -211,16 +246,15 @@ Return ONLY the JSON object, no other text.`;
       } else {
         throw new Error("No ads generated");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Generation error:", err);
-      setError("Unable to generate ads. Please check your internet connection and try again.");
+      setError(err.message || "AI generation failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const getCharacterCount = (text: string): number => text.length;
-  const isWithinLimit = (text: string, limit: number): boolean => text.length <= limit;
 
   return (
     <div className="bg-[#080c14] text-white min-h-screen">
@@ -241,8 +275,8 @@ Return ONLY the JSON object, no other text.`;
         <div className="bg-gradient-to-r from-yellow-400/10 to-transparent p-8 rounded-2xl border border-yellow-400/30">
           <div className="aspect-video bg-black rounded-xl flex items-center justify-center border-2 border-yellow-400">
             <div className="text-center">
-              <div className="text-6xl mb-4">📊</div>
-              <p className="text-gray-400">Watch how to outsmart competitors in 2 minutes</p>
+              <div className="text-6xl mb-4">🎥</div>
+              <p className="text-gray-400">Watch demo - 2 minutes to better ads</p>
             </div>
           </div>
         </div>
@@ -329,7 +363,7 @@ Return ONLY the JSON object, no other text.`;
                 <p className="text-sm text-gray-500">Press Ctrl + V to paste here</p>
               </div>
               
-              {adsText && adsText !== "Analyzing screenshot..." && (
+              {adsText && !adsText.includes("Analyzing") && !adsText.includes("Could not read") && (
                 <div className="mt-4">
                   <label className="text-sm text-gray-400 mb-2 block">Extracted Ad Text:</label>
                   <textarea
@@ -339,6 +373,12 @@ Return ONLY the JSON object, no other text.`;
                     rows={3}
                     readOnly
                   />
+                </div>
+              )}
+              
+              {adsText && adsText.includes("Analyzing") && (
+                <div className="mt-4 text-center text-yellow-400">
+                  {adsText}
                 </div>
               )}
             </div>
@@ -360,57 +400,68 @@ Return ONLY the JSON object, no other text.`;
                 disabled={loading}
                 className="mt-4 bg-green-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-600 transition w-full disabled:opacity-50"
               >
-                {loading ? "AI Analyzing & Generating..." : "Generate Winning Ads →"}
+                {loading ? "🤖 AI Generating Your Ads..." : "🚀 Generate Winning Ads →"}
               </button>
             </div>
           )}
 
           {/* Error Message */}
           {error && (
-            <div className="mt-4 p-3 bg-red-900/50 border border-red-500 rounded-lg text-red-200 text-center">
-              {error}
+            <div className="mt-4 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-200 text-center">
+              <div className="font-semibold mb-1">❌ {error}</div>
+              <div className="text-sm mt-2">Please try again or check your internet connection.</div>
             </div>
           )}
         </div>
       </div>
 
-      {/* Results */}
+      {/* Loading State */}
       {loading && (
         <div className="max-w-4xl mx-auto px-6 pb-20 text-center">
           <div className="bg-gray-900/50 rounded-2xl p-12">
             <div className="text-6xl animate-spin mb-4">🤖</div>
             <p className="text-xl text-gray-300">AI is analyzing competitor strategy...</p>
             <p className="text-sm text-gray-500 mt-2">Creating Google-compliant ads for {brand || "your brand"}</p>
+            <div className="mt-4 w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+              <div className="bg-yellow-400 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+            </div>
           </div>
         </div>
       )}
 
+      {/* Results - AI Only */}
       {output.length > 0 && !loading && (
         <div className="max-w-4xl mx-auto px-6 pb-20">
-          <h2 className="text-3xl font-bold text-center mb-8">🎯 Your Winning Ads Are Ready</h2>
+          <div className="text-center mb-8">
+            <div className="inline-block bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm mb-4">
+              ✨ Generated by Google Gemini AI
+            </div>
+            <h2 className="text-3xl font-bold">🎯 Your Winning Ads Are Ready</h2>
+            <p className="text-gray-400 mt-2">Google Ads compliant • Ready to launch</p>
+          </div>
           
           {output.map((ad, idx) => (
-            <div key={idx} className="mb-8 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700">
+            <div key={idx} className="mb-8 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-yellow-400/50 transition">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">
                   {idx + 1}
                 </div>
                 <h3 className="text-xl font-bold">
-                  {ad.type === 'responsive_search' && '🔍 Search Ad'}
-                  {ad.type === 'responsive_display' && '🖼️ Display Ad'}
-                  {ad.type === 'performance_max' && '🚀 Performance Max'}
+                  {ad.type === 'responsive_search' && '🔍 Responsive Search Ad'}
+                  {ad.type === 'responsive_display' && '🖼️ Responsive Display Ad'}
+                  {ad.type === 'performance_max' && '🚀 Performance Max Ad'}
                 </h3>
               </div>
               
               {/* Headlines */}
               <div className="mb-4">
-                <h4 className="text-sm text-gray-400 mb-2">Headlines (max 30 chars):</h4>
+                <h4 className="text-sm text-gray-400 mb-2">Headlines (30 chars max):</h4>
                 <div className="flex flex-wrap gap-2">
                   {ad.headlines.map((headline, i) => (
-                    <div key={i} className={`bg-gray-800 px-3 py-2 rounded-lg text-sm ${!isWithinLimit(headline, 30) ? 'border-2 border-red-500' : ''}`}>
+                    <div key={i} className="bg-gray-800 px-3 py-2 rounded-lg text-sm hover:bg-gray-700 transition">
                       {headline}
-                      <span className={`ml-2 text-xs ${isWithinLimit(headline, 30) ? 'text-green-400' : 'text-red-400'}`}>
-                        {getCharacterCount(headline)}/30
+                      <span className="ml-2 text-xs text-green-400">
+                        ({getCharacterCount(headline)}/30)
                       </span>
                     </div>
                   ))}
@@ -419,13 +470,13 @@ Return ONLY the JSON object, no other text.`;
               
               {/* Descriptions */}
               <div className="mb-4">
-                <h4 className="text-sm text-gray-400 mb-2">Descriptions (max 90 chars):</h4>
+                <h4 className="text-sm text-gray-400 mb-2">Descriptions (90 chars max):</h4>
                 <div className="space-y-2">
                   {ad.descriptions.map((desc, i) => (
-                    <div key={i} className={`bg-gray-800 p-3 rounded-lg ${!isWithinLimit(desc, 90) ? 'border-2 border-red-500' : ''}`}>
+                    <div key={i} className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition">
                       {desc}
-                      <span className={`ml-2 text-xs ${isWithinLimit(desc, 90) ? 'text-green-400' : 'text-red-400'}`}>
-                        {getCharacterCount(desc)}/90
+                      <span className="ml-2 text-xs text-green-400">
+                        ({getCharacterCount(desc)}/90)
                       </span>
                     </div>
                   ))}
@@ -435,11 +486,14 @@ Return ONLY the JSON object, no other text.`;
               {/* Display Paths */}
               {ad.displayPaths && ad.displayPaths.length > 0 && (
                 <div className="mb-4">
-                  <h4 className="text-sm text-gray-400 mb-2">Display URL Paths:</h4>
+                  <h4 className="text-sm text-gray-400 mb-2">Display URL Paths (15 chars max):</h4>
                   <div className="flex gap-2">
                     {ad.displayPaths.map((path, i) => (
                       <div key={i} className="bg-gray-800 px-3 py-1 rounded-lg text-sm">
-                        /{path} ({getCharacterCount(path)}/15)
+                        /{path}
+                        <span className="ml-2 text-xs text-green-400">
+                          ({getCharacterCount(path)}/15)
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -449,9 +503,12 @@ Return ONLY the JSON object, no other text.`;
               {/* Business Name */}
               {ad.businessName && (
                 <div className="mb-4">
-                  <h4 className="text-sm text-gray-400 mb-2">Business Name:</h4>
+                  <h4 className="text-sm text-gray-400 mb-2">Business Name (25 chars max):</h4>
                   <div className="bg-gray-800 px-3 py-1 rounded-lg inline-block">
-                    {ad.businessName} ({getCharacterCount(ad.businessName)}/25)
+                    {ad.businessName}
+                    <span className="ml-2 text-xs text-green-400">
+                      ({getCharacterCount(ad.businessName)}/25)
+                    </span>
                   </div>
                 </div>
               )}
@@ -459,31 +516,41 @@ Return ONLY the JSON object, no other text.`;
               {/* Long Headline */}
               {ad.longHeadline && (
                 <div className="mb-4">
-                  <h4 className="text-sm text-gray-400 mb-2">Long Headline:</h4>
+                  <h4 className="text-sm text-gray-400 mb-2">Long Headline (90 chars max):</h4>
                   <div className="bg-gray-800 p-3 rounded-lg">
-                    {ad.longHeadline} ({getCharacterCount(ad.longHeadline)}/90)
+                    {ad.longHeadline}
+                    <span className="ml-2 text-xs text-green-400">
+                      ({getCharacterCount(ad.longHeadline)}/90)
+                    </span>
                   </div>
                 </div>
               )}
               
               <div className="mt-4 p-3 bg-green-900/30 rounded-lg text-sm text-green-400 border border-green-500/30">
-                ✅ Google Ads Compliant • Ready to launch
+                ✅ Google Ads Compliant • No competitor mentions • Ready to launch
               </div>
             </div>
           ))}
           
           <div className="bg-blue-900/30 p-6 rounded-xl text-center border border-blue-500/30">
             <p className="text-blue-300">
-              🚀 These ads are optimized for Google's AI. Create multiple variations and let Google find the best performing combinations.
+              🚀 These ads were generated by AI based on competitor analysis. 
+              Create multiple variations and let Google's AI find the best performing combinations.
             </p>
+            <button 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg text-sm hover:bg-blue-600 transition"
+            >
+              Analyze Another Competitor →
+            </button>
           </div>
         </div>
       )}
 
       {/* Footer */}
       <div className="text-center text-gray-500 py-10 border-t border-gray-800">
-        <p>© 2025 - Real Google Ads Intelligence • Live Data • AI Powered</p>
-        <p className="text-xs mt-2">Better than SEMrush, SpyFu & Ahrefs for Google Ads competitor research</p>
+        <p>© 2025 - Real Google Ads Intelligence • Powered by Google Gemini AI</p>
+        <p className="text-xs mt-2">Better than SEMrush, SpyFu & Ahrefs for real-time Google Ads competitor research</p>
       </div>
     </div>
   );
