@@ -103,6 +103,17 @@ function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
+
+          {/* ✅ ADD THIS BLOCK */}
+  <div className="flex justify-end">
+    <button onClick={() => setMenuOpen(false)} className="text-white">
+      <X size={32} />
+    </button>
+  </div>
+
+
+
+            
             <div className="flex flex-col gap-6 mt-16 text-white text-xl font-medium text-center">
 
               <Link href="/" className="text-white hover:text-[#c9a84c]">Home</Link>
