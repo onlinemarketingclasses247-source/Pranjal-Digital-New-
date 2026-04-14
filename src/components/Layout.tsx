@@ -83,7 +83,7 @@ function Header() {
 
      <button 
   className="lg:hidden text-white z-[99999] p-2"
-  onClick={() => setMenuOpen(!menuOpen)}
+  onClick={() => setMenuOpen(prev => !prev)}
 >
   {menuOpen ? <X size={28} /> : <Menu size={28} />}
 </button>
@@ -94,11 +94,11 @@ function Header() {
       </header>
 
       {/* MOBILE MENU (OUTSIDE HEADER) */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {menuOpen && (
     
           <motion.div 
-  className="fixed inset-0 bg-[#020617] z-[2147483647] p-6 flex flex-col"
+  className="fixed inset-0 bg-[#020617] z-[9999] p-6 flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
