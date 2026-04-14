@@ -12,6 +12,7 @@ const FreeGoogleAdsCompetitorResearch = () => {
     document.title = "Google Ads Competitor Research Tool";
   }, []);
 
+  // STEP 1: OPEN GOOGLE ADS
   const startProcess = () => {
     if (!company) return alert("Enter competitor");
 
@@ -28,7 +29,7 @@ const FreeGoogleAdsCompetitorResearch = () => {
     setTimeout(() => setStep(3), 4000);
   };
 
-  // ✅ OCR (UNCHANGED)
+  // ✅ OCR (UNCHANGED AS REQUESTED)
   useEffect(() => {
     const handlePaste = async (e) => {
       const items = e.clipboardData?.items;
@@ -58,33 +59,75 @@ const FreeGoogleAdsCompetitorResearch = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ✅ API CALL FIXED
+  // ✅ AI GENERATION (NO BACKEND)
   const generateAds = async () => {
     if (!brand) return alert("Enter your brand");
 
     setLoading(true);
 
     try {
-      const res = await fetch("/api/generateAds", {
+      const cleanedText = adsText
+        .replace(/\n+/g, " ")
+        .slice(0, 3000);
+
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
+          Authorization:
+            "Bearer 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",
           "Content-Type": "application/json",
+          "HTTP-Referer": "https://pranjaldigital.com",
+          "X-Title": "Ads AI Tool",
         },
         body: JSON.stringify({
-          brand,
-          company,
-          adsText,
+          model: "mistralai/mixtral-8x7b-instruct",
+          messages: [
+            {
+              role: "user",
+              content: `
+You are a senior Google Ads strategist managing $1M/month.
+
+Brand: ${brand}
+Competitor: ${company}
+
+Competitor Ads:
+${cleanedText}
+
+TASK:
+
+1. Identify:
+- Messaging gaps
+- Weak CTAs
+- Missed opportunities
+
+2. Generate:
+
+HEADLINES (5)
+DESCRIPTIONS (5)
+
+3. KEYWORDS:
+- Exact Match
+- Phrase Match
+- Broad Match
+
+4. Add:
+- 2 creative ad angles
+- 1 aggressive growth strategy
+
+Make output structured, creative, and conversion-focused.
+              `,
+            },
+          ],
         }),
       });
 
       const data = await res.json();
+      const output = data?.choices?.[0]?.message?.content;
 
-      setAdsOutput(
-        data?.choices?.[0]?.message?.content || "No response from API"
-      );
-    } catch (error) {
-      console.error(error);
-      setAdsOutput("❌ API failed");
+      setAdsOutput(output || "No response from AI");
+    } catch (err) {
+      console.error(err);
+      setAdsOutput("❌ AI failed");
     }
 
     setLoading(false);
@@ -100,12 +143,9 @@ const FreeGoogleAdsCompetitorResearch = () => {
         </h1>
 
         <p className="mt-6 text-gray-400 text-lg leading-relaxed max-w-3xl mx-auto">
-          Stop relying on outdated data from tools like SEMrush, Ahrefs, or SpyFu.
-          <br /><br />
-          This tool pulls <span className="text-white font-semibold">live ads directly from Google Ads Transparency Center</span>,
-          extracts them using image parsing, and uses AI to generate better ads.
-          <br /><br />
-          Get headlines, descriptions, and keyword ideas instantly for your brand.
+          Get real competitor ads directly from Google Ads Transparency Center.
+          Analyze gaps, extract insights, and generate high-converting ad copies
+          and keyword strategies using AI.
         </p>
 
         {/* VIDEO */}
@@ -122,29 +162,8 @@ const FreeGoogleAdsCompetitorResearch = () => {
         </div>
       </div>
 
-      {/* WHAT YOU GET */}
-      <div className="max-w-5xl mx-auto mt-20 px-6 grid md:grid-cols-2 gap-6">
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          🧠 AI Ad Copy
-        </div>
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          🎯 Keyword Suggestions
-        </div>
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          🔍 Competitor Insights
-        </div>
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          ⚡ Faster Campaign Setup
-        </div>
-
-      </div>
-
       {/* TOOL */}
-      <div className="max-w-3xl mx-auto mt-20 px-6 text-center">
+      <div className="max-w-3xl mx-auto mt-10 px-6 text-center">
 
         <input
           value={company}
@@ -198,13 +217,29 @@ const FreeGoogleAdsCompetitorResearch = () => {
       )}
 
       {adsOutput && (
-        <div className="max-w-4xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl px-6">
-          <pre className="whitespace-pre-wrap">{adsOutput}</pre>
+        <div className="max-w-5xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl space-y-6">
+
+          <h2 className="text-2xl font-semibold">AI Ad Strategy Output</h2>
+
+          <div className="bg-[#111827] p-4 rounded-lg">
+            <pre className="whitespace-pre-wrap text-sm text-gray-300">
+              {adsOutput}
+            </pre>
+          </div>
+
+          <button
+            onClick={() => navigator.clipboard.writeText(adsOutput)}
+            className="bg-[#c9a84c] px-4 py-2 rounded"
+          >
+            Copy Full Output
+          </button>
+
         </div>
       )}
 
+      {/* FOOTER */}
       <div className="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
-        Built by Pranjal Digital
+        Built by Pranjal Digital • AI Marketing Tools
       </div>
 
     </div>
