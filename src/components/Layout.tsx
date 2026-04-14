@@ -130,15 +130,6 @@ function Header() {
 
 
 
-</>
-);
-
-
-
-    
-    
-  );
-}
 
 function Footer() {
   return (
