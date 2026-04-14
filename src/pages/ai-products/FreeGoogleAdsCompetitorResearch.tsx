@@ -25,14 +25,22 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   const [error, setError] = useState("");
 
   // ============================================
-  // 🔑 READ ENVIRONMENT VARIABLES (Added in Vercel/Platform)
+  // 🔑 ENVIRONMENT VARIABLES - MUST start with REACT_APP_
   // ============================================
   
-  // These match the variable names you added:
-  // OPEN_ROUTER_KEY and HF_API_KEY
-  const OPENROUTER_API_KEY = process.env.OPEN_ROUTER_KEY || "";
-  const HF_API_KEY = process.env.HF_API_KEY || "";
+  // Your OpenRouter API Key
+  const OPENROUTER_API_KEY = process.env.REACT_APP_OPEN_ROUTER_KEY || "";
   
+  // Your Hugging Face API Key  
+  const HF_API_KEY = process.env.REACT_APP_HF_API_KEY || "";
+  
+  // Fallback hardcoded key (if env vars don't work)
+  const FALLBACK_OPENROUTER_KEY = "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";
+  
+  // Use env var or fallback
+  const activeOpenRouterKey = OPENROUTER_API_KEY || FALLBACK_OPENROUTER_KEY;
+  const activeHfKey = HF_API_KEY || "hf_YOUR_TOKEN_HERE";
+
   // ============================================
   // AI PROVIDER SELECTION
   // ============================================
@@ -42,9 +50,10 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     document.title = "Google Ads Competitor Intelligence - Real-Time Ad Analysis";
     window.scrollTo(0, 0);
     
-    // Debug: Check if keys are loaded (remove in production)
-    console.log("OpenRouter Key loaded:", !!OPENROUTER_API_KEY);
-    console.log("HuggingFace Key loaded:", !!HF_API_KEY);
+    // Debug logging
+    console.log("REACT_APP_OPEN_ROUTER_KEY exists:", !!process.env.REACT_APP_OPEN_ROUTER_KEY);
+    console.log("Using OpenRouter Key:", activeOpenRouterKey ? "Yes (length: " + activeOpenRouterKey.length + ")" : "No");
+    console.log("Using HF Key:", activeHfKey ? "Yes" : "No");
   }, []);
 
   const startProcess = () => {
@@ -131,16 +140,15 @@ Return ONLY valid JSON (no markdown, no extra text):
   };
 
   // ============================================
-  // OPENROUTER API CALL
+  // OPENROUTER API CALL (Using the key)
   // ============================================
   const callOpenRouter = async (prompt: string): Promise<AdSuggestion[]> => {
-    if (!OPENROUTER_API_KEY) {
-      throw new Error("OpenRouter API key not configured. Please add OPEN_ROUTER_KEY in environment variables.");
+    if (!activeOpenRouterKey) {
+      throw new Error("OpenRouter API key not configured. Please add REACT_APP_OPEN_ROUTER_KEY in environment variables.");
     }
     
-    console.log("Using OpenRouter AI...");
+    console.log("Calling OpenRouter API...");
     
-    // List of free OpenRouter models
     const freeModels = [
       "qwen/qwen3.6-plus-preview:free",
       "meta-llama/llama-3.3-70b-instruct:free",
@@ -157,7 +165,7 @@ Return ONLY valid JSON (no markdown, no extra text):
         const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+            "Authorization": `Bearer ${activeOpenRouterKey}`,
             "Content-Type": "application/json",
             "HTTP-Referer": window.location.origin,
             "X-Title": "Google Ads Competitor Tool"
@@ -215,16 +223,16 @@ Return ONLY valid JSON (no markdown, no extra text):
   // HUGGING FACE API CALL
   // ============================================
   const callHuggingFace = async (prompt: string): Promise<AdSuggestion[]> => {
-    if (!HF_API_KEY) {
-      throw new Error("Hugging Face API key not configured. Please add HF_API_KEY in environment variables.");
+    if (!activeHfKey || activeHfKey === "hf_YOUR_TOKEN_HERE") {
+      throw new Error("Hugging Face API key not configured. Please add REACT_APP_HF_API_KEY in environment variables.");
     }
     
-    console.log("Using Hugging Face AI...");
+    console.log("Calling Hugging Face API...");
     
     const response = await fetch("https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${HF_API_KEY}`,
+        "Authorization": `Bearer ${activeHfKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
