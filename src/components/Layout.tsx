@@ -80,7 +80,15 @@ function Header() {
             </div>
 
             {/* MOBILE BUTTON */}
-            <button className="lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+
+            <button 
+  className="lg:hidden" 
+  onClick={() => {
+    console.log("MENU CLICKED");
+    setMenuOpen(!menuOpen);
+  }}
+>   
+            
               {menuOpen ? <X /> : <Menu />}
             </button>
 
@@ -92,8 +100,9 @@ function Header() {
       {/* MOBILE MENU (OUTSIDE HEADER) */}
       <AnimatePresence>
         {menuOpen && (
+    
           <motion.div 
-            className="fixed inset-0 bg-[#020617] z-[999999] p-6 flex flex-col"
+  className="fixed inset-0 bg-[#020617] z-[2147483647] p-6 flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
