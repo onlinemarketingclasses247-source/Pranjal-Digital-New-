@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Menu, X, Linkedin, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Menu, X, Linkedin, Twitter, Youtube, Mail, Phone, MapPin, ExternalLink, Calendar, Award, Users, Globe, DollarSign, TrendingUp, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChatPopup from "@/components/ChatPopup";
 
@@ -124,7 +124,7 @@ Book Meeting
 );
 }
 
-// PREMIUM FOOTER WITH YOUR SOCIAL MEDIA AND LEGAL PAGES
+// PREMIUM FOOTER WITH ALL REQUESTED CHANGES
 function Footer() {
 const currentYear = new Date().getFullYear();
 
@@ -134,6 +134,16 @@ linkedin: "https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consulta
 twitter: "https://x.com/Pranjaldigitl",
 youtube: "https://www.youtube.com/@PranjalSharmaDigital",
 };
+
+// Stats data
+const stats = [
+{ value: "12+", label: "Years Experience", icon: Award },
+{ value: "400+", label: "Happy Clients", icon: Users },
+{ value: "20+", label: "Countries Served", icon: Globe },
+{ value: "5M+", label: "Revenue Generated", icon: DollarSign },
+{ value: "7X", label: "Avg ROAS", icon: TrendingUp },
+{ value: "25+", label: "Team Members", icon: UserPlus },
+];
 
 return (
 <footer className="bg-gradient-to-b from-[#0a0f1c] to-[#040608] text-white border-t border-[#c9a84c]/20 mt-auto">
@@ -218,53 +228,78 @@ return (
     </ul>
   </div>
 
-  {/* AI Products Section */}
+  {/* Marketing Services Section - Ready for future landing pages */}
   <div className="space-y-4">
     <h3 className="text-white font-semibold text-lg relative inline-block">
-      AI Products
+      Marketing Services
       <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#c9a84c]"></span>
     </h3>
     <ul className="space-y-2">
-      <li>
-        <Link 
-          href="/ai-products/free-google-ads-competitor-research" 
-          className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm"
-        >
-          Ads Intelligence Tool
-        </Link>
+      <li className="text-white/30 text-sm italic">
+        Coming soon...
       </li>
     </ul>
   </div>
 
-  {/* Contact Info Section */}
+  {/* Get In Touch Section with Contact Links */}
   <div className="space-y-4">
     <h3 className="text-white font-semibold text-lg relative inline-block">
       Get In Touch
       <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#c9a84c]"></span>
     </h3>
     <ul className="space-y-3">
-      <li className="flex items-start gap-3 text-white/50 text-sm">
+      <li className="flex items-start gap-3">
         <Mail size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <a href="mailto:info@pranjaldigital.com" className="hover:text-[#c9a84c] transition-colors">
+        <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
           info@pranjaldigital.com
         </a>
       </li>
-      <li className="flex items-start gap-3 text-white/50 text-sm">
+      <li className="flex items-start gap-3">
         <Phone size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <a href="tel:+1234567890" className="hover:text-[#c9a84c] transition-colors">
+        <a href="tel:+1234567890" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
           +1 (234) 567-890
         </a>
       </li>
-      <li className="flex items-start gap-3 text-white/50 text-sm">
+      <li className="flex items-start gap-3">
         <MapPin size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <span>Digital Business Center, Global Reach</span>
+        <span className="text-white/50 text-sm">Digital Business Center, Global Reach</span>
+      </li>
+      <li className="flex items-start gap-3 pt-2">
+        <ExternalLink size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+        <Link href="/contact" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+          Contact Us
+        </Link>
+      </li>
+      <li className="flex items-start gap-3">
+        <Calendar size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+        <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+          Book a Meeting
+        </a>
       </li>
     </ul>
   </div>
 </div>
 
-{/* Bottom Bar with Legal Links */}
+{/* Stats Section - Fills empty space */}
 <div className="mt-12 pt-8 border-t border-white/10">
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+    {stats.map((stat, index) => {
+      const Icon = stat.icon;
+      return (
+        <div key={index} className="text-center group">
+          <div className="flex justify-center mb-2">
+            <Icon size={24} className="text-[#c9a84c] group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <div className="text-xl font-bold text-white">{stat.value}</div>
+          <div className="text-xs text-white/40">{stat.label}</div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+{/* Bottom Bar with Legal Links */}
+<div className="mt-8 pt-6 border-t border-white/10">
   <div className="flex flex-col md:flex-row justify-between items-center gap-4">
     <p className="text-white/40 text-sm">
       © {currentYear} Pranjal Digital. All rights reserved.
