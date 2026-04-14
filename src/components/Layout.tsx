@@ -22,7 +22,7 @@ function Header() {
   }, [location]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${scrolled ? 'bg-[#080c14] shadow-lg' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-[999]"> transition-all duration-300 ${scrolled ? 'bg-[#080c14] shadow-lg' : 'bg-transparent'}`}>
       
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -62,7 +62,7 @@ function Header() {
     AI Products ▾
   </span>
 
-  <div className="absolute top-full pt-2 hidden group-hover:block z-50">
+<div className="absolute top-full pt-2 hidden group-hover:block">
     <div className="bg-[#0a0f1c] rounded-lg shadow-lg border border-white/10 min-w-[220px]">
 
       <Link
@@ -116,7 +116,8 @@ function Header() {
       {/* MOBILE MENU */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div className="fixed inset-0 bg-[#080c14] z-[9999] p-6">
+
+      <motion.div className="fixed inset-0 bg-[#080c14] z-[10000] p-6">
 
             <div className="flex flex-col gap-6 mt-10">
 
