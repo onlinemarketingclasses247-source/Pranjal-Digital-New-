@@ -55,20 +55,28 @@ function Header() {
             </Link>
 
             {/* DROPDOWN */}
-            <div className="relative group">
-              <span className="text-white/80 hover:text-[#c9a84c] cursor-pointer">
-                AI Products ▾
-              </span>
 
-              <div className="absolute hidden group-hover:block bg-[#0a0f1c] mt-3 rounded-lg shadow-lg border border-white/10 z-50 min-w-[220px]">
-                <Link
-                  href="/ai-products/free-google-ads-competitor-research"
-                  className="block px-4 py-3 text-sm text-white/80 hover:text-[#c9a84c] hover:bg-white/5"
-                >
-                  Ads Intelligence Tool
-                </Link>
-              </div>
-            </div>
+
+            <div className="relative group">
+  <span className="text-white/80 hover:text-[#c9a84c] cursor-pointer">
+    AI Products ▾
+  </span>
+
+  <div className="absolute top-full pt-2 hidden group-hover:block z-50">
+    <div className="bg-[#0a0f1c] rounded-lg shadow-lg border border-white/10 min-w-[220px]">
+
+      <Link
+        href="/ai-products/free-google-ads-competitor-research"
+        className="block px-4 py-3 text-sm text-white/80 hover:text-[#c9a84c] hover:bg-white/5"
+      >
+        Ads Intelligence Tool
+      </Link>
+
+    </div>
+  </div>
+</div>
+
+            
 
             <Link href="/contact" className="text-white/80 hover:text-[#c9a84c]">
               Contact
