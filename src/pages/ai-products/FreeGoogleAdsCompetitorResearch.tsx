@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-const FreeGoogleAdsCompetitorResearch = () => {
-  const [company, setCompany] = useState("");
-  const [step, setStep] = useState(0);
-  const [adsText, setAdsText] = useState("");
-  const [brand, setBrand] = useState("");
-  const [adsOutput, setAdsOutput] = useState("");
-  const [loading, setLoading] = useState(false);
+declare global {
+  interface Window {
+    Tesseract: any;
+  }
+}
+
+const FreeGoogleAdsCompetitorResearch: React.FC = () => {
+  const [company, setCompany] = useState<string>("");
+  const [step, setStep] = useState<number>(0);
+  const [adsText, setAdsText] = useState<string>("");
+  const [brand, setBrand] = useState<string>("");
+  const [adsOutput, setAdsOutput] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     document.title = "Google Ads Competitor Research Tool";
   }, []);
 
-  // STEP 1
   const startProcess = () => {
     if (!company) return alert("Enter competitor");
 
@@ -30,8 +35,8 @@ const FreeGoogleAdsCompetitorResearch = () => {
 
   // OCR (UNCHANGED)
   useEffect(() => {
-    const handlePaste = async (e) => {
-      const items = e.clipboardData?.items;
+    const handlePaste = async (e: ClipboardEvent) => {
+      const items = (e.clipboardData as DataTransfer)?.items;
       if (!items) return;
 
       for (let item of items) {
@@ -58,63 +63,53 @@ const FreeGoogleAdsCompetitorResearch = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ✅ WORKING AI
+  // ✅ WORKING AI (NO API KEY)
   const generateAds = async () => {
     if (!brand) return alert("Enter your brand");
 
     setLoading(true);
 
     try {
-      const cleanedText = adsText
-        .replace(/\n+/g, " ")
-        .slice(0, 2000);
-
-      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization:
-            "Bearer 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",
-          "Content-Type": "application/json",
-          "HTTP-Referer": "https://pranjaldigital.com",
-          "X-Title": "Ads AI Tool",
-        },
-        body: JSON.stringify({
-          model: "mistralai/mistral-7b-instruct",
-          messages: [
-            {
-              role: "user",
-              content: `
-You are a senior Google Ads strategist.
+      const prompt = `
+You are a Google Ads expert.
 
 Brand: ${brand}
 Competitor: ${company}
 
-Ads:
-${cleanedText}
+Competitor Ads:
+${adsText}
 
-Do:
-1. Identify messaging gaps
-2. Generate 5 Headlines
-3. Generate 5 Descriptions
-4. Keywords:
+Generate:
+1. 5 Headlines
+2. 5 Descriptions
+3. Keywords:
    - Exact
    - Phrase
    - Broad
-5. Give 2 ad angles + 1 strategy
+`;
 
-Keep structured and practical.
-`
-            }
-          ]
-        }),
-      });
+      const res = await fetch(
+        "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            inputs: prompt
+          })
+        }
+      );
 
       const data = await res.json();
+
       console.log("AI RESPONSE:", data);
 
-      const output = data?.choices?.[0]?.message?.content;
+      const output =
+        data?.[0]?.generated_text ||
+        "⚠️ AI loading or rate limited. Try again.";
 
-      setAdsOutput(output || "❌ No response from AI");
+      setAdsOutput(output);
 
     } catch (err) {
       console.error(err);
@@ -129,64 +124,32 @@ Keep structured and practical.
 
       {/* HERO */}
       <div className="max-w-6xl mx-auto text-center py-20 px-6">
-
-        <h1 className="text-5xl font-bold leading-tight">
-          Turn Competitor Ads Into  
-          <span className="text-yellow-400"> High-Converting Campaigns</span>
+        <h1 className="text-5xl font-bold">
+          Turn Competitor Ads Into{" "}
+          <span className="text-yellow-400">
+            High-Converting Campaigns
+          </span>
         </h1>
 
-        <p className="mt-6 text-gray-400 text-lg max-w-3xl mx-auto">
+        <p className="mt-6 text-gray-400 max-w-3xl mx-auto">
           Get real ads directly from Google Ads Transparency Center.
-          Analyze gaps, decode strategies, and generate better ads using AI.
+          Analyze gaps and generate better ads using AI.
         </p>
 
         {/* VIDEO */}
         <div className="mt-12 flex justify-center">
-          <div className="aspect-square w-full max-w-[360px] rounded-xl overflow-hidden border border-yellow-500/30 shadow-[0_0_40px_rgba(201,168,76,0.2)]">
-            <div className="w-full h-full flex items-center justify-center bg-black text-gray-500">
-              YouTube Video
-            </div>
+          <div className="aspect-square w-full max-w-[360px] bg-black rounded-xl flex items-center justify-center text-gray-500">
+            YouTube Video
           </div>
         </div>
 
         <div className="mt-6 text-sm text-gray-500">
-          ✔ Real Data &nbsp;&nbsp; ✔ AI Powered &nbsp;&nbsp; ✔ No Crawlers
+          ✔ Real Data ✔ AI Powered ✔ No Crawlers
         </div>
-
       </div>
 
-      {/* PROBLEM VS ADVANTAGE */}
-      <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-6">
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl border border-red-500/20">
-          ❌ SEO tools rely on outdated crawler data
-        </div>
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl border border-green-500/20">
-          ✅ We use real Google ads data
-        </div>
-
-      </div>
-
-      {/* FEATURES */}
-      <div className="max-w-5xl mx-auto mt-16 px-6 grid md:grid-cols-3 gap-6 text-center">
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          AI Ad Copy
-        </div>
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          Keyword Suggestions
-        </div>
-
-        <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          Competitor Insights
-        </div>
-
-      </div>
-
-      {/* TOOL */}
-      <div className="max-w-3xl mx-auto mt-16 px-6 text-center">
+      {/* INPUT */}
+      <div className="max-w-3xl mx-auto mt-10 px-6 text-center">
 
         <input
           value={company}
@@ -201,12 +164,11 @@ Keep structured and practical.
         >
           Start Analysis
         </button>
-
       </div>
 
       {step >= 3 && (
-        <div className="max-w-2xl mx-auto mt-6 border border-dashed border-gray-600 p-6 text-center rounded-xl">
-          📸 Paste screenshot (Ctrl + V)
+        <div className="max-w-2xl mx-auto mt-6 border p-6 text-center">
+          Paste screenshot (Ctrl + V)
         </div>
       )}
 
@@ -241,21 +203,9 @@ Keep structured and practical.
 
       {adsOutput && (
         <div className="max-w-5xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
-
-          <h2 className="text-xl mb-4">AI Ad Strategy Output</h2>
-
-          <pre className="whitespace-pre-wrap text-sm text-gray-300">
-            {adsOutput}
-          </pre>
-
+          <pre className="whitespace-pre-wrap">{adsOutput}</pre>
         </div>
       )}
-
-      {/* FOOTER */}
-      <div className="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
-        Built by Pranjal Digital • AI Marketing Tools
-      </div>
-
     </div>
   );
 };
