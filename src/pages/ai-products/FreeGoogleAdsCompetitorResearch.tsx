@@ -80,7 +80,7 @@ STRICT RULES:
 - NEVER mention or reference the competitor name anywhere
 - ONLY use the brand name: "${brand}"
 - Keep the same value propositions and benefits
-- Follow all Google Ads policies
+- Follow all Google Ads policies (no all caps, no excessive punctuation, no clickbait)
 
 Generate EXACT JSON format (no other text, no markdown):
 
@@ -90,7 +90,7 @@ Generate EXACT JSON format (no other text, no markdown):
       "type": "responsive_search",
       "headlines": [
         "${brand} Best Solution",
-        "Save Time With ${brand}", 
+        "Save Time With ${brand}",
         "${brand} Trusted Platform",
         "Get More Results Today",
         "Try ${brand} Free Now",
@@ -158,71 +158,77 @@ CHARACTER LIMITS (STRICT):
 
 Return ONLY the JSON object. No explanations, no markdown formatting.`;
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": window.location.origin,
-        "X-Title": "Google Ads Competitor Tool"
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2-flash-1.1",
-        messages: [
-          {
-            role: "system",
-            content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names, only the user's brand name. Follow character limits strictly."
-          },
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 1500,
-      }),
-    });
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": window.location.origin,
+          "X-Title": "Google Ads Competitor Tool"
+        },
+        body: JSON.stringify({
+          model: "qwen/qwen3.6-plus-preview:free",
+          messages: [
+            {
+              role: "system",
+              content: "You are a Google Ads expert. Generate only valid JSON. Never include competitor names, only the user's brand name. Follow character limits strictly."
+            },
+            {
+              role: "user",
+              content: prompt
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 2000,
+        }),
+      });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error("API Error:", response.status, errorData);
-      throw new Error(`AI Service Error: ${response.status}. Please try again.`);
-    }
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error("API Error:", response.status, errorData);
+        throw new Error(`AI Service Error: ${response.status}. Please try again.`);
+      }
 
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content;
-    
-    if (!content) {
-      throw new Error("No response from AI service");
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content;
+      
+      if (!content) {
+        throw new Error("No response from AI service");
+      }
+      
+      // Clean the response - remove any markdown
+      let cleanContent = content.trim();
+      if (cleanContent.startsWith('```json')) {
+        cleanContent = cleanContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+      }
+      if (cleanContent.startsWith('```')) {
+        cleanContent = cleanContent.replace(/```\n?/g, '');
+      }
+      
+      const parsed = JSON.parse(cleanContent);
+      const ads = parsed.ads || parsed;
+      
+      // Validate and ensure character limits, remove any competitor mentions
+      return ads.map((ad: any) => ({
+        type: ad.type,
+        headlines: ad.headlines.slice(0, 15).map((h: string) => {
+          let cleaned = h.replace(new RegExp(competitor, 'gi'), '');
+          return cleaned.substring(0, 30);
+        }),
+        descriptions: ad.descriptions.slice(0, 5).map((d: string) => {
+          let cleaned = d.replace(new RegExp(competitor, 'gi'), '');
+          return cleaned.substring(0, 90);
+        }),
+        displayPaths: ad.displayPaths?.slice(0, 2).map((p: string) => p.substring(0, 15)),
+        businessName: ad.businessName?.substring(0, 25),
+        longHeadline: ad.longHeadline?.substring(0, 90),
+      }));
+      
+    } catch (error) {
+      console.error("AI generation error:", error);
+      throw new Error(`AI Service Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
-    
-    // Clean the response - remove any markdown
-    let cleanContent = content.trim();
-    if (cleanContent.startsWith('```json')) {
-      cleanContent = cleanContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
-    }
-    if (cleanContent.startsWith('```')) {
-      cleanContent = cleanContent.replace(/```\n?/g, '');
-    }
-    
-    const parsed = JSON.parse(cleanContent);
-    const ads = parsed.ads || parsed;
-    
-    // Validate and ensure character limits
-    return ads.map((ad: any) => ({
-      type: ad.type,
-      headlines: ad.headlines.slice(0, 15).map((h: string) => {
-        let cleaned = h.replace(new RegExp(competitor, 'gi'), '');
-        return cleaned.substring(0, 30);
-      }),
-      descriptions: ad.descriptions.slice(0, 5).map((d: string) => {
-        let cleaned = d.replace(new RegExp(competitor, 'gi'), '');
-        return cleaned.substring(0, 90);
-      }),
-      displayPaths: ad.displayPaths?.slice(0, 2).map((p: string) => p.substring(0, 15)),
-      businessName: ad.businessName?.substring(0, 25),
-      longHeadline: ad.longHeadline?.substring(0, 90),
-    }));
   };
 
   const generateAds = async () => {
@@ -409,7 +415,7 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
           {error && (
             <div className="mt-4 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-200 text-center">
               <div className="font-semibold mb-1">❌ {error}</div>
-              <div className="text-sm mt-2">Please try again or check your internet connection.</div>
+              <div className="text-sm mt-2">Using OpenRouter Free Model: Qwen 3.6 Plus</div>
             </div>
           )}
         </div>
@@ -425,6 +431,7 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
             <div className="mt-4 w-full bg-gray-700 rounded-full h-2 overflow-hidden">
               <div className="bg-yellow-400 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
             </div>
+            <p className="text-xs text-gray-600 mt-4">Powered by OpenRouter • Qwen 3.6 Plus (Free)</p>
           </div>
         </div>
       )}
@@ -434,7 +441,7 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
         <div className="max-w-4xl mx-auto px-6 pb-20">
           <div className="text-center mb-8">
             <div className="inline-block bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm mb-4">
-              ✨ Generated by Google Gemini AI
+              ✨ Generated by Qwen 3.6 Plus AI (OpenRouter)
             </div>
             <h2 className="text-3xl font-bold">🎯 Your Winning Ads Are Ready</h2>
             <p className="text-gray-400 mt-2">Google Ads compliant • Ready to launch</p>
@@ -534,7 +541,7 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
           
           <div className="bg-blue-900/30 p-6 rounded-xl text-center border border-blue-500/30">
             <p className="text-blue-300">
-              🚀 These ads were generated by AI based on competitor analysis. 
+              🚀 These ads were generated by Qwen 3.6 Plus AI based on competitor analysis. 
               Create multiple variations and let Google's AI find the best performing combinations.
             </p>
             <button 
@@ -549,7 +556,7 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
 
       {/* Footer */}
       <div className="text-center text-gray-500 py-10 border-t border-gray-800">
-        <p>© 2025 - Real Google Ads Intelligence • Powered by Google Gemini AI</p>
+        <p>© 2025 - Real Google Ads Intelligence • Powered by OpenRouter Qwen 3.6 Plus (Free)</p>
         <p className="text-xs mt-2">Better than SEMrush, SpyFu & Ahrefs for real-time Google Ads competitor research</p>
       </div>
     </div>
