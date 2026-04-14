@@ -113,53 +113,50 @@ function Header() {
       </div>
 
       {/* MOBILE MENU */}
-      <AnimatePresence>
-        {menuOpen && (
-
-  <motion.div className="fixed inset-0 bg-[#020617] z-[999999] p-6 flex flex-col">
-          <div className="flex flex-col gap-6 mt-16 text-white text-xl font-medium text-center">
-
-  <Link href="/" className="text-white hover:text-[#c9a84c] transition">
-    Home
-  </Link>
-
-  <Link href="/services" className="text-white hover:text-[#c9a84c] transition">
-    Services
-  </Link>
-
-  <Link href="/about" className="text-white hover:text-[#c9a84c] transition">
-    About
-  </Link>
-
-  <Link href="/case-studies" className="text-white hover:text-[#c9a84c] transition">
-    Case Studies
-  </Link>
-
-  <Link 
-    href="/ai-products/free-google-ads-competitor-research"
-    className="text-white hover:text-[#c9a84c] transition"
-  >
-    Ads Intelligence Tool
-  </Link>
-
-  <Link href="/contact" className="text-white hover:text-[#c9a84c] transition">
-    Contact
-  </Link>
-
-  <a 
-    href={CALENDLY} 
-    className="gold-bg text-center p-3 rounded-lg mt-4 text-[#080c14] font-semibold"
-  >
-    Book Meeting
-  </a>
-
-</div>
-
-          </motion.div>
-        )}
-      </AnimatePresence>
+     
 
     </header>
+
+<AnimatePresence>
+  {menuOpen && (
+    <motion.div 
+      className="fixed inset-0 bg-[#020617] z-[999999] p-6 flex flex-col"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <div className="flex flex-col gap-6 mt-16 text-white text-xl font-medium text-center">
+
+        <Link href="/" className="text-white hover:text-[#c9a84c]">Home</Link>
+        <Link href="/services" className="text-white hover:text-[#c9a84c]">Services</Link>
+        <Link href="/about" className="text-white hover:text-[#c9a84c]">About</Link>
+        <Link href="/case-studies" className="text-white hover:text-[#c9a84c]">Case Studies</Link>
+
+        <Link 
+          href="/ai-products/free-google-ads-competitor-research"
+          className="text-white hover:text-[#c9a84c]"
+        >
+          Ads Intelligence Tool
+        </Link>
+
+        <Link href="/contact" className="text-white hover:text-[#c9a84c]">Contact</Link>
+
+        <a 
+          href={CALENDLY} 
+          className="gold-bg text-center p-3 rounded-lg mt-4 text-[#080c14] font-semibold"
+        >
+          Book Meeting
+        </a>
+
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+
+
+    
+    
   );
 }
 
