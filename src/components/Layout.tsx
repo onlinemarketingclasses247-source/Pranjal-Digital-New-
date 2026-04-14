@@ -116,9 +116,8 @@ function Header() {
       <AnimatePresence>
         {menuOpen && (
 
-   <motion.div className="fixed inset-0 bg-[#080c14] z-[999999] p-6">
-
-            <div className="flex flex-col gap-6 mt-10">
+  <motion.div className="fixed inset-0 bg-[#020617] z-[999999] p-6 flex flex-col">
+            <div className="flex flex-col gap-6 mt-16 text-white text-xl font-medium">
 
               <Link href="/">Home</Link>
               <Link href="/services">Services</Link>
