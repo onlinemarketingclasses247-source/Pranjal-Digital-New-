@@ -10,14 +10,16 @@ export async function generateAds(prompt) {
 
     const data = await response.json();
 
+    console.log("API RESPONSE:", data); // ✅ DEBUG
+
     if (!response.ok) {
-      throw new Error("API failed");
+      return "API failed";
     }
 
-    return data.choices[0].message.content;
+    return data?.choices?.[0]?.message?.content || "No response";
 
   } catch (error) {
-    console.error(error);
+    console.error("FRONTEND ERROR:", error);
     return "API failed";
   }
 }
