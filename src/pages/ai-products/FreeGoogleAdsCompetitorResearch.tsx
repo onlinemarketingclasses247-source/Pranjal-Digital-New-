@@ -8,33 +8,29 @@ declare global {
 
 const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   const [company, setCompany] = useState("");
-  const [step, setStep] = useState(0);
   const [adsText, setAdsText] = useState("");
   const [brand, setBrand] = useState("");
-  const [adsOutput, setAdsOutput] = useState("");
+  const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
-    document.title = "Free Google Ads Competitor Research";
+    document.title = "Google Ads Competitor Intelligence Tool";
   }, []);
 
   // START PROCESS
   const startProcess = () => {
     if (!company) return alert("Enter competitor");
 
+    window.open(
+      `https://adstransparency.google.com/?region=IN&q=${company}`,
+      "_blank"
+    );
+
     setStep(1);
-
-    setTimeout(() => {
-      window.open(
-        `https://adstransparency.google.com/?region=IN&q=${company}`,
-        "_blank"
-      );
-    }, 1000);
-
-    setTimeout(() => setStep(3), 3000);
   };
 
-  // OCR (UNCHANGED)
+  // OCR
   useEffect(() => {
     const handlePaste = async (e: any) => {
       const items = e.clipboardData?.items;
@@ -45,14 +41,12 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
           const file = item.getAsFile();
           if (!file) return;
 
-          setAdsText("🔍 Reading screenshot...");
+          setAdsText("Reading screenshot...");
 
           try {
-            if (window.Tesseract) {
-              const result = await window.Tesseract.recognize(file, "eng");
-              setAdsText(result?.data?.text || "No text found");
-              setStep(4);
-            }
+            const result = await window.Tesseract.recognize(file, "eng");
+            setAdsText(result?.data?.text || "");
+            setStep(2);
           } catch {
             setAdsText("Error reading image");
           }
@@ -64,105 +58,104 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // 🔥 SMART GENERATION WITH AI-LIKE DELAY
+  // 🔥 SMART AD GENERATION
   const generateAds = () => {
     if (!brand) return alert("Enter your brand");
 
     setLoading(true);
-    setAdsOutput("");
+    setOutput("");
 
-    // ⏱ RANDOM AI THINKING TIME (2–5 sec)
     const delay = 2000 + Math.random() * 3000;
 
     setTimeout(() => {
       try {
-        let text = adsText;
-
-        text = text.replace(/\n+/g, "\n").trim();
-
-        const lines = text
-          .split("\n")
-          .map((l) => l.trim())
-          .filter((l) => l.length > 20 && !l.includes("http"));
-
-        const topLines = lines.slice(0, 5);
-
-        // 🔹 Replace competitor → brand
-        const rewritten = topLines.map((line) => {
-          const regex = new RegExp(company, "gi");
-          return line.replace(regex, brand);
-        });
-
-        // 🔹 Headlines
-        const headlines = rewritten.map((l) =>
-          l.length > 60 ? l.slice(0, 60) + "..." : l
-        );
-
-        // 🔹 Descriptions
-        const descriptions = rewritten.map((l) =>
-          l.length > 90 ? l.slice(0, 90) + "..." : l
-        );
-
-        // 🔹 Keyword extraction (cleaned)
-        const keywordBase = lines
-          .join(" ")
-          .toLowerCase()
+        const clean = adsText
+          .replace(/\n+/g, " ")
           .replace(/[^\w\s]/g, "")
-          .split(" ")
-          .filter(
-            (w) =>
-              w.length > 4 &&
-              ![
-                "with",
-                "from",
-                "this",
-                "that",
-                "your",
-                "have",
-                "more",
-                "their",
-                "about",
-              ].includes(w)
-          );
+          .toLowerCase();
 
-        const uniqueKeywords = [...new Set(keywordBase)].slice(0, 10);
+        const words = clean.split(" ").filter(w => w.length > 4);
 
-        const exact = uniqueKeywords.map((k) => `[${k}]`);
-        const phrase = uniqueKeywords.map((k) => `"${k}"`);
-        const broad = uniqueKeywords;
+        const unique = [...new Set(words)].slice(0, 10);
 
-        const strategy = [
-          `Target competitor: ${company}`,
-          `Position ${brand} as better alternative`,
-          `Use competitor keywords for conquest campaigns`,
-        ];
+        // Replace competitor → brand
+        const baseLine =
+          unique.slice(0, 5).join(" ") || `${company} services`;
 
-        const output = `
-🔥 HEADLINES:
-${headlines.join("\n")}
+        const ad1 = {
+          headlines: [
+            `${brand} vs ${company}`.slice(0, 30),
+            `Better than ${company}`.slice(0, 30),
+            `${brand} delivers ROI`.slice(0, 30),
+            `Switch from ${company}`.slice(0, 30),
+            `${brand} growth system`.slice(0, 30),
+          ],
+          descriptions: [
+            `${brand} helps you outperform ${company} with better results.`.slice(
+              0,
+              90
+            ),
+            `Upgrade your strategy. ${brand} drives real ROI and conversions.`.slice(
+              0,
+              90
+            ),
+          ],
+        };
 
-📝 DESCRIPTIONS:
-${descriptions.join("\n")}
+        const ad2 = {
+          headlines: [
+            `Stop using ${company}`.slice(0, 30),
+            `${brand} is smarter`.slice(0, 30),
+            `Scale faster today`.slice(0, 30),
+            `${brand} vs competitors`.slice(0, 30),
+            `Performance driven ads`.slice(0, 30),
+          ],
+          descriptions: [
+            `Get better conversions than ${company} with ${brand}.`.slice(0, 90),
+            `Data-driven ads. Better CTR, lower CPC, higher ROI.`.slice(0, 90),
+          ],
+        };
 
-🎯 KEYWORDS:
+        // Landing page suggestions
+        const landing = `
+🔥 LANDING PAGE IMPROVEMENTS:
 
-Exact:
-${exact.join(", ")}
-
-Phrase:
-${phrase.join(", ")}
-
-Broad:
-${broad.join(", ")}
-
-⚡ STRATEGY:
-${strategy.join("\n")}
+1. Clear headline with value proposition
+2. Add trust signals (logos, testimonials)
+3. Strong CTA above the fold
+4. Show comparison vs ${company}
+5. Add case studies / results
+6. Use benefit-driven bullets
+7. Improve page speed & mobile UX
 `;
 
-        setAdsOutput(output);
+        const final = `
+==============================
+🚀 AD VARIATION 1
+==============================
+
+HEADLINES:
+${ad1.headlines.join("\n")}
+
+DESCRIPTIONS:
+${ad1.descriptions.join("\n")}
+
+==============================
+🚀 AD VARIATION 2
+==============================
+
+HEADLINES:
+${ad2.headlines.join("\n")}
+
+DESCRIPTIONS:
+${ad2.descriptions.join("\n")}
+
+${landing}
+`;
+
+        setOutput(final);
       } catch (err) {
-        console.error(err);
-        setAdsOutput("❌ AI failed");
+        setOutput("AI failed");
       }
 
       setLoading(false);
@@ -170,13 +163,56 @@ ${strategy.join("\n")}
   };
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-white p-6">
+    <div className="bg-[#080c14] text-white">
 
-      {/* HERO (UNCHANGED STYLE) */}
-      <div className="max-w-3xl mx-auto text-center mt-20">
-        <h1 className="text-4xl font-bold mb-3">
-          Free Google Ads Competitor Research
+      {/* HERO */}
+      <div className="text-center py-20 px-6 max-w-5xl mx-auto">
+        <h1 className="text-5xl font-bold">
+          Turn Competitor Ads Into{" "}
+          <span className="text-yellow-400">High-Converting Campaigns</span>
         </h1>
+
+        <p className="mt-6 text-gray-400">
+          Stop relying on SEMrush, Ahrefs, SpyFu — crawler-based tools give
+          delayed and outdated data.
+        </p>
+
+        <p className="mt-2 text-gray-300">
+          This tool uses real Google Ads data + AI logic to generate better ads.
+        </p>
+
+        {/* VIDEO */}
+        <div className="flex justify-center mt-10">
+          <div className="w-[320px] h-[320px] bg-black rounded-xl border border-yellow-400 flex items-center justify-center text-gray-500">
+            YouTube Video
+          </div>
+        </div>
+      </div>
+
+      {/* PROBLEM VS SOLUTION */}
+      <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto px-6">
+        <div className="p-6 bg-red-900/10 border border-red-500 rounded-xl">
+          ❌ Crawler tools (SEMrush, Ahrefs, SpyFu) show outdated ads
+        </div>
+
+        <div className="p-6 bg-green-900/10 border border-green-500 rounded-xl">
+          ✅ We use real-time Google Ads Transparency data
+        </div>
+      </div>
+
+      {/* PROCESS */}
+      <div className="text-center mt-20">
+        <h2 className="text-2xl font-bold mb-6">How It Works</h2>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto px-6">
+          <div>1. Search competitor</div>
+          <div>2. Paste screenshot</div>
+          <div>3. Generate better ads</div>
+        </div>
+      </div>
+
+      {/* TOOL */}
+      <div className="max-w-2xl mx-auto mt-20 px-6 text-center">
 
         <input
           value={company}
@@ -187,71 +223,63 @@ ${strategy.join("\n")}
 
         <button
           onClick={startProcess}
-          className="mt-4 bg-[#c9a84c] px-6 py-3 rounded-xl"
+          className="mt-4 bg-yellow-500 px-6 py-3 rounded-xl"
         >
           Start Analysis
         </button>
-      </div>
 
-      {step >= 3 && (
-        <div className="max-w-2xl mx-auto mt-6 border p-6 text-center">
-          Paste screenshot (Ctrl + V)
-        </div>
-      )}
+        {step >= 1 && (
+          <div className="mt-6 border p-6 rounded-xl">
+            Paste screenshot (Ctrl + V)
+          </div>
+        )}
 
-      {adsText && (
-        <div className="max-w-2xl mx-auto mt-6">
+        {adsText && (
           <textarea
             value={adsText}
             readOnly
-            className="w-full p-4 text-black"
-            rows={5}
+            className="w-full mt-4 p-4 text-black"
           />
-        </div>
-      )}
+        )}
 
-      {step >= 4 && (
-        <div className="max-w-2xl mx-auto mt-4">
-          <input
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-            placeholder="Enter your brand"
-            className="w-full p-3 text-black"
-          />
+        {step >= 2 && (
+          <>
+            <input
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              placeholder="Enter your brand"
+              className="w-full mt-4 p-3 text-black"
+            />
 
-          <button
-            onClick={generateAds}
-            className="mt-3 bg-green-500 px-6 py-3 w-full"
-          >
-            Generate Ads
-          </button>
-        </div>
-      )}
+            <button
+              onClick={generateAds}
+              className="mt-3 bg-green-500 px-6 py-3 w-full"
+            >
+              Generate Ads
+            </button>
+          </>
+        )}
+      </div>
 
-      {/* 🤖 AI THINKING LOADER */}
+      {/* AI LOADER */}
       {loading && (
-        <div className="max-w-2xl mx-auto mt-10 text-center">
-          <div className="animate-spin text-4xl mb-4">🤖</div>
-          <p className="text-gray-400">AI analyzing competitor ads...</p>
+        <div className="text-center mt-10">
+          <div className="text-4xl animate-spin">🤖</div>
+          <p className="text-gray-400 mt-2">AI analyzing...</p>
         </div>
       )}
 
       {/* OUTPUT */}
-      {adsOutput && !loading && (
+      {output && !loading && (
         <div className="max-w-4xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl">
-          <div className="flex justify-between mb-3">
-            <h3>Ad Copy</h3>
-            <button
-              onClick={() => navigator.clipboard.writeText(adsOutput)}
-              className="bg-[#c9a84c] px-3 py-1"
-            >
-              Copy
-            </button>
-          </div>
-
-          <pre className="whitespace-pre-wrap">{adsOutput}</pre>
+          <pre>{output}</pre>
         </div>
       )}
+
+      {/* FOOTER */}
+      <div className="text-center text-gray-500 mt-20 pb-10">
+        © 2025 Pranjal Digital
+      </div>
     </div>
   );
 };
