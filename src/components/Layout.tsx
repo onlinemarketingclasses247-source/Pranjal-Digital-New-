@@ -26,7 +26,7 @@ function Header() {
   return (
     <>
       {/* HEADER */}
-      <header className={`fixed top-0 left-0 right-0 z-[999] transition-all duration-300 ${scrolled ? 'bg-[#080c14] shadow-lg' : 'bg-transparent'}`}>
+   <header className="fixed top-0 left-0 right-0 z-[99999]" transition-all duration-300 ${scrolled ? 'bg-[#080c14] shadow-lg' : 'bg-transparent'}`}>
         
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16 lg:h-20">
@@ -81,15 +81,23 @@ function Header() {
 
             {/* MOBILE BUTTON */}
 
+
             <button 
-  className="lg:hidden" 
+  className="lg:hidden text-white z-[99999] p-2"
+  style={{ fontSize: "28px" }}
+  onClick={() => {
+    console.log("MENU CLICKED");
+    setMenuOpen(!menuOpen);
+  }}
+>
   onClick={() => {
     console.log("MENU CLICKED");
     setMenuOpen(!menuOpen);
   }}
 >   
             
-              {menuOpen ? <X /> : <Menu />}
+{menuOpen ? <X color="white" size={28} /> : <Menu color="white" size={28} />}          
+            
             </button>
 
           </div>
