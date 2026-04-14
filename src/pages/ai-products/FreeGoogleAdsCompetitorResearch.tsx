@@ -19,15 +19,15 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   const [adsText, setAdsText] = useState("");
   const [brand, setBrand] = useState("");
   const [adsOutput, setAdsOutput] = useState("");
-  const [keywords, setKeywords] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.title = "Free Google Ads Competitor Research | Pranjal Digital";
   }, []);
 
+  // STEP FLOW
   const startProcess = () => {
-    if (!company) return alert("Enter competitor name");
+    if (!company) return alert("Enter competitor");
 
     setStep(1);
 
@@ -61,7 +61,7 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
               setAdsText(result?.data?.text || "No text found");
               setStep(4);
             } else {
-              setAdsText("OCR not loaded");
+              setAdsText("OCR not loaded. Refresh page.");
             }
           } catch {
             setAdsText("Error reading image");
@@ -74,25 +74,16 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // AI
+  // AI GENERATION (FIXED)
   const generateAds = async () => {
     if (!brand) return alert("Enter your brand");
 
     setLoading(true);
 
-    try {
-      const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyBYOmGaUQ3ZAlk3Ft5v9JuWXDp3-DRojA8",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `
-Improve this Google Ad:
+    const prompt = `
+You are a Google Ads expert.
+
+Rewrite the ad professionally.
 
 Brand: ${brand}
 Competitor: ${company}
@@ -100,33 +91,54 @@ Competitor: ${company}
 Ad:
 ${adsText}
 
-Give:
+STRICT FORMAT:
 
-HEADLINES (5)
-DESCRIPTIONS (3)
-CTA
----
-KEYWORDS (10)
-                    `,
-                  },
-                ],
-              },
-            ],
-          }),
+HEADLINES:
+1.
+2.
+3.
+4.
+5.
+
+DESCRIPTIONS:
+1.
+2.
+3.
+
+CTA:
+(one line)
+
+KEYWORDS:
+comma separated list (10 keywords)
+`;
+
+    try {
+      const res = await fetch(
+        "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyBYOmGaUQ3ZAlk3Ft5v9JuWXDp3-DRojA8",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [{ text: prompt }]
+              }
+            ]
+          })
         }
       );
 
       const data = await res.json();
 
       const text =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "No response from AI";
 
-      const parts = text.split("---");
-
-      setAdsOutput(parts[0] || "");
-      setKeywords(parts[1] || "");
+      setAdsOutput(text);
     } catch {
-      setAdsOutput("Error generating ads");
+      setAdsOutput("❌ Error generating ads");
     } finally {
       setLoading(false);
     }
@@ -183,7 +195,7 @@ KEYWORDS (10)
       {/* INSTRUCTIONS */}
       {step >= 2 && (
         <div className="max-w-2xl mx-auto mt-8 text-center text-gray-400">
-          Go to ads library → filter ads → right click → copy image → paste below
+          Step 1: Open ads library → Step 2: Filter ads → Step 3: Copy image → Step 4: Paste below
         </div>
       )}
 
@@ -208,7 +220,7 @@ KEYWORDS (10)
         </div>
       )}
 
-      {/* BRAND */}
+      {/* BRAND INPUT */}
       {step >= 4 && (
         <div className="max-w-2xl mx-auto mt-4">
           <input
@@ -224,21 +236,33 @@ KEYWORDS (10)
           >
             {loading ? "Generating..." : "Generate Ads"}
           </button>
+
+          {adsOutput && (
+            <p className="text-green-400 text-center mt-3">
+              ✅ Ads generated successfully
+            </p>
+          )}
         </div>
       )}
 
       {/* OUTPUT */}
-      {(adsOutput || keywords) && (
-        <div className="max-w-5xl mx-auto mt-10 grid md:grid-cols-2 gap-6">
+      {adsOutput && (
+        <div className="max-w-5xl mx-auto mt-10">
 
           <div className="bg-[#0a0f1c] p-6 rounded-xl">
-            <h3 className="font-bold mb-3">Ad Copy</h3>
-            <pre className="whitespace-pre-wrap text-sm">{adsOutput}</pre>
-          </div>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-bold">Ad Copy</h3>
+              <button
+                onClick={() => navigator.clipboard.writeText(adsOutput)}
+                className="text-sm bg-[#c9a84c] px-3 py-1 rounded"
+              >
+                Copy
+              </button>
+            </div>
 
-          <div className="bg-[#0a0f1c] p-6 rounded-xl">
-            <h3 className="font-bold mb-3">Keywords</h3>
-            <pre className="whitespace-pre-wrap text-sm">{keywords}</pre>
+            <pre className="whitespace-pre-wrap text-sm">
+              {adsOutput}
+            </pre>
           </div>
 
         </div>
