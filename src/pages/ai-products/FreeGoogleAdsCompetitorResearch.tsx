@@ -28,7 +28,7 @@ const FreeGoogleAdsCompetitorResearch = () => {
     setTimeout(() => setStep(3), 4000);
   };
 
-  // ✅ KEEPING YOUR OCR EXACTLY SAME (NOT TOUCHING)
+  // ✅ OCR (UNCHANGED)
   useEffect(() => {
     const handlePaste = async (e) => {
       const items = e.clipboardData?.items;
@@ -58,7 +58,7 @@ const FreeGoogleAdsCompetitorResearch = () => {
     return () => document.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ✅ FIXED OUTPUT
+  // ✅ API CALL FIXED
   const generateAds = async () => {
     if (!brand) return alert("Enter your brand");
 
@@ -95,7 +95,7 @@ const FreeGoogleAdsCompetitorResearch = () => {
 
       {/* HERO */}
       <div className="max-w-6xl mx-auto text-center py-20 px-6">
-        <h1 className="text-5xl font-bold leading-tight">
+        <h1 className="text-5xl font-bold">
           Google Ads Competitor Research Tool
         </h1>
 
@@ -108,9 +108,9 @@ const FreeGoogleAdsCompetitorResearch = () => {
           Get headlines, descriptions, and keyword ideas instantly for your brand.
         </p>
 
-        {/* VIDEO (SQUARE FIXED) */}
+        {/* VIDEO */}
         <div className="mt-10 flex justify-center">
-          <div className="aspect-square w-full max-w-[380px] rounded-xl overflow-hidden border border-gray-700 shadow-xl">
+          <div className="aspect-square w-full max-w-[360px] rounded-xl overflow-hidden border border-yellow-500/30 shadow-[0_0_30px_rgba(201,168,76,0.2)]">
             <div className="w-full h-full flex items-center justify-center bg-black text-gray-500">
               YouTube Video
             </div>
@@ -122,53 +122,25 @@ const FreeGoogleAdsCompetitorResearch = () => {
         </div>
       </div>
 
-      {/* PROBLEM VS ADVANTAGE */}
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 px-6">
+      {/* WHAT YOU GET */}
+      <div className="max-w-5xl mx-auto mt-20 px-6 grid md:grid-cols-2 gap-6">
 
         <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          <h3 className="text-xl font-semibold mb-3">❌ The Problem</h3>
-          <p className="text-gray-400">
-            SEO tools rely on crawlers → outdated & incomplete ad data.
-          </p>
+          🧠 AI Ad Copy
         </div>
 
         <div className="bg-[#0a0f1c] p-6 rounded-xl">
-          <h3 className="text-xl font-semibold mb-3">✅ Our Advantage</h3>
-          <p className="text-gray-400">
-            We pull real-time ads directly from Google Transparency Center.
-          </p>
+          🎯 Keyword Suggestions
         </div>
 
-      </div>
-
-      {/* HOW IT WORKS */}
-      <div className="max-w-5xl mx-auto text-center mt-20 px-6">
-        <h2 className="text-3xl font-bold mb-10">How It Works</h2>
-
-        <div className="grid md:grid-cols-3 gap-6">
-
-          <div className="bg-[#0a0f1c] p-6 rounded-xl">
-            <h4 className="font-semibold mb-2">1. Fetch Ads</h4>
-            <p className="text-gray-400 text-sm">
-              Open Google Ads Transparency Center
-            </p>
-          </div>
-
-          <div className="bg-[#0a0f1c] p-6 rounded-xl">
-            <h4 className="font-semibold mb-2">2. Paste Screenshot</h4>
-            <p className="text-gray-400 text-sm">
-              Extract ad data using OCR
-            </p>
-          </div>
-
-          <div className="bg-[#0a0f1c] p-6 rounded-xl">
-            <h4 className="font-semibold mb-2">3. Generate Ads</h4>
-            <p className="text-gray-400 text-sm">
-              AI creates better ads + keywords
-            </p>
-          </div>
-
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          🔍 Competitor Insights
         </div>
+
+        <div className="bg-[#0a0f1c] p-6 rounded-xl">
+          ⚡ Faster Campaign Setup
+        </div>
+
       </div>
 
       {/* TOOL */}
@@ -227,24 +199,12 @@ const FreeGoogleAdsCompetitorResearch = () => {
 
       {adsOutput && (
         <div className="max-w-4xl mx-auto mt-10 bg-[#0a0f1c] p-6 rounded-xl px-6">
-
-          <div className="flex justify-between mb-3">
-            <h3>Ad Copy</h3>
-            <button
-              onClick={() => navigator.clipboard.writeText(adsOutput)}
-              className="bg-[#c9a84c] px-3 py-1"
-            >
-              Copy
-            </button>
-          </div>
-
           <pre className="whitespace-pre-wrap">{adsOutput}</pre>
         </div>
       )}
 
-      {/* FOOTER */}
       <div className="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
-        Built by Pranjal Digital • AI Marketing Tools
+        Built by Pranjal Digital
       </div>
 
     </div>
