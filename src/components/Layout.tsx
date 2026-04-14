@@ -23,11 +23,9 @@ function Header() {
 
   return (
     <>
-      {/* HEADER */}
       <header className={`fixed top-0 left-0 right-0 z-[99999] transition-all duration-300 ${scrolled ? 'bg-[#080c14] shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* LOGO */}
             <Link href="/">
               <span className="text-2xl font-bold">
                 <span className="gold-gradient">Pranjal</span>
@@ -35,14 +33,12 @@ function Header() {
               </span>
             </Link>
 
-            {/* DESKTOP NAV */}
             <nav className="hidden lg:flex items-center gap-8">
               <Link href="/" className="text-white/80 hover:text-[#c9a84c]">Home</Link>
               <Link href="/services" className="text-white/80 hover:text-[#c9a84c]">Services</Link>
               <Link href="/about" className="text-white/80 hover:text-[#c9a84c]">About</Link>
               <Link href="/case-studies" className="text-white/80 hover:text-[#c9a84c]">Case Studies</Link>
 
-              {/* DROPDOWN */}
               <div className="relative group">
                 <span className="text-white/80 hover:text-[#c9a84c] cursor-pointer">
                   AI Products ▾
@@ -62,7 +58,6 @@ function Header() {
               <Link href="/contact" className="text-white/80 hover:text-[#c9a84c]">Contact</Link>
             </nav>
 
-            {/* BUTTONS */}
             <div className="hidden lg:flex gap-3">
               <Link href="/contact" className="border border-[#c9a84c] text-[#c9a84c] px-4 py-2 rounded-lg">
                 Contact
@@ -72,7 +67,6 @@ function Header() {
               </a>
             </div>
 
-            {/* MOBILE BUTTON */}
             <button
               className="lg:hidden text-white z-[99999] p-2"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -83,7 +77,6 @@ function Header() {
         </div>
       </header>
 
-      {/* MOBILE MENU (OUTSIDE HEADER) */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -117,19 +110,22 @@ function Header() {
   );
 }
 
+// FIXED FOOTER - Now visible!
 function Footer() {
   return (
-    <footer className="bg-[#040608] text-center text-white/40 py-6">
-      © 2025 Pranjal Digital
+    <footer className="bg-[#0a0f1c] border-t border-[#c9a84c]/20 text-center py-8 mt-auto">
+      <div className="max-w-7xl mx-auto px-4">
+        <p className="text-white/60">© 2025 Pranjal Digital. All rights reserved.</p>
+      </div>
     </footer>
   );
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#020617]">
+    <div className="min-h-screen bg-[#020617] flex flex-col">
       <Header />
-      <main className="pt-20">{children}</main>
+      <main className="pt-20 flex-grow">{children}</main>
       <Footer />
       <ChatPopup />
     </div>
