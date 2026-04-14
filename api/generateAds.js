@@ -6,6 +6,14 @@ export default async function handler(req, res) {
   try {
     const { brand, company, adsText } = req.body;
 
+    console.log("INPUT:", brand, company, adsText);
+
+    if (!adsText || adsText.length < 10) {
+      return res.status(200).json({
+        text: "❌ No ad content detected. Paste screenshot properly.",
+      });
+    }
+
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBYOmGaUQ3ZAlk3Ft5v9JuWXDp3-DRojA8",
       {
@@ -19,7 +27,9 @@ export default async function handler(req, res) {
               role: "user",
               parts: [
                 {
-                  text: `Rewrite this Google ad:
+                  text: `You are a Google Ads expert.
+
+Rewrite this into HIGH CONVERTING Google Ads:
 
 Brand: ${brand}
 Competitor: ${company}
@@ -27,28 +37,50 @@ Competitor: ${company}
 Ad:
 ${adsText}
 
-Give:
-- 5 Headlines
-- 3 Descriptions
-- 1 CTA
-- 10 Keywords`,
+Return:
+
+HEADLINES:
+- 5 options
+
+DESCRIPTIONS:
+- 3 options
+
+CTA:
+- 1 strong CTA
+
+KEYWORDS:
+- 10 keywords`,
                 },
               ],
             },
           ],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 800,
+          },
         }),
       }
     );
 
     const data = await response.json();
 
+    console.log("GEMINI RAW:", JSON.stringify(data));
+
     const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "❌ No response from AI";
+      data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!text) {
+      return res.status(200).json({
+        text: "❌ Gemini returned empty response",
+      });
+    }
 
     return res.status(200).json({ text });
 
   } catch (error) {
-    return res.status(500).json({ text: "❌ Backend error" });
+    console.error("ERROR:", error);
+    return res.status(500).json({
+      text: "❌ Backend error",
+    });
   }
 }
