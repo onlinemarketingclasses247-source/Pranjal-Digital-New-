@@ -65,7 +65,7 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
   }, []);
 
   // ✅ FIXED GEMINI CALL
- const generateAds = async () => {
+const generateAds = async () => {
   if (!brand) return alert("Enter your brand");
 
   setLoading(true);
@@ -85,7 +85,7 @@ const FreeGoogleAdsCompetitorResearch: React.FC = () => {
 
     const data = await res.json();
 
-    setAdsOutput(data.text || "❌ No response from AI");
+    setAdsOutput(data.text);
 
   } catch (error) {
     console.error(error);
