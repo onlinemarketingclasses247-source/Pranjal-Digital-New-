@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Menu, X, Linkedin, Twitter, Youtube, Mail, Phone, MapPin, ExternalLink, Calendar, Award, Users, Globe, DollarSign, TrendingUp, UserPlus } from 'lucide-react';
+import { Menu, X, Linkedin, Twitter, Youtube, Mail, ExternalLink, Calendar, Award, Users, Globe, DollarSign, TrendingUp, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChatPopup from "@/components/ChatPopup";
 
@@ -145,6 +145,15 @@ const stats = [
 { value: "25+", label: "Team Members", icon: UserPlus },
 ];
 
+// Marketing Services
+const marketingServices = [
+{ name: "IT Services Marketing", path: "it-services-marketing" },
+{ name: "SaaS Marketing Services", path: "saas-marketing-services" },
+{ name: "Ecommerce Marketing Services", path: "ecommerce-marketing-services" },
+{ name: "Healthcare Marketing Services", path: "healthcare-marketing-services" },
+{ name: "Dental Marketing Services", path: "dental-marketing-services" },
+];
+
 return (
 <footer className="bg-gradient-to-b from-[#0a0f1c] to-[#040608] text-white border-t border-[#c9a84c]/20 mt-auto">
 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -228,16 +237,23 @@ return (
     </ul>
   </div>
 
-  {/* Marketing Services Section - Ready for future landing pages */}
+  {/* Marketing Services Section */}
   <div className="space-y-4">
     <h3 className="text-white font-semibold text-lg relative inline-block">
       Marketing Services
       <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#c9a84c]"></span>
     </h3>
     <ul className="space-y-2">
-      <li className="text-white/30 text-sm italic">
-        Coming soon...
-      </li>
+      {marketingServices.map((service, index) => (
+        <li key={index}>
+          <Link 
+            href={`/${service.path}`} 
+            className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm"
+          >
+            {service.name}
+          </Link>
+        </li>
+      ))}
     </ul>
   </div>
 
@@ -253,16 +269,6 @@ return (
         <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
           info@pranjaldigital.com
         </a>
-      </li>
-      <li className="flex items-start gap-3">
-        <Phone size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <a href="tel:+1234567890" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
-          +1 (234) 567-890
-        </a>
-      </li>
-      <li className="flex items-start gap-3">
-        <MapPin size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <span className="text-white/50 text-sm">Digital Business Center, Global Reach</span>
       </li>
       <li className="flex items-start gap-3 pt-2">
         <ExternalLink size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
