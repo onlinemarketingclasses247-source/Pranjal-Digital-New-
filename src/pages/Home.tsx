@@ -327,7 +327,7 @@ return (
 <div className="bg-[#080c14] overflow-hidden">
 
 {/* ========== HERO SECTION ========== */}
-<section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden pb-10 md:pb-24">
+<section className="relative min-h-[90vh] flex flex-col justify-start overflow-hidden pb-6 md:pb-12">
   
 <div className="absolute inset-0 pointer-events-none">
 <div className="absolute inset-0 bg-gradient-to-br from-[#080c14] via-[#0a0f1c] to-[#080c14]" />
@@ -343,12 +343,12 @@ className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-[#c
 />
 </div>
 
-<div className="relative z-10 max-w-6xl mx-auto px-4 pt-20 md:pt-28 text-center">
+<div className="relative z-10 max-w-6xl mx-auto px-4 pt-12 md:pt-20 lg:pt-28 text-center">
 <motion.div
 initial={{ opacity: 0, y: -20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.6 }}
-className="inline-flex items-center gap-3 bg-gradient-to-r from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/30 rounded-full px-5 py-2 mb-8"
+className="inline-flex items-center gap-3 bg-gradient-to-r from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/30 rounded-full px-5 py-2 mb-6 md:mb-8"
 >
 <motion.span
 animate={{ scale: [1, 1.2, 1] }}
@@ -362,7 +362,7 @@ className="w-2.5 h-2.5 rounded-full bg-[#c9a84c]"
 initial={{ opacity: 0, y: 30 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.7 }}
-className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] mb-6"
+className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold leading-[1.2] sm:leading-[1.1] mb-4 md:mb-6"
 >
 <span className="text-white">12+ Years of Making</span>
 <br />
@@ -377,7 +377,7 @@ Digital Magic Happen
 initial={{ opacity: 0, y: 20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.7, delay: 0.2 }}
-className="text-white/60 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed"
+className="text-white/60 text-base md:text-xl max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed px-4"
 >
 I have helped 400+ businesses grow online across 20+ countries — from startups to enterprises.
 Generated millions in revenue, managed millions in ad spend, and delivered 6X-7X ROAS consistently.
@@ -387,20 +387,20 @@ Generated millions in revenue, managed millions in ad spend, and delivered 6X-7X
 initial={{ opacity: 0, y: 20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ duration: 0.7, delay: 0.4 }}
-className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
+className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-4 md:mt-8"
 >
 <a
 href={CALENDLY}
 target="_blank"
 rel="noopener noreferrer"
-className="group inline-flex whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
+className="group inline-flex whitespace-nowrap items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-auto text-sm sm:text-base"
 >
 <span className="relative z-10 flex items-center gap-2">
-Book Free Strategy Call <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-2" />
+Book Free Strategy Call <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-2" />
 </span>
 </a>
 <Link href="/services">
-  <a className="inline-flex whitespace-nowrap items-center justify-center border border-white/40 bg-white/5 px-6 sm:px-8 py-4 rounded-xl text-white font-semibold transition-all duration-300 hover:border-[#c9a84c]/60 hover:text-[#c9a84c]" >
+  <a className="inline-flex whitespace-nowrap items-center justify-center border border-white/40 bg-white/5 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-white font-semibold transition-all duration-300 hover:border-[#c9a84c]/60 hover:text-[#c9a84c] w-full sm:w-auto text-sm sm:text-base" >
 Explore Services
 </a>
 </Link>
@@ -410,36 +410,39 @@ Explore Services
 initial={{ opacity: 0 }}
 animate={{ opacity: 1 }}
 transition={{ delay: 1.5 }}
-
+className="mt-8 md:mt-12"
 >
 <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-<ChevronDown size={28} className="text-white/30" />
+<ChevronDown size={24} className="text-white/30 mx-auto" />
 </motion.div>
 </motion.div>
 </div>
 </section>
 
-<StatsDesktop />
-<StatsMobile />
+{/* FIXED: Stats section with reduced top margin */}
+<div className="-mt-6 md:-mt-8">
+  <StatsDesktop />
+  <StatsMobile />
+</div>
 
 
 {/* ========== GLOBAL PRESENCE SECTION ========== */}
-<section className="py-16 bg-gradient-to-b from-[#040608] to-[#080c14]">
+<section className="py-12 md:py-16 bg-gradient-to-b from-[#040608] to-[#080c14]">
 <div className="max-w-7xl mx-auto px-4">
 <motion.div
 initial={{ opacity: 0, y: 30 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
-className="text-center mb-8"
+className="text-center mb-6 md:mb-8"
 >
 <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
 <Globe size={14} className="text-[#c9a84c]" />
 <span className="text-[#c9a84c] text-xs font-medium">GLOBAL PRESENCE</span>
 </div>
-<h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+<h2 className="text-2xl md:text-4xl font-bold text-white mb-3">
 Working With Clients Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 20+ Countries</span>
 </h2>
-<p className="text-white/60 text-base max-w-3xl mx-auto leading-relaxed">
+<p className="text-white/60 text-sm md:text-base max-w-3xl mx-auto leading-relaxed px-4">
 From United States and Canada to United Kingdom, Germany, France, and Netherlands in Europe.
 From India and Singapore to Japan and Australia in Asia-Pacific.
 I have helped businesses succeed across different markets, cultures, and consumer behaviors.
@@ -572,9 +575,9 @@ Proven Global Experience
 initial={{ opacity: 0, y: 20 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
-className="text-center mt-8"
+className="text-center mt-6 md:mt-8"
 >
-<p className="text-white/40 text-sm">
+<p className="text-white/40 text-xs md:text-sm">
 🌍 United States • Canada • United Kingdom • Germany • France • Netherlands • Sweden • India • Singapore • Japan • Australia • UAE
 </p>
 </motion.div>
@@ -582,7 +585,7 @@ className="text-center mt-8"
 </section>
 
 {/* ========== VIDEO SECTION ========== */}
-<section className="pt-12 pb-6 md:pt-16 md:pb-8 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
+<section className="pt-8 pb-6 md:pt-16 md:pb-8 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
 
 <div className="max-w-6xl mx-auto px-4">
 <div className="flex flex-col lg:flex-row gap-8 items-center">
@@ -596,27 +599,27 @@ className="lg:w-1/2 text-center lg:text-left"
 <Play size={14} className="text-[#c9a84c]" />
 <span className="text-[#c9a84c] text-xs font-medium">WATCH MY STORY</span>
 </div>
-<h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+<h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
 Why I Started Pranjal Digital?
 </h2>
-<p className="text-white/60 text-lg mb-6 leading-relaxed">
+<p className="text-white/60 text-base md:text-lg mb-6 leading-relaxed">
 I saw too many businesses getting ripped off by agencies. Paying huge fees for fancy reports but getting zero results.
 </p>
-<p className="text-white/60 mb-6 leading-relaxed">
+<p className="text-white/60 mb-6 leading-relaxed text-sm md:text-base">
 So I decided to do things differently. Direct access to an expert. Transparent pricing via calculator. Results that actually matter.
 </p>
 <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
 <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2">
-<CheckCircle2 size={16} className="text-[#c9a84c]" />
-<span className="text-white/70 text-sm">12+ Years Experience</span>
+<CheckCircle2 size={14} className="text-[#c9a84c]" />
+<span className="text-white/70 text-xs md:text-sm">12+ Years Experience</span>
 </div>
 <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2">
-<CheckCircle2 size={16} className="text-[#c9a84c]" />
-<span className="text-white/70 text-sm">400+ Happy Clients</span>
+<CheckCircle2 size={14} className="text-[#c9a84c]" />
+<span className="text-white/70 text-xs md:text-sm">400+ Happy Clients</span>
 </div>
 <div className="flex items-center gap-2 bg-white/5 rounded-full px-4 py-2">
-<CheckCircle2 size={16} className="text-[#c9a84c]" />
-<span className="text-white/70 text-sm">20+ Countries</span>
+<CheckCircle2 size={14} className="text-[#c9a84c]" />
+<span className="text-white/70 text-xs md:text-sm">20+ Countries</span>
 </div>
 </div>
 </motion.div>
@@ -627,7 +630,7 @@ whileInView={{ opacity: 1, x: 0 }}
 viewport={{ once: true }}
 className="lg:w-1/2"
 >
-<div className="border border-white/10 rounded-2xl overflow-hidden aspect-video w-full -mb-10 md:-mb-16">
+<div className="border border-white/10 rounded-2xl overflow-hidden aspect-video w-full">
 
 <iframe
 className="w-full h-full"
@@ -652,25 +655,25 @@ allowFullScreen
 <CostCalculator />
 
 {/* ========== COMPLETE DIGITAL MARKETING ECOSYSTEM ========== */}
-<section className="py-24 bg-gradient-to-b from-[#080c14] to-[#040608]">
+<section className="py-16 md:py-24 bg-gradient-to-b from-[#080c14] to-[#040608]">
 <div className="max-w-7xl mx-auto px-4">
 <motion.div
 initial={{ opacity: 0, y: 30 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
-className="text-center mb-16"
+className="text-center mb-12 md:mb-16"
 >
 <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
 <Layers size={14} className="text-[#c9a84c]" />
 <span className="text-[#c9a84c] text-xs font-medium">COMPLETE ECOSYSTEM</span>
 </div>
-<h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+<h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
 Complete Digital<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Marketing Ecosystem</span>
 </h2>
-<p className="text-white/60 text-lg max-w-3xl mx-auto mb-6">
+<p className="text-white/60 text-base md:text-lg max-w-3xl mx-auto mb-6 px-4">
 SEO • AEO • GEO • Performance Marketing • Content • CRO • LinkedIn Sales Navigator • AI-Powered Everything
 </p>
-<p className="text-white/50 text-base max-w-3xl mx-auto leading-relaxed">
+<p className="text-white/50 text-sm md:text-base max-w-3xl mx-auto leading-relaxed px-4">
 I don't just do SEO. I optimize for Answer Engines (Alexa, Siri) AND Generative Engines (ChatGPT, Perplexity).
 I don't just run ads. I use Google PMax, Meta Advantage+, and TikTok's AI to maximize every dollar.
 I don't just build funnels. I automate them with AI — chatbots, personalized sequences, lead scoring.
@@ -678,7 +681,7 @@ This is not your father's digital marketing. This is marketing for 2026 and beyo
 </p>
 </motion.div>
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
 {aiServices.map((service, i) => (
 <motion.div
 key={service.name}
@@ -687,21 +690,21 @@ whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
 transition={{ delay: i * 0.1 }}
 whileHover={{ y: -8, scale: 1.02 }}
-className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/40 transition-all duration-300 group"
+className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 rounded-2xl p-5 md:p-6 hover:border-[#c9a84c]/40 transition-all duration-300 group"
 >
-<div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-<service.icon size={28} className="text-[#c9a84c]" />
+<div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+<service.icon size={24} className="text-[#c9a84c]" />
 </div>
-<h3 className="text-xl font-bold text-white mb-3">{service.name}</h3>
-<p className="text-white/60 text-sm leading-relaxed mb-4">{service.desc}</p>
-<div className="flex flex-wrap gap-2 mb-4">
+<h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">{service.name}</h3>
+<p className="text-white/60 text-xs md:text-sm leading-relaxed mb-3 md:mb-4">{service.desc}</p>
+<div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4">
 {service.features.map((feature, idx) => (
-<span key={idx} className="text-[10px] bg-white/5 border border-white/10 rounded-full px-2 py-1 text-white/50">
+<span key={idx} className="text-[9px] md:text-[10px] bg-white/5 border border-white/10 rounded-full px-1.5 py-0.5 md:px-2 md:py-1 text-white/50">
 {feature}
 </span>
 ))}
 </div>
-<p className="text-white/40 text-xs leading-relaxed border-t border-white/10 pt-3 mt-2">
+<p className="text-white/40 text-[10px] md:text-xs leading-relaxed border-t border-white/10 pt-2 md:pt-3 mt-1 md:mt-2">
 {service.detailedDesc}
 </p>
 </motion.div>
@@ -712,11 +715,11 @@ className="bg-gradient-to-br from-[#0a0f1c] to-[#040608] border border-white/10 
 initial={{ opacity: 0, y: 20 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
-className="text-center mt-12"
+className="text-center mt-8 md:mt-12"
 >
 <Link href="/services">
-<a className="inline-flex items-center gap-3 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-8 py-4 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-[#c9a84c]/30">
-View All 14+ Detailed Services <ArrowRight size={18} />
+<a className="inline-flex items-center gap-2 md:gap-3 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-6 md:px-8 py-3 md:py-4 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-[#c9a84c]/30 text-sm md:text-base">
+View All 14+ Detailed Services <ArrowRight size={16} />
 </a>
 </Link>
 </motion.div>
@@ -724,22 +727,22 @@ View All 14+ Detailed Services <ArrowRight size={18} />
 </section>
 
 {/* ========== INDUSTRIES SECTION - 25+ INDUSTRIES ========== */}
-<section className="py-24 bg-[#040608]">
+<section className="py-16 md:py-24 bg-[#040608]">
 <div className="max-w-7xl mx-auto px-4">
 <motion.div
 initial={{ opacity: 0, y: 30 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
-className="text-center mb-12"
+className="text-center mb-8 md:mb-12"
 >
 <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
 <Briefcase size={14} className="text-[#c9a84c]" />
 <span className="text-[#c9a84c] text-xs font-medium">INDUSTRY EXPERTISE</span>
 </div>
-<h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+<h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
 Worked Across<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> 25+ Industries</span>
 </h2>
-<p className="text-white/60 text-lg max-w-2xl mx-auto">
+<p className="text-white/60 text-sm md:text-lg max-w-2xl mx-auto px-4">
 Each industry has its own playbook. And I have mastered most of them.
 From SaaS to Manufacturing, Healthcare to Gaming — I bring best practices from every sector.
 </p>
@@ -747,7 +750,7 @@ From SaaS to Manufacturing, Healthcare to Gaming — I bring best practices from
 
 <div className="flex flex-col lg:flex-row gap-6">
 <div className="lg:w-2/5">
-<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2 md:gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
 {industriesData.map((industry, i) => (
 <motion.button
 key={industry.name}
@@ -756,21 +759,21 @@ whileInView={{ opacity: 1, x: 0 }}
 viewport={{ once: true }}
 transition={{ delay: i * 0.02 }}
 onClick={() => setSelectedIndustry(industry)}
-className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-300 ${
+className={`flex items-center gap-3 p-2 md:p-3 rounded-xl transition-all duration-300 ${
 selectedIndustry?.name === industry.name
 ? `bg-gradient-to-r ${industry.color} border border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/10`
 : 'bg-[#0a0f1c] border border-white/10 hover:border-[#c9a84c]/30'
 }`}
 >
-<div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-<industry.icon size={18} className="text-[#c9a84c]" />
+<div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+<industry.icon size={16} className="text-[#c9a84c]" />
 </div>
 <div className="text-left flex-1">
-<div className="text-white font-medium text-sm">{industry.name}</div>
-<div className="text-white/40 text-xs">{industry.projects}+ projects</div>
+<div className="text-white font-medium text-xs md:text-sm">{industry.name}</div>
+<div className="text-white/40 text-[10px] md:text-xs">{industry.projects}+ projects</div>
 </div>
 {selectedIndustry?.name === industry.name && (
-<CheckCircle2 size={14} className="text-[#c9a84c]" />
+<CheckCircle2 size={12} className="text-[#c9a84c]" />
 )}
 </motion.button>
 ))}
@@ -782,43 +785,43 @@ key={selectedIndustry?.name}
 initial={{ opacity: 0, x: 30 }}
 animate={{ opacity: 1, x: 0 }}
 transition={{ duration: 0.3 }}
-className="lg:w-3/5 bg-gradient-to-br from-[#0a0f1c] to-[#040608] rounded-2xl border border-white/10 p-6 md:p-8"
+className="lg:w-3/5 bg-gradient-to-br from-[#0a0f1c] to-[#040608] rounded-2xl border border-white/10 p-5 md:p-8"
 >
 {selectedIndustry && (
 <>
 <div className="flex items-center gap-4 mb-6 flex-wrap">
-<div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${selectedIndustry.color} flex items-center justify-center`}>
-<selectedIndustry.icon size={32} className="text-[#c9a84c]" />
+<div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${selectedIndustry.color} flex items-center justify-center`}>
+<selectedIndustry.icon size={24} className="text-[#c9a84c]" />
 </div>
 <div>
-<h3 className="text-2xl md:text-3xl font-bold text-white">{selectedIndustry.name}</h3>
-<p className="text-white/50 text-sm">{selectedIndustry.projects}+ projects completed</p>
+<h3 className="text-xl md:text-3xl font-bold text-white">{selectedIndustry.name}</h3>
+<p className="text-white/50 text-xs md:text-sm">{selectedIndustry.projects}+ projects completed</p>
 </div>
 </div>
 
-<div className="space-y-6">
-<div className="bg-white/5 rounded-xl p-4">
-<h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2">
-<CheckCircle2 size={16} /> What I Have Done
+<div className="space-y-4 md:space-y-6">
+<div className="bg-white/5 rounded-xl p-3 md:p-4">
+<h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2 text-sm md:text-base">
+<CheckCircle2 size={14} /> What I Have Done
 </h4>
-<p className="text-white/70 leading-relaxed">{selectedIndustry.whatIDid}</p>
+<p className="text-white/70 text-xs md:text-sm leading-relaxed">{selectedIndustry.whatIDid}</p>
 </div>
 
-<div className="bg-white/5 rounded-xl p-4">
-<h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2">
-<Target size={16} /> What I Can Do For You
+<div className="bg-white/5 rounded-xl p-3 md:p-4">
+<h4 className="text-[#c9a84c] font-semibold mb-2 flex items-center gap-2 text-sm md:text-base">
+<Target size={14} /> What I Can Do For You
 </h4>
-<p className="text-white/70 leading-relaxed">{selectedIndustry.whatICanDo}</p>
+<p className="text-white/70 text-xs md:text-sm leading-relaxed">{selectedIndustry.whatICanDo}</p>
 </div>
 
 <div>
-<h4 className="text-[#c9a84c] font-semibold mb-3 flex items-center gap-2">
-<TrendingIcon size={16} /> Key Results I Have Delivered
+<h4 className="text-[#c9a84c] font-semibold mb-3 flex items-center gap-2 text-sm md:text-base">
+<TrendingIcon size={14} /> Key Results I Have Delivered
 </h4>
-<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3">
 {selectedIndustry.results.map((result, idx) => (
-<div key={idx} className="bg-gradient-to-br from-[#c9a84c]/10 to-transparent rounded-xl p-3 text-center border border-[#c9a84c]/20">
-<div className="text-[#c9a84c] font-bold text-sm">{result}</div>
+<div key={idx} className="bg-gradient-to-br from-[#c9a84c]/10 to-transparent rounded-xl p-2 md:p-3 text-center border border-[#c9a84c]/20">
+<div className="text-[#c9a84c] font-bold text-xs md:text-sm">{result}</div>
 </div>
 ))}
 </div>
@@ -833,9 +836,9 @@ className="lg:w-3/5 bg-gradient-to-br from-[#0a0f1c] to-[#040608] rounded-2xl bo
 initial={{ opacity: 0, y: 20 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
-className="text-center mt-8"
+className="text-center mt-6 md:mt-8"
 >
-<p className="text-white/40 text-sm">
+<p className="text-white/40 text-xs md:text-sm px-4">
 Pranjal Digital brings proven experience across 25+ industries, delivering results across diverse niches. With strong expertise in campaign planning, audience targeting, funnel optimization, and analytics, we understand what drives performance. Our multi-industry exposure enables agile strategy execution, data-driven decisions, and scalable growth, helping brands maximize visibility, engagement, and conversions across digital channels. </p>
 </motion.div>
 </div>
@@ -843,7 +846,7 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
 
 {/* ========== ENHANCED 3D COMPARISON TABLE ========== */}
 {/* ========== PREMIUM COMPARISON TABLE (CLEAN + HIGH-END) ========== */}
-<section className="py-20 bg-[#080c14] relative overflow-hidden">
+<section className="py-16 md:py-20 bg-[#080c14] relative overflow-hidden">
 
 {/* Background Glow */}
 <div className="absolute inset-0">
@@ -853,11 +856,11 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
 <div className="relative max-w-6xl mx-auto px-4">
 
 {/* Heading */}
-<div className="text-center mb-10">
-<h2 className="text-3xl md:text-5xl font-bold text-white mb-3">
+<div className="text-center mb-8 md:mb-10">
+<h2 className="text-2xl md:text-5xl font-bold text-white mb-3">
 Big Agency vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Pranjal Digital</span>
 </h2>
-<p className="text-white/60">
+<p className="text-white/60 text-sm md:text-base">
 Clear differences. No fluff. Just what impacts your growth.
 </p>
 </div>
@@ -866,12 +869,12 @@ Clear differences. No fluff. Just what impacts your growth.
 <div className="rounded-2xl border border-white/10 overflow-hidden backdrop-blur-xl">
 
 {/* Header */}
-<div className="grid grid-cols-3 bg-[#0a0f1c] text-sm font-semibold">
-<div className="p-4 text-white/40">Factor</div>
-<div className="p-4 text-center text-white/50 border-l border-white/10">
+<div className="grid grid-cols-3 bg-[#0a0f1c] text-xs md:text-sm font-semibold">
+<div className="p-3 md:p-4 text-white/40">Factor</div>
+<div className="p-3 md:p-4 text-center text-white/50 border-l border-white/10">
 Big Agency
 </div>
-<div className="p-4 text-center border-l border-[#c9a84c]/30 bg-[#c9a84c]/5 text-[#c9a84c]">
+<div className="p-3 md:p-4 text-center border-l border-[#c9a84c]/30 bg-[#c9a84c]/5 text-[#c9a84c]">
 Pranjal Digital
 </div>
 </div>
@@ -922,22 +925,22 @@ me: "Direct responsibility",
 
 <div
 key={i}
-className="grid grid-cols-3 text-sm border-t border-white/10 hover:bg-white/5 transition"
+className="grid grid-cols-3 text-xs md:text-sm border-t border-white/10 hover:bg-white/5 transition"
 >
 
 {/* Factor */}
-<div className="p-4 text-white font-medium">
+<div className="p-3 md:p-4 text-white font-medium">
 {row.title}
 </div>
 
 {/* Agency */}
-<div className="p-4 text-center text-white/50 border-l border-white/10 flex items-center justify-center gap-2">
+<div className="p-3 md:p-4 text-center text-white/50 border-l border-white/10 flex items-center justify-center gap-1 md:gap-2">
 <span className="text-red-400">✕</span>
 {row.agency}
 </div>
 
 {/* Me */}
-<div className="p-4 text-center border-l border-[#c9a84c]/20 bg-gradient-to-r from-[#c9a84c]/5 to-transparent flex items-center justify-center gap-2">
+<div className="p-3 md:p-4 text-center border-l border-[#c9a84c]/20 bg-gradient-to-r from-[#c9a84c]/5 to-transparent flex items-center justify-center gap-1 md:gap-2">
 <span className="text-[#c9a84c]">✓</span>
 <span className="text-white/80 font-medium">{row.me}</span>
 </div>
@@ -950,22 +953,22 @@ className="grid grid-cols-3 text-sm border-t border-white/10 hover:bg-white/5 tr
 </div>
 </section>
 {/* ========== FAQ SECTION ========== */}
-<section className="py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
+<section className="py-16 md:py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
 <div className="max-w-4xl mx-auto px-4">
 <motion.div
 initial={{ opacity: 0, y: 30 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
-className="text-center mb-12"
+className="text-center mb-8 md:mb-12"
 >
 <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
 <Coffee size={14} className="text-[#c9a84c]" />
 <span className="text-[#c9a84c] text-xs font-medium">QUESTIONS?</span>
 </div>
-<h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+<h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
 Frequently Asked<span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent"> Questions</span>
 </h2>
-<p className="text-white/50 text-lg">
+<p className="text-white/50 text-sm md:text-lg">
 Everything you wanted to know. In simple English. No BS.
 </p>
 </motion.div>
@@ -979,7 +982,7 @@ Everything you wanted to know. In simple English. No BS.
 </section>
 
 {/* ========== FINAL CTA ========== */}
-<section className="py-28 relative overflow-hidden">
+<section className="py-20 md:py-28 relative overflow-hidden">
 <div className="absolute inset-0">
 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-gradient-to-r from-[#c9a84c]/20 to-[#f0d282]/20 blur-[100px]" />
 </div>
@@ -993,13 +996,13 @@ viewport={{ once: true }}
 <RocketIcon size={14} className="text-[#c9a84c]" />
 <span className="text-[#c9a84c] text-xs font-medium">READY TO GROW?</span>
 </div>
-<h2 className="text-4xl md:text-6xl font-bold text-white mb-5">
+<h2 className="text-3xl md:text-6xl font-bold text-white mb-5">
 Ready to Scale Your<br />
 <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">
 Digital Marketing ROI?
 </span>
 </h2>
-<p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
+<p className="text-white/60 text-sm md:text-lg mb-8 md:mb-10 max-w-xl mx-auto px-4">
 Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on how to grow your business.
 </p>
 
@@ -1012,14 +1015,14 @@ Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on h
     href={CALENDLY}
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex items-center justify-center gap-2 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-auto"
+    className="inline-flex items-center justify-center gap-2 bg-[#c9a84c] text-[#080c14] font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-auto text-sm md:text-base"
   >
     Book Free Strategy Call
     <ArrowRight size={16} />
   </a>
 
   <Link href="/contact">
-    <a className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors w-full sm:w-auto">
+    <a className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors w-full sm:w-auto text-sm md:text-base">
       Send a Message
     </a>
   </Link>
@@ -1032,7 +1035,7 @@ Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on h
 
 
   
-<p className="text-white/30 text-sm mt-6">
+<p className="text-white/30 text-xs md:text-sm mt-6">
 ⏰ 30-min free consultation • No obligation • Real advice • Use calculator for pricing
 </p>
 </motion.div>
