@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Menu, X, Linkedin, Twitter, Youtube, Mail, ExternalLink, Calendar, Award, Users, Globe, DollarSign, TrendingUp, UserPlus } from 'lucide-react';
+import { Menu, X, Linkedin, Twitter, Youtube, Mail, ExternalLink, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChatPopup from "@/components/ChatPopup";
 
@@ -38,18 +38,15 @@ return (
 
 {/* DESKTOP NAV */}
 <nav className="hidden lg:flex items-center gap-8">
-
 <Link href="/" className="text-white/80 hover:text-[#c9a84c] transition-colors">Home</Link>
 <Link href="/services" className="text-white/80 hover:text-[#c9a84c] transition-colors">Services</Link>
 <Link href="/about" className="text-white/80 hover:text-[#c9a84c] transition-colors">About</Link>
 <Link href="/case-studies" className="text-white/80 hover:text-[#c9a84c] transition-colors">Case Studies</Link>
 
-{/* DROPDOWN */}
 <div className="relative group">
 <span className="text-white/80 hover:text-[#c9a84c] cursor-pointer transition-colors">
 AI Products ▾
 </span>
-
 <div className="absolute top-full pt-2 hidden group-hover:block z-[9999]">
 <div className="bg-[#0a0f1c] rounded-lg shadow-lg border border-white/10 min-w-[220px]">
 <Link
@@ -70,7 +67,6 @@ Ads Intelligence Tool
 <Link href="/contact" className="border border-[#c9a84c] text-[#c9a84c] px-4 py-2 rounded-lg hover:bg-[#c9a84c]/10 transition-all">
 Contact
 </Link>
-
 <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="gold-bg px-4 py-2 rounded-lg text-[#080c14] font-semibold hover:opacity-90 transition-all">
 Book Meeting
 </a>
@@ -86,10 +82,9 @@ onClick={() => setMenuOpen(!menuOpen)}
 
 </div>
 </div>
-
 </header>
 
-{/* MOBILE MENU (OUTSIDE HEADER) */}
+{/* MOBILE MENU */}
 <AnimatePresence>
 {menuOpen && (
 <motion.div
@@ -103,7 +98,6 @@ exit={{ opacity: 0 }}
 <X size={32} />
 </button>
 </div>
-
 <div className="flex flex-col gap-6 mt-16 text-white text-xl font-medium text-center">
 <Link href="/" className="text-white hover:text-[#c9a84c] transition-colors">Home</Link>
 <Link href="/services" className="text-white hover:text-[#c9a84c] transition-colors">Services</Link>
@@ -124,18 +118,16 @@ Book Meeting
 );
 }
 
-// PREMIUM FOOTER - FIXED FOR MOBILE (NO YELLOW SQUARES)
+// FOOTER
 function Footer() {
 const currentYear = new Date().getFullYear();
 
-// Your social media links
 const socialLinks = {
 linkedin: "https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/",
 twitter: "https://x.com/Pranjaldigitl",
 youtube: "https://www.youtube.com/@PranjalSharmaDigital",
 };
 
-// Marketing Services
 const marketingServices = [
 { name: "IT Services Marketing", path: "it-services-marketing" },
 { name: "SaaS Marketing Services", path: "saas-marketing-services" },
@@ -160,33 +152,14 @@ return (
     <p className="text-white/50 text-xs lg:text-sm leading-relaxed">
       Premium digital marketing solutions tailored to boost your business growth and maximize ROI.
     </p>
-    {/* Social Media Links */}
     <div className="flex gap-2 pt-2">
-      <a 
-        href={socialLinks.linkedin} 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
-        aria-label="LinkedIn"
-      >
+      <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300">
         <Linkedin size={14} className="lg:w-4 lg:h-4" />
       </a>
-      <a 
-        href={socialLinks.twitter} 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
-        aria-label="Twitter"
-      >
+      <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300">
         <Twitter size={14} className="lg:w-4 lg:h-4" />
       </a>
-      <a 
-        href={socialLinks.youtube} 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
-        aria-label="YouTube"
-      >
+      <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300">
         <Youtube size={14} className="lg:w-4 lg:h-4" />
       </a>
     </div>
@@ -199,31 +172,11 @@ return (
       <span className="absolute -bottom-1 left-0 w-8 lg:w-12 h-0.5 bg-[#c9a84c]"></span>
     </h3>
     <ul className="space-y-1.5">
-      <li>
-        <Link href="/" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link href="/services" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
-          Services
-        </Link>
-      </li>
-      <li>
-        <Link href="/about" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
-          About Us
-        </Link>
-      </li>
-      <li>
-        <Link href="/case-studies" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
-          Case Studies
-        </Link>
-      </li>
-      <li>
-        <Link href="/contact" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
-          Contact
-        </Link>
-      </li>
+      <li><Link href="/" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">Home</Link></li>
+      <li><Link href="/services" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">Services</Link></li>
+      <li><Link href="/about" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">About Us</Link></li>
+      <li><Link href="/case-studies" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">Case Studies</Link></li>
+      <li><Link href="/contact" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">Contact</Link></li>
     </ul>
   </div>
 
@@ -236,10 +189,7 @@ return (
     <ul className="space-y-1.5">
       {marketingServices.map((service, index) => (
         <li key={index}>
-          <Link 
-            href={`/${service.path}`} 
-            className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm block"
-          >
+          <Link href={`/${service.path}`} className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm block">
             {service.name}
           </Link>
         </li>
@@ -276,23 +226,17 @@ return (
   </div>
 </div>
 
-{/* Bottom Bar with Legal Links - No stats section to avoid yellow squares */}
+{/* Bottom Bar */}
 <div className="mt-8 pt-6 border-t border-white/10">
   <div className="flex flex-col md:flex-row justify-between items-center gap-3">
     <p className="text-white/40 text-xs lg:text-sm">
       © {currentYear} Pranjal Digital. All rights reserved.
     </p>
     <div className="flex gap-4">
-      <Link 
-        href="/privacy-policy" 
-        className="text-white/40 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm"
-      >
+      <Link href="/privacy-policy" className="text-white/40 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
         Privacy Policy
       </Link>
-      <Link 
-        href="/terms-of-service" 
-        className="text-white/40 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm"
-      >
+      <Link href="/terms-of-service" className="text-white/40 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
         Terms of Service
       </Link>
     </div>
@@ -307,7 +251,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 return (
 <div className="min-h-screen bg-[#020617] flex flex-col">
 <Header />
-<main className="pt-20 flex-grow">{children}</main>
+{/* FIXED: Reduced padding on mobile from pt-20 to pt-16 */}
+<main className="pt-16 md:pt-20 flex-grow">{children}</main>
 <Footer />
 <ChatPopup />
 </div>
