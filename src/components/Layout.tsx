@@ -124,7 +124,7 @@ Book Meeting
 );
 }
 
-// PREMIUM FOOTER WITH ALL REQUESTED CHANGES
+// PREMIUM FOOTER - FIXED FOR MOBILE (NO YELLOW SQUARES)
 function Footer() {
 const currentYear = new Date().getFullYear();
 
@@ -134,16 +134,6 @@ linkedin: "https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consulta
 twitter: "https://x.com/Pranjaldigitl",
 youtube: "https://www.youtube.com/@PranjalSharmaDigital",
 };
-
-// Stats data
-const stats = [
-{ value: "12+", label: "Years Experience", icon: Award },
-{ value: "400+", label: "Happy Clients", icon: Users },
-{ value: "20+", label: "Countries Served", icon: Globe },
-{ value: "5M+", label: "Revenue Generated", icon: DollarSign },
-{ value: "7X", label: "Avg ROAS", icon: TrendingUp },
-{ value: "25+", label: "Team Members", icon: UserPlus },
-];
 
 // Marketing Services
 const marketingServices = [
@@ -156,81 +146,81 @@ const marketingServices = [
 
 return (
 <footer className="bg-gradient-to-b from-[#0a0f1c] to-[#040608] text-white border-t border-[#c9a84c]/20 mt-auto">
-<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
   
   {/* Company Info Section */}
-  <div className="space-y-4">
+  <div className="space-y-3">
     <Link href="/">
-      <span className="text-2xl font-bold cursor-pointer inline-block">
+      <span className="text-xl lg:text-2xl font-bold cursor-pointer inline-block">
         <span className="gold-gradient">Pranjal</span>
         <span className="text-white"> Digital</span>
       </span>
     </Link>
-    <p className="text-white/50 text-sm leading-relaxed">
+    <p className="text-white/50 text-xs lg:text-sm leading-relaxed">
       Premium digital marketing solutions tailored to boost your business growth and maximize ROI.
     </p>
     {/* Social Media Links */}
-    <div className="flex gap-3 pt-2">
+    <div className="flex gap-2 pt-2">
       <a 
         href={socialLinks.linkedin} 
         target="_blank" 
         rel="noopener noreferrer"
-        className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
+        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
         aria-label="LinkedIn"
       >
-        <Linkedin size={16} />
+        <Linkedin size={14} className="lg:w-4 lg:h-4" />
       </a>
       <a 
         href={socialLinks.twitter} 
         target="_blank" 
         rel="noopener noreferrer"
-        className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
+        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
         aria-label="Twitter"
       >
-        <Twitter size={16} />
+        <Twitter size={14} className="lg:w-4 lg:h-4" />
       </a>
       <a 
         href={socialLinks.youtube} 
         target="_blank" 
         rel="noopener noreferrer"
-        className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
+        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#c9a84c] hover:text-[#080c14] transition-all duration-300"
         aria-label="YouTube"
       >
-        <Youtube size={16} />
+        <Youtube size={14} className="lg:w-4 lg:h-4" />
       </a>
     </div>
   </div>
 
   {/* Quick Links Section */}
-  <div className="space-y-4">
-    <h3 className="text-white font-semibold text-lg relative inline-block">
+  <div className="space-y-3">
+    <h3 className="text-white font-semibold text-base lg:text-lg relative inline-block">
       Quick Links
-      <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#c9a84c]"></span>
+      <span className="absolute -bottom-1 left-0 w-8 lg:w-12 h-0.5 bg-[#c9a84c]"></span>
     </h3>
-    <ul className="space-y-2">
+    <ul className="space-y-1.5">
       <li>
-        <Link href="/" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+        <Link href="/" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
           Home
         </Link>
       </li>
       <li>
-        <Link href="/services" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+        <Link href="/services" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
           Services
         </Link>
       </li>
       <li>
-        <Link href="/about" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+        <Link href="/about" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
           About Us
         </Link>
       </li>
       <li>
-        <Link href="/case-studies" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+        <Link href="/case-studies" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
           Case Studies
         </Link>
       </li>
       <li>
-        <Link href="/contact" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+        <Link href="/contact" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
           Contact
         </Link>
       </li>
@@ -238,17 +228,17 @@ return (
   </div>
 
   {/* Marketing Services Section */}
-  <div className="space-y-4">
-    <h3 className="text-white font-semibold text-lg relative inline-block">
+  <div className="space-y-3">
+    <h3 className="text-white font-semibold text-base lg:text-lg relative inline-block">
       Marketing Services
-      <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#c9a84c]"></span>
+      <span className="absolute -bottom-1 left-0 w-8 lg:w-12 h-0.5 bg-[#c9a84c]"></span>
     </h3>
-    <ul className="space-y-2">
+    <ul className="space-y-1.5">
       {marketingServices.map((service, index) => (
         <li key={index}>
           <Link 
             href={`/${service.path}`} 
-            className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm"
+            className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm block"
           >
             {service.name}
           </Link>
@@ -257,28 +247,28 @@ return (
     </ul>
   </div>
 
-  {/* Get In Touch Section with Contact Links */}
-  <div className="space-y-4">
-    <h3 className="text-white font-semibold text-lg relative inline-block">
+  {/* Get In Touch Section */}
+  <div className="space-y-3">
+    <h3 className="text-white font-semibold text-base lg:text-lg relative inline-block">
       Get In Touch
-      <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#c9a84c]"></span>
+      <span className="absolute -bottom-1 left-0 w-8 lg:w-12 h-0.5 bg-[#c9a84c]"></span>
     </h3>
-    <ul className="space-y-3">
-      <li className="flex items-start gap-3">
-        <Mail size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+    <ul className="space-y-2">
+      <li className="flex items-start gap-2">
+        <Mail size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+        <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm break-all">
           info@pranjaldigital.com
         </a>
       </li>
-      <li className="flex items-start gap-3 pt-2">
-        <ExternalLink size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <Link href="/contact" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+      <li className="flex items-start gap-2">
+        <ExternalLink size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+        <Link href="/contact" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
           Contact Us
         </Link>
       </li>
-      <li className="flex items-start gap-3">
-        <Calendar size={16} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
-        <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+      <li className="flex items-start gap-2">
+        <Calendar size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+        <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm">
           Book a Meeting
         </a>
       </li>
@@ -286,40 +276,22 @@ return (
   </div>
 </div>
 
-{/* Stats Section - Fills empty space */}
-<div className="mt-12 pt-8 border-t border-white/10">
-  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-    {stats.map((stat, index) => {
-      const Icon = stat.icon;
-      return (
-        <div key={index} className="text-center group">
-          <div className="flex justify-center mb-2">
-            <Icon size={24} className="text-[#c9a84c] group-hover:scale-110 transition-transform duration-300" />
-          </div>
-          <div className="text-xl font-bold text-white">{stat.value}</div>
-          <div className="text-xs text-white/40">{stat.label}</div>
-        </div>
-      );
-    })}
-  </div>
-</div>
-
-{/* Bottom Bar with Legal Links */}
+{/* Bottom Bar with Legal Links - No stats section to avoid yellow squares */}
 <div className="mt-8 pt-6 border-t border-white/10">
-  <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-    <p className="text-white/40 text-sm">
+  <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+    <p className="text-white/40 text-xs lg:text-sm">
       © {currentYear} Pranjal Digital. All rights reserved.
     </p>
-    <div className="flex gap-6">
+    <div className="flex gap-4">
       <Link 
         href="/privacy-policy" 
-        className="text-white/40 hover:text-[#c9a84c] transition-colors text-sm"
+        className="text-white/40 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm"
       >
         Privacy Policy
       </Link>
       <Link 
         href="/terms-of-service" 
-        className="text-white/40 hover:text-[#c9a84c] transition-colors text-sm"
+        className="text-white/40 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm"
       >
         Terms of Service
       </Link>
