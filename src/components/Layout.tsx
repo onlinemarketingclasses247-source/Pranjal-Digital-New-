@@ -217,11 +217,11 @@ return (
           1st floor, H.no 5, Rodali path, Janakpur, Kahilipara, Guwahati, Assam 781019, India
         </span>
       </li>
-      {/* Phone - space reserved with icon and placeholder */}
+      {/* Phone - icon only, space reserved for later addition */}
       <li className="flex items-start gap-2">
         <Phone size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
         <span className="text-white/50 text-xs lg:text-sm">
-          <span className="opacity-60">+91 </span><span className="text-white/30">(phone number)</span>
+          {/* Phone number will be added here */}
         </span>
       </li>
       <li className="flex items-start gap-2">
