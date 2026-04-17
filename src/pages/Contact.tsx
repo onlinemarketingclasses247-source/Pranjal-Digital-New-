@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star, BarChart3, Briefcase, TrendingUp as TrendingUpIcon, Users as UsersIcon, DollarSign } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -133,51 +133,55 @@ const processSteps = [
   }
 ];
 
-// Animated Dot Component
-const AnimatedDot = ({ active, delay, label, sublabel, index, total }) => {
+// Fixed height Animated Dot Component - NO CLS ISSUE
+const AnimatedDot = ({ active, delay, label, sublabel }) => {
   return (
-    <div className="flex flex-col items-center flex-1">
-      <motion.div
-        animate={{
-          scale: active ? [1, 1.3, 1] : 1,
-          opacity: active ? 1 : 0.4,
-        }}
-        transition={{
-          duration: 1.5,
-          repeat: active ? Infinity : 0,
-          repeatDelay: 2,
-          delay: delay,
-        }}
-        className="relative"
-      >
-        <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-          active ? 'bg-[#c9a84c] shadow-lg shadow-[#c9a84c]/50' : 'bg-white/30'
-        }`} />
-        {active && (
-          <motion.div
-            className="absolute -inset-2 rounded-full bg-[#c9a84c]/20"
-            animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 1.5, repeat: Infinity, delay }}
-          />
-        )}
-      </motion.div>
-      <AnimatePresence mode="wait">
-        {active && (
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.3 }}
-            className="mt-2 text-center"
-          >
-            <p className="text-[#c9a84c] text-[10px] sm:text-xs font-semibold whitespace-nowrap">{label}</p>
-            <p className="text-white/40 text-[8px] sm:text-[10px] whitespace-nowrap">{sublabel}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      {!active && index < total - 1 && (
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mt-4 hidden sm:block" />
-      )}
+    <div className="flex flex-col items-center flex-1 min-w-[60px]">
+      <div className="relative h-8 flex items-center justify-center">
+        <motion.div
+          animate={{
+            scale: active ? [1, 1.3, 1] : 1,
+            opacity: active ? 1 : 0.4,
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: active ? Infinity : 0,
+            repeatDelay: 2,
+            delay: delay,
+          }}
+          className="relative"
+        >
+          <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            active ? 'bg-[#c9a84c] shadow-lg shadow-[#c9a84c]/50' : 'bg-white/30'
+          }`} />
+          {active && (
+            <motion.div
+              className="absolute -inset-2 rounded-full bg-[#c9a84c]/20"
+              animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay }}
+            />
+          )}
+        </motion.div>
+      </div>
+      {/* Fixed height container for text to prevent CLS */}
+      <div className="h-10 text-center mt-1">
+        <AnimatePresence mode="wait">
+          {active && (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-[#c9a84c] text-[10px] sm:text-xs font-semibold whitespace-nowrap">{label}</p>
+              <p className="text-white/40 text-[8px] sm:text-[10px] whitespace-nowrap">{sublabel}</p>
+            </motion.div>
+          )}
+          {!active && (
+            <div className="h-8" />
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
@@ -249,7 +253,6 @@ export default function Contact() {
       "Contact a digital marketing consultant to discuss your business growth. Book a strategy call or send a message to explore SEO, ads, and full-funnel solutions."
     );
     
-    // Cycle through dots every 3 seconds
     const interval = setInterval(() => {
       setActiveDot((prev) => (prev + 1) % 4);
     }, 3000);
@@ -507,7 +510,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Option 2: Book Meeting - Premium Redesign */}
+          {/* Option 2: Book Meeting */}
           <motion.div variants={fadeUp} className="group h-full">
             <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full flex flex-col">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
@@ -567,26 +570,49 @@ export default function Contact() {
                     <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
 
-                  {/* Premium Stats Section */}
+                  {/* Premium Stats Section - Graphical with Icons */}
                   <div className="mt-4 pt-4 border-t border-white/10">
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="text-center">
-                        <p className="text-xl sm:text-2xl font-bold text-[#c9a84c]">400+</p>
-                        <p className="text-white/40 text-[10px] sm:text-xs">Clients Served</p>
+                    <p className="text-white/30 text-[10px] uppercase tracking-wider text-center mb-4">OUR IMPACT IN NUMBERS</p>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="text-center group/stat">
+                        <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
+                          <Briefcase size={22} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white font-bold text-lg sm:text-xl">400+</p>
+                        <p className="text-white/40 text-[10px]">Businesses Served</p>
                       </div>
-                      <div className="text-center">
-                        <p className="text-xl sm:text-2xl font-bold text-[#c9a84c]">20+</p>
-                        <p className="text-white/40 text-[10px] sm:text-xs">Countries</p>
+                      <div className="text-center group/stat">
+                        <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
+                          <Globe size={22} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white font-bold text-lg sm:text-xl">20+</p>
+                        <p className="text-white/40 text-[10px]">Countries Global</p>
                       </div>
-                      <div className="text-center">
-                        <p className="text-xl sm:text-2xl font-bold text-[#c9a84c]">98%</p>
-                        <p className="text-white/40 text-[10px] sm:text-xs">Satisfaction</p>
+                      <div className="text-center group/stat">
+                        <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
+                          <TrendingUpIcon size={22} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white font-bold text-lg sm:text-xl">3x</p>
+                        <p className="text-white/40 text-[10px]">Avg. ROI Growth</p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Animated Journey Dots */}
-                  <div className="mt-2 pt-3 border-t border-white/10">
+                  {/* Premium Square Box - Explaining the stats */}
+                  <div className="mt-3 p-4 rounded-xl bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/5 to-transparent border border-[#c9a84c]/20">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
+                        <Star size={14} className="text-[#c9a84c]" />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-semibold tracking-wide">Proven Track Record</p>
+                        <p className="text-white/50 text-xs leading-relaxed mt-1">Over 400+ businesses across 20+ countries have achieved 3x average ROI growth with our data-driven marketing strategies.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Animated Journey Dots - Fixed height to prevent CLS */}
+                  <div className="mt-3 pt-3 border-t border-white/10">
                     <p className="text-white/30 text-[9px] sm:text-[10px] uppercase tracking-wider text-center mb-4">YOUR JOURNEY STARTS HERE</p>
                     <div className="flex items-center justify-between gap-1 sm:gap-2">
                       {journeySteps.map((step, idx) => (
@@ -596,21 +622,8 @@ export default function Contact() {
                           delay={idx * 0.5}
                           label={step.label}
                           sublabel={step.sublabel}
-                          index={idx}
-                          total={journeySteps.length}
                         />
                       ))}
-                    </div>
-                  </div>
-
-                  {/* Premium Stylish Box */}
-                  <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-[#c9a84c]/10 to-transparent border border-[#c9a84c]/20">
-                    <div className="flex items-start gap-3">
-                      <Star size={18} className="text-[#c9a84c] flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="text-white/80 text-xs sm:text-sm font-medium">"No pressure, just solutions."</p>
-                        <p className="text-white/40 text-[10px] sm:text-xs mt-1">Get a tailored marketing roadmap specific to your business goals — completely free.</p>
-                      </div>
                     </div>
                   </div>
 
