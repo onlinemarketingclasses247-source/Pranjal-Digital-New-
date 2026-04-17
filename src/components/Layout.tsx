@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Menu, X, Linkedin, Twitter, Youtube, Mail, ExternalLink, Calendar } from 'lucide-react';
+import { Menu, X, Linkedin, Twitter, Youtube, Mail, ExternalLink, Calendar, MapPin, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChatPopup from "@/components/ChatPopup";
 
@@ -209,6 +209,20 @@ return (
         <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs lg:text-sm break-all">
           info@pranjaldigital.com
         </a>
+      </li>
+      {/* Address */}
+      <li className="flex items-start gap-2">
+        <MapPin size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+        <span className="text-white/50 text-xs lg:text-sm leading-relaxed">
+          1st floor, H.no 5, Rodali path, Janakpur, Kahilipara, Guwahati, Assam 781019, India
+        </span>
+      </li>
+      {/* Phone - space reserved with icon and placeholder */}
+      <li className="flex items-start gap-2">
+        <Phone size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+        <span className="text-white/50 text-xs lg:text-sm">
+          <span className="opacity-60">+91 </span><span className="text-white/30">(phone number)</span>
+        </span>
       </li>
       <li className="flex items-start gap-2">
         <ExternalLink size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
