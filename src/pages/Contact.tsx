@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, BarChart3, Rocket, Brain, LineChart, PieChart, ArrowRight } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, BarChart3, Rocket, Brain, LineChart, PieChart, ArrowRight, Star, TrendingUp as TrendingUpIcon, Users as UsersIcon, DollarSign } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -443,7 +443,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Option 2: Book Meeting - FIXED: Removed dead space, added visual elements */}
+          {/* Option 2: Book Meeting - FIXED: Added visual elements to fill dead space */}
           <motion.div variants={fadeUp} className="group h-full">
             <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full flex flex-col">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
@@ -480,7 +480,7 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* What happens next section - Reduced bottom padding */}
+                  {/* What happens next section */}
                   <div className="bg-[#c9a84c]/10 rounded-xl p-5 border border-[#c9a84c]/20">
                     <div className="flex items-center gap-2 mb-3">
                       <Zap size={14} className="text-[#c9a84c]" />
@@ -494,35 +494,51 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Button and note - Tight spacing */}
-                  <div className="space-y-3 pt-2">
-                    <button
-                      onClick={scrollToCalendly}
-                      className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                    >
-                      Book Your Free Call 
-                      <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
+                  {/* Button */}
+                  <button
+                    onClick={scrollToCalendly}
+                    className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                  >
+                    Book Your Free Call 
+                    <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                  </button>
 
-                    <div className="text-center">
-                      <p className="text-white/30 text-xs">No credit card required • Cancel anytime • 100% free consultation</p>
+                  {/* FILL THE DEAD SPACE WITH VISUAL ELEMENTS */}
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <p className="text-center text-white/30 text-[10px] uppercase tracking-wider mb-3">TRUSTED BY BUSINESSES WORLDWIDE</p>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="text-center">
+                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-1">
+                          <UsersIcon size={14} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white font-bold text-sm">400+</p>
+                        <p className="text-white/30 text-[10px]">Clients</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-1">
+                          <Globe size={14} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white font-bold text-sm">20+</p>
+                        <p className="text-white/30 text-[10px]">Countries</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-1">
+                          <Star size={14} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white font-bold text-sm">98%</p>
+                        <p className="text-white/30 text-[10px]">Satisfaction</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Decorative elements to fill space on desktop */}
-                <div className="hidden lg:block mt-6 pt-4 border-t border-white/10">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/40" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/60" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
-                    </div>
-                    <p className="text-white/20 text-[10px] tracking-wider">READY TO SCALE →</p>
-                    <div className="flex items-center gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/60" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/40" />
+                  {/* Additional visual - growth indicator */}
+                  <div className="mt-2">
+                    <div className="flex items-center justify-between gap-2 text-white/20 text-[10px]">
+                      <span>●</span>
+                      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/30 to-transparent"></span>
+                      <span>READY TO SCALE</span>
+                      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/30 to-transparent"></span>
+                      <span>●</span>
                     </div>
                   </div>
                 </div>
