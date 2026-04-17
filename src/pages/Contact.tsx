@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { Link } from 'wouter';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -538,6 +539,132 @@ export default function Contact() {
                 <p className="text-white/40 text-xs">{stat.label}</p>
               </div>
             ))}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Get In Touch Footer Section - Added at the bottom */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 overflow-hidden"
+        >
+          <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
+            {/* Left Column - Get In Touch Info */}
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-6">Get In Touch</h3>
+              
+              <div className="space-y-4">
+                {/* Address */}
+                <div className="flex items-start gap-3">
+                  <MapPin size={20} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-white/70 text-sm font-medium mb-1">Visit Us</p>
+                    <p className="text-white/50 text-sm leading-relaxed">
+                      1st floor, H.no 5, Rodali path, Janakpur, Kahilipara, Guwahati, Assam 781019, India
+                    </p>
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="flex items-start gap-3">
+                  <Mail size={20} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-white/70 text-sm font-medium mb-1">Email Us</p>
+                    <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+                      info@pranjaldigital.com
+                    </a>
+                  </div>
+                </div>
+
+                {/* Book a Meeting */}
+                <div className="flex items-start gap-3">
+                  <Calendar size={20} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-white/70 text-sm font-medium mb-1">Book a Meeting</p>
+                    <button onClick={scrollToCalendly} className="text-[#c9a84c] hover:text-[#dbb85c] transition-colors text-sm">
+                      Schedule a free strategy call →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Social Media & Connect */}
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-6">Connect With Us</h3>
+              <p className="text-white/50 text-sm mb-6">
+                Follow us on social media for digital marketing insights, tips, and updates.
+              </p>
+              
+              <div className="flex flex-wrap gap-4">
+                {/* LinkedIn Company Page */}
+                <a 
+                  href="https://www.linkedin.com/company/pranjal-digital" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Linkedin size={20} className="text-[#c9a84c]" />
+                  </div>
+                  <div>
+                    <p className="text-white text-sm font-medium">Pranjal Digital</p>
+                    <p className="text-white/40 text-xs">Company Page</p>
+                  </div>
+                </a>
+
+                {/* Pranjal's LinkedIn */}
+                <a 
+                  href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Linkedin size={20} className="text-[#c9a84c]" />
+                  </div>
+                  <div>
+                    <p className="text-white text-sm font-medium">Pranjal Sharma</p>
+                    <p className="text-white/40 text-xs">Founder's LinkedIn</p>
+                  </div>
+                </a>
+
+                {/* X (Twitter) */}
+                <a 
+                  href="https://x.com/Pranjaldigitl" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Twitter size={20} className="text-[#c9a84c]" />
+                  </div>
+                  <div>
+                    <p className="text-white text-sm font-medium">Twitter / X</p>
+                    <p className="text-white/40 text-xs">@Pranjaldigitl</p>
+                  </div>
+                </a>
+
+                {/* YouTube */}
+                <a 
+                  href="https://www.youtube.com/@PranjalSharmaDigital" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Youtube size={20} className="text-[#c9a84c]" />
+                  </div>
+                  <div>
+                    <p className="text-white text-sm font-medium">YouTube</p>
+                    <p className="text-white/40 text-xs">Pranjal Sharma Digital</p>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
