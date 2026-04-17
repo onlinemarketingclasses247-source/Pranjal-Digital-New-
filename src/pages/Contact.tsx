@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -14,7 +14,7 @@ function setMeta(description) {
   meta.setAttribute("content", description);
 }
 
-// Updated services list with SaaS Marketing at top, Content Marketing, YouTube Marketing
+// Updated services list
 const services = [
   'SaaS Marketing',
   'IT Services Marketing',
@@ -46,43 +46,51 @@ const budgets = [
   'One-time project',
 ];
 
-// Country codes with dial codes
-const countryCodes = [
-  { code: "+1", country: "US/Canada" },
-  { code: "+44", country: "UK" },
-  { code: "+91", country: "India" },
-  { code: "+61", country: "Australia" },
-  { code: "+49", country: "Germany" },
-  { code: "+33", country: "France" },
-  { code: "+81", country: "Japan" },
-  { code: "+65", country: "Singapore" },
-  { code: "+27", country: "South Africa" },
-  { code: "+971", country: "UAE" },
-  { code: "+966", country: "Saudi Arabia" },
-  { code: "+852", country: "Hong Kong" },
-  { code: "+86", country: "China" },
-  { code: "+82", country: "Korea" },
-  { code: "+55", country: "Brazil" },
-  { code: "+52", country: "Mexico" },
-  { code: "+34", country: "Spain" },
-  { code: "+39", country: "Italy" },
-  { code: "+31", country: "Netherlands" },
-  { code: "+46", country: "Sweden" },
-  { code: "+47", country: "Norway" },
-  { code: "+45", country: "Denmark" },
-  { code: "+358", country: "Finland" },
-  { code: "+64", country: "New Zealand" },
-  { code: "+60", country: "Malaysia" },
-  { code: "+66", country: "Thailand" },
-  { code: "+62", country: "Indonesia" },
-  { code: "+63", country: "Philippines" },
-  { code: "+84", country: "Vietnam" },
-  { code: "+20", country: "Egypt" },
-  { code: "+234", country: "Nigeria" },
-  { code: "+254", country: "Kenya" },
-  { code: "+598", country: "Uruguay" },
-  { code: "+507", country: "Panama" },
+// Country codes with dial codes - mapped for easy lookup
+const countryCodesList = [
+  { code: "+1", country: "US/Canada", countries: ["United States", "Canada"] },
+  { code: "+44", country: "UK", countries: ["United Kingdom"] },
+  { code: "+91", country: "India", countries: ["India"] },
+  { code: "+61", country: "Australia", countries: ["Australia"] },
+  { code: "+49", country: "Germany", countries: ["Germany"] },
+  { code: "+33", country: "France", countries: ["France"] },
+  { code: "+81", country: "Japan", countries: ["Japan"] },
+  { code: "+65", country: "Singapore", countries: ["Singapore"] },
+  { code: "+27", country: "South Africa", countries: ["South Africa"] },
+  { code: "+971", country: "UAE", countries: ["UAE"] },
+  { code: "+966", country: "Saudi Arabia", countries: ["Saudi Arabia"] },
+  { code: "+852", country: "Hong Kong", countries: ["Hong Kong"] },
+  { code: "+86", country: "China", countries: ["China"] },
+  { code: "+82", country: "Korea", countries: ["South Korea"] },
+  { code: "+55", country: "Brazil", countries: ["Brazil"] },
+  { code: "+52", country: "Mexico", countries: ["Mexico"] },
+  { code: "+34", country: "Spain", countries: ["Spain"] },
+  { code: "+39", country: "Italy", countries: ["Italy"] },
+  { code: "+31", country: "Netherlands", countries: ["Netherlands"] },
+  { code: "+46", country: "Sweden", countries: ["Sweden"] },
+  { code: "+47", country: "Norway", countries: ["Norway"] },
+  { code: "+45", country: "Denmark", countries: ["Denmark"] },
+  { code: "+358", country: "Finland", countries: ["Finland"] },
+  { code: "+64", country: "New Zealand", countries: ["New Zealand"] },
+  { code: "+60", country: "Malaysia", countries: ["Malaysia"] },
+  { code: "+66", country: "Thailand", countries: ["Thailand"] },
+  { code: "+62", country: "Indonesia", countries: ["Indonesia"] },
+  { code: "+63", country: "Philippines", countries: ["Philippines"] },
+  { code: "+84", country: "Vietnam", countries: ["Vietnam"] },
+  { code: "+20", country: "Egypt", countries: ["Egypt"] },
+  { code: "+234", country: "Nigeria", countries: ["Nigeria"] },
+  { code: "+254", country: "Kenya", countries: ["Kenya"] },
+  { code: "+598", country: "Uruguay", countries: ["Uruguay"] },
+  { code: "+507", country: "Panama", countries: ["Panama"] },
 ];
+
+// Default country code mapping
+const getDefaultCountryCode = (country) => {
+  const match = countryCodesList.find(item => 
+    item.countries.includes(country) || item.country === country
+  );
+  return match ? match.code : "+1";
+};
 
 // Countries list
 const countries = [
@@ -177,6 +185,16 @@ const ShakingPhoneIcon = () => {
 export default function Contact() {
   const [showCalendly, setShowCalendly] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [countryCode, setCountryCode] = useState("+1");
+
+  // Auto-update country code when country changes
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setSelectedCountry(country);
+    const defaultCode = getDefaultCountryCode(country);
+    setCountryCode(defaultCode);
+  };
 
   useEffect(() => {
     document.title = "Contact Digital Marketing Consultant | Pranjal Digital";
@@ -305,41 +323,49 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Country and Phone Number Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Country *</label>
-                      <select
-                        name="country"
-                        required
-                        className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
-                      >
-                        <option value="">Select country...</option>
-                        {countries.map((c) => (
-                          <option key={c} value={c}>{c}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Phone Number</label>
-                      <div className="flex gap-2">
+                  {/* Country and Phone Number Row - Mobile Responsive */}
+                  <div>
+                    <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Country *</label>
+                    <select
+                      name="country"
+                      required
+                      value={selectedCountry}
+                      onChange={handleCountryChange}
+                      className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
+                    >
+                      <option value="">Select country...</option>
+                      {countries.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Phone Number</label>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      {/* Country Code Selector */}
+                      <div className="relative sm:w-32">
                         <select
                           name="country_code"
-                          className="w-28 bg-[#080c14] border border-white/10 text-white rounded-xl px-3 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
+                          value={countryCode}
+                          onChange={(e) => setCountryCode(e.target.value)}
+                          className="w-full appearance-none bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
                         >
-                          <option value="">Code</option>
-                          {countryCodes.map((cc) => (
-                            <option key={cc.code} value={cc.code}>{cc.code}</option>
+                          {countryCodesList.map((cc) => (
+                            <option key={cc.code} value={cc.code}>{cc.code} ({cc.country})</option>
                           ))}
                         </select>
-                        <input
-                          name="phone"
-                          type="tel"
-                          placeholder="Phone number"
-                          className="flex-1 bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 placeholder:text-white/20 transition-all"
-                        />
+                        <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
                       </div>
+                      {/* Phone Number Input */}
+                      <input
+                        name="phone"
+                        type="tel"
+                        placeholder="Phone number"
+                        className="flex-1 bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 placeholder:text-white/20 transition-all"
+                      />
                     </div>
+                    <p className="text-white/30 text-xs mt-1">Select country code or it auto-selects based on country</p>
                   </div>
 
                   <div>
@@ -486,7 +512,7 @@ export default function Contact() {
         </motion.div>
       </div>
 
-      {/* Contact Info Row - Mobile responsive */}
+      {/* Contact Info Row */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -636,7 +662,7 @@ export default function Contact() {
         </motion.div>
       </div>
 
-      {/* Get In Touch Footer Section with Address and Social Media */}
+      {/* Get In Touch Footer Section */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -650,7 +676,6 @@ export default function Contact() {
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Get In Touch</h3>
               
               <div className="space-y-4">
-                {/* Address */}
                 <div className="flex items-start gap-3">
                   <MapPin size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
@@ -661,7 +686,6 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Email */}
                 <div className="flex items-start gap-3">
                   <Mail size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
@@ -672,7 +696,6 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Book a Meeting */}
                 <div className="flex items-start gap-3">
                   <Calendar size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
@@ -685,7 +708,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Right Column - Social Media & Connect */}
+            {/* Right Column - Social Media */}
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Connect With Us</h3>
               <p className="text-white/50 text-xs sm:text-sm mb-6">
@@ -693,7 +716,6 @@ export default function Contact() {
               </p>
               
               <div className="flex flex-wrap gap-3 md:gap-4">
-                {/* LinkedIn Company Page */}
                 <a 
                   href="https://www.linkedin.com/company/pranjal-digital" 
                   target="_blank" 
@@ -709,7 +731,6 @@ export default function Contact() {
                   </div>
                 </a>
 
-                {/* Pranjal's LinkedIn */}
                 <a 
                   href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/" 
                   target="_blank" 
@@ -725,7 +746,6 @@ export default function Contact() {
                   </div>
                 </a>
 
-                {/* X (Twitter) */}
                 <a 
                   href="https://x.com/Pranjaldigitl" 
                   target="_blank" 
@@ -741,7 +761,6 @@ export default function Contact() {
                   </div>
                 </a>
 
-                {/* YouTube */}
                 <a 
                   href="https://www.youtube.com/@PranjalSharmaDigital" 
                   target="_blank" 
