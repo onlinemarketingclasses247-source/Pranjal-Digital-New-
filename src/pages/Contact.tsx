@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, BarChart3, Rocket, Brain, LineChart, PieChart, ArrowRight, Star, TrendingUp as TrendingUpIcon, Users as UsersIcon, DollarSign } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, BarChart3, Rocket, Brain, LineChart, PieChart, ArrowRight, Star, TrendingUp as TrendingUpIcon, Users as UsersIcon, DollarSign, Check, Clock as ClockIcon, PhoneCall, Video, MessageCircle, ThumbsUp, Briefcase, Trophy, Zap as ZapIcon, Crown } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -443,7 +443,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Option 2: Book Meeting - FIXED: Added visual elements to fill dead space */}
+          {/* Option 2: Book Meeting - RICH VISUAL ELEMENTS TO FILL DEAD SPACE */}
           <motion.div variants={fadeUp} className="group h-full">
             <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full flex flex-col">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
@@ -503,43 +503,88 @@ export default function Contact() {
                     <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
 
-                  {/* FILL THE DEAD SPACE WITH VISUAL ELEMENTS */}
+                  {/* ========== RICH VISUAL CONTENT TO FILL DEAD SPACE ========== */}
+                  
+                  {/* Success Stats Grid */}
                   <div className="mt-4 pt-4 border-t border-white/10">
-                    <p className="text-center text-white/30 text-[10px] uppercase tracking-wider mb-3">TRUSTED BY BUSINESSES WORLDWIDE</p>
+                    <p className="text-center text-white/30 text-[10px] uppercase tracking-wider mb-4">TRUSTED BY BUSINESSES WORLDWIDE</p>
                     <div className="grid grid-cols-3 gap-3">
-                      <div className="text-center">
-                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-1">
-                          <UsersIcon size={14} className="text-[#c9a84c]" />
+                      <div className="text-center group/stat">
+                        <div className="w-10 h-10 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover/stat:bg-[#c9a84c]/20 transition-all duration-300">
+                          <Trophy size={16} className="text-[#c9a84c]" />
                         </div>
                         <p className="text-white font-bold text-sm">400+</p>
-                        <p className="text-white/30 text-[10px]">Clients</p>
+                        <p className="text-white/30 text-[10px]">Happy Clients</p>
                       </div>
-                      <div className="text-center">
-                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-1">
-                          <Globe size={14} className="text-[#c9a84c]" />
+                      <div className="text-center group/stat">
+                        <div className="w-10 h-10 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover/stat:bg-[#c9a84c]/20 transition-all duration-300">
+                          <Globe size={16} className="text-[#c9a84c]" />
                         </div>
                         <p className="text-white font-bold text-sm">20+</p>
                         <p className="text-white/30 text-[10px]">Countries</p>
                       </div>
-                      <div className="text-center">
-                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-1">
-                          <Star size={14} className="text-[#c9a84c]" />
+                      <div className="text-center group/stat">
+                        <div className="w-10 h-10 mx-auto rounded-full bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover/stat:bg-[#c9a84c]/20 transition-all duration-300">
+                          <TrendingUpIcon size={16} className="text-[#c9a84c]" />
                         </div>
-                        <p className="text-white font-bold text-sm">98%</p>
-                        <p className="text-white/30 text-[10px]">Satisfaction</p>
+                        <p className="text-white font-bold text-sm">3x</p>
+                        <p className="text-white/30 text-[10px]">Avg. ROI</p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Additional visual - growth indicator */}
-                  <div className="mt-2">
-                    <div className="flex items-center justify-between gap-2 text-white/20 text-[10px]">
-                      <span>●</span>
-                      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/30 to-transparent"></span>
-                      <span>READY TO SCALE</span>
-                      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/30 to-transparent"></span>
-                      <span>●</span>
+                  {/* Client Testimonial Snippet */}
+                  <div className="bg-gradient-to-r from-[#c9a84c]/5 to-transparent rounded-lg p-3 border-l-2 border-[#c9a84c]">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Star size={12} className="text-[#c9a84c] fill-[#c9a84c]" />
+                      <Star size={12} className="text-[#c9a84c] fill-[#c9a84c]" />
+                      <Star size={12} className="text-[#c9a84c] fill-[#c9a84c]" />
+                      <Star size={12} className="text-[#c9a84c] fill-[#c9a84c]" />
+                      <Star size={12} className="text-[#c9a84c] fill-[#c9a84c]" />
                     </div>
+                    <p className="text-white/60 text-[11px] italic">"Pranjal Digital transformed our online presence. Revenue increased by 150% in 6 months!"</p>
+                    <p className="text-white/30 text-[10px] mt-1">— Sarah Chen, SaaS Founder</p>
+                  </div>
+
+                  {/* Process Timeline Mini */}
+                  <div>
+                    <p className="text-white/30 text-[10px] uppercase tracking-wider text-center mb-3">YOUR JOURNEY WITH US</p>
+                    <div className="flex items-center justify-between">
+                      <div className="text-center flex-1">
+                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
+                          <PhoneCall size={12} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white/40 text-[8px] mt-1">Call</p>
+                      </div>
+                      <ArrowRight size={12} className="text-white/20" />
+                      <div className="text-center flex-1">
+                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
+                          <Target size={12} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white/40 text-[8px] mt-1">Strategy</p>
+                      </div>
+                      <ArrowRight size={12} className="text-white/20" />
+                      <div className="text-center flex-1">
+                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
+                          <Rocket size={12} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white/40 text-[8px] mt-1">Launch</p>
+                      </div>
+                      <ArrowRight size={12} className="text-white/20" />
+                      <div className="text-center flex-1">
+                        <div className="w-8 h-8 mx-auto rounded-full bg-[#c9a84c]/40 flex items-center justify-center">
+                          <Trophy size={12} className="text-[#c9a84c]" />
+                        </div>
+                        <p className="text-white/40 text-[8px] mt-1">Growth</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Call to action reminder */}
+                  <div className="flex items-center justify-center gap-2 text-white/20 text-[9px] pt-2">
+                    <span>⚡</span>
+                    <span>No obligation • Cancel anytime • 100% free</span>
+                    <span>⚡</span>
                   </div>
                 </div>
               </div>
