@@ -16,6 +16,7 @@ function setMeta(description) {
 }
 
 const services = [
+  'SaaS Marketing',
   'IT Services Marketing',
   'Dental Marketing',
   'Go High Level',
@@ -31,6 +32,8 @@ const services = [
   'Amazon Ads',
   'TikTok Ads',
   'Social Media Marketing',
+  'YouTube Marketing',
+  'Content Marketing',
   'Other',
 ];
 
@@ -160,7 +163,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-[#080c14]">
+    <div className="bg-[#080c14] min-h-screen">
       {/* Hero Section */}
       <div className="relative overflow-hidden pt-20 pb-10 md:pt-24 md:pb-12">
         <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-[#c9a84c]/5 blur-[120px] animate-pulse" />
@@ -182,7 +185,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
           >
             Let's Build Something
             <span className="block bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent">Remarkable Together</span>
@@ -192,7 +195,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-white/60 text-lg"
+            className="text-white/60 text-base sm:text-lg"
           >
             Two ways to connect — choose what works best for you
           </motion.p>
@@ -206,14 +209,14 @@ export default function Contact() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid lg:grid-cols-2 gap-8"
+          className="grid lg:grid-cols-2 gap-6 md:gap-8"
         >
           {/* Option 1: Send Message */}
           <motion.div variants={fadeUp} className="group">
             <div className="relative rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 overflow-hidden hover:border-[#c9a84c]/30 transition-all duration-500 h-full">
               <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               
-              <div className="relative p-6 md:p-8">
+              <div className="relative p-5 sm:p-6 md:p-8">
                 <div className="flex items-center gap-4 mb-6">
                   <PulsingIcon Icon={MessageSquare} size={24} />
                   <div>
@@ -227,11 +230,11 @@ export default function Contact() {
                   method="POST"
                   className="space-y-5"
                 >
-                <input type="hidden" name="_captcha" value="false" />
-<input type="hidden" name="_subject" value="New Lead from Website" />
-<input type="hidden" name="_template" value="table" />
-<input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
-<input type="hidden" name="_honey" style={{ display: "none" }} />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_subject" value="New Lead from Website" />
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
+                  <input type="hidden" name="_honey" style={{ display: "none" }} />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -331,7 +334,7 @@ export default function Contact() {
             <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
               
-              <div className="relative p-6 md:p-8">
+              <div className="relative p-5 sm:p-6 md:p-8">
                 <div className="flex items-center gap-4 mb-6">
                   <ShakingPhoneIcon />
                   <div>
@@ -379,7 +382,6 @@ export default function Contact() {
                     <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
 
-                  {/* Added explainer text below button */}
                   <div className="text-center pt-2">
                     <p className="text-white/30 text-xs">No credit card required • Cancel anytime • 100% free consultation</p>
                   </div>
@@ -390,23 +392,23 @@ export default function Contact() {
         </motion.div>
       </div>
 
-      {/* Contact Info Row - Redesigned with illustrations */}
+      {/* Contact Info Row - Mobile friendly grid */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
         >
           {/* Email Card */}
           <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-500">
             <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
-            <div className="relative p-6 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Mail size={28} className="text-[#c9a84c]" />
+            <div className="relative p-5 sm:p-6 text-center">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Mail size={24} className="sm:size-28 text-[#c9a84c]" />
               </div>
-              <h4 className="text-white font-bold text-lg mb-2">Email Us</h4>
-              <p className="text-[#c9a84c] text-sm font-mono mb-3">info@pranjaldigital.com</p>
+              <h4 className="text-white font-bold text-base sm:text-lg mb-2">Email Us</h4>
+              <p className="text-[#c9a84c] text-xs sm:text-sm font-mono mb-3 break-all">info@pranjaldigital.com</p>
               <p className="text-white/40 text-xs">We reply within 24 hours</p>
             </div>
           </div>
@@ -414,25 +416,25 @@ export default function Contact() {
           {/* Response Time Card */}
           <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-500">
             <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
-            <div className="relative p-6 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Clock size={28} className="text-[#c9a84c]" />
+            <div className="relative p-5 sm:p-6 text-center">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Clock size={24} className="sm:size-28 text-[#c9a84c]" />
               </div>
-              <h4 className="text-white font-bold text-lg mb-2">Fast Response</h4>
-              <p className="text-2xl font-bold text-[#c9a84c] mb-2">Within 24h</p>
+              <h4 className="text-white font-bold text-base sm:text-lg mb-2">Fast Response</h4>
+              <p className="text-xl sm:text-2xl font-bold text-[#c9a84c] mb-2">Within 24h</p>
               <p className="text-white/40 text-xs">Usually much faster</p>
             </div>
           </div>
 
           {/* Markets Served Card */}
-          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-500">
+          <div className="sm:col-span-2 lg:col-span-1 group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 hover:border-[#c9a84c]/30 transition-all duration-500">
             <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
-            <div className="relative p-6 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Globe size={28} className="text-[#c9a84c]" />
+            <div className="relative p-5 sm:p-6 text-center">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Globe size={24} className="sm:size-28 text-[#c9a84c]" />
               </div>
-              <h4 className="text-white font-bold text-lg mb-2">Global Reach</h4>
-              <p className="text-[#c9a84c] text-sm font-semibold mb-2">US • Canada • India</p>
+              <h4 className="text-white font-bold text-base sm:text-lg mb-2">Global Reach</h4>
+              <p className="text-[#c9a84c] text-xs sm:text-sm font-semibold mb-2">US • Canada • India</p>
               <p className="text-white/40 text-xs">11+ countries served</p>
             </div>
           </div>
@@ -451,38 +453,37 @@ export default function Contact() {
               <iframe
                 src={CALENDLY}
                 width="100%"
-                height="700"
+                height="650"
                 frameBorder="0"
                 title="Book a Meeting with Pranjal Digital"
-                className="bg-white"
+                className="bg-white min-h-[600px]"
               />
             </motion.div>
           )}
         </div>
       </div>
 
-      {/* Process Section - Reduced gap */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-2">
+      {/* Process Section */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 mt-2">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-12"
         >
           <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-4 py-2 rounded-full mb-6">
             <Shield size={16} className="text-[#c9a84c]" />
             <span className="text-[#c9a84c] text-sm font-medium">Our Process</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How We Handle Your Inquiry</h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">How We Handle Your Inquiry</h2>
+          <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto px-4">
             From first contact to partnership — a transparent, no-pressure process designed for your success
           </p>
         </motion.div>
 
-        {/* Process Timeline with better visual design */}
+        {/* Process Timeline */}
         <div className="relative">
-          {/* Animated connecting line */}
-          <div className="absolute left-6 top-8 bottom-8 w-0.5 bg-gradient-to-b from-[#c9a84c] via-[#c9a84c]/50 to-transparent hidden md:block" />
+          <div className="absolute left-5 top-8 bottom-8 w-0.5 bg-gradient-to-b from-[#c9a84c] via-[#c9a84c]/50 to-transparent hidden md:block" />
           
           <div className="space-y-4">
             {processSteps.map((step, index) => (
@@ -494,12 +495,11 @@ export default function Contact() {
                 transition={{ delay: index * 0.1 }}
                 className="relative flex flex-col md:flex-row gap-4 group"
               >
-                {/* Step number badge */}
                 <div className="flex-shrink-0">
                   <div className="relative">
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <step.icon className="text-[#c9a84c]" size={20} />
+                    <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 border border-[#c9a84c]/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <step.icon className="text-[#c9a84c]" size={18} />
                     </div>
                     <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#c9a84c] flex items-center justify-center text-[10px] font-bold text-[#080c14]">
                       {index + 1}
@@ -507,88 +507,85 @@ export default function Contact() {
                   </div>
                 </div>
                 
-                <div className="flex-1 bg-gradient-to-r from-[#0a0f1c] via-[#0a0f1c]/80 to-transparent rounded-xl p-5 border border-white/5 hover:border-[#c9a84c]/20 transition-all duration-300 group-hover:transform group-hover:translate-x-1">
+                <div className="flex-1 bg-gradient-to-r from-[#0a0f1c] via-[#0a0f1c]/80 to-transparent rounded-xl p-4 md:p-5 border border-white/5 hover:border-[#c9a84c]/20 transition-all duration-300 group-hover:transform group-hover:translate-x-1">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <h4 className="text-white font-bold text-lg">{step.title}</h4>
+                    <h4 className="text-white font-bold text-base md:text-lg">{step.title}</h4>
                     <span className="text-xs text-[#c9a84c] bg-[#c9a84c]/10 px-3 py-1 rounded-full font-mono">
                       ⏱ {step.duration}
                     </span>
                   </div>
-                  <p className="text-white/50 text-sm leading-relaxed">{step.description}</p>
+                  <p className="text-white/50 text-xs md:text-sm leading-relaxed">{step.description}</p>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Trust Section - Compact design */}
+        {/* Trust Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 pt-8 border-t border-white/10"
+          className="mt-10 md:mt-12 pt-6 md:pt-8 border-t border-white/10"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
-              { icon: Award, number: "400+", label: "Clients Served", color: "from-amber-500/20 to-amber-500/5" },
-              { icon: Headphones, number: "24h", label: "Response Guarantee", color: "from-blue-500/20 to-blue-500/5" },
-              { icon: TrendingUp, number: "Free", label: "Strategy Call & Audit", color: "from-green-500/20 to-green-500/5" },
-              { icon: Shield, number: "✓", label: "NDA on Request", color: "from-purple-500/20 to-purple-500/5" }
+              { icon: Award, number: "400+", label: "Clients Served" },
+              { icon: Headphones, number: "24h", label: "Response Guarantee" },
+              { icon: TrendingUp, number: "Free", label: "Strategy Call & Audit" },
+              { icon: Shield, number: "✓", label: "NDA on Request" }
             ].map((stat, idx) => (
-              <div key={idx} className="group p-4 rounded-xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/5 hover:border-[#c9a84c]/20 transition-all duration-300 text-center">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
-                  <stat.icon size={18} className="text-[#c9a84c]" />
+              <div key={idx} className="group p-3 md:p-4 rounded-xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/5 hover:border-[#c9a84c]/20 transition-all duration-300 text-center">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <stat.icon size={16} className="md:size-18 text-[#c9a84c]" />
                 </div>
-                <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent mb-1">{stat.number}</p>
-                <p className="text-white/40 text-xs">{stat.label}</p>
+                <p className="text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent mb-1">{stat.number}</p>
+                <p className="text-white/40 text-xs md:text-xs">{stat.label}</p>
               </div>
             ))}
           </div>
         </motion.div>
       </div>
 
-      {/* Get In Touch Footer Section - Added at the bottom */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Get In Touch Footer Section */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 overflow-hidden"
         >
-          <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-6 sm:p-8 md:p-12">
             {/* Left Column - Get In Touch Info */}
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">Get In Touch</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Get In Touch</h3>
               
               <div className="space-y-4">
-                {/* Address */}
                 <div className="flex items-start gap-3">
-                  <MapPin size={20} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+                  <MapPin size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white/70 text-sm font-medium mb-1">Visit Us</p>
-                    <p className="text-white/50 text-sm leading-relaxed">
+                    <p className="text-white/50 text-xs sm:text-sm leading-relaxed">
                       1st floor, H.no 5, Rodali path, Janakpur, Kahilipara, Guwahati, Assam 781019, India
                     </p>
                   </div>
                 </div>
 
-                {/* Email */}
                 <div className="flex items-start gap-3">
-                  <Mail size={20} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+                  <Mail size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white/70 text-sm font-medium mb-1">Email Us</p>
-                    <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-sm">
+                    <a href="mailto:info@pranjaldigital.com" className="text-white/50 hover:text-[#c9a84c] transition-colors text-xs sm:text-sm break-all">
                       info@pranjaldigital.com
                     </a>
                   </div>
                 </div>
 
-                {/* Book a Meeting */}
                 <div className="flex items-start gap-3">
-                  <Calendar size={20} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
+                  <Calendar size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white/70 text-sm font-medium mb-1">Book a Meeting</p>
-                    <button onClick={scrollToCalendly} className="text-[#c9a84c] hover:text-[#dbb85c] transition-colors text-sm">
+                    <button onClick={scrollToCalendly} className="text-[#c9a84c] hover:text-[#dbb85c] transition-colors text-xs sm:text-sm">
                       Schedule a free strategy call →
                     </button>
                   </div>
@@ -598,73 +595,69 @@ export default function Contact() {
 
             {/* Right Column - Social Media & Connect */}
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">Connect With Us</h3>
-              <p className="text-white/50 text-sm mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Connect With Us</h3>
+              <p className="text-white/50 text-xs sm:text-sm mb-6">
                 Follow us on social media for digital marketing insights, tips, and updates.
               </p>
               
-              <div className="flex flex-wrap gap-4">
-                {/* LinkedIn Company Page */}
+              <div className="flex flex-wrap gap-3 md:gap-4">
                 <a 
                   href="https://www.linkedin.com/company/pranjal-digital" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Linkedin size={20} className="text-[#c9a84c]" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Linkedin size={16} className="sm:size-20 text-[#c9a84c]" />
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">Pranjal Digital</p>
-                    <p className="text-white/40 text-xs">Company Page</p>
+                    <p className="text-white text-xs sm:text-sm font-medium">Pranjal Digital</p>
+                    <p className="text-white/40 text-[10px] sm:text-xs">Company Page</p>
                   </div>
                 </a>
 
-                {/* Pranjal's LinkedIn */}
                 <a 
                   href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Linkedin size={20} className="text-[#c9a84c]" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Linkedin size={16} className="sm:size-20 text-[#c9a84c]" />
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">Pranjal Sharma</p>
-                    <p className="text-white/40 text-xs">Founder's LinkedIn</p>
+                    <p className="text-white text-xs sm:text-sm font-medium">Pranjal Sharma</p>
+                    <p className="text-white/40 text-[10px] sm:text-xs">Founder's LinkedIn</p>
                   </div>
                 </a>
 
-                {/* X (Twitter) */}
                 <a 
                   href="https://x.com/Pranjaldigitl" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Twitter size={20} className="text-[#c9a84c]" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Twitter size={16} className="sm:size-20 text-[#c9a84c]" />
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">Twitter / X</p>
-                    <p className="text-white/40 text-xs">@Pranjaldigitl</p>
+                    <p className="text-white text-xs sm:text-sm font-medium">Twitter / X</p>
+                    <p className="text-white/40 text-[10px] sm:text-xs">@Pranjaldigitl</p>
                   </div>
                 </a>
 
-                {/* YouTube */}
                 <a 
                   href="https://www.youtube.com/@PranjalSharmaDigital" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-3 bg-[#080c14] border border-white/10 rounded-xl px-4 py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
+                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Youtube size={20} className="text-[#c9a84c]" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Youtube size={16} className="sm:size-20 text-[#c9a84c]" />
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">YouTube</p>
-                    <p className="text-white/40 text-xs">Pranjal Sharma Digital</p>
+                    <p className="text-white text-xs sm:text-sm font-medium">YouTube</p>
+                    <p className="text-white/40 text-[10px] sm:text-xs">Pranjal Sharma Digital</p>
                   </div>
                 </a>
               </div>
