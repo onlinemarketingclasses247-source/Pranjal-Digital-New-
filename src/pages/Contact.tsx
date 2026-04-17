@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, BarChart3, Rocket, Brain, LineChart, PieChart, ArrowRight } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -46,7 +46,7 @@ const budgets = [
   'One-time project',
 ];
 
-// Country codes with dial codes - mapped for easy lookup
+// Country codes with dial codes
 const countryCodesList = [
   { code: "+1", country: "US/Canada", countries: ["United States", "Canada"] },
   { code: "+44", country: "UK", countries: ["United Kingdom"] },
@@ -84,7 +84,6 @@ const countryCodesList = [
   { code: "+507", country: "Panama", countries: ["Panama"] },
 ];
 
-// Default country code mapping
 const getDefaultCountryCode = (country) => {
   const match = countryCodesList.find(item => 
     item.countries.includes(country) || item.country === country
@@ -92,7 +91,6 @@ const getDefaultCountryCode = (country) => {
   return match ? match.code : "+1";
 };
 
-// Countries list
 const countries = [
   "United States", "Canada", "United Kingdom", "India", "Australia", "Germany", 
   "France", "Japan", "Singapore", "South Africa", "UAE", "Saudi Arabia", 
@@ -188,7 +186,6 @@ export default function Contact() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [countryCode, setCountryCode] = useState("+1");
 
-  // Auto-update country code when country changes
   const handleCountryChange = (e) => {
     const country = e.target.value;
     setSelectedCountry(country);
@@ -323,7 +320,6 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Country and Phone Number Row - Mobile Responsive */}
                   <div>
                     <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Country *</label>
                     <select
@@ -343,7 +339,6 @@ export default function Contact() {
                   <div>
                     <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Phone Number</label>
                     <div className="flex flex-col sm:flex-row gap-2">
-                      {/* Country Code Selector */}
                       <div className="relative sm:w-32">
                         <select
                           name="country_code"
@@ -352,12 +347,11 @@ export default function Contact() {
                           className="w-full appearance-none bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
                         >
                           {countryCodesList.map((cc) => (
-                            <option key={cc.code} value={cc.code}>{cc.code} ({cc.country})</option>
+                            <option key={cc.code} value={cc.code}>{cc.code}</option>
                           ))}
                         </select>
                         <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
                       </div>
-                      {/* Phone Number Input */}
                       <input
                         name="phone"
                         type="tel"
@@ -365,7 +359,7 @@ export default function Contact() {
                         className="flex-1 bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 placeholder:text-white/20 transition-all"
                       />
                     </div>
-                    <p className="text-white/30 text-xs mt-1">Select country code or it auto-selects based on country</p>
+                    <p className="text-white/30 text-xs mt-1">Country code auto-selects based on your country</p>
                   </div>
 
                   <div>
@@ -449,12 +443,13 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Option 2: Book Meeting */}
+          {/* Option 2: Book Meeting - FIXED: Removed dead space, added visual elements */}
           <motion.div variants={fadeUp} className="group h-full">
-            <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full">
+            <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full flex flex-col">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#c9a84c]/5 rounded-full blur-2xl" />
               
-              <div className="relative p-5 sm:p-6 md:p-8">
+              <div className="relative p-5 sm:p-6 md:p-8 flex-1 flex flex-col">
                 <div className="flex items-center gap-4 mb-6">
                   <ShakingPhoneIcon />
                   <div>
@@ -463,9 +458,13 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-5 flex-1">
+                  {/* Why book section */}
                   <div className="bg-black/30 rounded-xl p-5">
-                    <p className="text-white font-semibold mb-4 text-sm">✨ Why book a meeting:</p>
+                    <div className="flex items-center gap-2 mb-4">
+                      <Rocket size={16} className="text-[#c9a84c]" />
+                      <p className="text-white font-semibold text-sm">✨ Why book a meeting:</p>
+                    </div>
                     <div className="space-y-3">
                       {[
                         'Immediate conversation about your goals',
@@ -481,6 +480,7 @@ export default function Contact() {
                     </div>
                   </div>
 
+                  {/* What happens next section - Reduced bottom padding */}
                   <div className="bg-[#c9a84c]/10 rounded-xl p-5 border border-[#c9a84c]/20">
                     <div className="flex items-center gap-2 mb-3">
                       <Zap size={14} className="text-[#c9a84c]" />
@@ -494,16 +494,36 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={scrollToCalendly}
-                    className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                  >
-                    Book Your Free Call 
-                    <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                  </button>
+                  {/* Button and note - Tight spacing */}
+                  <div className="space-y-3 pt-2">
+                    <button
+                      onClick={scrollToCalendly}
+                      className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                    >
+                      Book Your Free Call 
+                      <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
 
-                  <div className="text-center pt-2">
-                    <p className="text-white/30 text-xs">No credit card required • Cancel anytime • 100% free consultation</p>
+                    <div className="text-center">
+                      <p className="text-white/30 text-xs">No credit card required • Cancel anytime • 100% free consultation</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative elements to fill space on desktop */}
+                <div className="hidden lg:block mt-6 pt-4 border-t border-white/10">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/40" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/60" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
+                    </div>
+                    <p className="text-white/20 text-[10px] tracking-wider">READY TO SCALE →</p>
+                    <div className="flex items-center gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/60" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/40" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -524,7 +544,7 @@ export default function Contact() {
             <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
             <div className="relative p-5 sm:p-6 text-center">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Mail size={24} className="sm:size-28 text-[#c9a84c]" />
+                <Mail size={24} className="text-[#c9a84c]" />
               </div>
               <h4 className="text-white font-bold text-base sm:text-lg mb-2">Email Us</h4>
               <p className="text-[#c9a84c] text-xs sm:text-sm font-mono mb-3 break-all">info@pranjaldigital.com</p>
@@ -536,7 +556,7 @@ export default function Contact() {
             <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
             <div className="relative p-5 sm:p-6 text-center">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Clock size={24} className="sm:size-28 text-[#c9a84c]" />
+                <Clock size={24} className="text-[#c9a84c]" />
               </div>
               <h4 className="text-white font-bold text-base sm:text-lg mb-2">Fast Response</h4>
               <p className="text-xl sm:text-2xl font-bold text-[#c9a84c] mb-2">Within 24h</p>
@@ -548,7 +568,7 @@ export default function Contact() {
             <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#c9a84c]/5 blur-3xl group-hover:bg-[#c9a84c]/10 transition-all duration-700" />
             <div className="relative p-5 sm:p-6 text-center">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Globe size={24} className="sm:size-28 text-[#c9a84c]" />
+                <Globe size={24} className="text-[#c9a84c]" />
               </div>
               <h4 className="text-white font-bold text-base sm:text-lg mb-2">Global Reach</h4>
               <p className="text-[#c9a84c] text-xs sm:text-sm font-semibold mb-2">US • Canada • India</p>
@@ -652,7 +672,7 @@ export default function Contact() {
             ].map((stat, idx) => (
               <div key={idx} className="group p-3 md:p-4 rounded-xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/5 hover:border-[#c9a84c]/20 transition-all duration-300 text-center">
                 <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mx-auto mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300">
-                  <stat.icon size={16} className="md:size-18 text-[#c9a84c]" />
+                  <stat.icon size={16} className="text-[#c9a84c]" />
                 </div>
                 <p className="text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent mb-1">{stat.number}</p>
                 <p className="text-white/40 text-xs md:text-xs">{stat.label}</p>
@@ -671,10 +691,8 @@ export default function Contact() {
           className="rounded-2xl bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 overflow-hidden"
         >
           <div className="grid md:grid-cols-2 gap-6 md:gap-8 p-6 sm:p-8 md:p-12">
-            {/* Left Column - Get In Touch Info */}
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Get In Touch</h3>
-              
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <MapPin size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
@@ -685,7 +703,6 @@ export default function Contact() {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start gap-3">
                   <Mail size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
@@ -695,7 +712,6 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
-
                 <div className="flex items-start gap-3">
                   <Calendar size={18} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                   <div>
@@ -707,68 +723,42 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-
-            {/* Right Column - Social Media */}
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Connect With Us</h3>
               <p className="text-white/50 text-xs sm:text-sm mb-6">
                 Follow us on social media for digital marketing insights, tips, and updates.
               </p>
-              
               <div className="flex flex-wrap gap-3 md:gap-4">
-                <a 
-                  href="https://www.linkedin.com/company/pranjal-digital" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
-                >
+                <a href="https://www.linkedin.com/company/pranjal-digital" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Linkedin size={16} className="sm:size-20 text-[#c9a84c]" />
+                    <Linkedin size={16} className="text-[#c9a84c]" />
                   </div>
                   <div>
                     <p className="text-white text-xs sm:text-sm font-medium">Pranjal Digital</p>
                     <p className="text-white/40 text-[10px] sm:text-xs">Company Page</p>
                   </div>
                 </a>
-
-                <a 
-                  href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
-                >
+                <a href="https://www.linkedin.com/in/pranjal-sharma-digital-marketing-consultant/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Linkedin size={16} className="sm:size-20 text-[#c9a84c]" />
+                    <Linkedin size={16} className="text-[#c9a84c]" />
                   </div>
                   <div>
                     <p className="text-white text-xs sm:text-sm font-medium">Pranjal Sharma</p>
                     <p className="text-white/40 text-[10px] sm:text-xs">Founder's LinkedIn</p>
                   </div>
                 </a>
-
-                <a 
-                  href="https://x.com/Pranjaldigitl" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
-                >
+                <a href="https://x.com/Pranjaldigitl" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Twitter size={16} className="sm:size-20 text-[#c9a84c]" />
+                    <Twitter size={16} className="text-[#c9a84c]" />
                   </div>
                   <div>
                     <p className="text-white text-xs sm:text-sm font-medium">Twitter / X</p>
                     <p className="text-white/40 text-[10px] sm:text-xs">@Pranjaldigitl</p>
                   </div>
                 </a>
-
-                <a 
-                  href="https://www.youtube.com/@PranjalSharmaDigital" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300"
-                >
+                <a href="https://www.youtube.com/@PranjalSharmaDigital" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 sm:gap-3 bg-[#080c14] border border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-3 hover:border-[#c9a84c]/30 hover:bg-[#c9a84c]/5 transition-all duration-300">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#0a0f1c] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Youtube size={16} className="sm:size-20 text-[#c9a84c]" />
+                    <Youtube size={16} className="text-[#c9a84c]" />
                   </div>
                   <div>
                     <p className="text-white text-xs sm:text-sm font-medium">YouTube</p>
