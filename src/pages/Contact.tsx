@@ -16,18 +16,22 @@ function setMeta(description) {
 }
 
 const services = [
-  'SEO (Technical / Content / Local)',
-  'Google PPC Advertising',
-  'Meta Ads (Facebook / Instagram)',
-  'LinkedIn Advertising',
-  'B2B Marketing & Lead Generation',
-  'SaaS Marketing',
   'IT Services Marketing',
-  'Email Marketing & Automation',
+  'Dental Marketing',
+  'Go High Level',
+  'Ecommerce Marketing',
+  'Healthcare Marketing',
+  'US Local Business',
+  'India Local Business',
+  'SEO, AEO, GEO',
+  'Performance Marketing',
+  'Google Ads',
+  'Meta Ads',
+  'LinkedIn Ads',
+  'Amazon Ads',
+  'TikTok Ads',
   'Social Media Marketing',
-  'UI/UX & CRO',
-  'Strategy Consultation',
-  'Other / Not Sure',
+  'Other',
 ];
 
 const budgets = [
