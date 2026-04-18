@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star, BarChart3, Briefcase, TrendingUp as TrendingUpIcon, Users as UsersIcon, DollarSign } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star, Briefcase, TrendingUp as TrendingUpIcon } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -46,7 +46,7 @@ const budgets = [
   'One-time project',
 ];
 
-// Country codes with dial codes
+// Complete Country codes with dial codes
 const countryCodesList = [
   { code: "+1", country: "US/Canada", countries: ["United States", "Canada"] },
   { code: "+44", country: "UK", countries: ["United Kingdom"] },
