@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star, Briefcase, TrendingUp as TrendingUpIcon } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star, Briefcase, TrendingUp as TrendingUpIcon, DollarSign, IndianRupee, CheckCircle, Circle } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -37,7 +37,8 @@ const services = [
   'Other',
 ];
 
-const budgets = [
+// USD Budgets
+const budgetsUSD = [
   'Under $500/month',
   '$500 – $1,500/month',
   '$1,500 – $3,000/month',
@@ -46,7 +47,17 @@ const budgets = [
   'One-time project',
 ];
 
-// Complete Country codes with dial codes
+// INR Budgets
+const budgetsINR = [
+  'Under ₹40,000/month',
+  '₹40,000 – ₹1,25,000/month',
+  '₹1,25,000 – ₹2,50,000/month',
+  '₹2,50,000 – ₹4,00,000/month',
+  '₹4,00,000+/month',
+  'One-time project',
+];
+
+// Country codes with dial codes
 const countryCodesList = [
   { code: "+1", country: "US/Canada", countries: ["United States", "Canada"] },
   { code: "+44", country: "UK", countries: ["United Kingdom"] },
@@ -133,7 +144,80 @@ const processSteps = [
   }
 ];
 
-// Fixed height Animated Dot Component - NO CLS ISSUE
+// Graphical Timeline Step Component
+const TimelineStep = ({ step, index, isActive, isCompleted, onHover }) => {
+  return (
+    <motion.div 
+      className="relative flex-1"
+      onHoverStart={() => onHover(index)}
+      onHoverEnd={() => onHover(null)}
+    >
+      {/* Connector Line */}
+      {index < 3 && (
+        <div className={`absolute top-5 left-[calc(50%+20px)] right-[-50%] h-0.5 transition-all duration-500 ${
+          isCompleted ? 'bg-[#c9a84c]' : 'bg-white/10'
+        }`} />
+      )}
+      
+      <div className="flex flex-col items-center">
+        {/* Icon Circle */}
+        <motion.div
+          animate={{
+            scale: isActive ? 1.1 : 1,
+          }}
+          transition={{ duration: 0.3 }}
+          className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+            isCompleted 
+              ? 'bg-gradient-to-br from-[#c9a84c] to-[#dbb85c]' 
+              : isActive 
+                ? 'bg-[#c9a84c]/20 border-2 border-[#c9a84c]' 
+                : 'bg-white/5 border border-white/10'
+          }`}
+        >
+          {isCompleted ? (
+            <CheckCircle size={18} className="text-[#080c14]" />
+          ) : (
+            <step.icon size={18} className={isActive ? 'text-[#c9a84c]' : 'text-white/30'} />
+          )}
+          
+          {/* Pulse ring for active step */}
+          {isActive && !isCompleted && (
+            <motion.div
+              className="absolute inset-0 rounded-full bg-[#c9a84c]/30"
+              animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          )}
+        </motion.div>
+        
+        {/* Step Number */}
+        <span className={`text-[10px] mt-1 font-mono ${
+          isCompleted ? 'text-[#c9a84c]' : isActive ? 'text-[#c9a84c]' : 'text-white/30'
+        }`}>
+          Step {index + 1}
+        </span>
+        
+        {/* Title - appears on hover or active */}
+        <AnimatePresence>
+          {(isActive || isCompleted) && (
+            <motion.div
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              className="absolute -top-8 whitespace-nowrap"
+            >
+              <span className="text-[#c9a84c] text-[10px] font-semibold bg-[#080c14] px-2 py-0.5 rounded-full">
+                {step.title.split(' ')[0]}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+};
+
+// Fixed height Animated Dot Component
 const AnimatedDot = ({ active, delay, label, sublabel }) => {
   return (
     <div className="flex flex-col items-center flex-1 min-w-[60px]">
@@ -163,7 +247,6 @@ const AnimatedDot = ({ active, delay, label, sublabel }) => {
           )}
         </motion.div>
       </div>
-      {/* Fixed height container for text to prevent CLS */}
       <div className="h-10 text-center mt-1">
         <AnimatePresence mode="wait">
           {active && (
@@ -177,9 +260,7 @@ const AnimatedDot = ({ active, delay, label, sublabel }) => {
               <p className="text-white/40 text-[8px] sm:text-[10px] whitespace-nowrap">{sublabel}</p>
             </motion.div>
           )}
-          {!active && (
-            <div className="h-8" />
-          )}
+          {!active && <div className="h-8" />}
         </AnimatePresence>
       </div>
     </div>
@@ -239,12 +320,20 @@ export default function Contact() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [countryCode, setCountryCode] = useState("+1");
   const [activeDot, setActiveDot] = useState(0);
+  const [currency, setCurrency] = useState("USD");
+  const [activeTimelineStep, setActiveTimelineStep] = useState(null);
+  const [completedSteps, setCompletedSteps] = useState([false, false, false, false]);
 
   const handleCountryChange = (e) => {
     const country = e.target.value;
     setSelectedCountry(country);
     const defaultCode = getDefaultCountryCode(country);
     setCountryCode(defaultCode);
+  };
+
+  // Get budgets based on selected currency
+  const getBudgets = () => {
+    return currency === "USD" ? budgetsUSD : budgetsINR;
   };
 
   useEffect(() => {
@@ -257,7 +346,22 @@ export default function Contact() {
       setActiveDot((prev) => (prev + 1) % 4);
     }, 3000);
     
-    return () => clearInterval(interval);
+    // Auto-advance timeline steps for demo (can be triggered by form submission in real scenario)
+    const timelineInterval = setInterval(() => {
+      setCompletedSteps(prev => {
+        const next = [...prev];
+        const nextIndex = prev.findIndex(s => !s);
+        if (nextIndex !== -1) {
+          next[nextIndex] = true;
+        }
+        return next;
+      });
+    }, 5000);
+    
+    return () => {
+      clearInterval(interval);
+      clearInterval(timelineInterval);
+    };
   }, []);
 
   const scrollToCalendly = () => {
@@ -286,6 +390,13 @@ export default function Contact() {
     { label: "Discovery", sublabel: "Strategy session" },
     { label: "Proposal", sublabel: "48hr delivery" },
     { label: "Launch", sublabel: "Growth begins" }
+  ];
+
+  const timelineSteps = [
+    { icon: Send, title: "Form Submitted" },
+    { icon: Mail, title: "Email Confirmation" },
+    { icon: Headphones, title: "Quick Response" },
+    { icon: Calendar, title: "Call Scheduled" }
   ];
 
   return (
@@ -364,6 +475,7 @@ export default function Contact() {
                   <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
                   <input type="hidden" name="_honey" style={{ display: "none" }} />
                   <input type="hidden" name="_redirect" value="https://pranjaldigital.com/thank-you" />
+                  <input type="hidden" name="currency" value={currency} />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -453,15 +565,29 @@ export default function Contact() {
                     </div>
                     <div>
                       <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Monthly Budget</label>
-                      <select
-                        name="budget"
-                        className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
-                      >
-                        <option value="">Select budget range...</option>
-                        {budgets.map((b) => (
-                          <option key={b} value={b}>{b}</option>
-                        ))}
-                      </select>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <select
+                            name="budget"
+                            className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer appearance-none"
+                          >
+                            <option value="">Select budget...</option>
+                            {getBudgets().map((b) => (
+                              <option key={b} value={b}>{b}</option>
+                            ))}
+                          </select>
+                          <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setCurrency(currency === "USD" ? "INR" : "USD")}
+                          className="px-4 py-3 rounded-xl bg-[#0a0f1c] border border-white/10 text-white/70 text-sm font-medium hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-all duration-300 flex items-center gap-2"
+                        >
+                          {currency === "USD" ? <DollarSign size={16} /> : <IndianRupee size={16} />}
+                          {currency}
+                        </button>
+                      </div>
+                      <p className="text-white/30 text-[10px] mt-1">Click currency to switch between USD/INR</p>
                     </div>
                   </div>
 
@@ -495,15 +621,44 @@ export default function Contact() {
                   </button>
                 </form>
 
-                <div className="mt-6 pt-6 border-t border-white/10">
-                  <div className="flex items-center gap-2 mb-3">
+                {/* Graphical Timeline - What happens next */}
+                <div className="mt-8 pt-6 border-t border-white/10">
+                  <div className="flex items-center gap-2 mb-6">
                     <Zap size={14} className="text-[#c9a84c]" />
                     <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
                   </div>
-                  <div className="space-y-2 text-sm text-white/60">
-                    <p className="flex items-center gap-2">✓ Form submitted → Email confirmation</p>
-                    <p className="flex items-center gap-2">✓ Response within 24 hours</p>
-                    <p className="flex items-center gap-2">✓ Discovery call scheduled</p>
+                  
+                  {/* Graphical Timeline */}
+                  <div className="relative py-6">
+                    <div className="flex items-center justify-between">
+                      {timelineSteps.map((step, idx) => (
+                        <TimelineStep
+                          key={idx}
+                          step={step}
+                          index={idx}
+                          isActive={activeTimelineStep === idx}
+                          isCompleted={completedSteps[idx]}
+                          onHover={setActiveTimelineStep}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Timeline labels */}
+                    <div className="flex justify-between mt-4 px-2">
+                      {timelineSteps.map((step, idx) => (
+                        <div key={idx} className="text-center flex-1">
+                          <p className={`text-[10px] font-medium transition-colors duration-300 ${
+                            completedSteps[idx] 
+                              ? 'text-[#c9a84c]' 
+                              : activeTimelineStep === idx 
+                                ? 'text-white/70' 
+                                : 'text-white/30'
+                          }`}>
+                            {step.title}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -547,20 +702,6 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* What happens next section */}
-                  <div className="bg-[#c9a84c]/10 rounded-xl p-5 border border-[#c9a84c]/20">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Zap size={14} className="text-[#c9a84c]" />
-                      <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
-                    </div>
-                    <div className="space-y-2 text-sm text-white/60">
-                      <p className="flex items-center gap-2">✓ Choose a time slot that works for you</p>
-                      <p className="flex items-center gap-2">✓ Join the video/audio call</p>
-                      <p className="flex items-center gap-2">✓ Discuss your business goals</p>
-                      <p className="flex items-center gap-2">✓ Get immediate feedback & proposal within 48h</p>
-                    </div>
-                  </div>
-
                   {/* Button */}
                   <button
                     onClick={scrollToCalendly}
@@ -570,7 +711,7 @@ export default function Contact() {
                     <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
 
-                  {/* Premium Stats Section - Graphical with Icons */}
+                  {/* Premium Stats Section */}
                   <div className="mt-4 pt-4 border-t border-white/10">
                     <p className="text-white/30 text-[10px] uppercase tracking-wider text-center mb-4">OUR IMPACT IN NUMBERS</p>
                     <div className="grid grid-cols-3 gap-3">
@@ -598,7 +739,7 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Premium Square Box - Explaining the stats */}
+                  {/* Premium Square Box */}
                   <div className="mt-3 p-4 rounded-xl bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/5 to-transparent border border-[#c9a84c]/20">
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
@@ -611,7 +752,7 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Animated Journey Dots - Fixed height to prevent CLS */}
+                  {/* Animated Journey Dots */}
                   <div className="mt-3 pt-3 border-t border-white/10">
                     <p className="text-white/30 text-[9px] sm:text-[10px] uppercase tracking-wider text-center mb-4">YOUR JOURNEY STARTS HERE</p>
                     <div className="flex items-center justify-between gap-1 sm:gap-2">
