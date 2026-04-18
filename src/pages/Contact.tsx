@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star, Briefcase, TrendingUp as TrendingUpIcon, DollarSign, IndianRupee, CheckCircle, Circle } from 'lucide-react';
+import { Mail, Clock, CheckCircle2, Globe, Calendar, MessageSquare, FileText, Users, ClipboardList, Handshake, Send, Zap, Shield, Target, Sparkles, Phone, MapPin, Award, TrendingUp, Headphones, Linkedin, Twitter, Youtube, ChevronDown, Rocket, Star, Briefcase, TrendingUp as TrendingUpIcon, DollarSign, IndianRupee, CheckCircle, Circle, CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
@@ -144,7 +144,143 @@ const processSteps = [
   }
 ];
 
-// Graphical Timeline Step Component
+// Animated Calendar Component
+const AnimatedCalendar = ({ onSelectDate, onBookClick }) => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
+  
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    return { daysInMonth, startingDayOfWeek };
+  };
+  
+  const { daysInMonth, startingDayOfWeek } = getDaysInMonth(currentDate);
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  
+  const prevMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+  };
+  
+  const nextMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+  };
+  
+  const handleDateSelect = (day) => {
+    const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    setSelectedDate(selected);
+    if (onSelectDate) onSelectDate(selected);
+  };
+  
+  // Auto-rotate selected date every 2 seconds for animation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomDay = Math.floor(Math.random() * daysInMonth) + 1;
+      const randomDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), randomDay);
+      setSelectedDate(randomDate);
+    }, 2500);
+    
+    return () => clearInterval(interval);
+  }, [currentDate, daysInMonth]);
+  
+  return (
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-xl p-4 border border-white/10">
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={prevMonth}
+          className="w-7 h-7 rounded-full bg-white/5 hover:bg-[#c9a84c]/20 flex items-center justify-center transition-all duration-300"
+        >
+          <ChevronLeft size={14} className="text-white/60" />
+        </button>
+        <div className="flex items-center gap-2">
+          <CalendarDays size={14} className="text-[#c9a84c]" />
+          <span className="text-white text-sm font-medium">
+            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+          </span>
+        </div>
+        <button
+          onClick={nextMonth}
+          className="w-7 h-7 rounded-full bg-white/5 hover:bg-[#c9a84c]/20 flex items-center justify-center transition-all duration-300"
+        >
+          <ChevronRight size={14} className="text-white/60" />
+        </button>
+      </div>
+      
+      {/* Week days header */}
+      <div className="grid grid-cols-7 gap-1 mb-2">
+        {weekDays.map((day, idx) => (
+          <div key={idx} className="text-center">
+            <span className="text-white/30 text-[10px]">{day}</span>
+          </div>
+        ))}
+      </div>
+      
+      {/* Calendar days */}
+      <div className="grid grid-cols-7 gap-1">
+        {Array.from({ length: startingDayOfWeek }).map((_, idx) => (
+          <div key={`empty-${idx}`} className="h-8" />
+        ))}
+        {Array.from({ length: daysInMonth }).map((_, idx) => {
+          const day = idx + 1;
+          const isSelected = selectedDate && selectedDate.getDate() === day;
+          return (
+            <motion.button
+              key={day}
+              onClick={() => handleDateSelect(day)}
+              whileHover={{ scale: 1.1 }}
+              animate={isSelected ? {
+                scale: [1, 1.2, 1],
+                backgroundColor: ['rgba(201,168,76,0)', 'rgba(201,168,76,0.3)', 'rgba(201,168,76,0)']
+              } : {}}
+              transition={{ duration: 0.5, repeat: isSelected ? Infinity : 0, repeatDelay: 1 }}
+              className={`h-8 rounded-full text-xs font-medium transition-all duration-300 ${
+                isSelected 
+                  ? 'bg-[#c9a84c] text-[#080c14] shadow-lg shadow-[#c9a84c]/30' 
+                  : 'text-white/60 hover:bg-white/10'
+              }`}
+            >
+              {day}
+            </motion.button>
+          );
+        })}
+      </div>
+      
+      {/* Selected date indicator */}
+      {selectedDate && (
+        <motion.div
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-3 pt-3 border-t border-white/10 text-center"
+        >
+          <p className="text-white/40 text-[10px]">Selected: <span className="text-[#c9a84c] font-medium">
+            {monthNames[selectedDate.getMonth()]} {selectedDate.getDate()}, {selectedDate.getFullYear()}
+          </span></p>
+        </motion.div>
+      )}
+      
+      {/* Click to book button inside calendar */}
+      <motion.button
+        onClick={onBookClick}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="w-full mt-4 py-2.5 rounded-lg bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-300"
+      >
+        <Calendar size={14} />
+        {isHovering ? "Pick a Time →" : "Book Your Free Call"}
+      </motion.button>
+    </div>
+  );
+};
+
+// Timeline Step Component
 const TimelineStep = ({ step, index, isActive, isCompleted, onHover }) => {
   return (
     <motion.div 
@@ -152,7 +288,6 @@ const TimelineStep = ({ step, index, isActive, isCompleted, onHover }) => {
       onHoverStart={() => onHover(index)}
       onHoverEnd={() => onHover(null)}
     >
-      {/* Connector Line */}
       {index < 3 && (
         <div className={`absolute top-5 left-[calc(50%+20px)] right-[-50%] h-0.5 transition-all duration-500 ${
           isCompleted ? 'bg-[#c9a84c]' : 'bg-white/10'
@@ -160,11 +295,8 @@ const TimelineStep = ({ step, index, isActive, isCompleted, onHover }) => {
       )}
       
       <div className="flex flex-col items-center">
-        {/* Icon Circle */}
         <motion.div
-          animate={{
-            scale: isActive ? 1.1 : 1,
-          }}
+          animate={{ scale: isActive ? 1.1 : 1 }}
           transition={{ duration: 0.3 }}
           className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
             isCompleted 
@@ -179,8 +311,6 @@ const TimelineStep = ({ step, index, isActive, isCompleted, onHover }) => {
           ) : (
             <step.icon size={18} className={isActive ? 'text-[#c9a84c]' : 'text-white/30'} />
           )}
-          
-          {/* Pulse ring for active step */}
           {isActive && !isCompleted && (
             <motion.div
               className="absolute inset-0 rounded-full bg-[#c9a84c]/30"
@@ -190,14 +320,12 @@ const TimelineStep = ({ step, index, isActive, isCompleted, onHover }) => {
           )}
         </motion.div>
         
-        {/* Step Number */}
         <span className={`text-[10px] mt-1 font-mono ${
           isCompleted ? 'text-[#c9a84c]' : isActive ? 'text-[#c9a84c]' : 'text-white/30'
         }`}>
           Step {index + 1}
         </span>
         
-        {/* Title - appears on hover or active */}
         <AnimatePresence>
           {(isActive || isCompleted) && (
             <motion.div
@@ -217,7 +345,7 @@ const TimelineStep = ({ step, index, isActive, isCompleted, onHover }) => {
   );
 };
 
-// Fixed height Animated Dot Component
+// Animated Dot Component
 const AnimatedDot = ({ active, delay, label, sublabel }) => {
   return (
     <div className="flex flex-col items-center flex-1 min-w-[60px]">
@@ -280,40 +408,6 @@ const PulsingIcon = ({ Icon, size = 24 }) => {
   );
 };
 
-// Shaking phone icon component for Book Meeting
-const ShakingPhoneIcon = () => {
-  const [isShaking, setIsShaking] = useState(true);
-  const [showPhone, setShowPhone] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsShaking(true);
-      setShowPhone(false);
-      setTimeout(() => {
-        setShowPhone(true);
-        setTimeout(() => setIsShaking(false), 500);
-      }, 300);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="relative">
-      <motion.div
-        animate={isShaking ? {
-          rotate: [0, -10, 10, -10, 10, 0],
-          x: [0, -2, 2, -2, 2, 0]
-        } : {}}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center shadow-lg shadow-[#c9a84c]/25"
-      >
-        {showPhone ? <Phone size={24} className="text-[#080c14]" /> : <Calendar size={24} className="text-[#080c14]" />}
-      </motion.div>
-    </div>
-  );
-};
-
 export default function Contact() {
   const [showCalendly, setShowCalendly] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -331,7 +425,6 @@ export default function Contact() {
     setCountryCode(defaultCode);
   };
 
-  // Get budgets based on selected currency
   const getBudgets = () => {
     return currency === "USD" ? budgetsUSD : budgetsINR;
   };
@@ -346,7 +439,6 @@ export default function Contact() {
       setActiveDot((prev) => (prev + 1) % 4);
     }, 3000);
     
-    // Auto-advance timeline steps for demo (can be triggered by form submission in real scenario)
     const timelineInterval = setInterval(() => {
       setCompletedSteps(prev => {
         const next = [...prev];
@@ -621,14 +713,13 @@ export default function Contact() {
                   </button>
                 </form>
 
-                {/* Graphical Timeline - What happens next */}
+                {/* Graphical Timeline */}
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <div className="flex items-center gap-2 mb-6">
                     <Zap size={14} className="text-[#c9a84c]" />
                     <span className="text-xs font-semibold text-[#c9a84c] uppercase tracking-wider">What happens next:</span>
                   </div>
                   
-                  {/* Graphical Timeline */}
                   <div className="relative py-6">
                     <div className="flex items-center justify-between">
                       {timelineSteps.map((step, idx) => (
@@ -643,7 +734,6 @@ export default function Contact() {
                       ))}
                     </div>
                     
-                    {/* Timeline labels */}
                     <div className="flex justify-between mt-4 px-2">
                       {timelineSteps.map((step, idx) => (
                         <div key={idx} className="text-center flex-1">
@@ -665,7 +755,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Option 2: Book Meeting */}
+          {/* Option 2: Book Meeting - With Animated Calendar */}
           <motion.div variants={fadeUp} className="group h-full">
             <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full flex flex-col">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
@@ -673,7 +763,13 @@ export default function Contact() {
               
               <div className="relative p-5 sm:p-6 md:p-8 flex-1 flex flex-col">
                 <div className="flex items-center gap-4 mb-6">
-                  <ShakingPhoneIcon />
+                  <div className="relative">
+                    <div className="absolute inset-0 rounded-full bg-[#c9a84c] animate-ping opacity-75" style={{ animationDuration: '1.5s' }} />
+                    <div className="absolute inset-0 rounded-full bg-[#c9a84c] animate-pulse opacity-50" style={{ animationDuration: '1.5s' }} />
+                    <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center shadow-lg shadow-[#c9a84c]/25">
+                      <Calendar size={24} className="text-[#080c14]" />
+                    </div>
+                  </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">Book a Meeting</h3>
                     <p className="text-[#c9a84c]/70 text-sm">30-min free strategy call</p>
@@ -702,60 +798,54 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Button */}
-                  <button
-                    onClick={scrollToCalendly}
-                    className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                  >
-                    Book Your Free Call 
-                    <Calendar size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                  </button>
+                  {/* Animated Calendar Component - Above the button */}
+                  <AnimatedCalendar onBookClick={scrollToCalendly} />
 
                   {/* Premium Stats Section */}
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <p className="text-white/30 text-[10px] uppercase tracking-wider text-center mb-4">OUR IMPACT IN NUMBERS</p>
+                  <div className="mt-2 pt-2 border-t border-white/10">
+                    <p className="text-white/30 text-[10px] uppercase tracking-wider text-center mb-3">OUR IMPACT IN NUMBERS</p>
                     <div className="grid grid-cols-3 gap-3">
                       <div className="text-center group/stat">
-                        <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
-                          <Briefcase size={22} className="text-[#c9a84c]" />
+                        <div className="w-10 h-10 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
+                          <Briefcase size={20} className="text-[#c9a84c]" />
                         </div>
-                        <p className="text-white font-bold text-lg sm:text-xl">400+</p>
-                        <p className="text-white/40 text-[10px]">Businesses Served</p>
+                        <p className="text-white font-bold text-base sm:text-lg">400+</p>
+                        <p className="text-white/40 text-[9px]">Businesses</p>
                       </div>
                       <div className="text-center group/stat">
-                        <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
-                          <Globe size={22} className="text-[#c9a84c]" />
+                        <div className="w-10 h-10 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
+                          <Globe size={20} className="text-[#c9a84c]" />
                         </div>
-                        <p className="text-white font-bold text-lg sm:text-xl">20+</p>
-                        <p className="text-white/40 text-[10px]">Countries Global</p>
+                        <p className="text-white font-bold text-base sm:text-lg">20+</p>
+                        <p className="text-white/40 text-[9px]">Countries</p>
                       </div>
                       <div className="text-center group/stat">
-                        <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
-                          <TrendingUpIcon size={22} className="text-[#c9a84c]" />
+                        <div className="w-10 h-10 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-2 group-hover/stat:scale-110 transition-transform duration-300">
+                          <TrendingUpIcon size={20} className="text-[#c9a84c]" />
                         </div>
-                        <p className="text-white font-bold text-lg sm:text-xl">3x</p>
-                        <p className="text-white/40 text-[10px]">Avg. ROI Growth</p>
+                        <p className="text-white font-bold text-base sm:text-lg">3x</p>
+                        <p className="text-white/40 text-[9px]">Avg. ROI</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Premium Square Box */}
-                  <div className="mt-3 p-4 rounded-xl bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/5 to-transparent border border-[#c9a84c]/20">
-                    <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
-                        <Star size={14} className="text-[#c9a84c]" />
+                  <div className="p-3 rounded-xl bg-gradient-to-r from-[#c9a84c]/10 via-[#c9a84c]/5 to-transparent border border-[#c9a84c]/20">
+                    <div className="flex items-start gap-2">
+                      <div className="w-6 h-6 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
+                        <Star size={12} className="text-[#c9a84c]" />
                       </div>
                       <div>
-                        <p className="text-white text-sm font-semibold tracking-wide">Proven Track Record</p>
-                        <p className="text-white/50 text-xs leading-relaxed mt-1">Over 400+ businesses across 20+ countries have achieved 3x average ROI growth with our data-driven marketing strategies.</p>
+                        <p className="text-white text-xs font-semibold tracking-wide">Proven Track Record</p>
+                        <p className="text-white/50 text-[10px] leading-relaxed mt-0.5">400+ businesses across 20+ countries achieved 3x average ROI growth.</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Animated Journey Dots */}
-                  <div className="mt-3 pt-3 border-t border-white/10">
-                    <p className="text-white/30 text-[9px] sm:text-[10px] uppercase tracking-wider text-center mb-4">YOUR JOURNEY STARTS HERE</p>
-                    <div className="flex items-center justify-between gap-1 sm:gap-2">
+                  <div className="mt-2 pt-2 border-t border-white/10">
+                    <p className="text-white/30 text-[8px] sm:text-[9px] uppercase tracking-wider text-center mb-3">YOUR JOURNEY STARTS HERE</p>
+                    <div className="flex items-center justify-between gap-1">
                       {journeySteps.map((step, idx) => (
                         <AnimatedDot
                           key={idx}
@@ -769,7 +859,7 @@ export default function Contact() {
                   </div>
 
                   {/* Bottom note */}
-                  <div className="flex items-center justify-center gap-2 text-white/20 text-[8px] sm:text-[9px] pt-2">
+                  <div className="flex items-center justify-center gap-1 text-white/20 text-[7px] sm:text-[8px] pt-1">
                     <span>✦</span>
                     <span>No obligation • Cancel anytime • 100% free</span>
                     <span>✦</span>
