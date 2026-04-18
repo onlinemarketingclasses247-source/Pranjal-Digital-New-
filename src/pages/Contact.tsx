@@ -414,7 +414,7 @@ export default function Contact() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [countryCode, setCountryCode] = useState("+1");
   const [activeDot, setActiveDot] = useState(0);
-  const [currency, setCurrency] = useState("USD");
+  const [currency, setCurrency] = useState(null); // Start with null to force selection first
   const [activeTimelineStep, setActiveTimelineStep] = useState(null);
   const [completedSteps, setCompletedSteps] = useState([false, false, false, false]);
 
@@ -427,6 +427,11 @@ export default function Contact() {
 
   const getBudgets = () => {
     return currency === "USD" ? budgetsUSD : budgetsINR;
+  };
+
+  // Currency selection handler
+  const selectCurrency = (curr) => {
+    setCurrency(curr);
   };
 
   useEffect(() => {
@@ -567,7 +572,7 @@ export default function Contact() {
                   <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
                   <input type="hidden" name="_honey" style={{ display: "none" }} />
                   <input type="hidden" name="_redirect" value="https://pranjaldigital.com/thank-you" />
-                  <input type="hidden" name="currency" value={currency} />
+                  <input type="hidden" name="currency" value={currency || ""} />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -655,33 +660,66 @@ export default function Contact() {
                         ))}
                       </select>
                     </div>
+                    
+                    {/* CURRENCY SELECTION - NOW COMES FIRST BEFORE BUDGET */}
                     <div>
-                      <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Monthly Budget</label>
-                      <div className="flex gap-2">
-                        <div className="relative flex-1">
-                          <select
-                            name="budget"
-                            className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer appearance-none"
+                      <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Choose Your Currency *</label>
+                      {!currency ? (
+                        <div className="flex gap-3">
+                          <button
+                            type="button"
+                            onClick={() => selectCurrency("USD")}
+                            className="flex-1 py-3 rounded-xl bg-[#0a0f1c] border-2 border-white/20 text-white/80 text-sm font-semibold hover:border-[#c9a84c] hover:bg-[#c9a84c]/10 transition-all duration-300 flex items-center justify-center gap-2"
                           >
-                            <option value="">Select budget...</option>
-                            {getBudgets().map((b) => (
-                              <option key={b} value={b}>{b}</option>
-                            ))}
-                          </select>
-                          <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
+                            <DollarSign size={18} className="text-[#c9a84c]" />
+                            USD (US Dollar)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => selectCurrency("INR")}
+                            className="flex-1 py-3 rounded-xl bg-[#0a0f1c] border-2 border-white/20 text-white/80 text-sm font-semibold hover:border-[#c9a84c] hover:bg-[#c9a84c]/10 transition-all duration-300 flex items-center justify-center gap-2"
+                          >
+                            <IndianRupee size={18} className="text-[#c9a84c]" />
+                            INR (Indian Rupee)
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => setCurrency(currency === "USD" ? "INR" : "USD")}
-                          className="px-4 py-3 rounded-xl bg-[#0a0f1c] border border-white/10 text-white/70 text-sm font-medium hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-all duration-300 flex items-center gap-2"
-                        >
-                          {currency === "USD" ? <DollarSign size={16} /> : <IndianRupee size={16} />}
-                          {currency}
-                        </button>
-                      </div>
-                      <p className="text-white/30 text-[10px] mt-1">Click currency to switch between USD/INR</p>
+                      ) : (
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 py-3 px-4 rounded-xl bg-[#c9a84c]/20 border border-[#c9a84c] text-white text-sm font-semibold flex items-center gap-2">
+                            {currency === "USD" ? <DollarSign size={16} className="text-[#c9a84c]" /> : <IndianRupee size={16} className="text-[#c9a84c]" />}
+                            {currency === "USD" ? "USD (US Dollar)" : "INR (Indian Rupee)"}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setCurrency(null)}
+                            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-all duration-300"
+                          >
+                            Change
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
+
+                  {/* BUDGET SELECTION - Only shows after currency is selected */}
+                  {currency && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Monthly Budget ({currency})</label>
+                      <select
+                        name="budget"
+                        className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#c9a84c]/50 transition-all cursor-pointer"
+                      >
+                        <option value="">Select budget range...</option>
+                        {getBudgets().map((b) => (
+                          <option key={b} value={b}>{b}</option>
+                        ))}
+                      </select>
+                    </motion.div>
+                  )}
 
                   <div>
                     <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Your Message *</label>
@@ -696,8 +734,8 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn disabled:opacity-70 disabled:cursor-not-allowed"
+                    disabled={isSubmitting || !currency}
+                    className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <>
@@ -755,7 +793,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Option 2: Book Meeting - With Animated Calendar */}
+          {/* Option 2: Book Meeting */}
           <motion.div variants={fadeUp} className="group h-full">
             <div className="relative rounded-2xl bg-gradient-to-br from-[#c9a84c]/5 to-[#0d1220] border-2 border-[#c9a84c]/30 overflow-hidden hover:border-[#c9a84c]/60 transition-all duration-500 h-full flex flex-col">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a84c]/10 rounded-full blur-3xl" />
@@ -798,7 +836,7 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Animated Calendar Component - Above the button */}
+                  {/* Animated Calendar Component */}
                   <AnimatedCalendar onBookClick={scrollToCalendly} />
 
                   {/* Premium Stats Section */}
