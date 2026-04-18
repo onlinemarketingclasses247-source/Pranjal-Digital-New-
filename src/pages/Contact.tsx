@@ -178,7 +178,6 @@ const AnimatedCalendar = ({ onSelectDate, onBookClick }) => {
     if (onSelectDate) onSelectDate(selected);
   };
   
-  // Auto-rotate selected date every 2 seconds for animation
   useEffect(() => {
     const interval = setInterval(() => {
       const randomDay = Math.floor(Math.random() * daysInMonth) + 1;
@@ -212,7 +211,6 @@ const AnimatedCalendar = ({ onSelectDate, onBookClick }) => {
         </button>
       </div>
       
-      {/* Week days header */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {weekDays.map((day, idx) => (
           <div key={idx} className="text-center">
@@ -221,7 +219,6 @@ const AnimatedCalendar = ({ onSelectDate, onBookClick }) => {
         ))}
       </div>
       
-      {/* Calendar days */}
       <div className="grid grid-cols-7 gap-1">
         {Array.from({ length: startingDayOfWeek }).map((_, idx) => (
           <div key={`empty-${idx}`} className="h-8" />
@@ -251,7 +248,6 @@ const AnimatedCalendar = ({ onSelectDate, onBookClick }) => {
         })}
       </div>
       
-      {/* Selected date indicator */}
       {selectedDate && (
         <motion.div
           initial={{ opacity: 0, y: 5 }}
@@ -264,7 +260,6 @@ const AnimatedCalendar = ({ onSelectDate, onBookClick }) => {
         </motion.div>
       )}
       
-      {/* Click to book button inside calendar */}
       <motion.button
         onClick={onBookClick}
         onMouseEnter={() => setIsHovering(true)}
@@ -395,6 +390,56 @@ const AnimatedDot = ({ active, delay, label, sublabel }) => {
   );
 };
 
+// Currency Button with Shine and Spin Animation
+const CurrencyButton = ({ currency, icon: Icon, label, isSelected, onSelect }) => {
+  return (
+    <motion.button
+      type="button"
+      onClick={onSelect}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className={`flex-1 py-3 rounded-xl relative overflow-hidden transition-all duration-300 flex items-center justify-center gap-2 ${
+        isSelected 
+          ? 'bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] border-0 shadow-lg shadow-[#c9a84c]/30' 
+          : 'bg-[#0a0f1c] border-2 border-white/20 text-white/80 hover:border-[#c9a84c] hover:bg-[#c9a84c]/10'
+      }`}
+    >
+      {/* Shine animation overlay */}
+      {!isSelected && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
+          animate={{
+            x: ['-150%', '150%'],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            repeatDelay: 3,
+            ease: "linear",
+          }}
+        />
+      )}
+      
+      {/* Spin animation for icon */}
+      <motion.div
+        animate={{
+          rotate: isSelected ? [0, 360] : 0,
+        }}
+        transition={{
+          duration: 0.5,
+          repeat: isSelected ? 1 : 0,
+        }}
+      >
+        <Icon size={18} className={isSelected ? 'text-[#080c14]' : 'text-[#c9a84c]'} />
+      </motion.div>
+      
+      <span className={`text-sm font-semibold ${isSelected ? 'text-[#080c14]' : 'text-white/80'}`}>
+        {label}
+      </span>
+    </motion.button>
+  );
+};
+
 // Pulsing icon component for Send Message
 const PulsingIcon = ({ Icon, size = 24 }) => {
   return (
@@ -414,7 +459,7 @@ export default function Contact() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [countryCode, setCountryCode] = useState("+1");
   const [activeDot, setActiveDot] = useState(0);
-  const [currency, setCurrency] = useState(null); // Start with null to force selection first
+  const [currency, setCurrency] = useState(null);
   const [activeTimelineStep, setActiveTimelineStep] = useState(null);
   const [completedSteps, setCompletedSteps] = useState([false, false, false, false]);
 
@@ -429,7 +474,6 @@ export default function Contact() {
     return currency === "USD" ? budgetsUSD : budgetsINR;
   };
 
-  // Currency selection handler
   const selectCurrency = (curr) => {
     setCurrency(curr);
   };
@@ -661,33 +705,31 @@ export default function Contact() {
                       </select>
                     </div>
                     
-                    {/* CURRENCY SELECTION - NOW COMES FIRST BEFORE BUDGET */}
+                    {/* CURRENCY SELECTION - Fixed for mobile with shorter text */}
                     <div>
                       <label className="block text-white/50 text-xs uppercase tracking-wider mb-2">Choose Your Currency *</label>
                       {!currency ? (
                         <div className="flex gap-3">
-                          <button
-                            type="button"
-                            onClick={() => selectCurrency("USD")}
-                            className="flex-1 py-3 rounded-xl bg-[#0a0f1c] border-2 border-white/20 text-white/80 text-sm font-semibold hover:border-[#c9a84c] hover:bg-[#c9a84c]/10 transition-all duration-300 flex items-center justify-center gap-2"
-                          >
-                            <DollarSign size={18} className="text-[#c9a84c]" />
-                            USD (US Dollar)
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => selectCurrency("INR")}
-                            className="flex-1 py-3 rounded-xl bg-[#0a0f1c] border-2 border-white/20 text-white/80 text-sm font-semibold hover:border-[#c9a84c] hover:bg-[#c9a84c]/10 transition-all duration-300 flex items-center justify-center gap-2"
-                          >
-                            <IndianRupee size={18} className="text-[#c9a84c]" />
-                            INR (Indian Rupee)
-                          </button>
+                          <CurrencyButton
+                            currency="USD"
+                            icon={DollarSign}
+                            label="$ USD"
+                            isSelected={false}
+                            onSelect={() => selectCurrency("USD")}
+                          />
+                          <CurrencyButton
+                            currency="INR"
+                            icon={IndianRupee}
+                            label="₹ INR"
+                            isSelected={false}
+                            onSelect={() => selectCurrency("INR")}
+                          />
                         </div>
                       ) : (
                         <div className="flex items-center gap-3">
                           <div className="flex-1 py-3 px-4 rounded-xl bg-[#c9a84c]/20 border border-[#c9a84c] text-white text-sm font-semibold flex items-center gap-2">
                             {currency === "USD" ? <DollarSign size={16} className="text-[#c9a84c]" /> : <IndianRupee size={16} className="text-[#c9a84c]" />}
-                            {currency === "USD" ? "USD (US Dollar)" : "INR (Indian Rupee)"}
+                            {currency === "USD" ? "$ USD" : "₹ INR"}
                           </div>
                           <button
                             type="button"
