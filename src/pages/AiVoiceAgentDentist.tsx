@@ -46,7 +46,7 @@ const SectionHeader = ({ badge, title, description, center = true }) => (
 );
 
 // --- Free Trial Modal Component ---
-const FreeTrialModal = ({ isOpen, onClose, onSubmit }) => {
+const FreeTrialModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', clinicName: '',
     preferredTime: '', bestTimeToCall: '', services: []
@@ -60,16 +60,28 @@ const FreeTrialModal = ({ isOpen, onClose, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
+    // Create form data for FormSubmit
+    const formElement = e.target;
+    const formDataObj = new FormData(formElement);
+    
+    // Send to FormSubmit
+    try {
+      await fetch(FORM_SUBMIT_URL, {
+        method: 'POST',
+        body: formDataObj,
+        headers: { 'Accept': 'application/json' }
+      });
       setSubmitted(true);
+    } catch (error) {
+      console.error('Submission error:', error);
+    } finally {
       setIsSubmitting(false);
       setTimeout(() => {
         onClose();
         setSubmitted(false);
         setFormData({ name: '', email: '', phone: '', clinicName: '', preferredTime: '', bestTimeToCall: '', services: [] });
       }, 2000);
-    }, 1500);
+    }
   };
 
   if (!isOpen) return null;
@@ -86,6 +98,10 @@ const FreeTrialModal = ({ isOpen, onClose, onSubmit }) => {
 
         {!submitted ? (
           <form onSubmit={handleSubmit} className="p-6 md:p-8">
+            <input type="hidden" name="_subject" value="New Free Trial Request - Dental Voice AI" />
+            <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
+            <input type="hidden" name="_captcha" value="false" />
+            
             <div className="text-center mb-6">
               <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
                 <Zap size={28} className="text-[#c9a84c]" />
@@ -98,22 +114,22 @@ const FreeTrialModal = ({ isOpen, onClose, onSubmit }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-white/60 text-xs mb-1">Full Name *</label>
-                  <input required name="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Dr. John Smith" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
+                  <input required name="name" placeholder="Dr. John Smith" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
                 </div>
                 <div>
                   <label className="block text-white/60 text-xs mb-1">Clinic Name *</label>
-                  <input required name="clinic" value={formData.clinicName} onChange={(e) => setFormData({ ...formData, clinicName: e.target.value })} placeholder="Smith Dental Care" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
+                  <input required name="clinic" placeholder="Smith Dental Care" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
                 </div>
               </div>
 
               <div>
                 <label className="block text-white/60 text-xs mb-1">Email Address *</label>
-                <input required type="email" name="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="dr.smith@dentalcare.com" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
+                <input required type="email" name="email" placeholder="dr.smith@dentalcare.com" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
               </div>
 
               <div>
                 <label className="block text-white/60 text-xs mb-1">Phone Number *</label>
-                <input required type="tel" name="phone" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+1 (555) 000-9999" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
+                <input required type="tel" name="phone" placeholder="+1 (555) 000-9999" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 transition-all" />
               </div>
 
               <div>
@@ -121,10 +137,7 @@ const FreeTrialModal = ({ isOpen, onClose, onSubmit }) => {
                 <div className="grid grid-cols-2 gap-2">
                   {['AI Voice Receptionist', 'CRM Integration', 'Appointment Booking', 'SMS Reminders', 'Analytics Dashboard', 'Custom Training'].map(service => (
                     <label key={service} className="flex items-center gap-2 text-white/70 text-sm cursor-pointer">
-                      <input type="checkbox" value={service} onChange={(e) => {
-                        const updated = e.target.checked ? [...formData.services, service] : formData.services.filter(s => s !== service);
-                        setFormData({ ...formData, services: updated });
-                      }} className="rounded border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20" />
+                      <input type="checkbox" name="services" value={service} className="rounded border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20" />
                       <span>{service}</span>
                     </label>
                   ))}
@@ -133,7 +146,7 @@ const FreeTrialModal = ({ isOpen, onClose, onSubmit }) => {
 
               <div>
                 <label className="block text-white/60 text-xs mb-1">Preferred Trial Start Date</label>
-                <select name="preferredDate" value={formData.preferredTime} onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })} className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm">
+                <select name="preferredDate" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm">
                   <option value="">Select a timeframe...</option>
                   {timeSlots.map(slot => <option key={slot} value={slot}>{slot}</option>)}
                 </select>
@@ -141,7 +154,7 @@ const FreeTrialModal = ({ isOpen, onClose, onSubmit }) => {
 
               <div>
                 <label className="block text-white/60 text-xs mb-1">Best Time to Call You *</label>
-                <select required name="bestTime" value={formData.bestTimeToCall} onChange={(e) => setFormData({ ...formData, bestTimeToCall: e.target.value })} className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm">
+                <select required name="bestTime" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm">
                   <option value="">Select preferred time...</option>
                   {callOptions.map(time => <option key={time} value={time}>{time}</option>)}
                 </select>
@@ -275,8 +288,11 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-[#c9a84c]/10 blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#c9a84c]/8 blur-[150px]" />
         
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23grid)"/%3E%3C/svg%3E')] opacity-30" />
+        {/* Grid pattern overlay - fixed SVG syntax */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat'
+        }} />
       </div>
 
       <div className="relative text-center max-w-4xl mx-auto">
@@ -666,7 +682,7 @@ export default function DentalVoiceAgentLanding() {
               </div>
               
               <div className="flex gap-2">
-                <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)} className="w-28 bg-[#080c14] border border-white/10 text-white rounded-xl px-3 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all">
+                <select name="country_code" value={countryCode} onChange={(e) => setCountryCode(e.target.value)} className="w-28 bg-[#080c14] border border-white/10 text-white rounded-xl px-3 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all">
                   <option value="+1">+1</option>
                   <option value="+44">+44</option>
                   <option value="+91">+91</option>
