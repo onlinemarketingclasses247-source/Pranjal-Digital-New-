@@ -13,7 +13,7 @@ import {
   Crown, Gem, Rocket, Target, Brain, Bot, Headset, Volume2,
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
-  VolumeX, Volume1, Volume2 as Volume2Icon
+  VolumeX, Volume1
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -75,7 +75,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component with Clear X Button ---
+// --- Free Trial Modal Component with Proper X Button and No Overlap ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -125,24 +125,27 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onClick={onClose}>
       <motion.div
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 20 }}
         transition={{ duration: 0.2 }}
-        className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
+        className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Prominent X button at top right */}
-        <button 
-          onClick={onClose} 
-          className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 flex items-center justify-center text-white hover:text-white transition-all duration-300 group"
-        >
-          <X size={18} className="group-hover:rotate-90 transition-transform duration-300" />
-        </button>
+        {/* Prominent X close button */}
+        <div className="sticky top-0 right-0 z-20 flex justify-end p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent">
+          <button 
+            onClick={onClose} 
+            className="w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 flex items-center justify-center text-white hover:text-white transition-all duration-300 group"
+          >
+            <X size={18} className="group-hover:rotate-90 transition-transform duration-300" />
+          </button>
+        </div>
 
         {!submitted ? (
-          <form onSubmit={handleSubmit} className="p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="px-6 pb-8">
             <input type="hidden" name="_subject" value="7-Day Free Trial Request - Dental Voice AI" />
             <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
             <input type="hidden" name="_captcha" value="false" />
@@ -155,7 +158,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
               <p className="text-white/50 text-sm">Fill out the form below and we'll activate your trial within 24 hours.</p>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-white/60 text-xs mb-1 font-medium">Doctor Name *</label>
@@ -222,7 +225,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 <textarea 
                   required 
                   name="requirements" 
-                  rows={4}
+                  rows={3}
                   placeholder="Describe your clinic's needs, call volume, peak hours, and any specific features you're looking for..."
                   className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all resize-none"
                 />
@@ -257,7 +260,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   );
 };
 
-// --- Stable AI Work Animation (No CLS) ---
+// --- Stable AI Work Animation (No Shaking - Using static heights) ---
 const AIWorkAnimation = () => {
   return (
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10">
@@ -268,23 +271,18 @@ const AIWorkAnimation = () => {
         </span>
       </div>
       
-      {/* Fixed layout using CSS Grid with fixed heights - No shifting */}
+      {/* Fixed layout with consistent heights - No shaking animations on containers */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
-        {/* Step 1: Incoming Call */}
-        <div className="bg-white/5 rounded-xl p-4 text-center min-h-[140px]">
-          <div className="w-12 h-12 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center mb-2">
+        {/* Step 1 */}
+        <div className="bg-white/5 rounded-xl p-4 text-center h-[140px] flex flex-col items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-2">
             <PhoneCall size={22} className="text-blue-400" />
           </div>
           <p className="text-white/80 text-sm font-medium">Incoming Call</p>
           <p className="text-white/40 text-xs">Patient calling...</p>
-          <div className="mt-2 flex justify-center gap-1">
-            <div className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
-            <div className="w-1 h-1 rounded-full bg-blue-400/60 animate-pulse" style={{ animationDelay: '0.2s' }} />
-            <div className="w-1 h-1 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
-          </div>
         </div>
 
-        {/* Arrow - static */}
+        {/* Arrow */}
         <div className="hidden md:flex items-center justify-center">
           <ArrowRightIcon size={28} className="text-[#c9a84c]" />
         </div>
@@ -292,31 +290,20 @@ const AIWorkAnimation = () => {
           <ChevronDown size={20} className="text-[#c9a84c]" />
         </div>
 
-        {/* Step 2: AI Voice Agent */}
-        <div className="bg-gradient-to-br from-[#c9a84c]/10 to-transparent border border-[#c9a84c]/30 rounded-xl p-4 text-center min-h-[140px]">
-          <div className="relative w-16 h-16 mx-auto">
-            <div className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-ping" style={{ animationDuration: '2s' }} />
-            <div className="absolute inset-1 rounded-full bg-[#c9a84c]/30 animate-pulse" />
+        {/* Step 2 - AI Agent */}
+        <div className="bg-gradient-to-br from-[#c9a84c]/10 to-transparent border border-[#c9a84c]/30 rounded-xl p-4 text-center h-[140px] flex flex-col items-center justify-center">
+          <div className="relative w-12 h-12 mx-auto mb-2">
+            <div className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-pulse" />
+            <div className="absolute inset-1 rounded-full bg-[#c9a84c]/30" />
             <div className="absolute inset-2 rounded-full bg-[#c9a84c]/40 flex items-center justify-center">
               <Mic size={18} className="text-white" />
             </div>
           </div>
-          <div className="flex justify-center gap-0.5 mt-2">
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                animate={{ height: [6, 16, 6] }}
-                transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
-                className="w-1 bg-[#c9a84c] rounded-full"
-                style={{ height: 6 }}
-              />
-            ))}
-          </div>
-          <p className="text-[#c9a84c] text-sm font-semibold mt-1">AI Voice Agent</p>
+          <p className="text-[#c9a84c] text-sm font-semibold">AI Voice Agent</p>
           <p className="text-white/40 text-xs">Analyzing & Responding</p>
         </div>
 
-        {/* Arrow - static */}
+        {/* Arrow */}
         <div className="hidden md:flex items-center justify-center">
           <ArrowRightIcon size={28} className="text-[#c9a84c]" />
         </div>
@@ -324,16 +311,13 @@ const AIWorkAnimation = () => {
           <ChevronDown size={20} className="text-[#c9a84c]" />
         </div>
 
-        {/* Step 3: Appointment Booked */}
-        <div className="bg-white/5 rounded-xl p-4 text-center min-h-[140px]">
-          <div className="w-12 h-12 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-2">
+        {/* Step 3 - Appointment Booked */}
+        <div className="bg-white/5 rounded-xl p-4 text-center h-[140px] flex flex-col items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-2">
             <Calendar size={22} className="text-green-400" />
           </div>
           <p className="text-white/80 text-sm font-medium">Appointment Booked</p>
           <p className="text-white/40 text-xs">CRM Updated</p>
-          <div className="mt-2">
-            <CheckCircle2 size={14} className="text-green-400 mx-auto" />
-          </div>
         </div>
       </div>
 
@@ -348,7 +332,7 @@ const AIWorkAnimation = () => {
   );
 };
 
-// --- Typing Effect Component for Hero ---
+// --- Typing Effect Component ---
 const TypingEffect = () => {
   const phrases = [
     "After Clinic Hours",
@@ -393,30 +377,16 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Auto-Play and Live Call Indicator ---
+// --- Video Section with Working Video Player ---
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const videoRef = useRef(null);
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
-
-  useEffect(() => {
-    if (isInView && videoRef.current && !isPlaying) {
-      // Auto-play when in view
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          // Auto-play was prevented, user needs to click
-          console.log("Auto-play prevented");
-        });
-      }
-    }
-  }, [isInView, isPlaying]);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -437,6 +407,11 @@ const VideoSection = () => {
     }
   };
 
+  const handleVideoError = () => {
+    setHasError(true);
+    console.error("Video failed to load. Please check the video path: /videos/dental-ai-demo.mp4");
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -453,7 +428,7 @@ const VideoSection = () => {
             <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
             <div className="w-2 h-2 rounded-full bg-red-500 absolute top-0 left-0" />
           </div>
-          <span className="text-white text-xs font-medium tracking-wider">LIVE CALL IN ACTION</span>
+          <span className="text-white text-xs font-medium tracking-wider">LIVE DEMO</span>
         </div>
         
         {/* Mute button */}
@@ -461,26 +436,40 @@ const VideoSection = () => {
           onClick={handleMuteToggle}
           className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm rounded-full p-2 hover:bg-black/80 transition-colors"
         >
-          {isMuted ? <VolumeX size={16} className="text-white" /> : <Volume2Icon size={16} className="text-white" />}
+          {isMuted ? <VolumeX size={16} className="text-white" /> : <Volume1 size={16} className="text-white" />}
         </button>
 
         <div className="relative aspect-video bg-black/50">
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            preload="auto"
-            loop
-            muted={isMuted}
-            playsInline
-            onLoadedData={() => setIsLoaded(true)}
-            onEnded={() => setIsPlaying(false)}
-          >
-            <source src="/videos/dental-ai-demo.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          {!hasError ? (
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              preload="auto"
+              loop
+              muted={isMuted}
+              playsInline
+              onLoadedData={() => {
+                setIsLoaded(true);
+                console.log("Video loaded successfully");
+              }}
+              onError={handleVideoError}
+              onEnded={() => setIsPlaying(false)}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            >
+              <source src="/videos/dental-ai-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-[#0a0f1c]">
+              <AlertCircle size={48} className="text-red-400 mb-4" />
+              <p className="text-white/60 text-sm">Video failed to load</p>
+              <p className="text-white/30 text-xs mt-2">Please check that /videos/dental-ai-demo.mp4 exists</p>
+            </div>
+          )}
           
           {/* Play/Pause overlay button */}
-          {!isPlaying && isLoaded && (
+          {isLoaded && !isPlaying && !hasError && (
             <button
               onClick={handlePlayPause}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-[#c9a84c]/80 backdrop-blur-sm flex items-center justify-center hover:bg-[#c9a84c] transition-all duration-300"
@@ -490,9 +479,12 @@ const VideoSection = () => {
           )}
           
           {/* Loading indicator */}
-          {!isLoaded && (
+          {!isLoaded && !hasError && (
             <div className="absolute inset-0 flex items-center justify-center bg-[#0a0f1c]">
-              <div className="w-8 h-8 border-2 border-[#c9a84c]/30 border-t-[#c9a84c] rounded-full animate-spin" />
+              <div className="text-center">
+                <div className="w-10 h-10 border-2 border-[#c9a84c]/30 border-t-[#c9a84c] rounded-full animate-spin mx-auto mb-3" />
+                <p className="text-white/40 text-xs">Loading video...</p>
+              </div>
             </div>
           )}
         </div>
@@ -511,13 +503,12 @@ const VideoSection = () => {
           <span className="flex items-center gap-1 text-white/40"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Real appointment booking</span>
           <span className="flex items-center gap-1 text-white/40"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No human involved</span>
         </div>
-        <p className="text-white/30 text-xs mt-3 max-w-2xl mx-auto">See how our AI handles a real patient call from start to finish - natural conversation, real-time scheduling, and automatic CRM update.</p>
       </div>
     </motion.div>
   );
 };
 
-// --- Premium How It Works Section ---
+// --- How It Works Section ---
 const HowItWorksSection = () => {
   const [activeStep, setActiveStep] = useState(0);
   const controls = useAnimation();
@@ -535,9 +526,9 @@ const HowItWorksSection = () => {
   }, [controls, isInView]);
 
   const steps = [
-    { number: "01", icon: PhoneCall, title: "Patient Calls", description: "Patient calls your existing clinic number. AI answers instantly, 24/7/365.", features: ["No app download", "Same number", "Instant response"] },
-    { number: "02", icon: Bot, title: "AI Agent Answers", description: "AI understands patient needs, checks real-time availability, books appointments naturally.", features: ["Natural conversation", "Real-time sync", "Smart scheduling"] },
-    { number: "03", icon: Database, title: "CRM Updated", description: "Patient details saved, appointment logged, and follow-ups automated seamlessly.", features: ["Auto-sync", "Smart reminders", "Patient insights"] }
+    { number: "01", icon: PhoneCall, title: "Patient Calls", description: "Patient calls your existing clinic number. AI answers instantly, 24/7.", features: ["No app download", "Same number", "Instant response"] },
+    { number: "02", icon: Bot, title: "AI Agent Answers", description: "AI understands patient needs, checks availability, books appointments naturally.", features: ["Natural conversation", "Real-time sync", "Smart scheduling"] },
+    { number: "03", icon: Database, title: "CRM Updated", description: "Patient details saved, appointment logged, and follow-ups automated.", features: ["Auto-sync", "Smart reminders", "Patient insights"] }
   ];
 
   return (
@@ -554,7 +545,6 @@ const HowItWorksSection = () => {
             <motion.div
               animate={{
                 scale: activeStep === idx ? [1, 1.02, 1] : 1,
-                boxShadow: activeStep === idx ? "0 10px 30px rgba(201,168,76,0.15)" : "none",
                 borderColor: activeStep === idx ? "#c9a84c" : "rgba(255,255,255,0.1)"
               }}
               transition={{ duration: 0.5, repeat: activeStep === idx ? Infinity : 0, repeatDelay: 2 }}
@@ -588,12 +578,7 @@ const HowItWorksSection = () => {
 
             {idx < 2 && (
               <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
-                <motion.div
-                  animate={{ x: activeStep === idx ? [0, 4, 0] : 0 }}
-                  transition={{ duration: 0.6, repeat: activeStep === idx ? Infinity : 0 }}
-                >
-                  <ArrowRightIcon size={20} className="text-[#c9a84c]/40" />
-                </motion.div>
+                <ArrowRightIcon size={20} className="text-[#c9a84c]/40" />
               </div>
             )}
           </motion.div>
@@ -613,7 +598,7 @@ const HowItWorksSection = () => {
   );
 };
 
-// --- Human + AI Collaboration Section ---
+// --- Collaboration Section ---
 const CollaborationSection = () => {
   return (
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10">
@@ -625,9 +610,9 @@ const CollaborationSection = () => {
           </div>
           <h3 className="text-xl font-bold text-white mb-3">We Don't Replace Your Receptionist — We Empower Them</h3>
           <p className="text-white/60 text-sm mb-4">
-            Your receptionist is the heart of your practice. But no human can work 24/7/365. 
-            Our AI voice agent steps in when your team is unavailable — after hours, during lunch breaks, 
-            or when they're busy with other patients.
+            Your receptionist is the heart of your practice. But no human can work 24/7. 
+            Our AI voice agent steps in when your team is unavailable — after hours, during lunch, 
+            or when they're busy with patients.
           </p>
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-white/5 rounded-lg p-2.5">
@@ -643,7 +628,6 @@ const CollaborationSection = () => {
           </div>
         </div>
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
           <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -666,14 +650,13 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Pricing Comparison Table ---
+// --- Pricing Section ---
 const PricingSection = ({ onFreeTrialClick }) => {
   return (
     <div>
       <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        {/* Our Plan */}
         <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-5 shadow-xl shadow-[#c9a84c]/15">
-          <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+          <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[10px] font-bold px-2 py-0.5 rounded-full">
             OUR PLAN
           </div>
           <div className="relative text-center">
@@ -688,20 +671,16 @@ const PricingSection = ({ onFreeTrialClick }) => {
             <p className="text-[#c9a84c] text-[10px] mb-3">+ nominal per-call fee for high volumes</p>
             <ul className="space-y-1.5 text-left mt-4 mb-4">
               <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No setup fees</li>
-              <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> 24/7/365 availability</li>
+              <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> 24/7 availability</li>
               <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Free CRM integration</li>
               <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Low latency response</li>
             </ul>
-            <button 
-              onClick={onFreeTrialClick}
-              className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2 rounded-lg hover:shadow-lg hover:shadow-[#c9a84c]/30 transition-all text-sm"
-            >
+            <button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2 rounded-lg hover:shadow-lg transition-all text-sm">
               Start Free Trial
             </button>
           </div>
         </div>
 
-        {/* Comparison */}
         <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-5">
           <div className="text-center">
             <div className="w-10 h-10 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-3">
@@ -721,23 +700,16 @@ const PricingSection = ({ onFreeTrialClick }) => {
           </div>
         </div>
       </div>
-      
-      <div className="text-center mt-4">
-        <p className="text-white/40 text-[10px] flex items-center justify-center gap-1">
-          <Info size={10} /> Pricing varies based on call volume and custom AI workflows. Contact us for enterprise pricing.
-        </p>
-      </div>
     </div>
   );
 };
 
-// --- Calendly Section (Scroll to) ---
+// --- Calendly Section ---
 const CalendlySection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const sectionRef = useRef(null);
 
   return (
-    <div ref={sectionRef} id="calendly-section" className="scroll-mt-20">
+    <div id="calendly-section" className="scroll-mt-20">
       <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10">
         <div className="text-center mb-5">
           <h3 className="text-xl font-bold text-white mb-1">Schedule Your Free Demo</h3>
@@ -797,7 +769,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         >
           <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-4 py-1.5 rounded-full mb-5 border border-[#c9a84c]/20">
             <Sparkles size={12} className="text-[#c9a84c] animate-pulse" />
-            <span className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-wider">The Smart AI Receptionist for Modern Dental Practices</span>
+            <span className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
           </span>
         </motion.div>
 
@@ -817,7 +789,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-white/60 text-sm md:text-base mb-5 max-w-2xl mx-auto"
         >
-          AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically — so your team can focus on patients.
+          AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.
         </motion.p>
 
         <motion.div
@@ -842,9 +814,9 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="flex flex-wrap justify-center gap-4 mt-6 text-[10px] md:text-xs text-white/40"
         >
-          <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Works with your existing number</span>
+          <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Works with your number</span>
           <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Setup in 24 hours</span>
-          <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No technical skills needed</span>
+          <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No technical skills</span>
         </motion.div>
       </div>
     </div>
@@ -864,10 +836,10 @@ export default function DentalVoiceAgentLanding() {
   };
 
   const faqs = [
-    { q: "How does the AI voice agent work with my existing phone number?", a: "Simply forward your clinic's number to us, or we provide a new local number. The AI answers instantly, 24/7, using your clinic's protocols. Setup takes less than 24 hours." },
-    { q: "Will this replace my receptionist?", a: "No! We believe in human + AI collaboration. Your receptionist is invaluable for complex patient needs. Our AI steps in after hours, during lunch breaks, or when your team is busy — ensuring every call is answered." },
-    { q: "Can it handle complex appointment scheduling?", a: "Absolutely. It checks real-time availability from your calendar, books, reschedules, and cancels appointments—all through natural conversation." },
-    { q: "What CRMs do you integrate with?", a: "We integrate with all major dental CRMs including Open Dental, Dentrix, Eaglesoft, and Curve Dental. No CRM? We provide a simple one for free." },
+    { q: "How does the AI work with my existing phone number?", a: "Simply forward your clinic's number to us. The AI answers instantly, 24/7. Setup takes less than 24 hours." },
+    { q: "Will this replace my receptionist?", a: "No! We believe in human + AI collaboration. Our AI steps in after hours, during lunch breaks, or when your team is busy." },
+    { q: "Can it handle complex appointment scheduling?", a: "Absolutely. It checks real-time availability from your calendar and books appointments naturally." },
+    { q: "What CRMs do you integrate with?", a: "We integrate with Open Dental, Dentrix, Eaglesoft, and more. No CRM? We provide one for free." },
   ];
 
   return (
@@ -892,7 +864,7 @@ export default function DentalVoiceAgentLanding() {
         </div>
       </SectionWrapper>
 
-      {/* Human + AI Collaboration Section */}
+      {/* Collaboration Section */}
       <SectionWrapper className="py-8">
         <CollaborationSection />
       </SectionWrapper>
@@ -914,46 +886,32 @@ export default function DentalVoiceAgentLanding() {
       <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-10">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <SectionHeader badge="The Problem" title="Every Missed Call = Lost Revenue" description="You're losing patients daily without knowing it." center={false} />
-            
+            <SectionHeader badge="The Problem" title="Every Missed Call = Lost Revenue" center={false} />
             <div className="mb-5 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
               <p className="text-red-400 font-bold text-center text-sm">Clinics lose 30–40% of calls</p>
-              <p className="text-red-400/70 text-center text-[10px] mt-0.5">That's thousands in lost revenue every month</p>
             </div>
-
             <ul className="space-y-2">
-              {["Patients call when you're busy with patients", "No one answers after clinic hours", "Reception mistakes lead to double-booking", "No call tracking means no follow-ups"].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2 group">
-                  <div className="w-4 h-4 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <X size={10} className="text-red-400" />
-                  </div>
-                  <span className="text-white/70 text-xs">{item}</span>
-                </li>
-              ))}
+              <li className="flex items-center gap-2"><X size={12} className="text-red-400" /><span className="text-white/70 text-xs">Patients call when you're busy</span></li>
+              <li className="flex items-center gap-2"><X size={12} className="text-red-400" /><span className="text-white/70 text-xs">No answers after clinic hours</span></li>
+              <li className="flex items-center gap-2"><X size={12} className="text-red-400" /><span className="text-white/70 text-xs">Receptionist burnout</span></li>
             </ul>
           </div>
-          
-          <div className="relative">
-            <div className="relative bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span className="text-white/70 text-[10px] font-medium">Missed Call Dashboard</span>
-                <span className="text-red-400 text-[8px] bg-red-500/20 px-1.5 py-0.5 rounded-full ml-auto">+127%</span>
-              </div>
-              <div className="space-y-1.5">
-                {[
-                  { patient: "Sarah Johnson", time: "2:15 PM", value: "$450" },
-                  { patient: "Michael Chen", time: "6:30 PM", value: "$320" },
-                  { patient: "Dr. Emily Wilson", time: "8:45 AM", value: "$580" }
-                ].map((call, i) => (
-                  <div key={i} className="bg-white/5 rounded-lg p-2">
-                    <div className="flex justify-between items-center">
-                      <div><p className="text-white/80 text-[10px] font-medium">{call.patient}</p><p className="text-white/30 text-[8px]">{call.time}</p></div>
-                      <div className="text-right"><p className="text-red-400/70 text-[10px]">-{call.value}</p></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+          <div className="bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-white/70 text-[10px] font-medium">Missed Calls This Week</span>
+            </div>
+            <div className="space-y-2">
+              {[
+                { patient: "Sarah Johnson", value: "$450" },
+                { patient: "Michael Chen", value: "$320" },
+                { patient: "Dr. Emily Wilson", value: "$580" }
+              ].map((call, i) => (
+                <div key={i} className="bg-white/5 rounded-lg p-2 flex justify-between">
+                  <span className="text-white/80 text-[10px]">{call.patient}</span>
+                  <span className="text-red-400/70 text-[10px]">-{call.value}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -961,7 +919,7 @@ export default function DentalVoiceAgentLanding() {
 
       {/* Pricing Section */}
       <SectionWrapper id="pricing" className="py-10">
-        <SectionHeader badge="Simple Pricing" title="Simple, Affordable Pricing" description="Transparent pricing with no hidden fees." />
+        <SectionHeader badge="Simple Pricing" title="Simple, Affordable Pricing" />
         <PricingSection onFreeTrialClick={() => setShowFreeTrial(true)} />
       </SectionWrapper>
 
@@ -979,47 +937,40 @@ export default function DentalVoiceAgentLanding() {
 
       {/* FAQ Section */}
       <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-10">
-        <SectionHeader badge="FAQ" title="Frequently Asked Questions" description="Got questions? We've got answers." />
+        <SectionHeader badge="FAQ" title="Frequently Asked Questions" />
         <div className="max-w-2xl mx-auto space-y-2">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="border border-white/10 rounded-lg overflow-hidden hover:border-[#c9a84c]/30 transition-all">
+            <div key={idx} className="border border-white/10 rounded-lg overflow-hidden">
               <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full flex justify-between items-center p-3 text-left">
                 <span className="text-white font-medium text-xs">{faq.q}</span>
-                <ChevronDown size={12} className={`text-white/50 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
+                <ChevronDown size={12} className={`text-white/50 transition-transform ${activeFaq === idx ? 'rotate-180' : ''}`} />
               </button>
-              <AnimatePresence>
-                {activeFaq === idx && (
-                  <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden">
-                    <div className="p-3 pt-0 text-white/50 text-[10px] border-t border-white/10">{faq.a}</div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {activeFaq === idx && (
+                <div className="p-3 pt-0 text-white/50 text-[10px] border-t border-white/10">{faq.a}</div>
+              )}
             </div>
           ))}
         </div>
       </SectionWrapper>
 
-      {/* Final CTA Section */}
+      {/* Final CTA */}
       <SectionWrapper className="py-10">
         <div className="rounded-xl bg-gradient-to-br from-[#c9a84c]/10 to-[#0d1220] border border-[#c9a84c]/20 p-6 text-center">
-          <h3 className="text-lg md:text-xl font-bold text-white mb-2">Ready to Never Miss a Patient Call Again?</h3>
-          <p className="text-white/60 mb-5 text-sm">Join hundreds of dental practices automating their front desk.</p>
+          <h3 className="text-lg font-bold text-white mb-2">Ready to Never Miss a Patient Call Again?</h3>
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
       </SectionWrapper>
 
       {/* Footer */}
       <div className="border-t border-white/10 py-5 text-center">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
-                <Mic size={12} className="text-[#080c14]" />
-              </div>
-              <span className="text-white font-bold text-xs">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
+              <Mic size={12} className="text-[#080c14]" />
             </div>
-            <div className="text-white/40 text-[9px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
+            <span className="text-white font-bold text-xs">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
           </div>
+          <div className="text-white/40 text-[9px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
         </div>
       </div>
 
