@@ -14,7 +14,7 @@ import {
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
-  Pause
+  Pause, UserCheck
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -356,25 +356,21 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Auto-play (Unmuted) and Large Play/Pause Button ---
+// --- Video Section ---
 const VideoSection = ({ onDemoClick }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
 
   useEffect(() => {
     if (isInView && videoRef.current && !isPlaying) {
-      // Unmute before playing
       videoRef.current.muted = false;
       setIsMuted(false);
       videoRef.current.play().then(() => {
         setIsPlaying(true);
-      }).catch((error) => {
-        console.log("Auto-play prevented:", error);
-        // If autoplay fails, show play button
+      }).catch(() => {
         setIsPlaying(false);
       });
     }
@@ -409,7 +405,6 @@ const VideoSection = ({ onDemoClick }) => {
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
       <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
-        {/* Live indicator with blinking red dot */}
         <div className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
           <div className="relative">
             <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
@@ -418,7 +413,6 @@ const VideoSection = ({ onDemoClick }) => {
           <span className="text-white text-xs font-medium tracking-wider">🔴 WATCH LIVE DEMO</span>
         </div>
         
-        {/* Mute button */}
         <button
           onClick={handleMuteToggle}
           className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm rounded-full p-2 hover:bg-black/80 transition-colors"
@@ -440,7 +434,6 @@ const VideoSection = ({ onDemoClick }) => {
             Your browser does not support the video tag.
           </video>
           
-          {/* Large Play/Pause overlay button */}
           <button
             onClick={handlePlayPause}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-[#c9a84c]/80 backdrop-blur-sm flex items-center justify-center hover:bg-[#c9a84c] hover:scale-110 transition-all duration-300 shadow-2xl"
@@ -634,10 +627,10 @@ const ComparisonTable = () => {
               <td className="text-center py-3 px-2">{typeof item.ai === 'boolean' ? (item.ai ? <CheckCircle2 size={16} className="text-[#c9a84c] mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-[#c9a84c] text-sm">{item.ai}</span>}</td>
               <td className="text-center py-3 px-2">{typeof item.voicemail === 'boolean' ? (item.voicemail ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-white/40 text-sm">{item.voicemail}</span>}</td>
               <td className="text-center py-3 px-2">{typeof item.answering === 'boolean' ? (item.answering ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-white/40 text-sm">{item.answering}</span>}</td>
-             </tr>
+            </tr>
           ))}
         </tbody>
-       </table>
+      </table>
       <div className="mt-6 p-4 bg-[#c9a84c]/10 rounded-lg text-center"><p className="text-[#c9a84c] text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p></div>
     </div>
   );
