@@ -15,12 +15,63 @@ import {
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
   Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
-  Tooth, Mic2, Waves, RadioTower
+  Waves, RadioTower, Cpu
 } from 'lucide-react';
 
 // --- Configuration ---
 const FORM_SUBMIT_URL = "https://formsubmit.co/pranjallundefined@gmail.com";
 const CALENDLY_URL = "https://calendly.com/pranjaldigital-info/30min";
+
+// --- Country Codes with proper order (US/Canada first, then major, then other) ---
+const countryCodesList = [
+  { code: "+1", country: "United States/Canada", flag: "🇺🇸🇨🇦" },
+  { code: "+44", country: "United Kingdom", flag: "🇬🇧" },
+  { code: "+91", country: "India", flag: "🇮🇳" },
+  { code: "+61", country: "Australia", flag: "🇦🇺" },
+  { code: "+49", country: "Germany", flag: "🇩🇪" },
+  { code: "+33", country: "France", flag: "🇫🇷" },
+  { code: "+81", country: "Japan", flag: "🇯🇵" },
+  { code: "+86", country: "China", flag: "🇨🇳" },
+  { code: "+82", country: "South Korea", flag: "🇰🇷" },
+  { code: "+55", country: "Brazil", flag: "🇧🇷" },
+  { code: "+52", country: "Mexico", flag: "🇲🇽" },
+  { code: "+39", country: "Italy", flag: "🇮🇹" },
+  { code: "+34", country: "Spain", flag: "🇪🇸" },
+  { code: "+31", country: "Netherlands", flag: "🇳🇱" },
+  { code: "+46", country: "Sweden", flag: "🇸🇪" },
+  { code: "+47", country: "Norway", flag: "🇳🇴" },
+  { code: "+45", country: "Denmark", flag: "🇩🇰" },
+  { code: "+358", country: "Finland", flag: "🇫🇮" },
+  { code: "+64", country: "New Zealand", flag: "🇳🇿" },
+  { code: "+60", country: "Malaysia", flag: "🇲🇾" },
+  { code: "+65", country: "Singapore", flag: "🇸🇬" },
+  { code: "+66", country: "Thailand", flag: "🇹🇭" },
+  { code: "+62", country: "Indonesia", flag: "🇮🇩" },
+  { code: "+63", country: "Philippines", flag: "🇵🇭" },
+  { code: "+84", country: "Vietnam", flag: "🇻🇳" },
+  { code: "+27", country: "South Africa", flag: "🇿🇦" },
+  { code: "+20", country: "Egypt", flag: "🇪🇬" },
+  { code: "+966", country: "Saudi Arabia", flag: "🇸🇦" },
+  { code: "+971", country: "UAE", flag: "🇦🇪" },
+  { code: "+7", country: "Russia", flag: "🇷🇺" },
+  { code: "+48", country: "Poland", flag: "🇵🇱" },
+  { code: "+90", country: "Turkey", flag: "🇹🇷" },
+  { code: "+98", country: "Iran", flag: "🇮🇷" },
+  { code: "+92", country: "Pakistan", flag: "🇵🇰" },
+  { code: "+880", country: "Bangladesh", flag: "🇧🇩" },
+  { code: "+94", country: "Sri Lanka", flag: "🇱🇰" },
+  { code: "+977", country: "Nepal", flag: "🇳🇵" },
+  { code: "+673", country: "Brunei", flag: "🇧🇳" },
+  { code: "+855", country: "Cambodia", flag: "🇰🇭" },
+  { code: "+856", country: "Laos", flag: "🇱🇦" },
+  { code: "+95", country: "Myanmar", flag: "🇲🇲" },
+  { code: "+54", country: "Argentina", flag: "🇦🇷" },
+  { code: "+56", country: "Chile", flag: "🇨🇱" },
+  { code: "+57", country: "Colombia", flag: "🇨🇴" },
+  { code: "+58", country: "Venezuela", flag: "🇻🇪" },
+  { code: "+51", country: "Peru", flag: "🇵🇪" },
+  { code: "+1", country: "Other (International)", flag: "🌍" }
+];
 
 // --- Helper Components ---
 const SectionWrapper = ({ children, className = "", id }) => (
@@ -78,12 +129,12 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component with Fixed Close Button ---
+// --- Free Trial Modal Component ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [countryCode, setCountryCode] = useState("+1");
-  const [selectedAISolutions, setSelectedAISolutions] = useState("");
+  const [selectedCountryCode, setSelectedCountryCode] = useState("+1");
+  const [selectedCountryLabel, setSelectedCountryLabel] = useState("United States/Canada");
 
   const aiOptions = [
     "24/7 Appointment Booking",
@@ -110,6 +161,9 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData(e.target);
+    // Add the country code as a separate field
+    formData.append("country_code", selectedCountryCode);
+    formData.append("country_name", selectedCountryLabel);
     
     try {
       await fetch(FORM_SUBMIT_URL, {
@@ -151,7 +205,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button - Left Side with Close Text */}
+        {/* Close Button */}
         <div className="sticky top-0 left-0 right-0 z-20 flex justify-start p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent border-b border-white/10">
           <button 
             onClick={onClose} 
@@ -198,29 +252,31 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 <label className="block text-white/60 text-xs mb-1 font-medium">Phone Number *</label>
                 <div className="flex flex-col sm:flex-row gap-2">
                   <select 
-                    value={countryCode} 
-                    onChange={(e) => setCountryCode(e.target.value)}
-                    className="w-full sm:w-28 bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all"
+                    value={selectedCountryCode}
+                    onChange={(e) => {
+                      const selected = countryCodesList.find(c => c.code === e.target.value);
+                      setSelectedCountryCode(e.target.value);
+                      setSelectedCountryLabel(selected?.country || "");
+                    }}
+                    className="w-full sm:w-48 bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all cursor-pointer"
                   >
-                    <option value="+1">🇺🇸 +1</option>
-                    <option value="+44">🇬🇧 +44</option>
-                    <option value="+91">🇮🇳 +91</option>
-                    <option value="+61">🇦🇺 +61</option>
-                    <option value="+49">🇩🇪 +49</option>
+                    {countryCodesList.map((cc) => (
+                      <option key={`${cc.code}-${cc.country}`} value={cc.code}>
+                        {cc.flag} {cc.code} ({cc.country})
+                      </option>
+                    ))}
                   </select>
                   <input required name="phone" type="tel" placeholder="(555) 000-9999" className="flex-1 bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all" />
                 </div>
+                <p className="text-white/30 text-[10px] mt-1">Selected country code will be included with your phone number</p>
               </div>
 
-              {/* AI Solutions - Dropdown instead of checkboxes */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
                 <select 
                   name="ai_solutions" 
                   required 
                   className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all cursor-pointer"
-                  value={selectedAISolutions}
-                  onChange={(e) => setSelectedAISolutions(e.target.value)}
                 >
                   <option value="">Select AI solutions...</option>
                   {aiOptions.map(option => (
@@ -229,7 +285,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </select>
               </div>
 
-              {/* CRM Options - Dropdown */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
                 <select 
@@ -1088,7 +1143,7 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component with Premium Icons ---
+// --- Animated Hero Component with Premium Robot + Phone + Voice Wave Icons ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
@@ -1100,27 +1155,38 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         <div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} />
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-3 sm:gap-4">
-          {/* Premium Dental Icon with Glow */}
-          <div className="relative">
-            <div className="absolute -inset-2 rounded-full bg-[#c9a84c]/20 blur-lg animate-pulse" />
-            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border border-[#c9a84c]/40">
-              <Activity size={18} className="sm:size-22 text-[#c9a84c]" />
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
+          {/* Premium Robot/AI Icon with Phone and Voice Waves */}
+          <div className="relative group">
+            <div className="absolute -inset-3 rounded-full bg-[#c9a84c]/20 blur-xl animate-pulse" />
+            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border-2 border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/20">
+              <div className="relative">
+                <Cpu size={24} className="sm:size-28 text-[#c9a84c] animate-pulse" />
+                <Phone className="absolute -top-1 -right-1 w-4 h-4 text-[#c9a84c]" />
+              </div>
+            </div>
+            {/* Voice wave animation */}
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-0.5">
+              <motion.div animate={{ height: [6, 12, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 18, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 24, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 18, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 12, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
             </div>
           </div>
           
-          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c]/20 to-[#c9a84c]/5 backdrop-blur-sm px-3 sm:px-5 py-1.5 sm:py-2 rounded-full border border-[#c9a84c]/30 shadow-lg shadow-[#c9a84c]/10">
-            <Sparkles size={10} className="sm:size-12 text-[#c9a84c] animate-pulse" />
-            <span className="text-[#c9a84c] text-[8px] sm:text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
+          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c]/20 to-[#c9a84c]/5 backdrop-blur-sm px-4 sm:px-6 py-2 sm:py-2.5 rounded-full border border-[#c9a84c]/30 shadow-lg shadow-[#c9a84c]/10">
+            <Sparkles size={12} className="sm:size-14 text-[#c9a84c] animate-pulse" />
+            <span className="text-[#c9a84c] text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
           </span>
           
-          {/* Premium AI Voice Icon with Sound Waves */}
-          <div className="relative">
-            <div className="absolute -inset-2 rounded-full bg-[#c9a84c]/20 blur-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border border-[#c9a84c]/40">
-              <RadioTower size={18} className="sm:size-22 text-[#c9a84c] animate-pulse" />
+          {/* Dental Icon with Tooth */}
+          <div className="relative group">
+            <div className="absolute -inset-3 rounded-full bg-[#c9a84c]/20 blur-xl animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border-2 border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/20">
+              <Activity size={24} className="sm:size-28 text-[#c9a84c] animate-pulse" />
             </div>
-            {/* Sound wave animation */}
+            {/* Pulse rings */}
             <div className="absolute -inset-1 rounded-full border-2 border-[#c9a84c]/30 animate-ping opacity-75" style={{ animationDuration: '1.5s' }} />
             <div className="absolute -inset-3 rounded-full border border-[#c9a84c]/20 animate-ping opacity-50" style={{ animationDuration: '2s', animationDelay: '0.5s' }} />
           </div>
