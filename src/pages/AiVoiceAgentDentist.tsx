@@ -205,25 +205,23 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-
-{/* Header with Close Button - Top Left next to title */}
-<div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-12 sm:pt-4 pb-2 px-5 sm:px-6">
-  <div className="flex items-center justify-between">
-    <button 
-      onClick={onClose} 
-      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 text-white hover:text-white transition-all duration-300 group"
-      aria-label="Close modal"
-    >
-      <X size={14} className="group-hover:rotate-90 transition-transform duration-300" />
-      <span className="text-xs font-medium">Close</span>
-    </button>
-    <div className="w-20"></div>
-  </div>
-</div>
+        {/* Header with Close Button */}
+        <div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-12 sm:pt-4 pb-2 px-5 sm:px-6">
+          <div className="flex items-center justify-between">
+            <button 
+              onClick={onClose} 
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 text-white hover:text-white transition-all duration-300 group"
+              aria-label="Close modal"
+            >
+              <X size={14} className="group-hover:rotate-90 transition-transform duration-300" />
+              <span className="text-xs font-medium">Close</span>
+            </button>
+            <div className="w-20"></div>
+          </div>
+        </div>
         
         {!submitted ? (
-  <form onSubmit={handleSubmit} className="px-5 pb-8 sm:px-6 pt-2">
-        
+          <form onSubmit={handleSubmit} className="px-5 pb-8 sm:px-6 pt-2">
             <input type="hidden" name="_subject" value="7-Day Free Trial Request - Dental Voice AI" />
             <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
             <input type="hidden" name="_captcha" value="false" />
@@ -964,7 +962,7 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Comparison Table ---
+// --- Comparison Table (Fixed - Proper Table Structure) ---
 const ComparisonTable = () => {
   const comparisons = [
     { feature: "Instant Response", ai: true, voicemail: false, answering: false },
@@ -985,7 +983,7 @@ const ComparisonTable = () => {
             <th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th>
-            <tr>
+          </tr>
         </thead>
         <tbody>
           {comparisons.map((item, idx) => (
@@ -1196,18 +1194,16 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
           Dental AI Voice Agent
         </motion.h1>
         
-
-{/* Subheading */}
-<motion.p 
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5, delay: 0.15 }}
-  className="text-base sm:text-lg md:text-xl text-[#c9a84c] font-semibold mb-6 sm:mb-8 px-4 break-words"
->
-  Our AI Agent saves thousands of dollars a month<br className="hidden sm:block" />
-  by answering missed call <span className="whitespace-nowrap">opportunities</span>
-</motion.p>
-        
+        {/* Subheading */}
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="text-base sm:text-lg md:text-xl text-[#c9a84c] font-semibold mb-6 sm:mb-8 px-4 break-words"
+        >
+          Our AI Agent saves thousands of dollars a month<br className="hidden sm:block" />
+          by answering missed call <span className="whitespace-nowrap">opportunities</span>
+        </motion.p>
         
         {/* Typing Effect Line */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mb-5 sm:mb-6">
