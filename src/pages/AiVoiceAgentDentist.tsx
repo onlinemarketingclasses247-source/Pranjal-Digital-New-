@@ -1,6 +1,6 @@
+import { usePageMeta } from '@/hooks/usePageMeta';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
 import {
   Phone, Calendar, CheckCircle2, ChevronRight, Play, Star,
   TrendingUp, Clock, Headphones, Shield, Zap, Users,
@@ -1236,6 +1236,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
 
 // --- Main Component ---
 export default function DentalVoiceAgentLanding() {
+  usePageMeta();
   const [showCalendly, setShowCalendly] = useState(false);
   const [showFreeTrial, setShowFreeTrial] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
@@ -1253,13 +1254,7 @@ export default function DentalVoiceAgentLanding() {
 
   return (
     <>
-      <Helmet>
-        <title>Dental AI Voice Agent | AI Receptionist for Dentists</title>
-        <meta
-          name="description"
-          content="AI dental voice agent that answers patient calls, books appointments, and updates your CRM automatically. Never miss a patient call again. Starts at $49.99/month with 7-day free trial."
-        />
-      </Helmet>
+    
       <div className="bg-[#080c14] min-h-screen font-sans antialiased overflow-x-hidden">
         <AnimatedHero onFreeTrialClick={() => setShowFreeTrial(true)} onDemoClick={scrollToCalendly} />
         
