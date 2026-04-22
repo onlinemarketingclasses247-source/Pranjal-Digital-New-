@@ -15,7 +15,7 @@ import {
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
   Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
-  MessageCircle
+  MessageCircle, HeadsetIcon
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -129,7 +129,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component ---
+// --- Free Trial Modal Component with Fixed Close Button Position ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -204,8 +204,8 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button - Positioned below the header area, not overlapping with any logo */}
-        <div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-4 pb-2 px-4 border-b border-white/10">
+        {/* Close Button - Left Middle Corner (not overlapping with content) */}
+        <div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-3 pb-2 px-4">
           <button 
             onClick={onClose} 
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 text-white hover:text-white transition-all duration-300 group"
@@ -387,51 +387,6 @@ const AIWorkAnimation = () => {
         </p>
       </div>
     </div>
-  );
-};
-
-// --- Typing Effect Component ---
-const TypingEffect = () => {
-  const phrases = [
-    "After Clinic Hours",
-    "During Lunch Break",
-    "When Reception is Busy",
-    "On Weekends",
-    "During Peak Hours"
-  ];
-  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentPhrase = phrases[currentPhraseIndex];
-    let timer;
-    
-    if (isDeleting) {
-      timer = setTimeout(() => {
-        setDisplayText(prev => prev.slice(0, -1));
-        if (displayText === "") {
-          setIsDeleting(false);
-          setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
-        }
-      }, 50);
-    } else {
-      timer = setTimeout(() => {
-        setDisplayText(currentPhrase.slice(0, displayText.length + 1));
-        if (displayText.length === currentPhrase.length) {
-          setTimeout(() => setIsDeleting(true), 1500);
-        }
-      }, 80);
-    }
-    
-    return () => clearTimeout(timer);
-  }, [displayText, isDeleting, currentPhraseIndex, phrases]);
-
-  return (
-    <span className="block bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent min-h-[50px] sm:min-h-[60px] md:min-h-[80px]">
-      {displayText}
-      <span className="inline-block w-0.5 h-5 sm:h-6 md:h-8 bg-[#c9a84c] ml-1 animate-pulse" />
-    </span>
   );
 };
 
@@ -1142,26 +1097,31 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component with Single AI Chatbot Icon ---
+// --- Animated Hero Component with New Layout ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
   
   return (
-    <div className="relative min-h-[70vh] sm:min-h-[75vh] flex items-center pt-8 sm:pt-12 pb-8 sm:pb-12 overflow-hidden" onMouseMove={handleMouseMove}>
+    <div className="relative min-h-[80vh] sm:min-h-[85vh] flex items-center pt-8 sm:pt-12 pb-8 sm:pb-12 overflow-hidden" onMouseMove={handleMouseMove}>
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} />
         <div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} />
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
-        {/* Single AI Chatbot Icon - picking up calls */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center mb-4">
+        {/* Animated Icon - Single AI Chatbot Picking Up Call */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center mb-6"
+        >
           <div className="relative group">
             <div className="absolute -inset-4 rounded-full bg-[#c9a84c]/20 blur-xl animate-pulse" />
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border-2 border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/20">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border-2 border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/20">
               <div className="relative">
-                <MessageCircle size={28} className="sm:size-32 text-[#c9a84c] animate-pulse" />
-                <Phone className="absolute -top-2 -right-2 w-5 h-5 text-[#c9a84c]" />
+                <HeadsetIcon size={32} className="sm:size-40 text-[#c9a84c] animate-pulse" />
+                <Phone className="absolute -top-2 -right-2 w-6 h-6 text-[#c9a84c]" />
               </div>
             </div>
             {/* Voice wave animation */}
@@ -1175,17 +1135,35 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
           </div>
         </motion.div>
         
-        {/* Improved Text Design - "Never Miss a Patient Call" on first line, typing effect on second line */}
-        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2 sm:mb-3 leading-tight">
-          Never Miss a Patient Call
+        {/* Main Heading */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 sm:mb-4"
+        >
+          Dental AI Voice Agent
         </motion.h1>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-5">
+        
+        {/* Subheading */}
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="text-lg sm:text-xl md:text-2xl text-[#c9a84c] font-semibold mb-6 sm:mb-8"
+        >
+          Our AI Agent saves thousands of dollars a month by answering missed call opportunities
+        </motion.p>
+        
+        {/* Typing Effect Line */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mb-5 sm:mb-6">
+          <span className="text-white/80 text-sm sm:text-base md:text-lg">Never Miss a Patient Call — </span>
           <TypingEffect />
         </motion.div>
         
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-white/60 text-[10px] sm:text-sm md:text-base mb-4 sm:mb-5 max-w-2xl mx-auto">AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.</motion.p>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }} className="text-white/60 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 max-w-2xl mx-auto">AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.</motion.p>
         
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="inline-flex flex-wrap items-center justify-center gap-1 sm:gap-2 bg-[#0a0f1c]/80 backdrop-blur-sm border border-white/10 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="inline-flex flex-wrap items-center justify-center gap-1 sm:gap-2 bg-[#0a0f1c]/80 backdrop-blur-sm border border-white/10 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 mb-5 sm:mb-7">
           <DollarIcon size={10} className="sm:size-14 text-[#c9a84c]" />
           <span className="text-white font-semibold text-[8px] sm:text-xs">Starts at $49.99/month</span>
           <span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span>
@@ -1196,7 +1174,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         
         <CTAButtons onDemoClick={onDemoClick} onTrialClick={onFreeTrialClick} />
         
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }} className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6 text-[6px] sm:text-[10px] md:text-xs text-white/40">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }} className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-5 sm:mt-7 text-[6px] sm:text-[10px] md:text-xs text-white/40">
           <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Works with your number</span>
           <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Setup in 24 hours</span>
           <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> No technical skills</span>
