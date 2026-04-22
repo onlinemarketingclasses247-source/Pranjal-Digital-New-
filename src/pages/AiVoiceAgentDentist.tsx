@@ -1194,16 +1194,20 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
           Dental AI Voice Agent
         </motion.h1>
         
-        {/* Subheading */}
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="text-base sm:text-lg md:text-xl text-[#c9a84c] font-semibold mb-6 sm:mb-8 px-4 break-words"
-        >
-          Our AI Agent saves thousands of dollars a month<br className="hidden sm:block" />
-          by answering missed call <span className="whitespace-nowrap">opportunities</span>
-        </motion.p>
+
+{/* Subheading */}
+<motion.p 
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.15 }}
+  className="text-base sm:text-lg md:text-xl text-[#c9a84c] font-semibold mb-6 sm:mb-8 px-4"
+>
+  Our AI Agent saves thousands of dollars a month
+  <span className="hidden sm:inline"> </span>
+  <br className="sm:hidden" />
+  by answering missed call <span className="whitespace-nowrap">opportunities</span>
+</motion.p>
+        
         
         {/* Typing Effect Line */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mb-5 sm:mb-6">
