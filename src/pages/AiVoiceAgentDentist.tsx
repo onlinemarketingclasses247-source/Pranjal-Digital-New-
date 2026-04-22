@@ -77,7 +77,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component with Fixed Mobile Layout ---
+// --- Free Trial Modal Component with Mobile-Friendly Design ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -135,9 +135,10 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 20 }}
         transition={{ duration: 0.2 }}
-        className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
+        className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Close Button */}
         <div className="sticky top-0 right-0 z-20 flex justify-end p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent">
           <button 
             onClick={onClose} 
@@ -148,21 +149,23 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         </div>
 
         {!submitted ? (
-          <form onSubmit={handleSubmit} className="px-4 sm:px-6 pb-8">
+          <form onSubmit={handleSubmit} className="px-5 pb-8 sm:px-6">
             <input type="hidden" name="_subject" value="7-Day Free Trial Request - Dental Voice AI" />
             <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
             <input type="hidden" name="_captcha" value="false" />
             
+            {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
                 <Gem size={28} className="text-[#c9a84c]" />
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Start Your 7-Day Free Trial</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Start Your 7-Day Free Trial</h3>
               <p className="text-white/50 text-xs sm:text-sm">Fill out the form below and we'll activate your trial within 24 hours.</p>
             </div>
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-5">
+              {/* Doctor Name & Clinic Name */}
+              <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
                 <div>
                   <label className="block text-white/60 text-xs mb-1 font-medium">Doctor Name *</label>
                   <input required name="doctor_name" placeholder="Dr. John Smith" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all" />
@@ -173,18 +176,20 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
+              {/* Email */}
               <div>
                 <label className="block text-white/60 text-xs mb-1 font-medium">Email Address *</label>
                 <input required type="email" name="email" placeholder="dr.smith@dentalcare.com" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all" />
               </div>
 
+              {/* Phone with Country Code */}
               <div>
                 <label className="block text-white/60 text-xs mb-1 font-medium">Phone Number *</label>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <select 
                     value={countryCode} 
                     onChange={(e) => setCountryCode(e.target.value)}
-                    className="w-24 sm:w-28 bg-[#080c14] border border-white/10 text-white rounded-xl px-3 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all"
+                    className="w-full sm:w-28 bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all"
                   >
                     <option value="+1">🇺🇸 +1</option>
                     <option value="+44">🇬🇧 +44</option>
@@ -196,57 +201,59 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* AI Solutions - Checkbox Section - Fixed for Mobile */}
+              {/* AI Solutions - Mobile Optimized */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
                 <div className="flex flex-col space-y-2">
                   {aiOptions.map(option => (
-                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group">
+                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition-colors">
                       <input 
                         type="checkbox" 
                         name="ai_solutions" 
                         value={option} 
-                        className="w-4 h-4 min-w-[16px] rounded border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
+                        className="w-5 h-5 min-w-[20px] rounded border-white/30 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
                       />
-                      <span className="text-white/70 text-sm leading-tight break-words group-hover:text-white transition-colors">{option}</span>
+                      <span className="text-white/80 text-sm leading-relaxed break-words group-hover:text-white transition-colors">{option}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
-              {/* CRM Section - Radio Buttons - Fixed for Mobile */}
+              {/* CRM Options - Mobile Optimized */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
                 <div className="flex flex-col space-y-2">
                   {crmOptions.map(option => (
-                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group">
+                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition-colors">
                       <input 
                         type="radio" 
                         name="crm" 
                         value={option} 
                         required 
-                        className="w-4 h-4 min-w-[16px] border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
+                        className="w-5 h-5 min-w-[20px] border-white/30 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
                       />
-                      <span className="text-white/70 text-sm leading-tight break-words group-hover:text-white transition-colors">{option}</span>
+                      <span className="text-white/80 text-sm leading-relaxed break-words group-hover:text-white transition-colors">{option}</span>
                     </label>
                   ))}
                 </div>
-                <p className="text-[#c9a84c]/70 text-xs mt-2 flex items-center gap-1">
-                  <Gift size={10} /> Free CRM implementation included!
+                <p className="text-[#c9a84c]/70 text-xs mt-3 flex items-center gap-1">
+                  <Gift size={12} /> Free CRM implementation included!
                 </p>
               </div>
 
+              {/* Requirements */}
               <div>
                 <label className="block text-white/60 text-xs mb-1 font-medium">Tell us about your AI Voice Assistant requirements *</label>
                 <textarea 
                   required 
                   name="requirements" 
-                  rows={3}
+                  rows={4}
                   placeholder="Describe your clinic's needs, call volume, peak hours, and any specific features you're looking for..."
                   className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all resize-none"
                 />
               </div>
 
+              {/* Submit Button */}
               <button 
                 type="submit" 
                 disabled={isSubmitting} 
@@ -254,7 +261,8 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
               >
                 {isSubmitting ? <><Loader2 size={20} className="animate-spin" /> Processing...</> : <>Request 7-Day Trial Now <Rocket size={18} /></>}
               </button>
-              <p className="text-white/30 text-xs text-center">No credit card required • Cancel anytime • Free setup included</p>
+              
+              <p className="text-white/30 text-xs text-center pb-2">No credit card required • Cancel anytime • Free setup included</p>
             </div>
           </form>
         ) : (
@@ -262,7 +270,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-6"
+              className="w-20 h-20 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-6"
             >
               <Check size={40} className="text-[#c9a84c]" />
             </motion.div>
@@ -914,7 +922,7 @@ const ComparisonTable = () => {
               <td className="text-white/70 text-[8px] sm:text-sm py-2 sm:py-3 px-1 sm:px-2">{item.feature}</td>
               <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.ai === 'boolean' ? (item.ai ? <CheckCircle2 size={10} className="sm:size-16 text-[#c9a84c] mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-[#c9a84c] text-[8px] sm:text-sm">{item.ai}</span>}</td>
               <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.voicemail === 'boolean' ? (item.voicemail ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-white/40 text-[8px] sm:text-sm">{item.voicemail}</span>}</td>
-              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.answering === 'boolean' ? (item.answering ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-white/40 text-[8px] sm:text-sm">{item.answering}</span>}</td>
+              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.answering === 'boolean' ? (item.answering ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-white/40 text-[8px] sm:text-sm>{item.answering}</span>}</td>
             </tr>
           ))}
         </tbody>
