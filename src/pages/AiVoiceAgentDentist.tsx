@@ -206,7 +206,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
       >
 
 {/* Header with Close Button - Top Left next to title */}
-<div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-4 pb-2 px-5 sm:px-6">
+<div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-12 sm:pt-4 pb-2 px-5 sm:px-6">
   <div className="flex items-center justify-between">
     <button 
       onClick={onClose} 
@@ -216,7 +216,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
       <X size={14} className="group-hover:rotate-90 transition-transform duration-300" />
       <span className="text-xs font-medium">Close</span>
     </button>
-    <div className="w-20"></div> {/* Spacer for balance */}
+    <div className="w-20"></div>
   </div>
 </div>
         
@@ -1195,15 +1195,18 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
           Dental AI Voice Agent
         </motion.h1>
         
-        {/* Subheading */}
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="text-lg sm:text-xl md:text-2xl text-[#c9a84c] font-semibold mb-6 sm:mb-8"
-        >
-          Our AI Agent saves thousands of dollars a month by answering missed call opportunities
-        </motion.p>
+
+{/* Subheading */}
+<motion.p 
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.15 }}
+  className="text-base sm:text-lg md:text-xl text-[#c9a84c] font-semibold mb-6 sm:mb-8 px-4 break-words"
+>
+  Our AI Agent saves thousands of dollars a month<br className="hidden sm:block" />
+  by answering missed call <span className="whitespace-nowrap">opportunities</span>
+</motion.p>
+        
         
         {/* Typing Effect Line */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mb-5 sm:mb-6">
