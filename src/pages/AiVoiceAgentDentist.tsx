@@ -356,33 +356,29 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Auto-play and Sound (Fixed) ---
+// --- Video Section with Premium Controls ---
 const VideoSection = ({ onDemoClick }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [hasStarted, setHasStarted] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
 
+  // Auto-play muted when in view
   useEffect(() => {
-    if (isInView && videoRef.current && !hasAutoPlayed) {
-      // Unmute for autoplay with sound
-      videoRef.current.muted = false;
-      setIsMuted(false);
-      
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setIsPlaying(true);
-          setHasAutoPlayed(true);
-        }).catch((error) => {
-          console.log("Auto-play prevented:", error);
-          setIsPlaying(false);
-        });
-      }
+    if (isInView && videoRef.current && !hasStarted) {
+      videoRef.current.muted = true;
+      setIsMuted(true);
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+        setHasStarted(true);
+      }).catch((error) => {
+        console.log("Auto-play prevented:", error);
+        setIsPlaying(false);
+      });
     }
-  }, [isInView, hasAutoPlayed]);
+  }, [isInView, hasStarted]);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -403,73 +399,144 @@ const VideoSection = ({ onDemoClick }) => {
     }
   };
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="relative group"
-    >
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
-      <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
-        <div className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
-          <div className="relative">
-            <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-            <div className="w-2 h-2 rounded-full bg-red-500 absolute top-0 left-0" />
-          </div>
-          <span className="text-white text-xs font-medium tracking-wider">🔴 LIVE DEMO</span>
-        </div>
-        
-        <button
-          onClick={handleMuteToggle}
-          className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm rounded-full p-2 hover:bg-black/80 transition-colors"
-        >
-          {isMuted ? <VolumeX size={16} className="text-white" /> : <Volume1 size={16} className="text-white" />}
-        </button>
+  // Stats data
+  const stats = [
+    { value: "98%", label: "Call Answer Rate", icon: PhoneCall },
+    { value: "24/7", label: "Availability", icon: Clock },
+    { value: "< 2s", label: "Response Time", icon: Zap },
+    { value: "40%", label: "No-Show Reduction", icon: TrendingUp }
+  ];
 
-        <div className="relative aspect-video bg-black/50">
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            preload="auto"
-            loop
-            playsInline
-            onEnded={() => setIsPlaying(false)}
-          >
-            <source src="/videos/dental-ai-demo.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+  return (
+    <div>
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative group"
+      >
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
+        <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
           
-          {/* Large Play/Pause button - always visible */}
+          {/* Live indicator */}
+          <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
+            <div className="relative">
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+              <div className="w-2 h-2 rounded-full bg-red-500 absolute top-0 left-0" />
+            </div>
+            <span className="text-white text-xs font-medium tracking-wider">🔴 LIVE DEMO</span>
+          </div>
+
+          {/* Large Sound Button - Bottom Left */}
           <button
-            onClick={handlePlayPause}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-[#c9a84c]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[#c9a84c] hover:scale-110 transition-all duration-300 shadow-2xl z-20"
+            onClick={handleMuteToggle}
+            className="absolute bottom-4 left-4 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-4 py-2.5 hover:bg-black/80 transition-all duration-300 hover:scale-105"
           >
-            {isPlaying ? <Pause size={28} className="text-[#080c14]" /> : <Play size={28} className="text-[#080c14] ml-1" />}
+            {isMuted ? (
+              <VolumeX size={20} className="text-white" />
+            ) : (
+              <Volume2 size={20} className="text-white" />
+            )}
+            <span className="text-white text-xs font-medium hidden sm:inline">
+              {isMuted ? "Sound Off" : "Sound On"}
+            </span>
+          </button>
+
+          <div className="relative aspect-video bg-black/50">
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              preload="auto"
+              loop
+              playsInline
+              onEnded={() => setIsPlaying(false)}
+            >
+              <source src="/videos/dental-ai-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            
+            {/* Large Center Play/Pause Button - Always Visible */}
+            <button
+              onClick={handlePlayPause}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 group/play transition-all duration-300"
+            >
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                  boxShadow: isPlaying 
+                    ? "0 0 20px rgba(201,168,76,0.3)" 
+                    : "0 0 30px rgba(201,168,76,0.6)"
+                }}
+                className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] flex items-center justify-center shadow-2xl transition-all duration-300"
+              >
+                {isPlaying ? (
+                  <Pause size={36} className="text-[#080c14] md:size-40" />
+                ) : (
+                  <Play size={36} className="text-[#080c14] ml-1 md:size-40" />
+                )}
+              </motion.div>
+            </button>
+
+            {/* Pulse effect on play button when paused */}
+            {!isPlaying && (
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-28 md:h-28 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75 z-10" />
+            )}
+          </div>
+        </div>
+
+        <div className="text-center mt-6">
+          <p className="text-white/70 text-sm md:text-base flex items-center justify-center gap-2">
+            <Video size={16} className="text-[#c9a84c]" /> 
+            Watch Live AI Voice Assistant Product Demo Now
+          </p>
+        </div>
+
+        <div className="text-center mt-5">
+          <button
+            onClick={onDemoClick}
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 transform hover:scale-105"
+          >
+            Request Demo Call <ArrowRight size={16} />
           </button>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="text-center mt-4">
-        <p className="text-white/70 text-sm flex items-center justify-center gap-2">
-          <Video size={14} className="text-[#c9a84c]" /> Watch Live AI Voice Assistant Product Demo Now
-        </p>
+      {/* Premium Stats Section Below Video */}
+      <div className="mt-8 pt-6 border-t border-white/10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {stats.map((stat, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-4 text-center hover:border-[#c9a84c]/30 transition-all duration-300 group"
+            >
+              <div className="w-10 h-10 mx-auto rounded-lg bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                <stat.icon size={18} className="text-[#c9a84c]" />
+              </div>
+              <p className="text-2xl font-bold text-white">{stat.value}</p>
+              <p className="text-white/40 text-xs">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+        
+        <div className="mt-6 text-center">
+          <p className="text-white/40 text-xs flex flex-wrap items-center justify-center gap-3">
+            <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Real patient call recording</span>
+            <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Real appointment booking</span>
+            <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No human intervention</span>
+            <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Automatic CRM update</span>
+          </p>
+        </div>
       </div>
-
-      <div className="text-center mt-5">
-        <button
-          onClick={onDemoClick}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 transform hover:scale-105"
-        >
-          Request Demo Call <ArrowRight size={16} />
-        </button>
-      </div>
-    </motion.div>
+    </div>
   );
 };
 
-// --- AI Dashboard Illustration Section ---
+// --- AI Dashboard Section ---
 const AIDashboardSection = () => {
   return (
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 md:p-8 border border-white/10">
