@@ -198,7 +198,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
 
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {aiOptions.map(option => (
                     <label key={option} className="flex items-center gap-2 text-white/70 text-xs sm:text-sm cursor-pointer hover:text-white transition-colors">
                       <input type="checkbox" name="ai_solutions" value={option} className="rounded border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20" />
@@ -356,7 +356,7 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Large Sound Button ---
+// --- Video Section ---
 const VideoSection = ({ onDemoClick }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -399,9 +399,9 @@ const VideoSection = ({ onDemoClick }) => {
   };
 
   const stats = [
-    { value: "98%", label: "Call Answer Rate", icon: PhoneCall },
+    { value: "100%", label: "Call Answer Rate", icon: PhoneCall },
     { value: "24/7", label: "Availability", icon: Clock },
-    { value: "< 2s", label: "Response Time", icon: Zap },
+    { value: "< 1s", label: "Avg Response Time", icon: Zap },
     { value: "40%", label: "No-Show Reduction", icon: TrendingUp }
   ];
 
@@ -417,7 +417,6 @@ const VideoSection = ({ onDemoClick }) => {
         <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
         <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
           
-          {/* Live indicator */}
           <div className="absolute top-3 left-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-2 py-1 sm:px-3 sm:py-1.5">
             <div className="relative">
               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-ping" />
@@ -426,7 +425,6 @@ const VideoSection = ({ onDemoClick }) => {
             <span className="text-white text-[10px] sm:text-xs font-medium tracking-wider">🔴 LIVE DEMO</span>
           </div>
 
-          {/* Large Sound Button - Bottom Left, BIG and VISIBLE */}
           <button
             onClick={handleMuteToggle}
             className="absolute bottom-4 left-4 z-20 flex items-center gap-2 sm:gap-3 bg-black/70 backdrop-blur-sm rounded-full px-3 py-2 sm:px-5 sm:py-3 hover:bg-black/90 transition-all duration-300 hover:scale-105 border border-white/20"
@@ -454,7 +452,6 @@ const VideoSection = ({ onDemoClick }) => {
               Your browser does not support the video tag.
             </video>
             
-            {/* Large Center Play/Pause Button */}
             <button
               onClick={handlePlayPause}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300"
@@ -477,7 +474,6 @@ const VideoSection = ({ onDemoClick }) => {
               </motion.div>
             </button>
 
-            {/* Pulse effect on play button when paused */}
             {!isPlaying && (
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75 z-10" />
             )}
@@ -501,7 +497,6 @@ const VideoSection = ({ onDemoClick }) => {
         </div>
       </motion.div>
 
-      {/* Stats Section Below Video */}
       <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {stats.map((stat, idx) => (
@@ -548,7 +543,6 @@ const AIDashboardSection = () => {
       </div>
       
       <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-        {/* Dashboard Illustration */}
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
           <div className="relative bg-gradient-to-br from-[#080c14] to-[#0a0f1c] border border-white/10 rounded-xl p-4 sm:p-5">
@@ -885,10 +879,9 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Comparison Table ---
+// --- Comparison Table (Without 24/7 Availability) ---
 const ComparisonTable = () => {
   const comparisons = [
-    { feature: "24/7 Availability", ai: true, voicemail: false, answering: false },
     { feature: "Instant Response", ai: true, voicemail: false, answering: false },
     { feature: "Books Appointments", ai: true, voicemail: false, answering: false },
     { feature: "Answers Patient Questions", ai: true, voicemail: false, answering: false },
@@ -979,7 +972,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
   
   return (
-    <div className="relative min-h-[80vh] sm:min-h-[85vh] flex items-center pt-12 sm:pt-16 pb-12 sm:pb-16 overflow-hidden" onMouseMove={handleMouseMove}>
+    <div className="relative min-h-[70vh] sm:min-h-[75vh] flex items-center pt-8 sm:pt-12 pb-8 sm:pb-12 overflow-hidden" onMouseMove={handleMouseMove}>
       <div className="absolute inset-0 overflow-hidden"><div className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} /><div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} /></div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-2 sm:gap-3">
