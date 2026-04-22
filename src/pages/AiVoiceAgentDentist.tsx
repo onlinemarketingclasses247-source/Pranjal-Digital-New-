@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import {
   Phone, Calendar, CheckCircle2, ChevronRight, Play, Star,
   TrendingUp, Clock, Headphones, Shield, Zap, Users,
@@ -984,7 +985,7 @@ const ComparisonTable = () => {
             <th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th>
-            </tr>
+            <tr>
         </thead>
         <tbody>
           {comparisons.map((item, idx) => (
@@ -1255,127 +1256,136 @@ export default function DentalVoiceAgentLanding() {
   ];
 
   return (
-    <div className="bg-[#080c14] min-h-screen font-sans antialiased overflow-x-hidden">
-      <AnimatedHero onFreeTrialClick={() => setShowFreeTrial(true)} onDemoClick={scrollToCalendly} />
-      
-      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
-        <VideoSection onDemoClick={scrollToCalendly} />
-      </SectionWrapper>
+    <>
+      <Helmet>
+        <title>Dental AI Voice Agent | AI Receptionist for Dentists</title>
+        <meta
+          name="description"
+          content="AI dental voice agent that answers patient calls, books appointments, and updates your CRM automatically. Never miss a patient call again. Starts at $49.99/month with 7-day free trial."
+        />
+      </Helmet>
+      <div className="bg-[#080c14] min-h-screen font-sans antialiased overflow-x-hidden">
+        <AnimatedHero onFreeTrialClick={() => setShowFreeTrial(true)} onDemoClick={scrollToCalendly} />
+        
+        <SectionWrapper className="pt-0 pb-8 sm:pb-12">
+          <VideoSection onDemoClick={scrollToCalendly} />
+        </SectionWrapper>
 
-      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
-        <ProblemSection />
-      </SectionWrapper>
+        <SectionWrapper className="pt-0 pb-8 sm:pb-12">
+          <ProblemSection />
+        </SectionWrapper>
 
-      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
-        <AIDashboardSection />
-      </SectionWrapper>
+        <SectionWrapper className="pt-0 pb-8 sm:pb-12">
+          <AIDashboardSection />
+        </SectionWrapper>
 
-      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
-        <AIWorkAnimation />
-      </SectionWrapper>
+        <SectionWrapper className="pt-0 pb-8 sm:pb-12">
+          <AIWorkAnimation />
+        </SectionWrapper>
 
-      <SectionWrapper className="pt-0 pb-6 sm:pb-8">
-        <FeatureCards />
-      </SectionWrapper>
+        <SectionWrapper className="pt-0 pb-6 sm:pb-8">
+          <FeatureCards />
+        </SectionWrapper>
 
-      <SectionWrapper className="pt-0 pb-6">
-        <div className="text-center">
-          <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper className="py-6 sm:py-8">
-        <CollaborationSection />
-      </SectionWrapper>
-
-      <SectionWrapper className="py-6 sm:py-8">
-        <ComparisonTable />
-      </SectionWrapper>
-
-      <SectionWrapper className="py-6 sm:py-8">
-        <ProductivityBoost />
-      </SectionWrapper>
-
-      <SectionWrapper id="how-it-works" className="py-6 sm:py-8">
-        <SectionHeader badge="Simple Process" title="How It Works" description="A 3-step system that turns missed calls into booked appointments" />
-        <HowItWorksFlow />
-      </SectionWrapper>
-
-      <SectionWrapper className="pt-0 pb-6">
-        <div className="text-center">
-          <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper className="py-8 sm:py-12">
-        <SectionHeader badge="The Solution" title="Your 24/7 AI Receptionist That Converts Calls" center={true} />
-        <SolutionSection />
-      </SectionWrapper>
-
-      <SectionWrapper id="pricing" className="py-8 sm:py-12">
-        <SectionHeader badge="Simple Pricing" title="Simple, Affordable Pricing" />
-        <PricingSection onFreeTrialClick={() => setShowFreeTrial(true)} />
-      </SectionWrapper>
-
-      <SectionWrapper className="pt-0 pb-6">
-        <div className="text-center">
-          <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper className="py-6 sm:py-8">
-        <CalendlySection />
-      </SectionWrapper>
-
-      <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-8 sm:py-12">
-        <SectionHeader badge="FAQ" title="Frequently Asked Questions" />
-        <div className="max-w-2xl mx-auto space-y-2 sm:space-y-3">
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="border border-white/10 rounded-lg overflow-hidden">
-              <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full flex justify-between items-center p-3 sm:p-4 text-left">
-                <span className="text-white font-medium text-[10px] sm:text-sm">{faq.q}</span>
-                <ChevronDown size={12} className={`text-white/50 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
-              </button>
-              {activeFaq === idx && (
-                <div className="p-3 sm:p-4 pt-0 text-white/50 text-[8px] sm:text-xs border-t border-white/10 leading-relaxed">{faq.a}</div>
-              )}
-            </div>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper className="py-8 sm:py-12">
-        <div className="rounded-xl bg-gradient-to-br from-[#c9a84c]/10 to-[#0d1220] border border-[#c9a84c]/20 p-5 sm:p-8 text-center">
-          <h3 className="text-base sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3">Ready to Never Miss a Patient Call Again?</h3>
-          <p className="text-white/60 mb-4 sm:mb-6 text-[10px] sm:text-sm">Join hundreds of dental practices automating their front desk with our AI voice agent.</p>
-          <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
-        </div>
-      </SectionWrapper>
-
-      <div className="border-t border-white/10 py-4 sm:py-6 text-center">
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
-              <Mic size={10} className="sm:size-14 text-[#080c14]" />
-            </div>
-            <span className="text-white font-bold text-[10px] sm:text-sm">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
+        <SectionWrapper className="pt-0 pb-6">
+          <div className="text-center">
+            <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
           </div>
-          <div className="text-white/40 text-[7px] sm:text-[11px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
+        </SectionWrapper>
+
+        <SectionWrapper className="py-6 sm:py-8">
+          <CollaborationSection />
+        </SectionWrapper>
+
+        <SectionWrapper className="py-6 sm:py-8">
+          <ComparisonTable />
+        </SectionWrapper>
+
+        <SectionWrapper className="py-6 sm:py-8">
+          <ProductivityBoost />
+        </SectionWrapper>
+
+        <SectionWrapper id="how-it-works" className="py-6 sm:py-8">
+          <SectionHeader badge="Simple Process" title="How It Works" description="A 3-step system that turns missed calls into booked appointments" />
+          <HowItWorksFlow />
+        </SectionWrapper>
+
+        <SectionWrapper className="pt-0 pb-6">
+          <div className="text-center">
+            <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
+          </div>
+        </SectionWrapper>
+
+        <SectionWrapper className="py-8 sm:py-12">
+          <SectionHeader badge="The Solution" title="Your 24/7 AI Receptionist That Converts Calls" center={true} />
+          <SolutionSection />
+        </SectionWrapper>
+
+        <SectionWrapper id="pricing" className="py-8 sm:py-12">
+          <SectionHeader badge="Simple Pricing" title="Simple, Affordable Pricing" />
+          <PricingSection onFreeTrialClick={() => setShowFreeTrial(true)} />
+        </SectionWrapper>
+
+        <SectionWrapper className="pt-0 pb-6">
+          <div className="text-center">
+            <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
+          </div>
+        </SectionWrapper>
+
+        <SectionWrapper className="py-6 sm:py-8">
+          <CalendlySection />
+        </SectionWrapper>
+
+        <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-8 sm:py-12">
+          <SectionHeader badge="FAQ" title="Frequently Asked Questions" />
+          <div className="max-w-2xl mx-auto space-y-2 sm:space-y-3">
+            {faqs.map((faq, idx) => (
+              <div key={idx} className="border border-white/10 rounded-lg overflow-hidden">
+                <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full flex justify-between items-center p-3 sm:p-4 text-left">
+                  <span className="text-white font-medium text-[10px] sm:text-sm">{faq.q}</span>
+                  <ChevronDown size={12} className={`text-white/50 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
+                </button>
+                {activeFaq === idx && (
+                  <div className="p-3 sm:p-4 pt-0 text-white/50 text-[8px] sm:text-xs border-t border-white/10 leading-relaxed">{faq.a}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </SectionWrapper>
+
+        <SectionWrapper className="py-8 sm:py-12">
+          <div className="rounded-xl bg-gradient-to-br from-[#c9a84c]/10 to-[#0d1220] border border-[#c9a84c]/20 p-5 sm:p-8 text-center">
+            <h3 className="text-base sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3">Ready to Never Miss a Patient Call Again?</h3>
+            <p className="text-white/60 mb-4 sm:mb-6 text-[10px] sm:text-sm">Join hundreds of dental practices automating their front desk with our AI voice agent.</p>
+            <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
+          </div>
+        </SectionWrapper>
+
+        <div className="border-t border-white/10 py-4 sm:py-6 text-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
+                <Mic size={10} className="sm:size-14 text-[#080c14]" />
+              </div>
+              <span className="text-white font-bold text-[10px] sm:text-sm">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
+            </div>
+            <div className="text-white/40 text-[7px] sm:text-[11px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
+          </div>
         </div>
+
+        <AnimatePresence>
+          {showCalendly && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative bg-[#080c14] rounded-2xl w-full max-w-4xl h-[85vh] overflow-hidden border border-[#c9a84c]/30 shadow-2xl">
+                <button onClick={() => setShowCalendly(false)} className="absolute top-4 right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors border border-white/10"><X size={14} className="sm:size-20" /></button>
+                <iframe src={CALENDLY_URL} width="100%" height="100%" frameBorder="0" className="bg-white" title="Calendly Booking" />
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+        <FreeTrialModal isOpen={showFreeTrial} onClose={() => setShowFreeTrial(false)} />
       </div>
-
-      <AnimatePresence>
-        {showCalendly && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative bg-[#080c14] rounded-2xl w-full max-w-4xl h-[85vh] overflow-hidden border border-[#c9a84c]/30 shadow-2xl">
-              <button onClick={() => setShowCalendly(false)} className="absolute top-4 right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors border border-white/10"><X size={14} className="sm:size-20" /></button>
-              <iframe src={CALENDLY_URL} width="100%" height="100%" frameBorder="0" className="bg-white" title="Calendly Booking" />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      <FreeTrialModal isOpen={showFreeTrial} onClose={() => setShowFreeTrial(false)} />
-    </div>
+    </>
   );
 }
