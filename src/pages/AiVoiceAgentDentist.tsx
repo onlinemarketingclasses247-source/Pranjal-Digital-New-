@@ -1,6 +1,3 @@
-Here is the complete, error-free, production-ready landing page with the fixed syntax issue in the comparison table.
-
-```tsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
 import {
@@ -915,7 +912,7 @@ const ComparisonTable = () => {
             <th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th>
-           </tr>
+            </tr>
         </thead>
         <tbody>
           {comparisons.map((item, idx) => (
@@ -942,7 +939,7 @@ const ComparisonTable = () => {
                   <span className="text-white/40 text-[8px] sm:text-sm">{item.answering}</span>
                 )}
               </td>
-             </tr>
+            </tr>
           ))}
         </tbody>
       </table>
@@ -1265,4 +1262,3 @@ export default function DentalVoiceAgentLanding() {
     </div>
   );
 }
-```
