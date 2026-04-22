@@ -15,7 +15,7 @@ import {
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
-  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,  
+  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
   HeadsetIcon
 } from 'lucide-react';
 
@@ -962,7 +962,7 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Comparison Table (Fixed - Proper Table Structure) ---
+// --- Comparison Table ---
 const ComparisonTable = () => {
   const comparisons = [
     { feature: "Instant Response", ai: true, voicemail: false, answering: false },
@@ -1259,22 +1259,8 @@ export default function DentalVoiceAgentLanding() {
           name="description"
           content="AI dental voice agent that answers patient calls, books appointments, and updates your CRM automatically. Never miss a patient call again. Starts at $49.99/month with 7-day free trial."
         />
-
-
-return (
-  <>
-    <Helmet>
-      <title>Dental AI Agent | AI Receptionist for Dentists</title>
-      <meta
-        name="description"
-        content="AI dental voice agent that answers patient calls, books appointments, and updates your CRM automatically. Starts at $49.99/month with a 7-day free trial."
-      />
-    </Helmet>
-
-    <div className="bg-[#080c14] min-h-screen font-sans antialiased overflow-x-hidden">
-        
-
-        
+      </Helmet>
+      <div className="bg-[#080c14] min-h-screen font-sans antialiased overflow-x-hidden">
         <AnimatedHero onFreeTrialClick={() => setShowFreeTrial(true)} onDemoClick={scrollToCalendly} />
         
         <SectionWrapper className="pt-0 pb-8 sm:pb-12">
