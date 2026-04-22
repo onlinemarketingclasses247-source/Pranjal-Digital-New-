@@ -14,8 +14,7 @@ import {
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
-  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
-  Tooth
+  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -926,7 +925,7 @@ const ComparisonTable = () => {
             <th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th>
-            </tr>
+            </table>
         </thead>
         <tbody>
           {comparisons.map((item, idx) => (
@@ -1089,7 +1088,7 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component with Teeth and AI Voice Icons ---
+// --- Animated Hero Component with Dental Icons ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
@@ -1102,10 +1101,10 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-2 sm:gap-3">
-          {/* Teeth Icon */}
+          {/* Dental/Teeth Icon */}
           <div className="relative">
             <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
-              <Tooth size={14} className="sm:size-18 text-[#c9a84c]" />
+              <Activity size={14} className="sm:size-18 text-[#c9a84c]" />
             </div>
           </div>
           <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full border border-[#c9a84c]/20">
@@ -1150,12 +1149,12 @@ export default function DentalVoiceAgentLanding() {
   const scrollToCalendly = () => { const element = document.getElementById('calendly-section'); if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'start' }); } };
 
   const faqs = [
-    { q: "How does the AI work with my existing phone number?", a: "Simply forward your clinic's number to us, or we can provide you with a new local number. The AI answers instantly, 24/7/365, using your clinic's custom protocols and greeting. Setup takes less than 24 hours and requires no technical skills from your side. We handle everything remotely." },
-    { q: "Will this replace my receptionist?", a: "No! We strongly believe in human + AI collaboration. Your receptionist is invaluable for complex patient needs, emotional conversations, and building relationships. Our AI steps in after hours, during lunch breaks, when your team is busy with other patients, or during peak call times — handling routine calls so your receptionist can focus on providing exceptional patient care." },
-    { q: "Can it handle complex appointment scheduling?", a: "Absolutely. Our AI checks real-time availability from your calendar, handles multiple providers and locations, manages waitlists, sends confirmations, and can even reschedule or cancel appointments through natural conversation. It understands context like 'next Tuesday' or 'anytime after 3pm' and books accordingly." },
-    { q: "What CRMs do you integrate with?", a: "We integrate with all major dental CRMs including Open Dental, Dentrix, Eaglesoft, Curve Dental, as well as general CRMs like HubSpot and Salesforce. If you don't have a CRM, we provide a simple, easy-to-use CRM completely free with no implementation charges. We also offer custom integrations for other systems." },
-    { q: "How does pricing work for higher call volumes?", a: "Our standard $49.99/month plan covers up to 500 calls per month. For clinics with higher call volumes, we offer a nominal per-call fee beyond that. For custom AI workflows, complex CRM integrations, or enterprise needs, we offer custom pricing. Contact us for a personalized quote based on your clinic's specific requirements." },
-    { q: "Is there a long-term contract?", a: "No. Our service is month-to-month with no long-term commitment. You can cancel anytime. The 7-day free trial is completely risk-free with no credit card required. If you're not satisfied, you can cancel within the trial period at no cost. We're confident you'll love the results." }
+    { q: "How does the AI work with my existing phone number?", a: "Simply forward your clinic's number to us, or we can provide you with a new local number. The AI answers instantly, 24/7/365, using your clinic's custom protocols and greeting. Setup takes less than 24 hours and requires no technical skills from your side. We handle everything remotely. You keep your existing number and patients can still call the same number they've always used." },
+    { q: "Will this replace my receptionist?", a: "No! We strongly believe in human + AI collaboration. Your receptionist is invaluable for complex patient needs, emotional conversations, and building relationships. Our AI steps in after hours, during lunch breaks, when your team is busy with other patients, or during peak call times — handling routine calls so your receptionist can focus on providing exceptional patient care. Think of it as a smart assistant, not a replacement." },
+    { q: "Can it handle complex appointment scheduling?", a: "Absolutely. Our AI checks real-time availability from your calendar, handles multiple providers and locations, manages waitlists, sends confirmations, and can even reschedule or cancel appointments through natural conversation. It understands context like 'next Tuesday' or 'anytime after 3pm' and books accordingly. It can also handle recurring appointments and special requests." },
+    { q: "What CRMs do you integrate with?", a: "We integrate with all major dental CRMs including Open Dental, Dentrix, Eaglesoft, Curve Dental, as well as general CRMs like HubSpot and Salesforce. If you don't have a CRM, we provide a simple, easy-to-use CRM completely free with no implementation charges. We also offer custom integrations for other systems. Our team handles the entire integration process for you." },
+    { q: "How does pricing work for higher call volumes?", a: "Our standard $49.99/month plan covers up to 500 calls per month. For clinics with higher call volumes, we offer a nominal per-call fee beyond that — typically just $0.05 per additional call. For custom AI workflows, complex CRM integrations, or enterprise needs with over 5,000 calls per month, we offer custom enterprise pricing. Contact us for a personalized quote based on your clinic's specific requirements." },
+    { q: "Is there a long-term contract?", a: "No. Our service is month-to-month with no long-term commitment. You can cancel anytime with 30 days notice. The 7-day free trial is completely risk-free with no credit card required. If you're not satisfied, you can cancel within the trial period at no cost. We're confident you'll love the results — most clinics see ROI within the first month of using our AI voice agent." }
   ];
 
   return (
