@@ -1200,12 +1200,13 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.5, delay: 0.15 }}
-  className="text-base sm:text-lg md:text-xl text-[#c9a84c] font-semibold mb-6 sm:mb-8 px-4 leading-relaxed"
+  className="text-sm sm:text-lg md:text-xl text-[#c9a84c] font-semibold mb-6 sm:mb-8 px-4 leading-relaxed"
 >
-  Our AI Agent saves thousands of dollars a month
-  <br />
+  Our AI Agent saves thousands of dollars monthly<br />
   by answering missed call opportunities
 </motion.p>
+
+        
         
         
         {/* Typing Effect Line */}
