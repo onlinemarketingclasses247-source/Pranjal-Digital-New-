@@ -15,14 +15,14 @@ import {
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
   Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
-  Waves, RadioTower, Cpu
+  MessageCircle
 } from 'lucide-react';
 
 // --- Configuration ---
 const FORM_SUBMIT_URL = "https://formsubmit.co/pranjallundefined@gmail.com";
 const CALENDLY_URL = "https://calendly.com/pranjaldigital-info/30min";
 
-// --- Country Codes with proper order (US/Canada first, then major, then other) ---
+// --- Country Codes ---
 const countryCodesList = [
   { code: "+1", country: "United States/Canada", flag: "🇺🇸🇨🇦" },
   { code: "+44", country: "United Kingdom", flag: "🇬🇧" },
@@ -161,7 +161,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData(e.target);
-    // Add the country code as a separate field
     formData.append("country_code", selectedCountryCode);
     formData.append("country_name", selectedCountryLabel);
     
@@ -205,8 +204,8 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <div className="sticky top-0 left-0 right-0 z-20 flex justify-start p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent border-b border-white/10">
+        {/* Close Button - Positioned below the header area, not overlapping with any logo */}
+        <div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-4 pb-2 px-4 border-b border-white/10">
           <button 
             onClick={onClose} 
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 text-white hover:text-white transition-all duration-300 group"
@@ -429,7 +428,7 @@ const TypingEffect = () => {
   }, [displayText, isDeleting, currentPhraseIndex, phrases]);
 
   return (
-    <span className="block bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent mt-2 min-h-[50px] sm:min-h-[60px] md:min-h-[80px]">
+    <span className="block bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent min-h-[50px] sm:min-h-[60px] md:min-h-[80px]">
       {displayText}
       <span className="inline-block w-0.5 h-5 sm:h-6 md:h-8 bg-[#c9a84c] ml-1 animate-pulse" />
     </span>
@@ -1143,7 +1142,7 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component with Premium Robot + Phone + Voice Wave Icons ---
+// --- Animated Hero Component with Single AI Chatbot Icon ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
@@ -1155,44 +1154,34 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         <div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} />
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
-          {/* Premium Robot/AI Icon with Phone and Voice Waves */}
+        {/* Single AI Chatbot Icon - picking up calls */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center mb-4">
           <div className="relative group">
-            <div className="absolute -inset-3 rounded-full bg-[#c9a84c]/20 blur-xl animate-pulse" />
-            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border-2 border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/20">
+            <div className="absolute -inset-4 rounded-full bg-[#c9a84c]/20 blur-xl animate-pulse" />
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border-2 border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/20">
               <div className="relative">
-                <Cpu size={24} className="sm:size-28 text-[#c9a84c] animate-pulse" />
-                <Phone className="absolute -top-1 -right-1 w-4 h-4 text-[#c9a84c]" />
+                <MessageCircle size={28} className="sm:size-32 text-[#c9a84c] animate-pulse" />
+                <Phone className="absolute -top-2 -right-2 w-5 h-5 text-[#c9a84c]" />
               </div>
             </div>
             {/* Voice wave animation */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-0.5">
-              <motion.div animate={{ height: [6, 12, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
-              <motion.div animate={{ height: [6, 18, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
-              <motion.div animate={{ height: [6, 24, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
-              <motion.div animate={{ height: [6, 18, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
-              <motion.div animate={{ height: [6, 12, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex gap-0.5">
+              <motion.div animate={{ height: [6, 14, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 20, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 26, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 20, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
+              <motion.div animate={{ height: [6, 14, 6] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} className="w-0.5 bg-[#c9a84c] rounded-full" style={{ height: 6 }} />
             </div>
-          </div>
-          
-          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c]/20 to-[#c9a84c]/5 backdrop-blur-sm px-4 sm:px-6 py-2 sm:py-2.5 rounded-full border border-[#c9a84c]/30 shadow-lg shadow-[#c9a84c]/10">
-            <Sparkles size={12} className="sm:size-14 text-[#c9a84c] animate-pulse" />
-            <span className="text-[#c9a84c] text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
-          </span>
-          
-          {/* Dental Icon with Tooth */}
-          <div className="relative group">
-            <div className="absolute -inset-3 rounded-full bg-[#c9a84c]/20 blur-xl animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border-2 border-[#c9a84c]/40 shadow-lg shadow-[#c9a84c]/20">
-              <Activity size={24} className="sm:size-28 text-[#c9a84c] animate-pulse" />
-            </div>
-            {/* Pulse rings */}
-            <div className="absolute -inset-1 rounded-full border-2 border-[#c9a84c]/30 animate-ping opacity-75" style={{ animationDuration: '1.5s' }} />
-            <div className="absolute -inset-3 rounded-full border border-[#c9a84c]/20 animate-ping opacity-50" style={{ animationDuration: '2s', animationDelay: '0.5s' }} />
           </div>
         </motion.div>
         
-        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-5 leading-tight">Never Miss a Patient Call —<TypingEffect /></motion.h1>
+        {/* Improved Text Design - "Never Miss a Patient Call" on first line, typing effect on second line */}
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2 sm:mb-3 leading-tight">
+          Never Miss a Patient Call
+        </motion.h1>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-5">
+          <TypingEffect />
+        </motion.div>
         
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-white/60 text-[10px] sm:text-sm md:text-base mb-4 sm:mb-5 max-w-2xl mx-auto">AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.</motion.p>
         
