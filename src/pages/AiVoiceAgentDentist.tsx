@@ -1236,7 +1236,6 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
 
 // --- Main Component ---
 export default function DentalVoiceAgentLanding() {
-  usePageMeta();
   const [showCalendly, setShowCalendly] = useState(false);
   const [showFreeTrial, setShowFreeTrial] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
