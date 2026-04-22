@@ -77,12 +77,11 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component with Dropdown and Fixed Close Button ---
+// --- Free Trial Modal Component ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
-  const modalRef = useRef(null);
 
   const aiOptions = [
     "24/7 Appointment Booking",
@@ -127,7 +126,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
     }
   };
 
-  // Handle escape key press
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -143,7 +141,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onClick={onClose}>
       <motion.div
-        ref={modalRef}
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -151,7 +148,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button - Prominent and Fixed */}
         <div className="sticky top-0 right-0 z-20 flex justify-end p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent">
           <button 
             onClick={onClose} 
@@ -211,7 +207,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* AI Solutions - Checkboxes */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
                 <div className="flex flex-col space-y-2">
@@ -229,7 +224,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* CRM Options - Dropdown instead of radio buttons */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
                 <select 
@@ -904,7 +898,7 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Comparison Table ---
+// --- Comparison Table (Fixed) ---
 const ComparisonTable = () => {
   const comparisons = [
     { feature: "Instant Response", ai: true, voicemail: false, answering: false },
@@ -925,7 +919,7 @@ const ComparisonTable = () => {
             <th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th>
-            </table>
+           </tr>
         </thead>
         <tbody>
           {comparisons.map((item, idx) => (
@@ -952,10 +946,10 @@ const ComparisonTable = () => {
                   <span className="text-white/40 text-[8px] sm:text-sm">{item.answering}</span>
                 )}
               </td>
-            </tr>
+             </tr>
           ))}
         </tbody>
-      </table>
+       </table>
       <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-[#c9a84c]/10 rounded-lg text-center">
         <p className="text-[#c9a84c] text-[8px] sm:text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p>
       </div>
@@ -1088,7 +1082,7 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component with Dental Icons ---
+// --- Animated Hero Component ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
@@ -1101,7 +1095,6 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-2 sm:gap-3">
-          {/* Dental/Teeth Icon */}
           <div className="relative">
             <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
               <Activity size={14} className="sm:size-18 text-[#c9a84c]" />
@@ -1111,7 +1104,6 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
             <Sparkles size={8} className="sm:size-12 text-[#c9a84c] animate-pulse" />
             <span className="text-[#c9a84c] text-[6px] sm:text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
           </span>
-          {/* AI Voice Pulse Icon */}
           <div className="relative">
             <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center animate-pulse">
               <Activity size={14} className="sm:size-18 text-[#c9a84c]" />
