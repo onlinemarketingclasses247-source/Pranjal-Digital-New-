@@ -15,7 +15,7 @@ import {
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
   Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
-  MessageCircle, HeadsetIcon
+  HeadsetIcon
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -129,7 +129,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component with Fixed Close Button Position ---
+// --- Free Trial Modal Component ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -204,7 +204,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button - Left Middle Corner (not overlapping with content) */}
+        {/* Close Button */}
         <div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-3 pb-2 px-4">
           <button 
             onClick={onClose} 
@@ -387,6 +387,51 @@ const AIWorkAnimation = () => {
         </p>
       </div>
     </div>
+  );
+};
+
+// --- Typing Effect Component ---
+const TypingEffect = () => {
+  const phrases = [
+    "After Clinic Hours",
+    "During Lunch Break",
+    "When Reception is Busy",
+    "On Weekends",
+    "During Peak Hours"
+  ];
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentPhrase = phrases[currentPhraseIndex];
+    let timer;
+    
+    if (isDeleting) {
+      timer = setTimeout(() => {
+        setDisplayText(prev => prev.slice(0, -1));
+        if (displayText === "") {
+          setIsDeleting(false);
+          setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        }
+      }, 50);
+    } else {
+      timer = setTimeout(() => {
+        setDisplayText(currentPhrase.slice(0, displayText.length + 1));
+        if (displayText.length === currentPhrase.length) {
+          setTimeout(() => setIsDeleting(true), 1500);
+        }
+      }, 80);
+    }
+    
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, currentPhraseIndex, phrases]);
+
+  return (
+    <span className="inline-block bg-gradient-to-r from-[#c9a84c] to-[#f5d76e] bg-clip-text text-transparent">
+      {displayText}
+      <span className="inline-block w-0.5 h-5 sm:h-6 md:h-8 bg-[#c9a84c] ml-1 animate-pulse" />
+    </span>
   );
 };
 
@@ -1097,7 +1142,7 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component with New Layout ---
+// --- Animated Hero Component ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
@@ -1109,7 +1154,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         <div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} />
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
-        {/* Animated Icon - Single AI Chatbot Picking Up Call */}
+        {/* Animated Icon */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
