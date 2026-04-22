@@ -99,7 +99,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
     "Dentrix",
     "Eaglesoft",
     "Curve Dental",
-    "Other (Please specify)",
+    "Other",
     "We are looking to implement CRM"
   ];
 
@@ -268,40 +268,40 @@ const AIWorkAnimation = () => {
   return (
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl border border-white/10 overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
-        <div className="p-4 md:p-5 text-center">
-          <div className="w-12 h-12 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center mb-2">
-            <PhoneCall size={22} className="text-blue-400" />
+        <div className="p-3 sm:p-4 md:p-5 text-center">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center mb-2">
+            <PhoneCall size={18} className="sm:size-22 text-blue-400" />
           </div>
-          <p className="text-white font-semibold text-sm">Incoming Call</p>
-          <p className="text-white/40 text-xs">Patient calling...</p>
+          <p className="text-white font-semibold text-xs sm:text-sm">Incoming Call</p>
+          <p className="text-white/40 text-[10px] sm:text-xs">Patient calling...</p>
           <div className="flex justify-center gap-1 mt-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60 animate-pulse" style={{ animationDelay: '0.2s' }} />
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
+            <div className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
+            <div className="w-1 h-1 rounded-full bg-blue-400/60 animate-pulse" style={{ animationDelay: '0.2s' }} />
+            <div className="w-1 h-1 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
           </div>
         </div>
-        <div className="p-4 md:p-5 text-center bg-gradient-to-r from-[#c9a84c]/5 to-transparent">
-          <div className="relative w-14 h-14 mx-auto mb-2">
+        <div className="p-3 sm:p-4 md:p-5 text-center bg-gradient-to-r from-[#c9a84c]/5 to-transparent">
+          <div className="relative w-10 h-10 sm:w-14 sm:h-14 mx-auto mb-2">
             <div className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-ping" style={{ animationDuration: '2s' }} />
             <div className="absolute inset-1 rounded-full bg-[#c9a84c]/30" />
             <div className="absolute inset-2 rounded-full bg-[#c9a84c]/40 flex items-center justify-center">
-              <Mic size={20} className="text-white" />
+              <Mic size={16} className="sm:size-20 text-white" />
             </div>
           </div>
-          <p className="text-[#c9a84c] font-semibold text-sm">AI Voice Agent</p>
-          <p className="text-white/40 text-xs">Analyzing & Responding</p>
+          <p className="text-[#c9a84c] font-semibold text-xs sm:text-sm">AI Voice Agent</p>
+          <p className="text-white/40 text-[10px] sm:text-xs">Analyzing & Responding</p>
         </div>
-        <div className="p-4 md:p-5 text-center">
-          <div className="w-12 h-12 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-2">
-            <Calendar size={22} className="text-green-400" />
+        <div className="p-3 sm:p-4 md:p-5 text-center">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-2">
+            <Calendar size={18} className="sm:size-22 text-green-400" />
           </div>
-          <p className="text-white font-semibold text-sm">Appointment Booked</p>
-          <p className="text-white/40 text-xs">CRM Updated</p>
-          <CheckCircle2 size={14} className="text-green-400 mx-auto mt-2" />
+          <p className="text-white font-semibold text-xs sm:text-sm">Appointment Booked</p>
+          <p className="text-white/40 text-[10px] sm:text-xs">CRM Updated</p>
+          <CheckCircle2 size={12} className="sm:size-14 text-green-400 mx-auto mt-2" />
         </div>
       </div>
       <div className="bg-white/5 py-2 text-center border-t border-white/10">
-        <p className="text-white/40 text-xs flex flex-wrap items-center justify-center gap-3">
+        <p className="text-white/40 text-[10px] sm:text-[11px] flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           <span className="flex items-center gap-1"><Clock size={10} /> Answers instantly</span>
           <span className="flex items-center gap-1"><Zap size={10} /> 24/7 availability</span>
           <span className="flex items-center gap-1"><CheckCircle2 size={10} /> Never misses a call</span>
@@ -356,7 +356,7 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Premium Controls ---
+// --- Video Section with Large Sound Button ---
 const VideoSection = ({ onDemoClick }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -365,7 +365,6 @@ const VideoSection = ({ onDemoClick }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
 
-  // Auto-play muted when in view
   useEffect(() => {
     if (isInView && videoRef.current && !hasStarted) {
       videoRef.current.muted = true;
@@ -399,7 +398,6 @@ const VideoSection = ({ onDemoClick }) => {
     }
   };
 
-  // Stats data
   const stats = [
     { value: "98%", label: "Call Answer Rate", icon: PhoneCall },
     { value: "24/7", label: "Availability", icon: Clock },
@@ -420,26 +418,26 @@ const VideoSection = ({ onDemoClick }) => {
         <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
           
           {/* Live indicator */}
-          <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
+          <div className="absolute top-3 left-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-2 py-1 sm:px-3 sm:py-1.5">
             <div className="relative">
-              <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-              <div className="w-2 h-2 rounded-full bg-red-500 absolute top-0 left-0" />
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-ping" />
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 absolute top-0 left-0" />
             </div>
-            <span className="text-white text-xs font-medium tracking-wider">🔴 LIVE DEMO</span>
+            <span className="text-white text-[10px] sm:text-xs font-medium tracking-wider">🔴 LIVE DEMO</span>
           </div>
 
-          {/* Large Sound Button - Bottom Left */}
+          {/* Large Sound Button - Bottom Left, BIG and VISIBLE */}
           <button
             onClick={handleMuteToggle}
-            className="absolute bottom-4 left-4 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-4 py-2.5 hover:bg-black/80 transition-all duration-300 hover:scale-105"
+            className="absolute bottom-4 left-4 z-20 flex items-center gap-2 sm:gap-3 bg-black/70 backdrop-blur-sm rounded-full px-3 py-2 sm:px-5 sm:py-3 hover:bg-black/90 transition-all duration-300 hover:scale-105 border border-white/20"
           >
             {isMuted ? (
-              <VolumeX size={20} className="text-white" />
+              <VolumeX size={20} className="sm:size-24 text-white" />
             ) : (
-              <Volume2 size={20} className="text-white" />
+              <Volume2 size={20} className="sm:size-24 text-white" />
             )}
-            <span className="text-white text-xs font-medium hidden sm:inline">
-              {isMuted ? "Sound Off" : "Sound On"}
+            <span className="text-white text-xs sm:text-sm font-semibold tracking-wide">
+              {isMuted ? "SOUND OFF" : "SOUND ON"}
             </span>
           </button>
 
@@ -456,10 +454,10 @@ const VideoSection = ({ onDemoClick }) => {
               Your browser does not support the video tag.
             </video>
             
-            {/* Large Center Play/Pause Button - Always Visible */}
+            {/* Large Center Play/Pause Button */}
             <button
               onClick={handlePlayPause}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 group/play transition-all duration-300"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-300"
             >
               <motion.div
                 whileHover={{ scale: 1.1 }}
@@ -469,62 +467,62 @@ const VideoSection = ({ onDemoClick }) => {
                     ? "0 0 20px rgba(201,168,76,0.3)" 
                     : "0 0 30px rgba(201,168,76,0.6)"
                 }}
-                className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] flex items-center justify-center shadow-2xl transition-all duration-300"
+                className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] flex items-center justify-center shadow-2xl transition-all duration-300"
               >
                 {isPlaying ? (
-                  <Pause size={36} className="text-[#080c14] md:size-40" />
+                  <Pause size={24} className="sm:size-32 md:size-36 text-[#080c14]" />
                 ) : (
-                  <Play size={36} className="text-[#080c14] ml-1 md:size-40" />
+                  <Play size={24} className="sm:size-32 md:size-36 text-[#080c14] ml-0.5 sm:ml-1" />
                 )}
               </motion.div>
             </button>
 
             {/* Pulse effect on play button when paused */}
             {!isPlaying && (
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-28 md:h-28 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75 z-10" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75 z-10" />
             )}
           </div>
         </div>
 
-        <div className="text-center mt-6">
-          <p className="text-white/70 text-sm md:text-base flex items-center justify-center gap-2">
-            <Video size={16} className="text-[#c9a84c]" /> 
+        <div className="text-center mt-4 sm:mt-6">
+          <p className="text-white/70 text-xs sm:text-sm md:text-base flex items-center justify-center gap-2">
+            <Video size={14} className="sm:size-16 text-[#c9a84c]" /> 
             Watch Live AI Voice Assistant Product Demo Now
           </p>
         </div>
 
-        <div className="text-center mt-5">
+        <div className="text-center mt-4 sm:mt-5">
           <button
             onClick={onDemoClick}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 transform hover:scale-105"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
           >
-            Request Demo Call <ArrowRight size={16} />
+            Request Demo Call <ArrowRight size={14} className="sm:size-16" />
           </button>
         </div>
       </motion.div>
 
-      {/* Premium Stats Section Below Video */}
-      <div className="mt-8 pt-6 border-t border-white/10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Stats Section Below Video */}
+      <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {stats.map((stat, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-4 text-center hover:border-[#c9a84c]/30 transition-all duration-300 group"
+              className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-lg sm:rounded-xl p-2 sm:p-4 text-center hover:border-[#c9a84c]/30 transition-all duration-300 group"
             >
-              <div className="w-10 h-10 mx-auto rounded-lg bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                <stat.icon size={18} className="text-[#c9a84c]" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg bg-[#c9a84c]/10 flex items-center justify-center mb-1 sm:mb-2 group-hover:scale-110 transition-transform">
+                <stat.icon size={14} className="sm:size-18 text-[#c9a84c]" />
               </div>
-              <p className="text-2xl font-bold text-white">{stat.value}</p>
-              <p className="text-white/40 text-xs">{stat.label}</p>
+              <p className="text-lg sm:text-2xl font-bold text-white">{stat.value}</p>
+              <p className="text-white/40 text-[10px] sm:text-xs">{stat.label}</p>
             </motion.div>
           ))}
         </div>
         
-        <div className="mt-6 text-center">
-          <p className="text-white/40 text-xs flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-4 sm:mt-6 text-center">
+          <p className="text-white/40 text-[10px] sm:text-xs flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Real patient call recording</span>
             <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Real appointment booking</span>
             <span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No human intervention</span>
@@ -539,8 +537,8 @@ const VideoSection = ({ onDemoClick }) => {
 // --- AI Dashboard Section ---
 const AIDashboardSection = () => {
   return (
-    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 md:p-8 border border-white/10">
-      <div className="text-center mb-8">
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-4 sm:p-6 md:p-8 border border-white/10">
+      <div className="text-center mb-6 sm:mb-8">
         <SectionHeader 
           badge="AI Dashboard" 
           title="Complete Visibility Into Your Call Performance" 
@@ -549,43 +547,40 @@ const AIDashboardSection = () => {
         />
       </div>
       
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
         {/* Dashboard Illustration */}
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
-          <div className="relative bg-gradient-to-br from-[#080c14] to-[#0a0f1c] border border-white/10 rounded-xl p-5">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6 pb-3 border-b border-white/10">
+          <div className="relative bg-gradient-to-br from-[#080c14] to-[#0a0f1c] border border-white/10 rounded-xl p-4 sm:p-5">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 pb-2 sm:pb-3 border-b border-white/10">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center">
-                  <BarChartIcon size={16} className="text-[#c9a84c]" />
+                <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center">
+                  <BarChartIcon size={14} className="sm:size-16 text-[#c9a84c]" />
                 </div>
-                <span className="text-white font-semibold text-sm">AI Voice Dashboard</span>
+                <span className="text-white font-semibold text-xs sm:text-sm">AI Voice Dashboard</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-white/40 text-[10px]">Live</span>
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-white/40 text-[8px] sm:text-[10px]">Live</span>
               </div>
             </div>
             
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-5">
-              <div className="bg-white/5 rounded-lg p-3 text-center">
-                <p className="text-white/40 text-[10px]">Calls Handled</p>
-                <p className="text-2xl font-bold text-[#c9a84c]">1,247</p>
-                <p className="text-green-400 text-[8px]">+32% vs last month</p>
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-5">
+              <div className="bg-white/5 rounded-lg p-2 sm:p-3 text-center">
+                <p className="text-white/40 text-[8px] sm:text-[10px]">Calls Handled</p>
+                <p className="text-xl sm:text-2xl font-bold text-[#c9a84c]">1,247</p>
+                <p className="text-green-400 text-[6px] sm:text-[8px]">+32% vs last month</p>
               </div>
-              <div className="bg-white/5 rounded-lg p-3 text-center">
-                <p className="text-white/40 text-[10px]">Appointments</p>
-                <p className="text-2xl font-bold text-white">892</p>
-                <p className="text-green-400 text-[8px]">+28% vs last month</p>
+              <div className="bg-white/5 rounded-lg p-2 sm:p-3 text-center">
+                <p className="text-white/40 text-[8px] sm:text-[10px]">Appointments</p>
+                <p className="text-xl sm:text-2xl font-bold text-white">892</p>
+                <p className="text-green-400 text-[6px] sm:text-[8px]">+28% vs last month</p>
               </div>
             </div>
             
-            {/* Call Volume Chart (Visual) */}
-            <div className="mb-5">
-              <p className="text-white/40 text-[10px] mb-2">Call Volume (Last 7 days)</p>
-              <div className="flex items-end gap-1 h-24">
+            <div className="mb-4 sm:mb-5">
+              <p className="text-white/40 text-[8px] sm:text-[10px] mb-1 sm:mb-2">Call Volume (Last 7 days)</p>
+              <div className="flex items-end gap-1 h-16 sm:h-24">
                 {[35, 52, 48, 61, 73, 68, 55].map((height, i) => (
                   <div key={i} className="flex-1 flex flex-col items-center gap-1">
                     <motion.div 
@@ -595,31 +590,30 @@ const AIDashboardSection = () => {
                       className="w-full bg-gradient-to-t from-[#c9a84c] to-[#dbb85c] rounded-t"
                       style={{ height: `${height}%` }}
                     />
-                    <span className="text-white/30 text-[8px]">Day {i+1}</span>
+                    <span className="text-white/30 text-[6px] sm:text-[8px]">Day {i+1}</span>
                   </div>
                 ))}
               </div>
             </div>
             
-            {/* Recent Calls */}
             <div>
-              <p className="text-white/40 text-[10px] mb-2">Recent Calls</p>
-              <div className="space-y-2">
+              <p className="text-white/40 text-[8px] sm:text-[10px] mb-1 sm:mb-2">Recent Calls</p>
+              <div className="space-y-1.5 sm:space-y-2">
                 {[
                   { patient: "Sarah Johnson", time: "2:15 PM", status: "Booked", duration: "2:30" },
                   { patient: "Michael Chen", time: "1:45 PM", status: "Booked", duration: "3:15" },
                   { patient: "Dr. Emily Wilson", time: "11:20 AM", status: "Rescheduled", duration: "4:00" }
                 ].map((call, i) => (
-                  <div key={i} className="flex items-center justify-between bg-white/5 rounded-lg p-2">
+                  <div key={i} className="flex items-center justify-between bg-white/5 rounded-lg p-1.5 sm:p-2">
                     <div>
-                      <p className="text-white text-xs font-medium">{call.patient}</p>
-                      <p className="text-white/30 text-[8px]">{call.time}</p>
+                      <p className="text-white text-[10px] sm:text-xs font-medium">{call.patient}</p>
+                      <p className="text-white/30 text-[6px] sm:text-[8px]">{call.time}</p>
                     </div>
                     <div className="text-right">
-                      <span className={`text-[10px] ${call.status === 'Booked' ? 'text-green-400' : 'text-yellow-400'}`}>
+                      <span className={`text-[8px] sm:text-[10px] ${call.status === 'Booked' ? 'text-green-400' : 'text-yellow-400'}`}>
                         {call.status}
                       </span>
-                      <p className="text-white/30 text-[8px]">{call.duration}</p>
+                      <p className="text-white/30 text-[6px] sm:text-[8px]">{call.duration}</p>
                     </div>
                   </div>
                 ))}
@@ -628,58 +622,57 @@ const AIDashboardSection = () => {
           </div>
         </div>
         
-        {/* Features List */}
-        <div className="space-y-4">
-          <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
-                <PhoneCall size={18} className="text-[#c9a84c]" />
+        <div className="space-y-3 sm:space-y-4">
+          <div className="bg-white/5 rounded-xl p-3 sm:p-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <PhoneCall size={14} className="sm:size-18 text-[#c9a84c]" />
               </div>
               <div>
-                <h4 className="text-white font-semibold text-sm">Real-time Call Monitoring</h4>
-                <p className="text-white/40 text-xs">Watch live as AI handles patient calls</p>
+                <h4 className="text-white font-semibold text-xs sm:text-sm">Real-time Call Monitoring</h4>
+                <p className="text-white/40 text-[10px] sm:text-xs">Watch live as AI handles patient calls</p>
               </div>
             </div>
-            <p className="text-white/50 text-xs ml-12">See every call as it happens, with live transcription and AI response tracking.</p>
+            <p className="text-white/50 text-[10px] sm:text-xs ml-10 sm:ml-12">See every call as it happens, with live transcription and AI response tracking.</p>
           </div>
           
-          <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
-                <TrendingUp size={18} className="text-[#c9a84c]" />
+          <div className="bg-white/5 rounded-xl p-3 sm:p-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <TrendingUp size={14} className="sm:size-18 text-[#c9a84c]" />
               </div>
               <div>
-                <h4 className="text-white font-semibold text-sm">Performance Analytics</h4>
-                <p className="text-white/40 text-xs">Track conversion rates and ROI</p>
+                <h4 className="text-white font-semibold text-xs sm:text-sm">Performance Analytics</h4>
+                <p className="text-white/40 text-[10px] sm:text-xs">Track conversion rates and ROI</p>
               </div>
             </div>
-            <p className="text-white/50 text-xs ml-12">Measure how many calls turn into booked appointments and calculate revenue recovered.</p>
+            <p className="text-white/50 text-[10px] sm:text-xs ml-10 sm:ml-12">Measure how many calls turn into booked appointments and calculate revenue recovered.</p>
           </div>
           
-          <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
-                <Database size={18} className="text-[#c9a84c]" />
+          <div className="bg-white/5 rounded-xl p-3 sm:p-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <Database size={14} className="sm:size-18 text-[#c9a84c]" />
               </div>
               <div>
-                <h4 className="text-white font-semibold text-sm">CRM Integration Status</h4>
-                <p className="text-white/40 text-xs">See sync status and patient records</p>
+                <h4 className="text-white font-semibold text-xs sm:text-sm">CRM Integration Status</h4>
+                <p className="text-white/40 text-[10px] sm:text-xs">See sync status and patient records</p>
               </div>
             </div>
-            <p className="text-white/50 text-xs ml-12">View real-time sync status, patient records created, and appointment confirmations sent.</p>
+            <p className="text-white/50 text-[10px] sm:text-xs ml-10 sm:ml-12">View real-time sync status, patient records created, and appointment confirmations sent.</p>
           </div>
           
-          <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
-                <Headphones size={18} className="text-[#c9a84c]" />
+          <div className="bg-white/5 rounded-xl p-3 sm:p-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <Headphones size={14} className="sm:size-18 text-[#c9a84c]" />
               </div>
               <div>
-                <h4 className="text-white font-semibold text-sm">Quality Assurance</h4>
-                <p className="text-white/40 text-xs">Review AI conversations and improve</p>
+                <h4 className="text-white font-semibold text-xs sm:text-sm">Quality Assurance</h4>
+                <p className="text-white/40 text-[10px] sm:text-xs">Review AI conversations and improve</p>
               </div>
             </div>
-            <p className="text-white/50 text-xs ml-12">Listen to call recordings, review AI responses, and continuously improve performance.</p>
+            <p className="text-white/50 text-[10px] sm:text-xs ml-10 sm:ml-12">Listen to call recordings, review AI responses, and continuously improve performance.</p>
           </div>
         </div>
       </div>
@@ -690,49 +683,49 @@ const AIDashboardSection = () => {
 // --- Problem Section ---
 const ProblemSection = () => {
   return (
-    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#080c14] rounded-2xl p-6 md:p-8 border border-white/10">
-      <div className="text-center mb-6">
-        <span className="inline-flex items-center gap-2 bg-red-500/10 px-3 py-1 rounded-full mb-3">
-          <AlertCircle size={12} className="text-red-400" />
-          <span className="text-red-400 text-xs font-medium uppercase tracking-wider">The Problem</span>
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#080c14] rounded-2xl p-4 sm:p-6 md:p-8 border border-white/10">
+      <div className="text-center mb-4 sm:mb-6">
+        <span className="inline-flex items-center gap-2 bg-red-500/10 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-2 sm:mb-3">
+          <AlertCircle size={10} className="sm:size-12 text-red-400" />
+          <span className="text-red-400 text-[8px] sm:text-xs font-medium uppercase tracking-wider">The Problem</span>
         </span>
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Every Missed Call = Lost Revenue</h2>
-        <p className="text-red-400 text-sm font-semibold">Clinics lose 30–40% of calls — that's thousands in lost revenue every month</p>
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">Every Missed Call = Lost Revenue</h2>
+        <p className="text-red-400 text-[10px] sm:text-sm font-semibold">Clinics lose 30–40% of calls — that's thousands in lost revenue every month</p>
       </div>
       
-      <div className="grid md:grid-cols-2 gap-8 items-center mt-6">
+      <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center mt-4 sm:mt-6">
         <div>
-          <ul className="space-y-3">
-            <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400 flex-shrink-0" /><span className="text-white/70 text-sm">Patients call when you're busy with other patients</span></li>
-            <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400 flex-shrink-0" /><span className="text-white/70 text-sm">No one answers after clinic hours or on weekends</span></li>
-            <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400 flex-shrink-0" /><span className="text-white/70 text-sm">Receptionist burnout and high turnover</span></li>
-            <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400 flex-shrink-0" /><span className="text-white/70 text-sm">No call tracking means no follow-ups</span></li>
+          <ul className="space-y-2 sm:space-y-3">
+            <li className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/5 rounded-lg"><X size={12} className="sm:size-16 text-red-400 flex-shrink-0" /><span className="text-white/70 text-[10px] sm:text-sm">Patients call when you're busy with other patients</span></li>
+            <li className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/5 rounded-lg"><X size={12} className="sm:size-16 text-red-400 flex-shrink-0" /><span className="text-white/70 text-[10px] sm:text-sm">No one answers after clinic hours or on weekends</span></li>
+            <li className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/5 rounded-lg"><X size={12} className="sm:size-16 text-red-400 flex-shrink-0" /><span className="text-white/70 text-[10px] sm:text-sm">Receptionist burnout and high turnover</span></li>
+            <li className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/5 rounded-lg"><X size={12} className="sm:size-16 text-red-400 flex-shrink-0" /><span className="text-white/70 text-[10px] sm:text-sm">No call tracking means no follow-ups</span></li>
           </ul>
         </div>
         
-        <div className="bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-5">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-white/70 text-sm font-medium">Missed Calls This Week</span>
+        <div className="bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-3 sm:p-5">
+          <div className="flex items-center gap-2 mb-2 sm:mb-4">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-pulse" />
+            <span className="text-white/70 text-[10px] sm:text-sm font-medium">Missed Calls This Week</span>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             {[
               { patient: "Sarah Johnson", time: "2:15 PM", value: "$450" },
               { patient: "Michael Chen", time: "6:30 PM", value: "$320" },
               { patient: "Dr. Emily Wilson", time: "8:45 AM", value: "$580" }
             ].map((call, i) => (
-              <div key={i} className="bg-white/5 rounded-lg p-3 flex justify-between items-center">
+              <div key={i} className="bg-white/5 rounded-lg p-2 sm:p-3 flex justify-between items-center">
                 <div>
-                  <span className="text-white/80 text-sm font-medium">{call.patient}</span>
-                  <p className="text-white/30 text-xs">{call.time}</p>
+                  <span className="text-white/80 text-[10px] sm:text-sm font-medium">{call.patient}</span>
+                  <p className="text-white/30 text-[8px] sm:text-[10px]">{call.time}</p>
                 </div>
-                <span className="text-red-400/80 text-sm font-medium">-{call.value}</span>
+                <span className="text-red-400/80 text-[10px] sm:text-sm font-medium">-{call.value}</span>
               </div>
             ))}
           </div>
-          <div className="mt-4 p-3 bg-red-500/20 rounded-lg text-center">
-            <p className="text-red-400 text-sm font-bold">Total Lost: $1,350 this week</p>
-            <p className="text-red-400/60 text-xs mt-1">That's over $5,400 per month!</p>
+          <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-red-500/20 rounded-lg text-center">
+            <p className="text-red-400 text-[10px] sm:text-sm font-bold">Total Lost: $1,350 this week</p>
+            <p className="text-red-400/60 text-[8px] sm:text-[10px] mt-0.5 sm:mt-1">That's over $5,400 per month!</p>
           </div>
         </div>
       </div>
@@ -752,20 +745,20 @@ const FeatureCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
       {features.map((feature, idx) => (
         <motion.div
           key={idx}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.05 }}
-          className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-3 text-center hover:border-[#c9a84c]/30 transition-all duration-300 group"
+          className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-2 sm:p-3 text-center hover:border-[#c9a84c]/30 transition-all duration-300 group"
         >
-          <div className="w-10 h-10 mx-auto rounded-lg bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-            <feature.icon size={18} className="text-[#c9a84c]" />
+          <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg bg-[#c9a84c]/10 flex items-center justify-center mb-1 sm:mb-2 group-hover:scale-110 transition-transform">
+            <feature.icon size={14} className="sm:size-18 text-[#c9a84c]" />
           </div>
-          <p className="text-white text-xs font-medium">{feature.title}</p>
-          <p className="text-white/30 text-[10px]">{feature.description}</p>
+          <p className="text-white text-[10px] sm:text-xs font-medium">{feature.title}</p>
+          <p className="text-white/30 text-[8px] sm:text-[10px]">{feature.description}</p>
         </motion.div>
       ))}
     </div>
@@ -796,8 +789,8 @@ const HowItWorksFlow = () => {
   ];
 
   return (
-    <div ref={ref} className="relative py-6">
-      <div className="grid md:grid-cols-3 gap-6">
+    <div ref={ref} className="relative py-4 sm:py-6">
+      <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
         {steps.map((step, idx) => (
           <motion.div
             key={idx}
@@ -809,42 +802,42 @@ const HowItWorksFlow = () => {
             {idx < 2 && (
               <div className="hidden md:block absolute top-1/3 -right-4 z-10">
                 <motion.div animate={{ x: activeStep === idx ? [0, 5, 0] : 0 }} transition={{ duration: 0.6, repeat: activeStep === idx ? Infinity : 0 }}>
-                  <ArrowRightIcon size={24} className="text-[#c9a84c]/50" />
+                  <ArrowRightIcon size={20} className="sm:size-24 text-[#c9a84c]/50" />
                 </motion.div>
               </div>
             )}
             <motion.div
               animate={{ scale: activeStep === idx ? [1, 1.02, 1] : 1, borderColor: activeStep === idx ? "#c9a84c" : "rgba(255,255,255,0.1)", boxShadow: activeStep === idx ? "0 10px 30px rgba(201,168,76,0.15)" : "none" }}
               transition={{ duration: 0.5, repeat: activeStep === idx ? Infinity : 0, repeatDelay: 2 }}
-              className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border rounded-xl p-5 relative overflow-hidden h-full"
+              className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border rounded-xl p-3 sm:p-5 relative overflow-hidden h-full"
             >
               {activeStep === idx && <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }} />}
-              <div className="flex justify-between items-start mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center">
-                  <step.icon size={24} className="text-[#c9a84c]" />
+              <div className="flex justify-between items-start mb-2 sm:mb-4">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center">
+                  <step.icon size={16} className="sm:size-24 text-[#c9a84c]" />
                 </div>
-                <span className="text-3xl font-bold text-white/10">{step.step}</span>
+                <span className="text-xl sm:text-3xl font-bold text-white/10">{step.step}</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-              <p className="text-white/50 text-sm mb-4 leading-relaxed">{step.description}</p>
-              <div className="flex flex-wrap gap-2 mt-2 pt-3 border-t border-white/10">
+              <h3 className="text-base sm:text-xl font-bold text-white mb-1 sm:mb-2">{step.title}</h3>
+              <p className="text-white/50 text-[10px] sm:text-sm mb-2 sm:mb-4 leading-relaxed">{step.description}</p>
+              <div className="flex flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2 pt-2 sm:pt-3 border-t border-white/10">
                 {step.features.map((feature, fIdx) => (
-                  <span key={fIdx} className="text-[#c9a84c]/70 text-xs bg-[#c9a84c]/10 px-3 py-1 rounded-full">{feature}</span>
+                  <span key={fIdx} className="text-[#c9a84c]/70 text-[8px] sm:text-xs bg-[#c9a84c]/10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">{feature}</span>
                 ))}
               </div>
               {activeStep === idx && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/50 animate-pulse" style={{ animationDelay: '0.2s' }} />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
+                <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
+                  <div className="w-1 h-1 rounded-full bg-[#c9a84c] animate-pulse" />
+                  <div className="w-1 h-1 rounded-full bg-[#c9a84c]/50 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                  <div className="w-1 h-1 rounded-full bg-[#c9a84c]/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
                 </div>
               )}
             </motion.div>
           </motion.div>
         ))}
       </div>
-      <div className="flex justify-center gap-2 mt-8">
-        {steps.map((_, idx) => (<button key={idx} onClick={() => setActiveStep(idx)} className={`h-1.5 rounded-full transition-all duration-300 ${activeStep === idx ? 'w-8 bg-[#c9a84c]' : 'w-2 bg-white/20'}`} />))}
+      <div className="flex justify-center gap-2 mt-4 sm:mt-8">
+        {steps.map((_, idx) => (<button key={idx} onClick={() => setActiveStep(idx)} className={`h-1 rounded-full transition-all duration-300 ${activeStep === idx ? 'w-5 sm:w-8 bg-[#c9a84c]' : 'w-1.5 sm:w-2 bg-white/20'}`} />))}
       </div>
     </div>
   );
@@ -853,37 +846,37 @@ const HowItWorksFlow = () => {
 // --- Human + AI Collaboration Section ---
 const CollaborationSection = () => {
   return (
-    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 md:p-8 border border-white/10">
-      <div className="grid md:grid-cols-2 gap-8 items-center">
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-4 sm:p-6 md:p-8 border border-white/10">
+      <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
         <div>
-          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-3 py-1 rounded-full mb-4">
-            <HeartHandshake size={14} className="text-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-xs font-medium">Human + AI Collaboration</span>
+          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-3 sm:mb-4">
+            <HeartHandshake size={10} className="sm:size-14 text-[#c9a84c]" />
+            <span className="text-[#c9a84c] text-[8px] sm:text-xs font-medium">Human + AI Collaboration</span>
           </div>
-          <h3 className="text-xl md:text-2xl font-bold text-white mb-4">We're Not Trying to Replace Your Receptionist — We're Empowering Them</h3>
-          <p className="text-white/60 text-sm md:text-base mb-4 leading-relaxed">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-4">We're Not Trying to Replace Your Receptionist — We're Empowering Them</h3>
+          <p className="text-white/60 text-[10px] sm:text-sm md:text-base mb-3 sm:mb-4 leading-relaxed">
             Your receptionist is the heart of your practice. But no human can work 24/7/365. 
             Unlike traditional voicemails or answering machines that just take messages, our AI Voice Agent 
             works <span className="text-[#c9a84c]">intelligently alongside your team</span> — handling routine calls, booking appointments, 
             and updating records while your receptionist focuses on complex patient needs.
           </p>
-          <div className="grid grid-cols-2 gap-3 mt-6">
-            <div className="bg-white/5 rounded-xl p-3"><TrendingUp size={16} className="text-[#c9a84c] mb-2" /><p className="text-white/80 text-sm font-medium">3x Higher Productivity</p><p className="text-white/30 text-xs">AI handles 70% of routine calls</p></div>
-            <div className="bg-white/5 rounded-xl p-3"><UserCheck size={16} className="text-[#c9a84c] mb-2" /><p className="text-white/80 text-sm font-medium">Less Burnout</p><p className="text-white/30 text-xs">Receptionists focus on patients</p></div>
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-4 sm:mt-6">
+            <div className="bg-white/5 rounded-lg sm:rounded-xl p-2 sm:p-3"><TrendingUp size={12} className="sm:size-16 text-[#c9a84c] mb-1 sm:mb-2" /><p className="text-white/70 sm:text-white/80 text-[10px] sm:text-sm font-medium">3x Higher Productivity</p><p className="text-white/30 text-[8px] sm:text-[10px]">AI handles 70% of routine calls</p></div>
+            <div className="bg-white/5 rounded-lg sm:rounded-xl p-2 sm:p-3"><UserCheck size={12} className="sm:size-16 text-[#c9a84c] mb-1 sm:mb-2" /><p className="text-white/70 sm:text-white/80 text-[10px] sm:text-sm font-medium">Less Burnout</p><p className="text-white/30 text-[8px] sm:text-[10px]">Receptionists focus on patients</p></div>
           </div>
         </div>
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
-          <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-5">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2"><div className="w-8 h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center"><Bot size={14} className="text-[#c9a84c]" /></div><span className="text-white/80 text-xs font-medium">AI Voice Agent</span></div>
-              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /><span className="text-white/40 text-[10px]">Active 24/7</span></div>
+          <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-3 sm:p-5">
+            <div className="flex items-center justify-between mb-2 sm:mb-4">
+              <div className="flex items-center gap-1 sm:gap-2"><div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center"><Bot size={10} className="sm:size-14 text-[#c9a84c]" /></div><span className="text-white/70 sm:text-white/80 text-[8px] sm:text-xs font-medium">AI Voice Agent</span></div>
+              <div className="flex items-center gap-1 sm:gap-2"><div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-green-500 animate-pulse" /><span className="text-white/40 text-[6px] sm:text-[10px]">Active 24/7</span></div>
             </div>
-            <div className="space-y-2">
-              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[11px]">AI: "Dr. Smith is with a patient. Can I help book an appointment?"</p></div>
-              <div className="bg-[#c9a84c]/10 rounded-lg p-2"><p className="text-[#c9a84c] text-[11px]">Patient: "Yes, I need a cleaning next week."</p></div>
-              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[11px]">AI: "Tuesday at 2pm works. I'll book it and add you to the system."</p></div>
-              <div className="border-t border-white/10 pt-2 mt-2 text-center"><p className="text-white/30 text-[10px]">Seamless handoff to human during business hours</p></div>
+            <div className="space-y-1.5 sm:space-y-2">
+              <div className="bg-white/5 rounded-lg p-1.5 sm:p-2"><p className="text-white/60 text-[8px] sm:text-[11px]">AI: "Dr. Smith is with a patient. Can I help book an appointment?"</p></div>
+              <div className="bg-[#c9a84c]/10 rounded-lg p-1.5 sm:p-2"><p className="text-[#c9a84c] text-[8px] sm:text-[11px]">Patient: "Yes, I need a cleaning next week."</p></div>
+              <div className="bg-white/5 rounded-lg p-1.5 sm:p-2"><p className="text-white/60 text-[8px] sm:text-[11px]">AI: "Tuesday at 2pm works. I'll book it and add you to the system."</p></div>
+              <div className="border-t border-white/10 pt-1 sm:pt-2 mt-1 sm:mt-2 text-center"><p className="text-white/30 text-[6px] sm:text-[10px]">Seamless handoff to human during business hours</p></div>
             </div>
           </div>
         </div>
@@ -905,22 +898,22 @@ const ComparisonTable = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10 overflow-x-auto">
-      <h3 className="text-lg font-bold text-white text-center mb-6">Why AI Voice Agent is Better Than Traditional Voicemail or Answering Machines</h3>
-      <table className="w-full min-w-[500px]">
-        <thead><tr className="border-b border-white/10"><th className="text-left text-white/60 text-sm font-medium py-3 px-2">Feature</th><th className="text-center text-[#c9a84c] text-sm font-medium py-3 px-2">AI Voice Agent</th><th className="text-center text-white/40 text-sm font-medium py-3 px-2">Voicemail</th><th className="text-center text-white/40 text-sm font-medium py-3 px-2">Answering Machine</th></tr></thead>
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-4 sm:p-6 border border-white/10 overflow-x-auto">
+      <h3 className="text-sm sm:text-lg font-bold text-white text-center mb-4 sm:mb-6">Why AI Voice Agent is Better Than Traditional Voicemail or Answering Machines</h3>
+      <table className="w-full min-w-[400px] sm:min-w-[500px]">
+        <thead><tr className="border-b border-white/10"><th className="text-left text-white/60 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Feature</th><th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th><th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th><th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th></tr></thead>
         <tbody>
           {comparisons.map((item, idx) => (
             <tr key={idx} className="border-b border-white/5">
-              <td className="text-white/70 text-sm py-3 px-2">{item.feature}</td>
-              <td className="text-center py-3 px-2">{typeof item.ai === 'boolean' ? (item.ai ? <CheckCircle2 size={16} className="text-[#c9a84c] mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-[#c9a84c] text-sm">{item.ai}</span>}</td>
-              <td className="text-center py-3 px-2">{typeof item.voicemail === 'boolean' ? (item.voicemail ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-white/40 text-sm">{item.voicemail}</span>}</td>
-              <td className="text-center py-3 px-2">{typeof item.answering === 'boolean' ? (item.answering ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-white/40 text-sm">{item.answering}</span>}</td>
+              <td className="text-white/70 text-[8px] sm:text-sm py-2 sm:py-3 px-1 sm:px-2">{item.feature}</td>
+              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.ai === 'boolean' ? (item.ai ? <CheckCircle2 size={10} className="sm:size-16 text-[#c9a84c] mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-[#c9a84c] text-[8px] sm:text-sm">{item.ai}</span>}</td>
+              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.voicemail === 'boolean' ? (item.voicemail ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-white/40 text-[8px] sm:text-sm">{item.voicemail}</span>}</td>
+              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.answering === 'boolean' ? (item.answering ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-white/40 text-[8px] sm:text-sm">{item.answering}</span>}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="mt-6 p-4 bg-[#c9a84c]/10 rounded-lg text-center"><p className="text-[#c9a84c] text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p></div>
+      <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-[#c9a84c]/10 rounded-lg text-center"><p className="text-[#c9a84c] text-[8px] sm:text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p></div>
     </div>
   );
 };
@@ -928,9 +921,9 @@ const ComparisonTable = () => {
 // --- Productivity Boost Section ---
 const ProductivityBoost = () => {
   return (
-    <div className="grid md:grid-cols-2 gap-8 items-center">
-      <div className="relative"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-6"><div className="flex items-center gap-3 mb-4"><BarChart3 size={24} className="text-red-400" /><span className="text-white font-bold text-lg">Before AI Voice Agent</span></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Receptionist spends 4+ hours/day on calls</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> 30-40% of after-hours calls go unanswered</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Manual data entry into CRM</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> High receptionist burnout & turnover</li></ul></div></div>
-      <div className="relative"><div className="absolute inset-0 bg-gradient-to-l from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-6"><div className="flex items-center gap-3 mb-4"><TrendingUp size={24} className="text-[#c9a84c]" /><span className="text-white font-bold text-lg">After AI Voice Agent</span></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI handles 70% of routine calls</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 100% of after-hours calls answered</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Automatic CRM updates</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 3x happier receptionists, lower turnover</li></ul></div></div>
+    <div className="grid md:grid-cols-2 gap-5 sm:gap-8 items-center">
+      <div className="relative"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-4 sm:p-6"><div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4"><BarChart3 size={16} className="sm:size-24 text-red-400" /><span className="text-white font-bold text-sm sm:text-lg">Before AI Voice Agent</span></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Receptionist spends 4+ hours/day on calls</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> 30-40% of after-hours calls go unanswered</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Manual data entry into CRM</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> High receptionist burnout & turnover</li></ul></div></div>
+      <div className="relative"><div className="absolute inset-0 bg-gradient-to-l from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-4 sm:p-6"><div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4"><TrendingUp size={16} className="sm:size-24 text-[#c9a84c]" /><span className="text-white font-bold text-sm sm:text-lg">After AI Voice Agent</span></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> AI handles 70% of routine calls</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> 100% of after-hours calls answered</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Automatic CRM updates</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> 3x happier receptionists, lower turnover</li></ul></div></div>
     </div>
   );
 };
@@ -938,9 +931,9 @@ const ProductivityBoost = () => {
 // --- Solution Section ---
 const SolutionSection = () => {
   return (
-    <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-      <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-6"><div className="flex items-center gap-3 mb-4"><XCircle size={22} className="text-red-400" /><h3 className="text-white font-bold text-lg">Before AI</h3></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Missed calls after hours</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Manual appointment booking</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Lost revenue</li></ul></div>
-      <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-6 relative overflow-hidden group"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" /><div className="flex items-center gap-3 mb-4"><ThumbsUp size={22} className="text-[#c9a84c]" /><h3 className="text-white font-bold text-lg">With AI</h3></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI answers instantly 24/7</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Auto appointment booking</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Capture every call</li></ul></div>
+    <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-3xl mx-auto">
+      <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-4 sm:p-6"><div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4"><XCircle size={16} className="sm:size-22 text-red-400" /><h3 className="text-white font-bold text-sm sm:text-lg">Before AI</h3></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Missed calls after hours</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Manual appointment booking</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Lost revenue</li></ul></div>
+      <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-4 sm:p-6 relative overflow-hidden group"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" /><div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4"><ThumbsUp size={16} className="sm:size-22 text-[#c9a84c]" /><h3 className="text-white font-bold text-sm sm:text-lg">With AI</h3></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> AI answers instantly 24/7</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Auto appointment booking</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Capture every call</li></ul></div>
     </div>
   );
 };
@@ -949,9 +942,9 @@ const SolutionSection = () => {
 const PricingSection = ({ onFreeTrialClick }) => {
   return (
     <div>
-      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-6 shadow-xl shadow-[#c9a84c]/15"><div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[11px] font-bold px-3 py-1 rounded-full">OUR PLAN</div><div className="relative text-center"><div className="w-12 h-12 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-4"><Crown size={22} className="text-[#c9a84c]" /></div><h3 className="text-xl font-bold text-white">DentalVoiceAI</h3><div className="mt-4 mb-1"><span className="text-4xl font-bold text-[#c9a84c]">$49.99</span><span className="text-white/40 text-base">/month</span></div><p className="text-[#c9a84c] text-xs mb-4">+ nominal per-call fee for high volumes</p><ul className="space-y-2 text-left mt-5 mb-6"><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> No setup fees</li><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> 24/7 availability</li><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Free CRM integration</li><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Low latency response</li></ul><button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 rounded-lg hover:shadow-lg transition-all text-sm">Start Free Trial</button></div></div>
-        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-6"><div className="text-center"><div className="w-12 h-12 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-4"><AlertCircle size={22} className="text-white/40" /></div><h3 className="text-xl font-bold text-white/60">Other AI Voice Agents</h3><div className="mt-4 mb-1"><span className="text-3xl font-bold text-white/40">$200+</span><span className="text-white/30 text-base">/month</span></div><ul className="space-y-2 text-left mt-5 mb-6"><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> High setup fees ($500+)</li><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Expensive per-call charges</li><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Slow response time</li><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Long-term contracts</li></ul></div></div>
+      <div className="grid md:grid-cols-2 gap-5 sm:gap-6 max-w-4xl mx-auto">
+        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-5 sm:p-6 shadow-xl shadow-[#c9a84c]/15"><div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[10px] sm:text-[11px] font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">OUR PLAN</div><div className="relative text-center"><div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-3 sm:mb-4"><Crown size={16} className="sm:size-22 text-[#c9a84c]" /></div><h3 className="text-base sm:text-xl font-bold text-white">DentalVoiceAI</h3><div className="mt-3 sm:mt-4 mb-1"><span className="text-2xl sm:text-4xl font-bold text-[#c9a84c]">$49.99</span><span className="text-white/40 text-xs sm:text-base">/month</span></div><p className="text-[#c9a84c] text-[8px] sm:text-xs mb-3 sm:mb-4">+ nominal per-call fee for high volumes</p><ul className="space-y-1.5 sm:space-y-2 text-left mt-4 sm:mt-5 mb-4 sm:mb-6"><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> No setup fees</li><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> 24/7 availability</li><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> Free CRM integration</li><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> Low latency response</li></ul><button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2 sm:py-3 rounded-lg hover:shadow-lg transition-all text-[10px] sm:text-sm">Start Free Trial</button></div></div>
+        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-5 sm:p-6"><div className="text-center"><div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-3 sm:mb-4"><AlertCircle size={16} className="sm:size-22 text-white/40" /></div><h3 className="text-base sm:text-xl font-bold text-white/60">Other AI Voice Agents</h3><div className="mt-3 sm:mt-4 mb-1"><span className="text-2xl sm:text-3xl font-bold text-white/40">$200+</span><span className="text-white/30 text-xs sm:text-base">/month</span></div><ul className="space-y-1.5 sm:space-y-2 text-left mt-4 sm:mt-5 mb-4 sm:mb-6"><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> High setup fees ($500+)</li><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Expensive per-call charges</li><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Slow response time</li><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Long-term contracts</li></ul></div></div>
       </div>
     </div>
   );
@@ -962,15 +955,15 @@ const CalendlySection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
     <div id="calendly-section" className="scroll-mt-20">
-      <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10">
-        <div className="text-center mb-5">
-          <h3 className="text-xl font-bold text-white mb-1">Schedule Your Free Demo</h3>
-          <p className="text-white/50 text-sm">Choose a time that works for you. 30-min personalized walkthrough.</p>
+      <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-4 sm:p-6 border border-white/10">
+        <div className="text-center mb-4 sm:mb-5">
+          <h3 className="text-base sm:text-xl font-bold text-white mb-1">Schedule Your Free Demo</h3>
+          <p className="text-white/50 text-[10px] sm:text-sm">Choose a time that works for you. 30-min personalized walkthrough.</p>
         </div>
-        <div className="rounded-xl overflow-hidden border border-white/10 min-h-[550px] relative">
+        <div className="rounded-xl overflow-hidden border border-white/10 min-h-[450px] sm:min-h-[550px] relative">
           {!isLoaded && (
             <div className="absolute inset-0 flex items-center justify-center bg-[#0a0f1c]">
-              <div className="w-8 h-8 border-2 border-[#c9a84c]/30 border-t-[#c9a84c] rounded-full animate-spin" />
+              <div className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-[#c9a84c]/30 border-t-[#c9a84c] rounded-full animate-spin" />
             </div>
           )}
           <iframe src={CALENDLY_URL} width="100%" height="600" frameBorder="0" className={`bg-white transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} title="Calendly Booking" onLoad={() => setIsLoaded(true)} />
@@ -986,26 +979,26 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
   
   return (
-    <div className="relative min-h-[85vh] flex items-center pt-16 pb-16 overflow-hidden" onMouseMove={handleMouseMove}>
-      <div className="absolute inset-0 overflow-hidden"><div className="absolute w-80 h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} /><div className="absolute w-64 h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} /></div>
+    <div className="relative min-h-[80vh] sm:min-h-[85vh] flex items-center pt-12 sm:pt-16 pb-12 sm:pb-16 overflow-hidden" onMouseMove={handleMouseMove}>
+      <div className="absolute inset-0 overflow-hidden"><div className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} /><div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} /></div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-3">
-          <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-[#c9a84c]/20">
-            <Sparkles size={12} className="text-[#c9a84c] animate-pulse" />
-            <span className="text-[#c9a84c] text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-2 sm:gap-3">
+          <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full border border-[#c9a84c]/20">
+            <Sparkles size={8} className="sm:size-12 text-[#c9a84c] animate-pulse" />
+            <span className="text-[#c9a84c] text-[6px] sm:text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
           </span>
           <div className="relative">
-            <div className="w-8 h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center animate-pulse">
-              <Activity size={16} className="text-[#c9a84c]" />
+            <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center animate-pulse">
+              <Activity size={10} className="sm:size-16 text-[#c9a84c]" />
             </div>
-            <div className="absolute -inset-1 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75" style={{ animationDuration: '0.8s' }} />
+            <div className="absolute -inset-0.5 sm:-inset-1 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75" style={{ animationDuration: '0.8s' }} />
           </div>
         </motion.div>
-        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5 leading-tight">Never Miss a Patient Call —<TypingEffect /></motion.h1>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-white/60 text-sm md:text-base mb-5 max-w-2xl mx-auto">AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.</motion.p>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="inline-flex flex-wrap items-center justify-center gap-2 bg-[#0a0f1c]/80 backdrop-blur-sm border border-white/10 rounded-full px-4 py-1.5 mb-6"><DollarIcon size={14} className="text-[#c9a84c]" /><span className="text-white font-semibold text-xs">Starts at $49.99/month</span><span className="text-white/40 text-[10px] mx-1">•</span><span className="text-white/70 text-xs">7-day free trial</span><span className="text-white/40 text-[10px] mx-1">•</span><span className="text-white/70 text-xs">No setup fees</span></motion.div>
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-5 leading-tight">Never Miss a Patient Call —<TypingEffect /></motion.h1>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-white/60 text-[10px] sm:text-sm md:text-base mb-4 sm:mb-5 max-w-2xl mx-auto">AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.</motion.p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="inline-flex flex-wrap items-center justify-center gap-1 sm:gap-2 bg-[#0a0f1c]/80 backdrop-blur-sm border border-white/10 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6"><DollarIcon size={10} className="sm:size-14 text-[#c9a84c]" /><span className="text-white font-semibold text-[8px] sm:text-xs">Starts at $49.99/month</span><span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span><span className="text-white/70 text-[7px] sm:text-xs">7-day free trial</span><span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span><span className="text-white/70 text-[7px] sm:text-xs">No setup fees</span></motion.div>
         <CTAButtons onDemoClick={onDemoClick} onTrialClick={onFreeTrialClick} />
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }} className="flex flex-wrap justify-center gap-4 mt-6 text-[10px] md:text-xs text-white/40"><span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Works with your number</span><span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Setup in 24 hours</span><span className="flex items-center gap-1"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No technical skills</span></motion.div>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }} className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6 text-[6px] sm:text-[10px] md:text-xs text-white/40"><span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Works with your number</span><span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Setup in 24 hours</span><span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> No technical skills</span></motion.div>
       </div>
     </div>
   );
@@ -1030,146 +1023,125 @@ export default function DentalVoiceAgentLanding() {
 
   return (
     <div className="bg-[#080c14] min-h-screen font-sans antialiased overflow-x-hidden">
-      {/* Hero Section */}
       <AnimatedHero onFreeTrialClick={() => setShowFreeTrial(true)} onDemoClick={scrollToCalendly} />
       
-      {/* Video Section - Right After Hero */}
-      <SectionWrapper className="pt-0 pb-12">
+      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
         <VideoSection onDemoClick={scrollToCalendly} />
       </SectionWrapper>
 
-      {/* Problem Section - After Video */}
-      <SectionWrapper className="pt-0 pb-12">
+      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
         <ProblemSection />
       </SectionWrapper>
 
-      {/* AI Dashboard Section */}
-      <SectionWrapper className="pt-0 pb-12">
+      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
         <AIDashboardSection />
       </SectionWrapper>
 
-      {/* AI Work Animation */}
-      <SectionWrapper className="pt-0 pb-12">
+      <SectionWrapper className="pt-0 pb-8 sm:pb-12">
         <AIWorkAnimation />
       </SectionWrapper>
 
-      {/* Feature Cards */}
-      <SectionWrapper className="pt-0 pb-8">
+      <SectionWrapper className="pt-0 pb-6 sm:pb-8">
         <FeatureCards />
       </SectionWrapper>
 
-      {/* CTA after Features */}
       <SectionWrapper className="pt-0 pb-6">
         <div className="text-center">
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
       </SectionWrapper>
 
-      {/* Collaboration Section */}
-      <SectionWrapper className="py-8">
+      <SectionWrapper className="py-6 sm:py-8">
         <CollaborationSection />
       </SectionWrapper>
 
-      {/* Comparison Table */}
-      <SectionWrapper className="py-8">
+      <SectionWrapper className="py-6 sm:py-8">
         <ComparisonTable />
       </SectionWrapper>
 
-      {/* Productivity Boost */}
-      <SectionWrapper className="py-8">
+      <SectionWrapper className="py-6 sm:py-8">
         <ProductivityBoost />
       </SectionWrapper>
 
-      {/* How It Works Section */}
-      <SectionWrapper id="how-it-works" className="py-8">
+      <SectionWrapper id="how-it-works" className="py-6 sm:py-8">
         <SectionHeader badge="Simple Process" title="How It Works" description="A 3-step system that turns missed calls into booked appointments" />
         <HowItWorksFlow />
       </SectionWrapper>
 
-      {/* CTA after How It Works */}
       <SectionWrapper className="pt-0 pb-6">
         <div className="text-center">
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
       </SectionWrapper>
 
-      {/* Solution Section */}
-      <SectionWrapper className="py-12">
+      <SectionWrapper className="py-8 sm:py-12">
         <SectionHeader badge="The Solution" title="Your 24/7 AI Receptionist That Converts Calls" center={true} />
         <SolutionSection />
       </SectionWrapper>
 
-      {/* Pricing Section */}
-      <SectionWrapper id="pricing" className="py-12">
+      <SectionWrapper id="pricing" className="py-8 sm:py-12">
         <SectionHeader badge="Simple Pricing" title="Simple, Affordable Pricing" />
         <PricingSection onFreeTrialClick={() => setShowFreeTrial(true)} />
       </SectionWrapper>
 
-      {/* CTA after Pricing */}
       <SectionWrapper className="pt-0 pb-6">
         <div className="text-center">
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
       </SectionWrapper>
 
-      {/* Calendly Section */}
-      <SectionWrapper className="py-8">
+      <SectionWrapper className="py-6 sm:py-8">
         <CalendlySection />
       </SectionWrapper>
 
-      {/* FAQ Section */}
-      <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-12">
+      <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-8 sm:py-12">
         <SectionHeader badge="FAQ" title="Frequently Asked Questions" />
-        <div className="max-w-2xl mx-auto space-y-3">
+        <div className="max-w-2xl mx-auto space-y-2 sm:space-y-3">
           {faqs.map((faq, idx) => (
             <div key={idx} className="border border-white/10 rounded-lg overflow-hidden">
-              <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full flex justify-between items-center p-4 text-left">
-                <span className="text-white font-medium text-sm">{faq.q}</span>
-                <ChevronDown size={14} className={`text-white/50 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
+              <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full flex justify-between items-center p-3 sm:p-4 text-left">
+                <span className="text-white font-medium text-[10px] sm:text-sm">{faq.q}</span>
+                <ChevronDown size={12} className={`text-white/50 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
               </button>
               {activeFaq === idx && (
-                <div className="p-4 pt-0 text-white/50 text-xs border-t border-white/10 leading-relaxed">{faq.a}</div>
+                <div className="p-3 sm:p-4 pt-0 text-white/50 text-[8px] sm:text-xs border-t border-white/10 leading-relaxed">{faq.a}</div>
               )}
             </div>
           ))}
         </div>
       </SectionWrapper>
 
-      {/* Final CTA */}
-      <SectionWrapper className="py-12">
-        <div className="rounded-xl bg-gradient-to-br from-[#c9a84c]/10 to-[#0d1220] border border-[#c9a84c]/20 p-8 text-center">
-          <h3 className="text-xl md:text-2xl font-bold text-white mb-3">Ready to Never Miss a Patient Call Again?</h3>
-          <p className="text-white/60 mb-6 text-sm">Join hundreds of dental practices automating their front desk with our AI voice agent.</p>
+      <SectionWrapper className="py-8 sm:py-12">
+        <div className="rounded-xl bg-gradient-to-br from-[#c9a84c]/10 to-[#0d1220] border border-[#c9a84c]/20 p-5 sm:p-8 text-center">
+          <h3 className="text-base sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3">Ready to Never Miss a Patient Call Again?</h3>
+          <p className="text-white/60 mb-4 sm:mb-6 text-[10px] sm:text-sm">Join hundreds of dental practices automating their front desk with our AI voice agent.</p>
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
       </SectionWrapper>
 
-      {/* Footer */}
-      <div className="border-t border-white/10 py-6 text-center">
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <div className="border-t border-white/10 py-4 sm:py-6 text-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
-              <Mic size={14} className="text-[#080c14]" />
+            <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
+              <Mic size={10} className="sm:size-14 text-[#080c14]" />
             </div>
-            <span className="text-white font-bold text-sm">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
+            <span className="text-white font-bold text-[10px] sm:text-sm">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
           </div>
-          <div className="text-white/40 text-[11px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
+          <div className="text-white/40 text-[7px] sm:text-[11px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
         </div>
       </div>
 
-      {/* Calendly Modal */}
       <AnimatePresence>
         {showCalendly && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative bg-[#080c14] rounded-2xl w-full max-w-4xl h-[85vh] overflow-hidden border border-[#c9a84c]/30 shadow-2xl">
-              <button onClick={() => setShowCalendly(false)} className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors border border-white/10"><X size={20} /></button>
+              <button onClick={() => setShowCalendly(false)} className="absolute top-4 right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors border border-white/10"><X size={14} className="sm:size-20" /></button>
               <iframe src={CALENDLY_URL} width="100%" height="100%" frameBorder="0" className="bg-white" title="Calendly Booking" />
             </motion.div>
           </div>
         )}
       </AnimatePresence>
 
-      {/* Free Trial Modal */}
       <FreeTrialModal isOpen={showFreeTrial} onClose={() => setShowFreeTrial(false)} />
     </div>
   );
