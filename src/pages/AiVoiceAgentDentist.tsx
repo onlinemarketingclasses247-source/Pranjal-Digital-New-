@@ -14,7 +14,8 @@ import {
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
-  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon
+  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
+  Tooth
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -77,11 +78,12 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component ---
+// --- Free Trial Modal Component with Dropdown and Fixed Close Button ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
+  const modalRef = useRef(null);
 
   const aiOptions = [
     "24/7 Appointment Booking",
@@ -126,11 +128,23 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
     }
   };
 
+  // Handle escape key press
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onClick={onClose}>
       <motion.div
+        ref={modalRef}
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -138,10 +152,12 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Close Button - Prominent and Fixed */}
         <div className="sticky top-0 right-0 z-20 flex justify-end p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent">
           <button 
             onClick={onClose} 
             className="w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 flex items-center justify-center text-white hover:text-white transition-all duration-300 group"
+            aria-label="Close modal"
           >
             <X size={18} className="group-hover:rotate-90 transition-transform duration-300" />
           </button>
@@ -196,6 +212,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
+              {/* AI Solutions - Checkboxes */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
                 <div className="flex flex-col space-y-2">
@@ -213,22 +230,19 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
+              {/* CRM Options - Dropdown instead of radio buttons */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
-                <div className="flex flex-col space-y-2">
+                <select 
+                  name="crm" 
+                  required 
+                  className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all cursor-pointer"
+                >
+                  <option value="">Select your CRM...</option>
                   {crmOptions.map(option => (
-                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition-colors">
-                      <input 
-                        type="radio" 
-                        name="crm" 
-                        value={option} 
-                        required 
-                        className="w-5 h-5 min-w-[20px] border-white/30 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
-                      />
-                      <span className="text-white/80 text-sm leading-relaxed break-words group-hover:text-white transition-colors">{option}</span>
-                    </label>
+                    <option key={option} value={option}>{option}</option>
                   ))}
-                </div>
+                </select>
                 <p className="text-[#c9a84c]/70 text-xs mt-3 flex items-center gap-1">
                   <Gift size={12} /> Free CRM implementation included!
                 </p>
@@ -891,7 +905,7 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Comparison Table (Fixed) ---
+// --- Comparison Table ---
 const ComparisonTable = () => {
   const comparisons = [
     { feature: "Instant Response", ai: true, voicemail: false, answering: false },
@@ -1075,7 +1089,7 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component ---
+// --- Animated Hero Component with Teeth and AI Voice Icons ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
@@ -1088,13 +1102,20 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-2 sm:gap-3">
+          {/* Teeth Icon */}
+          <div className="relative">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
+              <Tooth size={14} className="sm:size-18 text-[#c9a84c]" />
+            </div>
+          </div>
           <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full border border-[#c9a84c]/20">
             <Sparkles size={8} className="sm:size-12 text-[#c9a84c] animate-pulse" />
             <span className="text-[#c9a84c] text-[6px] sm:text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
           </span>
+          {/* AI Voice Pulse Icon */}
           <div className="relative">
-            <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center animate-pulse">
-              <Activity size={10} className="sm:size-16 text-[#c9a84c]" />
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center animate-pulse">
+              <Activity size={14} className="sm:size-18 text-[#c9a84c]" />
             </div>
             <div className="absolute -inset-0.5 sm:-inset-1 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75" style={{ animationDuration: '0.8s' }} />
           </div>
