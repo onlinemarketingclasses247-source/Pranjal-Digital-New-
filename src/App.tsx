@@ -2,6 +2,7 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { HelmetProvider } from 'react-helmet-async';
 import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/Layout";
 import Home from "@/pages/Home";
@@ -33,12 +34,12 @@ function Router() {
         <Route path="/ai-voice-agent-dentist" component={AiVoiceAgentDentist} />
       
         <Route path="/case-studies" component={CaseStudies} />
-  <Route path="/terms-of-service" component={TermsOfService} />
-<Route path="/privacy-policy" component={PrivacyPolicy} />
-<Route
-  path="/ai-products/free-google-ads-competitor-research"
-  component={FreeGoogleAdsCompetitorResearch}
-/>        
+        <Route path="/terms-of-service" component={TermsOfService} />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
+        <Route
+          path="/ai-products/free-google-ads-competitor-research"
+          component={FreeGoogleAdsCompetitorResearch}
+        />        
         <Route component={NotFound} />
       </Switch>
     </Layout>
@@ -47,15 +48,17 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-  <ScrollToTop />
-  <Router />
-</WouterRouter>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <ScrollToTop />
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 
