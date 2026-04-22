@@ -77,7 +77,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component ---
+// --- Free Trial Modal Component with Fixed Mobile Layout ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -196,25 +196,38 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
+              {/* AI Solutions - Checkbox Section - Fixed for Mobile */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="flex flex-col space-y-2">
                   {aiOptions.map(option => (
-                    <label key={option} className="flex items-center gap-2 text-white/70 text-xs sm:text-sm cursor-pointer hover:text-white transition-colors">
-                      <input type="checkbox" name="ai_solutions" value={option} className="rounded border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20" />
-                      <span>{option}</span>
+                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group">
+                      <input 
+                        type="checkbox" 
+                        name="ai_solutions" 
+                        value={option} 
+                        className="w-4 h-4 min-w-[16px] rounded border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
+                      />
+                      <span className="text-white/70 text-sm leading-tight break-words group-hover:text-white transition-colors">{option}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
+              {/* CRM Section - Radio Buttons - Fixed for Mobile */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="flex flex-col space-y-2">
                   {crmOptions.map(option => (
-                    <label key={option} className="flex items-center gap-2 text-white/70 text-xs sm:text-sm cursor-pointer hover:text-white transition-colors">
-                      <input type="radio" name="crm" value={option} required className="border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20" />
-                      <span>{option}</span>
+                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group">
+                      <input 
+                        type="radio" 
+                        name="crm" 
+                        value={option} 
+                        required 
+                        className="w-4 h-4 min-w-[16px] border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
+                      />
+                      <span className="text-white/70 text-sm leading-tight break-words group-hover:text-white transition-colors">{option}</span>
                     </label>
                   ))}
                 </div>
