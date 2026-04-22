@@ -14,7 +14,7 @@ import {
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
-  Pause, Activity, UserCheck
+  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -67,7 +67,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   return (
     <div className={`flex flex-col sm:flex-row gap-4 justify-center ${className}`}>
       <button onClick={onDemoClick} className="group bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2.5 px-5 sm:py-3 sm:px-6 rounded-xl hover:shadow-2xl hover:shadow-[#c9a84c]/40 transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
-        <Calendar size={16} className="sm:size-18" /> Book a Demo
+        <Calendar size={16} /> Book a Demo
         <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
       </button>
       <button onClick={onTrialClick} className="bg-white/10 border border-white/20 text-white font-bold py-2.5 px-5 sm:py-3 sm:px-6 rounded-xl hover:bg-white/20 hover:border-[#c9a84c]/40 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm text-sm sm:text-base">
@@ -155,7 +155,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
             
             <div className="text-center mb-6">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
-                <Gem size={28} className="sm:size-32 text-[#c9a84c]" />
+                <Gem size={28} className="text-[#c9a84c]" />
               </div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Start Your 7-Day Free Trial</h3>
               <p className="text-white/50 text-xs sm:text-sm">Fill out the form below and we'll activate your trial within 24 hours.</p>
@@ -251,7 +251,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
               animate={{ scale: 1 }}
               className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-6"
             >
-              <Check size={40} className="sm:size-48 text-[#c9a84c]" />
+              <Check size={40} className="text-[#c9a84c]" />
             </motion.div>
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Trial Request Received!</h3>
             <p className="text-white/60 text-xs sm:text-sm">Thank you! We'll contact you within 24 hours to activate your 7-day free trial.</p>
@@ -356,7 +356,7 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Auto-play (Unmuted by default) ---
+// --- Video Section with Auto-play and Sound (Fixed) ---
 const VideoSection = ({ onDemoClick }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -367,11 +367,10 @@ const VideoSection = ({ onDemoClick }) => {
 
   useEffect(() => {
     if (isInView && videoRef.current && !hasAutoPlayed) {
-      // Ensure video is unmuted for autoplay with sound
+      // Unmute for autoplay with sound
       videoRef.current.muted = false;
       setIsMuted(false);
       
-      // Play video with sound
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
@@ -379,7 +378,6 @@ const VideoSection = ({ onDemoClick }) => {
           setHasAutoPlayed(true);
         }).catch((error) => {
           console.log("Auto-play prevented:", error);
-          // Fallback: show play button
           setIsPlaying(false);
         });
       }
@@ -443,7 +441,7 @@ const VideoSection = ({ onDemoClick }) => {
             Your browser does not support the video tag.
           </video>
           
-          {/* Large Play/Pause button */}
+          {/* Large Play/Pause button - always visible */}
           <button
             onClick={handlePlayPause}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-[#c9a84c]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[#c9a84c] hover:scale-110 transition-all duration-300 shadow-2xl z-20"
@@ -468,6 +466,157 @@ const VideoSection = ({ onDemoClick }) => {
         </button>
       </div>
     </motion.div>
+  );
+};
+
+// --- AI Dashboard Illustration Section ---
+const AIDashboardSection = () => {
+  return (
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 md:p-8 border border-white/10">
+      <div className="text-center mb-8">
+        <SectionHeader 
+          badge="AI Dashboard" 
+          title="Complete Visibility Into Your Call Performance" 
+          description="Track every call, monitor AI responses, and see your ROI in real-time"
+          center={true}
+        />
+      </div>
+      
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Dashboard Illustration */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
+          <div className="relative bg-gradient-to-br from-[#080c14] to-[#0a0f1c] border border-white/10 rounded-xl p-5">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6 pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center">
+                  <BarChartIcon size={16} className="text-[#c9a84c]" />
+                </div>
+                <span className="text-white font-semibold text-sm">AI Voice Dashboard</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-white/40 text-[10px]">Live</span>
+              </div>
+            </div>
+            
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-3 mb-5">
+              <div className="bg-white/5 rounded-lg p-3 text-center">
+                <p className="text-white/40 text-[10px]">Calls Handled</p>
+                <p className="text-2xl font-bold text-[#c9a84c]">1,247</p>
+                <p className="text-green-400 text-[8px]">+32% vs last month</p>
+              </div>
+              <div className="bg-white/5 rounded-lg p-3 text-center">
+                <p className="text-white/40 text-[10px]">Appointments</p>
+                <p className="text-2xl font-bold text-white">892</p>
+                <p className="text-green-400 text-[8px]">+28% vs last month</p>
+              </div>
+            </div>
+            
+            {/* Call Volume Chart (Visual) */}
+            <div className="mb-5">
+              <p className="text-white/40 text-[10px] mb-2">Call Volume (Last 7 days)</p>
+              <div className="flex items-end gap-1 h-24">
+                {[35, 52, 48, 61, 73, 68, 55].map((height, i) => (
+                  <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                    <motion.div 
+                      initial={{ height: 0 }}
+                      whileInView={{ height: height }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                      className="w-full bg-gradient-to-t from-[#c9a84c] to-[#dbb85c] rounded-t"
+                      style={{ height: `${height}%` }}
+                    />
+                    <span className="text-white/30 text-[8px]">Day {i+1}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Recent Calls */}
+            <div>
+              <p className="text-white/40 text-[10px] mb-2">Recent Calls</p>
+              <div className="space-y-2">
+                {[
+                  { patient: "Sarah Johnson", time: "2:15 PM", status: "Booked", duration: "2:30" },
+                  { patient: "Michael Chen", time: "1:45 PM", status: "Booked", duration: "3:15" },
+                  { patient: "Dr. Emily Wilson", time: "11:20 AM", status: "Rescheduled", duration: "4:00" }
+                ].map((call, i) => (
+                  <div key={i} className="flex items-center justify-between bg-white/5 rounded-lg p-2">
+                    <div>
+                      <p className="text-white text-xs font-medium">{call.patient}</p>
+                      <p className="text-white/30 text-[8px]">{call.time}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className={`text-[10px] ${call.status === 'Booked' ? 'text-green-400' : 'text-yellow-400'}`}>
+                        {call.status}
+                      </span>
+                      <p className="text-white/30 text-[8px]">{call.duration}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Features List */}
+        <div className="space-y-4">
+          <div className="bg-white/5 rounded-xl p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <PhoneCall size={18} className="text-[#c9a84c]" />
+              </div>
+              <div>
+                <h4 className="text-white font-semibold text-sm">Real-time Call Monitoring</h4>
+                <p className="text-white/40 text-xs">Watch live as AI handles patient calls</p>
+              </div>
+            </div>
+            <p className="text-white/50 text-xs ml-12">See every call as it happens, with live transcription and AI response tracking.</p>
+          </div>
+          
+          <div className="bg-white/5 rounded-xl p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <TrendingUp size={18} className="text-[#c9a84c]" />
+              </div>
+              <div>
+                <h4 className="text-white font-semibold text-sm">Performance Analytics</h4>
+                <p className="text-white/40 text-xs">Track conversion rates and ROI</p>
+              </div>
+            </div>
+            <p className="text-white/50 text-xs ml-12">Measure how many calls turn into booked appointments and calculate revenue recovered.</p>
+          </div>
+          
+          <div className="bg-white/5 rounded-xl p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <Database size={18} className="text-[#c9a84c]" />
+              </div>
+              <div>
+                <h4 className="text-white font-semibold text-sm">CRM Integration Status</h4>
+                <p className="text-white/40 text-xs">See sync status and patient records</p>
+              </div>
+            </div>
+            <p className="text-white/50 text-xs ml-12">View real-time sync status, patient records created, and appointment confirmations sent.</p>
+          </div>
+          
+          <div className="bg-white/5 rounded-xl p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/10 flex items-center justify-center">
+                <Headphones size={18} className="text-[#c9a84c]" />
+              </div>
+              <div>
+                <h4 className="text-white font-semibold text-sm">Quality Assurance</h4>
+                <p className="text-white/40 text-xs">Review AI conversations and improve</p>
+              </div>
+            </div>
+            <p className="text-white/50 text-xs ml-12">Listen to call recordings, review AI responses, and continuously improve performance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -556,7 +705,7 @@ const FeatureCards = () => {
   );
 };
 
-// --- How It Works Section (Clean Step-by-Step, No Overlap) ---
+// --- How It Works Section ---
 const HowItWorksFlow = () => {
   const [activeStep, setActiveStep] = useState(0);
   const controls = useAnimation();
@@ -590,7 +739,6 @@ const HowItWorksFlow = () => {
             animate={controls}
             className="relative"
           >
-            {/* Connector arrow - hidden on mobile, shown on desktop */}
             {idx < 2 && (
               <div className="hidden md:block absolute top-1/3 -right-4 z-10">
                 <motion.div animate={{ x: activeStep === idx ? [0, 5, 0] : 0 }} transition={{ duration: 0.6, repeat: activeStep === idx ? Infinity : 0 }}>
@@ -598,48 +746,25 @@ const HowItWorksFlow = () => {
                 </motion.div>
               </div>
             )}
-            
-            {/* Step Card */}
             <motion.div
-              animate={{
-                scale: activeStep === idx ? [1, 1.02, 1] : 1,
-                borderColor: activeStep === idx ? "#c9a84c" : "rgba(255,255,255,0.1)",
-                boxShadow: activeStep === idx ? "0 10px 30px rgba(201,168,76,0.15)" : "none"
-              }}
+              animate={{ scale: activeStep === idx ? [1, 1.02, 1] : 1, borderColor: activeStep === idx ? "#c9a84c" : "rgba(255,255,255,0.1)", boxShadow: activeStep === idx ? "0 10px 30px rgba(201,168,76,0.15)" : "none" }}
               transition={{ duration: 0.5, repeat: activeStep === idx ? Infinity : 0, repeatDelay: 2 }}
               className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border rounded-xl p-5 relative overflow-hidden h-full"
             >
-              {/* Shine effect on active step */}
-              {activeStep === idx && (
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
-                  animate={{ x: ['-100%', '100%'] }}
-                  transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
-                />
-              )}
-              
-              {/* Header with icon and step number */}
+              {activeStep === idx && <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }} />}
               <div className="flex justify-between items-start mb-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center">
                   <step.icon size={24} className="text-[#c9a84c]" />
                 </div>
                 <span className="text-3xl font-bold text-white/10">{step.step}</span>
               </div>
-
-              {/* Title and Description */}
               <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
               <p className="text-white/50 text-sm mb-4 leading-relaxed">{step.description}</p>
-              
-              {/* Feature Tags */}
               <div className="flex flex-wrap gap-2 mt-2 pt-3 border-t border-white/10">
                 {step.features.map((feature, fIdx) => (
-                  <span key={fIdx} className="text-[#c9a84c]/70 text-xs bg-[#c9a84c]/10 px-3 py-1 rounded-full">
-                    {feature}
-                  </span>
+                  <span key={fIdx} className="text-[#c9a84c]/70 text-xs bg-[#c9a84c]/10 px-3 py-1 rounded-full">{feature}</span>
                 ))}
               </div>
-
-              {/* Progress indicator for active step */}
               {activeStep === idx && (
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
@@ -651,18 +776,8 @@ const HowItWorksFlow = () => {
           </motion.div>
         ))}
       </div>
-      
-      {/* Step indicators */}
       <div className="flex justify-center gap-2 mt-8">
-        {steps.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActiveStep(idx)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              activeStep === idx ? 'w-8 bg-[#c9a84c]' : 'w-2 bg-white/20'
-            }`}
-          />
-        ))}
+        {steps.map((_, idx) => (<button key={idx} onClick={() => setActiveStep(idx)} className={`h-1.5 rounded-full transition-all duration-300 ${activeStep === idx ? 'w-8 bg-[#c9a84c]' : 'w-2 bg-white/20'}`} />))}
       </div>
     </div>
   );
@@ -686,46 +801,22 @@ const CollaborationSection = () => {
             and updating records while your receptionist focuses on complex patient needs.
           </p>
           <div className="grid grid-cols-2 gap-3 mt-6">
-            <div className="bg-white/5 rounded-xl p-3">
-              <TrendingUp size={16} className="text-[#c9a84c] mb-2" />
-              <p className="text-white/80 text-sm font-medium">3x Higher Productivity</p>
-              <p className="text-white/30 text-xs">AI handles 70% of routine calls</p>
-            </div>
-            <div className="bg-white/5 rounded-xl p-3">
-              <UserCheck size={16} className="text-[#c9a84c] mb-2" />
-              <p className="text-white/80 text-sm font-medium">Less Burnout</p>
-              <p className="text-white/30 text-xs">Receptionists focus on patients</p>
-            </div>
+            <div className="bg-white/5 rounded-xl p-3"><TrendingUp size={16} className="text-[#c9a84c] mb-2" /><p className="text-white/80 text-sm font-medium">3x Higher Productivity</p><p className="text-white/30 text-xs">AI handles 70% of routine calls</p></div>
+            <div className="bg-white/5 rounded-xl p-3"><UserCheck size={16} className="text-[#c9a84c] mb-2" /><p className="text-white/80 text-sm font-medium">Less Burnout</p><p className="text-white/30 text-xs">Receptionists focus on patients</p></div>
           </div>
         </div>
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
           <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
-                  <Bot size={14} className="text-[#c9a84c]" />
-                </div>
-                <span className="text-white/80 text-xs font-medium">AI Voice Agent</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-white/40 text-[10px]">Active 24/7</span>
-              </div>
+              <div className="flex items-center gap-2"><div className="w-8 h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center"><Bot size={14} className="text-[#c9a84c]" /></div><span className="text-white/80 text-xs font-medium">AI Voice Agent</span></div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /><span className="text-white/40 text-[10px]">Active 24/7</span></div>
             </div>
             <div className="space-y-2">
-              <div className="bg-white/5 rounded-lg p-2">
-                <p className="text-white/60 text-[11px]">AI: "Dr. Smith is with a patient. Can I help book an appointment?"</p>
-              </div>
-              <div className="bg-[#c9a84c]/10 rounded-lg p-2">
-                <p className="text-[#c9a84c] text-[11px]">Patient: "Yes, I need a cleaning next week."</p>
-              </div>
-              <div className="bg-white/5 rounded-lg p-2">
-                <p className="text-white/60 text-[11px]">AI: "Tuesday at 2pm works. I'll book it and add you to the system."</p>
-              </div>
-              <div className="border-t border-white/10 pt-2 mt-2 text-center">
-                <p className="text-white/30 text-[10px]">Seamless handoff to human during business hours</p>
-              </div>
+              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[11px]">AI: "Dr. Smith is with a patient. Can I help book an appointment?"</p></div>
+              <div className="bg-[#c9a84c]/10 rounded-lg p-2"><p className="text-[#c9a84c] text-[11px]">Patient: "Yes, I need a cleaning next week."</p></div>
+              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[11px]">AI: "Tuesday at 2pm works. I'll book it and add you to the system."</p></div>
+              <div className="border-t border-white/10 pt-2 mt-2 text-center"><p className="text-white/30 text-[10px]">Seamless handoff to human during business hours</p></div>
             </div>
           </div>
         </div>
@@ -750,46 +841,19 @@ const ComparisonTable = () => {
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10 overflow-x-auto">
       <h3 className="text-lg font-bold text-white text-center mb-6">Why AI Voice Agent is Better Than Traditional Voicemail or Answering Machines</h3>
       <table className="w-full min-w-[500px]">
-        <thead>
-          <tr className="border-b border-white/10">
-            <th className="text-left text-white/60 text-sm font-medium py-3 px-2">Feature</th>
-            <th className="text-center text-[#c9a84c] text-sm font-medium py-3 px-2">AI Voice Agent</th>
-            <th className="text-center text-white/40 text-sm font-medium py-3 px-2">Voicemail</th>
-            <th className="text-center text-white/40 text-sm font-medium py-3 px-2">Answering Machine</th>
-           </tr>
-        </thead>
+        <thead><tr className="border-b border-white/10"><th className="text-left text-white/60 text-sm font-medium py-3 px-2">Feature</th><th className="text-center text-[#c9a84c] text-sm font-medium py-3 px-2">AI Voice Agent</th><th className="text-center text-white/40 text-sm font-medium py-3 px-2">Voicemail</th><th className="text-center text-white/40 text-sm font-medium py-3 px-2">Answering Machine</th></tr></thead>
         <tbody>
           {comparisons.map((item, idx) => (
             <tr key={idx} className="border-b border-white/5">
               <td className="text-white/70 text-sm py-3 px-2">{item.feature}</td>
-              <td className="text-center py-3 px-2">
-                {typeof item.ai === 'boolean' ? (
-                  item.ai ? <CheckCircle2 size={16} className="text-[#c9a84c] mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />
-                ) : (
-                  <span className="text-[#c9a84c] text-sm">{item.ai}</span>
-                )}
-              </td>
-              <td className="text-center py-3 px-2">
-                {typeof item.voicemail === 'boolean' ? (
-                  item.voicemail ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />
-                ) : (
-                  <span className="text-white/40 text-sm">{item.voicemail}</span>
-                )}
-              </td>
-              <td className="text-center py-3 px-2">
-                {typeof item.answering === 'boolean' ? (
-                  item.answering ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />
-                ) : (
-                  <span className="text-white/40 text-sm">{item.answering}</span>
-                )}
-              </td>
-             </tr>
+              <td className="text-center py-3 px-2">{typeof item.ai === 'boolean' ? (item.ai ? <CheckCircle2 size={16} className="text-[#c9a84c] mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-[#c9a84c] text-sm">{item.ai}</span>}</td>
+              <td className="text-center py-3 px-2">{typeof item.voicemail === 'boolean' ? (item.voicemail ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-white/40 text-sm">{item.voicemail}</span>}</td>
+              <td className="text-center py-3 px-2">{typeof item.answering === 'boolean' ? (item.answering ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />) : <span className="text-white/40 text-sm">{item.answering}</span>}</td>
+            </tr>
           ))}
         </tbody>
-       </table>
-      <div className="mt-6 p-4 bg-[#c9a84c]/10 rounded-lg text-center">
-        <p className="text-[#c9a84c] text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p>
-      </div>
+      </table>
+      <div className="mt-6 p-4 bg-[#c9a84c]/10 rounded-lg text-center"><p className="text-[#c9a84c] text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p></div>
     </div>
   );
 };
@@ -798,36 +862,8 @@ const ComparisonTable = () => {
 const ProductivityBoost = () => {
   return (
     <div className="grid md:grid-cols-2 gap-8 items-center">
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
-        <div className="relative bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <BarChart3 size={24} className="text-red-400" />
-            <span className="text-white font-bold text-lg">Before AI Voice Agent</span>
-          </div>
-          <ul className="space-y-3">
-            <li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Receptionist spends 4+ hours/day on calls</li>
-            <li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> 30-40% of after-hours calls go unanswered</li>
-            <li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Manual data entry into CRM</li>
-            <li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> High receptionist burnout & turnover</li>
-          </ul>
-        </div>
-      </div>
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-l from-[#c9a84c]/20 to-transparent blur-3xl" />
-        <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <TrendingUp size={24} className="text-[#c9a84c]" />
-            <span className="text-white font-bold text-lg">After AI Voice Agent</span>
-          </div>
-          <ul className="space-y-3">
-            <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI handles 70% of routine calls</li>
-            <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 100% of after-hours calls answered</li>
-            <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Automatic CRM updates</li>
-            <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 3x happier receptionists, lower turnover</li>
-          </ul>
-        </div>
-      </div>
+      <div className="relative"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-6"><div className="flex items-center gap-3 mb-4"><BarChart3 size={24} className="text-red-400" /><span className="text-white font-bold text-lg">Before AI Voice Agent</span></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Receptionist spends 4+ hours/day on calls</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> 30-40% of after-hours calls go unanswered</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Manual data entry into CRM</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> High receptionist burnout & turnover</li></ul></div></div>
+      <div className="relative"><div className="absolute inset-0 bg-gradient-to-l from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-6"><div className="flex items-center gap-3 mb-4"><TrendingUp size={24} className="text-[#c9a84c]" /><span className="text-white font-bold text-lg">After AI Voice Agent</span></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI handles 70% of routine calls</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 100% of after-hours calls answered</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Automatic CRM updates</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 3x happier receptionists, lower turnover</li></ul></div></div>
     </div>
   );
 };
@@ -836,29 +872,8 @@ const ProductivityBoost = () => {
 const SolutionSection = () => {
   return (
     <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-      <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <XCircle size={22} className="text-red-400" />
-          <h3 className="text-white font-bold text-lg">Before AI</h3>
-        </div>
-        <ul className="space-y-3">
-          <li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Missed calls after hours</li>
-          <li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Manual appointment booking</li>
-          <li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Lost revenue</li>
-        </ul>
-      </div>
-      <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-6 relative overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-        <div className="flex items-center gap-3 mb-4">
-          <ThumbsUp size={22} className="text-[#c9a84c]" />
-          <h3 className="text-white font-bold text-lg">With AI</h3>
-        </div>
-        <ul className="space-y-3">
-          <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI answers instantly 24/7</li>
-          <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Auto appointment booking</li>
-          <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Capture every call</li>
-        </ul>
-      </div>
+      <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-6"><div className="flex items-center gap-3 mb-4"><XCircle size={22} className="text-red-400" /><h3 className="text-white font-bold text-lg">Before AI</h3></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Missed calls after hours</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Manual appointment booking</li><li className="flex items-center gap-2 text-white/60 text-sm"><X size={14} className="text-red-400" /> Lost revenue</li></ul></div>
+      <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-6 relative overflow-hidden group"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" /><div className="flex items-center gap-3 mb-4"><ThumbsUp size={22} className="text-[#c9a84c]" /><h3 className="text-white font-bold text-lg">With AI</h3></div><ul className="space-y-3"><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI answers instantly 24/7</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Auto appointment booking</li><li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Capture every call</li></ul></div>
     </div>
   );
 };
@@ -868,45 +883,8 @@ const PricingSection = ({ onFreeTrialClick }) => {
   return (
     <div>
       <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-6 shadow-xl shadow-[#c9a84c]/15">
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[11px] font-bold px-3 py-1 rounded-full">OUR PLAN</div>
-          <div className="relative text-center">
-            <div className="w-12 h-12 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-4">
-              <Crown size={22} className="text-[#c9a84c]" />
-            </div>
-            <h3 className="text-xl font-bold text-white">DentalVoiceAI</h3>
-            <div className="mt-4 mb-1">
-              <span className="text-4xl font-bold text-[#c9a84c]">$49.99</span>
-              <span className="text-white/40 text-base">/month</span>
-            </div>
-            <p className="text-[#c9a84c] text-xs mb-4">+ nominal per-call fee for high volumes</p>
-            <ul className="space-y-2 text-left mt-5 mb-6">
-              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> No setup fees</li>
-              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> 24/7 availability</li>
-              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Free CRM integration</li>
-              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Low latency response</li>
-            </ul>
-            <button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 rounded-lg hover:shadow-lg transition-all text-sm">Start Free Trial</button>
-          </div>
-        </div>
-        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-6">
-          <div className="text-center">
-            <div className="w-12 h-12 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-4">
-              <AlertCircle size={22} className="text-white/40" />
-            </div>
-            <h3 className="text-xl font-bold text-white/60">Other AI Voice Agents</h3>
-            <div className="mt-4 mb-1">
-              <span className="text-3xl font-bold text-white/40">$200+</span>
-              <span className="text-white/30 text-base">/month</span>
-            </div>
-            <ul className="space-y-2 text-left mt-5 mb-6">
-              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> High setup fees ($500+)</li>
-              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Expensive per-call charges</li>
-              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Slow response time</li>
-              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Long-term contracts</li>
-            </ul>
-          </div>
-        </div>
+        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-6 shadow-xl shadow-[#c9a84c]/15"><div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[11px] font-bold px-3 py-1 rounded-full">OUR PLAN</div><div className="relative text-center"><div className="w-12 h-12 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-4"><Crown size={22} className="text-[#c9a84c]" /></div><h3 className="text-xl font-bold text-white">DentalVoiceAI</h3><div className="mt-4 mb-1"><span className="text-4xl font-bold text-[#c9a84c]">$49.99</span><span className="text-white/40 text-base">/month</span></div><p className="text-[#c9a84c] text-xs mb-4">+ nominal per-call fee for high volumes</p><ul className="space-y-2 text-left mt-5 mb-6"><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> No setup fees</li><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> 24/7 availability</li><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Free CRM integration</li><li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Low latency response</li></ul><button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 rounded-lg hover:shadow-lg transition-all text-sm">Start Free Trial</button></div></div>
+        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-6"><div className="text-center"><div className="w-12 h-12 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-4"><AlertCircle size={22} className="text-white/40" /></div><h3 className="text-xl font-bold text-white/60">Other AI Voice Agents</h3><div className="mt-4 mb-1"><span className="text-3xl font-bold text-white/40">$200+</span><span className="text-white/30 text-base">/month</span></div><ul className="space-y-2 text-left mt-5 mb-6"><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> High setup fees ($500+)</li><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Expensive per-call charges</li><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Slow response time</li><li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Long-term contracts</li></ul></div></div>
       </div>
     </div>
   );
@@ -942,10 +920,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   
   return (
     <div className="relative min-h-[85vh] flex items-center pt-16 pb-16 overflow-hidden" onMouseMove={handleMouseMove}>
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-80 h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} />
-        <div className="absolute w-64 h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} />
-      </div>
+      <div className="absolute inset-0 overflow-hidden"><div className="absolute w-80 h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} /><div className="absolute w-64 h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} /></div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-3">
           <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-[#c9a84c]/20">
@@ -999,6 +974,11 @@ export default function DentalVoiceAgentLanding() {
       {/* Problem Section - After Video */}
       <SectionWrapper className="pt-0 pb-12">
         <ProblemSection />
+      </SectionWrapper>
+
+      {/* AI Dashboard Section */}
+      <SectionWrapper className="pt-0 pb-12">
+        <AIDashboardSection />
       </SectionWrapper>
 
       {/* AI Work Animation */}
