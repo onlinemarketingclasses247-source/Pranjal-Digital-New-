@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
 import {
   Phone, Calendar, CheckCircle2, ChevronRight, Play, Star,
@@ -18,6 +18,7 @@ import {
 
 // --- Configuration ---
 const FORM_SUBMIT_URL = "https://formsubmit.co/pranjallundefined@gmail.com";
+const CALENDLY_URL = "https://calendly.com/pranjaldigital-info/30min";
 
 // --- Helper Components ---
 const SectionWrapper = ({ children, className = "", id }) => (
@@ -75,7 +76,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component with Proper X Button and No Overlap ---
+// --- Free Trial Modal Component ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -134,7 +135,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Prominent X close button */}
         <div className="sticky top-0 right-0 z-20 flex justify-end p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent">
           <button 
             onClick={onClose} 
@@ -260,68 +260,63 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   );
 };
 
-// --- Stable AI Work Animation (No Shaking - Using static heights) ---
+// --- Sleek AI Work Animation (No dead space, animated AI voice) ---
 const AIWorkAnimation = () => {
+  const [audioLevels] = useState([0.4, 0.7, 0.3, 0.9, 0.5, 0.8, 0.4, 0.6]);
+  
   return (
-    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10">
-      <div className="text-center mb-5">
-        <span className="inline-flex items-center gap-2 bg-[#c9a84c]/20 px-3 py-1 rounded-full">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-[#c9a84c] text-xs font-medium">AI ACTIVE 24/7</span>
-        </span>
-      </div>
-      
-      {/* Fixed layout with consistent heights - No shaking animations on containers */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl border border-white/10 overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
         {/* Step 1 */}
-        <div className="bg-white/5 rounded-xl p-4 text-center h-[140px] flex flex-col items-center justify-center">
-          <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-2">
+        <div className="p-5 text-center">
+          <div className="w-12 h-12 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center mb-3">
             <PhoneCall size={22} className="text-blue-400" />
           </div>
-          <p className="text-white/80 text-sm font-medium">Incoming Call</p>
+          <p className="text-white font-semibold text-sm">Incoming Call</p>
           <p className="text-white/40 text-xs">Patient calling...</p>
+          <div className="flex justify-center gap-1 mt-2">
+            <div className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
+            <div className="w-1 h-1 rounded-full bg-blue-400/60 animate-pulse" style={{ animationDelay: '0.2s' }} />
+            <div className="w-1 h-1 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
+          </div>
         </div>
 
-        {/* Arrow */}
-        <div className="hidden md:flex items-center justify-center">
-          <ArrowRightIcon size={28} className="text-[#c9a84c]" />
-        </div>
-        <div className="flex md:hidden justify-center my-1">
-          <ChevronDown size={20} className="text-[#c9a84c]" />
-        </div>
-
-        {/* Step 2 - AI Agent */}
-        <div className="bg-gradient-to-br from-[#c9a84c]/10 to-transparent border border-[#c9a84c]/30 rounded-xl p-4 text-center h-[140px] flex flex-col items-center justify-center">
-          <div className="relative w-12 h-12 mx-auto mb-2">
-            <div className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-pulse" />
-            <div className="absolute inset-1 rounded-full bg-[#c9a84c]/30" />
+        {/* Step 2 - AI Agent with animated voice waves */}
+        <div className="p-5 text-center bg-gradient-to-r from-[#c9a84c]/5 to-transparent">
+          <div className="relative w-16 h-16 mx-auto mb-2">
+            <div className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-ping" style={{ animationDuration: '2s' }} />
+            <div className="absolute inset-1 rounded-full bg-[#c9a84c]/30 animate-pulse" />
             <div className="absolute inset-2 rounded-full bg-[#c9a84c]/40 flex items-center justify-center">
-              <Mic size={18} className="text-white" />
+              <Mic size={20} className="text-white" />
             </div>
           </div>
-          <p className="text-[#c9a84c] text-sm font-semibold">AI Voice Agent</p>
+          <div className="flex justify-center gap-0.5 mb-2">
+            {audioLevels.map((level, i) => (
+              <motion.div
+                key={i}
+                animate={{ height: [8, 16 + level * 10, 8] }}
+                transition={{ duration: 0.4, repeat: Infinity, delay: i * 0.05 }}
+                className="w-1 bg-[#c9a84c] rounded-full"
+                style={{ height: 8 }}
+              />
+            ))}
+          </div>
+          <p className="text-[#c9a84c] font-semibold text-sm">AI Voice Agent</p>
           <p className="text-white/40 text-xs">Analyzing & Responding</p>
         </div>
 
-        {/* Arrow */}
-        <div className="hidden md:flex items-center justify-center">
-          <ArrowRightIcon size={28} className="text-[#c9a84c]" />
-        </div>
-        <div className="flex md:hidden justify-center my-1">
-          <ChevronDown size={20} className="text-[#c9a84c]" />
-        </div>
-
-        {/* Step 3 - Appointment Booked */}
-        <div className="bg-white/5 rounded-xl p-4 text-center h-[140px] flex flex-col items-center justify-center">
-          <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-2">
+        {/* Step 3 */}
+        <div className="p-5 text-center">
+          <div className="w-12 h-12 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-3">
             <Calendar size={22} className="text-green-400" />
           </div>
-          <p className="text-white/80 text-sm font-medium">Appointment Booked</p>
+          <p className="text-white font-semibold text-sm">Appointment Booked</p>
           <p className="text-white/40 text-xs">CRM Updated</p>
+          <CheckCircle2 size={14} className="text-green-400 mx-auto mt-2" />
         </div>
       </div>
-
-      <div className="mt-5 pt-3 border-t border-white/10 text-center">
+      
+      <div className="bg-white/5 py-2 text-center border-t border-white/10">
         <p className="text-white/40 text-xs flex flex-wrap items-center justify-center gap-3">
           <span className="flex items-center gap-1"><Clock size={10} /> Answers instantly</span>
           <span className="flex items-center gap-1"><Zap size={10} /> 24/7 availability</span>
@@ -377,40 +372,15 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Working Video Player ---
-const VideoSection = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const videoRef = useRef(null);
+// --- Video Section Component (Working video from your reference) ---
+const VideoSection = ({ onDemoClick }) => {
   const controls = useAnimation();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, threshold: 0.3 });
+  const isInView = useInView(ref, { once: true });
 
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        videoRef.current.play();
-        setIsPlaying(true);
-      }
-    }
-  };
-
-  const handleMuteToggle = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const handleVideoError = () => {
-    setHasError(true);
-    console.error("Video failed to load. Please check the video path: /videos/dental-ai-demo.mp4");
-  };
+  useEffect(() => {
+    if (isInView) controls.start("visible");
+  }, [controls, isInView]);
 
   return (
     <motion.div
@@ -420,167 +390,120 @@ const VideoSection = () => {
       variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
       className="relative group"
     >
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
+      <div className="absolute -inset-1 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
       <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
-        {/* Live indicator */}
-        <div className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
-          <div className="relative">
-            <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-            <div className="w-2 h-2 rounded-full bg-red-500 absolute top-0 left-0" />
-          </div>
-          <span className="text-white text-xs font-medium tracking-wider">LIVE DEMO</span>
-        </div>
-        
-        {/* Mute button */}
-        <button
-          onClick={handleMuteToggle}
-          className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm rounded-full p-2 hover:bg-black/80 transition-colors"
-        >
-          {isMuted ? <VolumeX size={16} className="text-white" /> : <Volume1 size={16} className="text-white" />}
-        </button>
-
-        <div className="relative aspect-video bg-black/50">
-          {!hasError ? (
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              preload="auto"
-              loop
-              muted={isMuted}
-              playsInline
-              onLoadedData={() => {
-                setIsLoaded(true);
-                console.log("Video loaded successfully");
-              }}
-              onError={handleVideoError}
-              onEnded={() => setIsPlaying(false)}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-            >
-              <source src="/videos/dental-ai-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-[#0a0f1c]">
-              <AlertCircle size={48} className="text-red-400 mb-4" />
-              <p className="text-white/60 text-sm">Video failed to load</p>
-              <p className="text-white/30 text-xs mt-2">Please check that /videos/dental-ai-demo.mp4 exists</p>
-            </div>
-          )}
-          
-          {/* Play/Pause overlay button */}
-          {isLoaded && !isPlaying && !hasError && (
-            <button
-              onClick={handlePlayPause}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-[#c9a84c]/80 backdrop-blur-sm flex items-center justify-center hover:bg-[#c9a84c] transition-all duration-300"
-            >
-              <Play size={24} className="text-[#080c14] ml-1" />
-            </button>
-          )}
-          
-          {/* Loading indicator */}
-          {!isLoaded && !hasError && (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#0a0f1c]">
-              <div className="text-center">
-                <div className="w-10 h-10 border-2 border-[#c9a84c]/30 border-t-[#c9a84c] rounded-full animate-spin mx-auto mb-3" />
-                <p className="text-white/40 text-xs">Loading video...</p>
-              </div>
-            </div>
-          )}
+        <div className="relative">
+          <video
+            className="w-full h-full object-cover rounded-xl"
+            controls
+            preload="metadata"
+            poster="https://placehold.co/1200x600/0a0f1c/ffffff?text=Dental+AI+Voice+Demo"
+          >
+            <source src="/videos/dental-ai-demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
-      
-      <div className="text-center mt-5">
-        <p className="text-white/80 text-sm md:text-base font-medium flex items-center justify-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-          </span>
-          Watch a real patient book an appointment via AI (35 sec)
+
+      <div className="text-center mt-4">
+        <p className="text-white/40 text-sm flex items-center justify-center gap-2">
+          <Video size={14} /> Watch a real patient book an appointment via AI (35 sec)
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-2 text-xs">
-          <span className="flex items-center gap-1 text-white/40"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Real call recording</span>
-          <span className="flex items-center gap-1 text-white/40"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Real appointment booking</span>
-          <span className="flex items-center gap-1 text-white/40"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No human involved</span>
+        <div className="flex items-center justify-center gap-4 mt-2 text-xs text-white/30">
+          <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Real call</span>
+          <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Real booking</span>
+          <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-[#c9a84c]" /> No human involved</span>
         </div>
+      </div>
+
+      <div className="text-center mt-6">
+        <button
+          onClick={onDemoClick}
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 transform hover:scale-105"
+        >
+          Request Demo Call <ArrowRight size={16} />
+        </button>
       </div>
     </motion.div>
   );
 };
 
-// --- How It Works Section ---
-const HowItWorksSection = () => {
-  const [activeStep, setActiveStep] = useState(0);
+// --- How It Works Flow Component ---
+const HowItWorksFlow = () => {
+  const [activeStep, setActiveStep] = useState(1);
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
     if (isInView) {
-      controls.start("visible");
       const interval = setInterval(() => {
         setActiveStep(prev => (prev + 1) % 3);
       }, 3000);
       return () => clearInterval(interval);
     }
+  }, [isInView]);
+
+  useEffect(() => {
+    if (isInView) controls.start("visible");
   }, [controls, isInView]);
 
   const steps = [
-    { number: "01", icon: PhoneCall, title: "Patient Calls", description: "Patient calls your existing clinic number. AI answers instantly, 24/7.", features: ["No app download", "Same number", "Instant response"] },
-    { number: "02", icon: Bot, title: "AI Agent Answers", description: "AI understands patient needs, checks availability, books appointments naturally.", features: ["Natural conversation", "Real-time sync", "Smart scheduling"] },
-    { number: "03", icon: Database, title: "CRM Updated", description: "Patient details saved, appointment logged, and follow-ups automated.", features: ["Auto-sync", "Smart reminders", "Patient insights"] }
+    { icon: PhoneCall, title: "Patient Calls", description: "Uses your existing clinic number. AI answers instantly, 24/7/365.", color: "from-blue-500/20 to-blue-500/5", step: 1 },
+    { icon: Mic, title: "AI Agent Answers", description: "Understands patient needs, checks real-time availability, books appointments naturally.", color: "from-[#c9a84c]/30 to-[#c9a84c]/10", step: 2 },
+    { icon: Database, title: "CRM Updated", description: "Patient details saved, appointment logged, and follow-ups automated seamlessly.", color: "from-green-500/20 to-green-500/5", step: 3 }
   ];
 
   return (
-    <div ref={ref} className="relative py-6">
-      <div className="grid md:grid-cols-3 gap-5">
+    <div ref={ref} className="relative py-8">
+      <div className="grid md:grid-cols-3 gap-6 relative">
         {steps.map((step, idx) => (
           <motion.div
             key={idx}
-            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: idx * 0.15 } } }}
+            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: idx * 0.2 } } }}
             initial="hidden"
             animate={controls}
             className="relative"
           >
+            {idx < 2 && (
+              <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-20">
+                <motion.div
+                  animate={{ x: activeStep === idx ? [0, 8, 0] : 0 }}
+                  transition={{ duration: 0.8, repeat: activeStep === idx ? Infinity : 0 }}
+                >
+                  <ArrowRightIcon size={28} className="text-[#c9a84c]/60" />
+                </motion.div>
+              </div>
+            )}
+
             <motion.div
               animate={{
-                scale: activeStep === idx ? [1, 1.02, 1] : 1,
-                borderColor: activeStep === idx ? "#c9a84c" : "rgba(255,255,255,0.1)"
+                scale: activeStep === idx ? 1.02 : 1,
+                borderColor: activeStep === idx ? '#c9a84c' : 'rgba(255,255,255,0.1)',
+                boxShadow: activeStep === idx ? '0 0 30px rgba(201,168,76,0.3)' : 'none'
               }}
               transition={{ duration: 0.5, repeat: activeStep === idx ? Infinity : 0, repeatDelay: 2 }}
-              className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border rounded-xl p-5 relative overflow-hidden h-full"
+              className={`bg-gradient-to-br ${step.color} border-2 rounded-xl p-5 text-center relative overflow-hidden ${activeStep === idx ? 'border-[#c9a84c]' : 'border-white/10'}`}
             >
               {activeStep === idx && (
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
                   animate={{ x: ['-100%', '100%'] }}
                   transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
                 />
               )}
               
-              <div className="flex justify-between items-start">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center">
-                  <step.icon size={20} className="text-[#c9a84c]" />
-                </div>
-                <span className="text-3xl font-bold text-white/5">{step.number}</span>
+              <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-white/40 text-[10px] font-bold">
+                {step.step}
               </div>
 
-              <div className="mt-3">
-                <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
-                <p className="text-white/50 text-xs mb-3">{step.description}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {step.features.map((feature, fIdx) => (
-                    <span key={fIdx} className="text-[#c9a84c]/50 text-[10px] bg-[#c9a84c]/5 px-2 py-0.5 rounded-full">{feature}</span>
-                  ))}
-                </div>
+              <div className="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-3 relative z-10">
+                <step.icon size={26} className="text-[#c9a84c]" />
               </div>
+              
+              <h3 className="text-base font-bold text-white mb-1">{step.title}</h3>
+              <p className="text-white/50 text-xs">{step.description}</p>
             </motion.div>
-
-            {idx < 2 && (
-              <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
-                <ArrowRightIcon size={20} className="text-[#c9a84c]/40" />
-              </div>
-            )}
           </motion.div>
         ))}
       </div>
@@ -722,7 +645,7 @@ const CalendlySection = () => {
             </div>
           )}
           <iframe 
-            src="https://calendly.com/pranjaldigital-info/30min?embed_domain=pranjaldigital.com&embed_type=Inline&hide_gdpr_banner=1"
+            src={CALENDLY_URL}
             width="100%" 
             height="600" 
             frameBorder="0" 
@@ -825,6 +748,7 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
 
 // --- Main Component ---
 export default function DentalVoiceAgentLanding() {
+  const [showCalendly, setShowCalendly] = useState(false);
   const [showFreeTrial, setShowFreeTrial] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
 
@@ -834,6 +758,8 @@ export default function DentalVoiceAgentLanding() {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  const openCalendlyModal = () => setShowCalendly(true);
 
   const faqs = [
     { q: "How does the AI work with my existing phone number?", a: "Simply forward your clinic's number to us. The AI answers instantly, 24/7. Setup takes less than 24 hours." },
@@ -848,13 +774,13 @@ export default function DentalVoiceAgentLanding() {
       <AnimatedHero onFreeTrialClick={() => setShowFreeTrial(true)} onDemoClick={scrollToCalendly} />
 
       {/* AI Work Animation */}
-      <SectionWrapper className="pt-0 pb-6">
+      <SectionWrapper className="pt-0 pb-8">
         <AIWorkAnimation />
       </SectionWrapper>
 
       {/* Video Section */}
-      <SectionWrapper className="pt-0 pb-10">
-        <VideoSection />
+      <SectionWrapper className="pt-0 pb-12">
+        <VideoSection onDemoClick={scrollToCalendly} />
       </SectionWrapper>
 
       {/* CTA after Video */}
@@ -872,7 +798,7 @@ export default function DentalVoiceAgentLanding() {
       {/* How It Works Section */}
       <SectionWrapper id="how-it-works" className="py-8">
         <SectionHeader badge="Simple Process" title="How It Works" description="A 3-step system that turns missed calls into booked appointments" />
-        <HowItWorksSection />
+        <HowItWorksFlow />
       </SectionWrapper>
 
       {/* CTA after How It Works */}
@@ -913,6 +839,29 @@ export default function DentalVoiceAgentLanding() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </SectionWrapper>
+
+      {/* Solution Section */}
+      <SectionWrapper className="py-10">
+        <SectionHeader badge="The Solution" title="Your 24/7 AI Receptionist That Converts Calls" center={true} />
+        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-5">
+            <div className="flex items-center gap-2 mb-3"><XCircle size={18} className="text-red-400" /><h3 className="text-white font-bold text-base">Before AI</h3></div>
+            <ul className="space-y-2">
+              <li className="flex items-center gap-2 text-white/60 text-sm"><X size={12} className="text-red-400" /> Missed calls after hours</li>
+              <li className="flex items-center gap-2 text-white/60 text-sm"><X size={12} className="text-red-400" /> Manual appointment booking</li>
+              <li className="flex items-center gap-2 text-white/60 text-sm"><X size={12} className="text-red-400" /> Lost revenue</li>
+            </ul>
+          </div>
+          <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-5">
+            <div className="flex items-center gap-2 mb-3"><ThumbsUp size={18} className="text-[#c9a84c]" /><h3 className="text-white font-bold text-base">With AI</h3></div>
+            <ul className="space-y-2">
+              <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> AI answers instantly 24/7</li>
+              <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Auto appointment booking</li>
+              <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Capture every call</li>
+            </ul>
           </div>
         </div>
       </SectionWrapper>
@@ -973,6 +922,28 @@ export default function DentalVoiceAgentLanding() {
           <div className="text-white/40 text-[9px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
         </div>
       </div>
+
+      {/* Calendly Modal */}
+      <AnimatePresence>
+        {showCalendly && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative bg-[#080c14] rounded-2xl w-full max-w-4xl h-[85vh] overflow-hidden border border-[#c9a84c]/30 shadow-2xl"
+            >
+              <button
+                onClick={() => setShowCalendly(false)}
+                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors border border-white/10"
+              >
+                <X size={20} />
+              </button>
+              <iframe src={CALENDLY_URL} width="100%" height="100%" frameBorder="0" className="bg-white" title="Calendly Booking" />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Free Trial Modal */}
       <FreeTrialModal isOpen={showFreeTrial} onClose={() => setShowFreeTrial(false)} />
