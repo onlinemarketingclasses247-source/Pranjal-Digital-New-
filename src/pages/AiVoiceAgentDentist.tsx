@@ -13,7 +13,7 @@ import {
   Crown, Gem, Rocket, Target, Brain, Bot, Headset, Volume2,
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
-  VolumeX, Volume1
+  VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -30,14 +30,14 @@ const SectionWrapper = ({ children, className = "", id }) => (
 );
 
 const SectionHeader = ({ badge, title, description, center = true }) => (
-  <div className={`mb-10 md:mb-14 ${center ? 'text-center' : ''}`}>
+  <div className={`mb-8 md:mb-12 ${center ? 'text-center' : ''}`}>
     {badge && (
-      <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-4 py-1.5 rounded-full mb-4">
-        <Sparkles size={14} className="text-[#c9a84c]" />
-        <span className="text-[#c9a84c] text-xs font-medium uppercase tracking-wider">{badge}</span>
+      <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-3 py-1 rounded-full mb-3">
+        <Sparkles size={12} className="text-[#c9a84c]" />
+        <span className="text-[#c9a84c] text-[10px] md:text-xs font-medium uppercase tracking-wider">{badge}</span>
       </span>
     )}
-    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
       {title}
     </h2>
     {description && (
@@ -260,54 +260,41 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   );
 };
 
-// --- Sleek AI Work Animation (No dead space, animated AI voice) ---
+// --- Stable AI Work Animation (No vibration - static heights, no continuous animations on containers) ---
 const AIWorkAnimation = () => {
-  const [audioLevels] = useState([0.4, 0.7, 0.3, 0.9, 0.5, 0.8, 0.4, 0.6]);
-  
   return (
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl border border-white/10 overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
-        {/* Step 1 */}
-        <div className="p-5 text-center">
-          <div className="w-12 h-12 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center mb-3">
+        {/* Step 1 - Incoming Call */}
+        <div className="p-4 md:p-5 text-center">
+          <div className="w-12 h-12 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center mb-2">
             <PhoneCall size={22} className="text-blue-400" />
           </div>
           <p className="text-white font-semibold text-sm">Incoming Call</p>
           <p className="text-white/40 text-xs">Patient calling...</p>
           <div className="flex justify-center gap-1 mt-2">
-            <div className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
-            <div className="w-1 h-1 rounded-full bg-blue-400/60 animate-pulse" style={{ animationDelay: '0.2s' }} />
-            <div className="w-1 h-1 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60 animate-pulse" style={{ animationDelay: '0.2s' }} />
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
           </div>
         </div>
 
-        {/* Step 2 - AI Agent with animated voice waves */}
-        <div className="p-5 text-center bg-gradient-to-r from-[#c9a84c]/5 to-transparent">
-          <div className="relative w-16 h-16 mx-auto mb-2">
+        {/* Step 2 - AI Agent */}
+        <div className="p-4 md:p-5 text-center bg-gradient-to-r from-[#c9a84c]/5 to-transparent">
+          <div className="relative w-14 h-14 mx-auto mb-2">
             <div className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-ping" style={{ animationDuration: '2s' }} />
-            <div className="absolute inset-1 rounded-full bg-[#c9a84c]/30 animate-pulse" />
+            <div className="absolute inset-1 rounded-full bg-[#c9a84c]/30" />
             <div className="absolute inset-2 rounded-full bg-[#c9a84c]/40 flex items-center justify-center">
               <Mic size={20} className="text-white" />
             </div>
-          </div>
-          <div className="flex justify-center gap-0.5 mb-2">
-            {audioLevels.map((level, i) => (
-              <motion.div
-                key={i}
-                animate={{ height: [8, 16 + level * 10, 8] }}
-                transition={{ duration: 0.4, repeat: Infinity, delay: i * 0.05 }}
-                className="w-1 bg-[#c9a84c] rounded-full"
-                style={{ height: 8 }}
-              />
-            ))}
           </div>
           <p className="text-[#c9a84c] font-semibold text-sm">AI Voice Agent</p>
           <p className="text-white/40 text-xs">Analyzing & Responding</p>
         </div>
 
-        {/* Step 3 */}
-        <div className="p-5 text-center">
-          <div className="w-12 h-12 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-3">
+        {/* Step 3 - Appointment Booked */}
+        <div className="p-4 md:p-5 text-center">
+          <div className="w-12 h-12 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-2">
             <Calendar size={22} className="text-green-400" />
           </div>
           <p className="text-white font-semibold text-sm">Appointment Booked</p>
@@ -317,7 +304,7 @@ const AIWorkAnimation = () => {
       </div>
       
       <div className="bg-white/5 py-2 text-center border-t border-white/10">
-        <p className="text-white/40 text-xs flex flex-wrap items-center justify-center gap-3">
+        <p className="text-white/40 text-[11px] flex flex-wrap items-center justify-center gap-3">
           <span className="flex items-center gap-1"><Clock size={10} /> Answers instantly</span>
           <span className="flex items-center gap-1"><Zap size={10} /> 24/7 availability</span>
           <span className="flex items-center gap-1"><CheckCircle2 size={10} /> Never misses a call</span>
@@ -372,51 +359,104 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section Component (Working video from your reference) ---
+// --- Video Section with Auto-play and Blinking Live Indicator ---
 const VideoSection = ({ onDemoClick }) => {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const controls = useAnimation();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, threshold: 0.3 });
 
   useEffect(() => {
-    if (isInView) controls.start("visible");
-  }, [controls, isInView]);
+    if (isInView && videoRef.current && !isPlaying) {
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {
+        console.log("Auto-play prevented");
+      });
+    }
+  }, [isInView, isPlaying]);
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  const handleMuteToggle = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
 
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
       className="relative group"
     >
-      <div className="absolute -inset-1 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
       <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
-        <div className="relative">
+        {/* Live indicator with blinking red dot */}
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
+          <div className="relative">
+            <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+            <div className="w-2 h-2 rounded-full bg-red-500 absolute top-0 left-0" />
+          </div>
+          <span className="text-white text-xs font-medium tracking-wider">🔴 WATCH LIVE DEMO</span>
+        </div>
+        
+        {/* Mute button */}
+        <button
+          onClick={handleMuteToggle}
+          className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm rounded-full p-2 hover:bg-black/80 transition-colors"
+        >
+          {isMuted ? <VolumeX size={16} className="text-white" /> : <Volume1 size={16} className="text-white" />}
+        </button>
+
+        <div className="relative aspect-video bg-black/50">
           <video
-            className="w-full h-full object-cover rounded-xl"
-            controls
-            preload="metadata"
-            poster="https://placehold.co/1200x600/0a0f1c/ffffff?text=Dental+AI+Voice+Demo"
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            preload="auto"
+            loop
+            muted={isMuted}
+            playsInline
+            onEnded={() => setIsPlaying(false)}
           >
             <source src="/videos/dental-ai-demo.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+          
+          {/* Play/Pause overlay button - only show when paused */}
+          {!isPlaying && (
+            <button
+              onClick={handlePlayPause}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-[#c9a84c]/80 backdrop-blur-sm flex items-center justify-center hover:bg-[#c9a84c] transition-all duration-300"
+            >
+              <Play size={24} className="text-[#080c14] ml-1" />
+            </button>
+          )}
         </div>
       </div>
 
       <div className="text-center mt-4">
-        <p className="text-white/40 text-sm flex items-center justify-center gap-2">
-          <Video size={14} /> Watch a real patient book an appointment via AI (35 sec)
+        <p className="text-white/70 text-sm flex items-center justify-center gap-2">
+          <Video size={14} className="text-[#c9a84c]" /> Watch Live AI Voice Assistant Product Demo Now
         </p>
-        <div className="flex items-center justify-center gap-4 mt-2 text-xs text-white/30">
-          <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Real call</span>
-          <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Real booking</span>
-          <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-[#c9a84c]" /> No human involved</span>
-        </div>
       </div>
 
-      <div className="text-center mt-6">
+      <div className="text-center mt-5">
         <button
           onClick={onDemoClick}
           className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-[#c9a84c]/25 transition-all duration-300 transform hover:scale-105"
@@ -428,81 +468,145 @@ const VideoSection = ({ onDemoClick }) => {
   );
 };
 
-// --- How It Works Flow Component ---
+// --- Feature Cards Section (What AI Can Do) ---
+const FeatureCards = () => {
+  const features = [
+    { icon: Phone, title: "Answer 24/7", description: "Never miss a call, day or night" },
+    { icon: Calendar, title: "Auto Booking", description: "Schedule appointments instantly" },
+    { icon: Database, title: "CRM Sync", description: "Update patient records automatically" },
+    { icon: MessageSquare, title: "Smart Questions", description: "Answer patient FAQs naturally" },
+    { icon: BellRing, title: "Smart Reminders", description: "Reduce no-shows by 40%" },
+    { icon: TrendingUp, title: "Revenue Recovery", description: "Capture every missed opportunity" }
+  ];
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      {features.map((feature, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: idx * 0.05 }}
+          className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-3 text-center hover:border-[#c9a84c]/30 transition-all duration-300 group"
+        >
+          <div className="w-10 h-10 mx-auto rounded-lg bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+            <feature.icon size={18} className="text-[#c9a84c]" />
+          </div>
+          <p className="text-white text-xs font-medium">{feature.title}</p>
+          <p className="text-white/30 text-[10px]">{feature.description}</p>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+// --- How It Works Section (Premium Design) ---
 const HowItWorksFlow = () => {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
     if (isInView) {
+      controls.start("visible");
       const interval = setInterval(() => {
         setActiveStep(prev => (prev + 1) % 3);
       }, 3000);
       return () => clearInterval(interval);
     }
-  }, [isInView]);
-
-  useEffect(() => {
-    if (isInView) controls.start("visible");
   }, [controls, isInView]);
 
   const steps = [
-    { icon: PhoneCall, title: "Patient Calls", description: "Uses your existing clinic number. AI answers instantly, 24/7/365.", color: "from-blue-500/20 to-blue-500/5", step: 1 },
-    { icon: Mic, title: "AI Agent Answers", description: "Understands patient needs, checks real-time availability, books appointments naturally.", color: "from-[#c9a84c]/30 to-[#c9a84c]/10", step: 2 },
-    { icon: Database, title: "CRM Updated", description: "Patient details saved, appointment logged, and follow-ups automated seamlessly.", color: "from-green-500/20 to-green-500/5", step: 3 }
+    { 
+      icon: PhoneCall, 
+      title: "Patient Calls", 
+      description: "Patient calls your existing clinic number. AI answers instantly, 24/7/365.",
+      features: ["No app download", "Same number", "Instant response"],
+      step: "01"
+    },
+    { 
+      icon: Bot, 
+      title: "AI Agent Answers", 
+      description: "AI understands patient needs, checks real-time availability, books appointments naturally.",
+      features: ["Natural conversation", "Real-time sync", "Smart scheduling"],
+      step: "02"
+    },
+    { 
+      icon: Database, 
+      title: "CRM Updated", 
+      description: "Patient details saved, appointment logged, and follow-ups automated seamlessly.",
+      features: ["Auto-sync", "Smart reminders", "Patient insights"],
+      step: "03"
+    }
   ];
 
   return (
-    <div ref={ref} className="relative py-8">
-      <div className="grid md:grid-cols-3 gap-6 relative">
+    <div ref={ref} className="relative py-6">
+      <div className="grid md:grid-cols-3 gap-6">
         {steps.map((step, idx) => (
           <motion.div
             key={idx}
-            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: idx * 0.2 } } }}
+            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: idx * 0.15 } } }}
             initial="hidden"
             animate={controls}
             className="relative"
           >
+            {/* Connector arrow */}
             {idx < 2 && (
-              <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-20">
+              <div className="hidden md:block absolute top-1/3 -right-4 z-10">
                 <motion.div
-                  animate={{ x: activeStep === idx ? [0, 8, 0] : 0 }}
-                  transition={{ duration: 0.8, repeat: activeStep === idx ? Infinity : 0 }}
+                  animate={{ x: activeStep === idx ? [0, 5, 0] : 0 }}
+                  transition={{ duration: 0.6, repeat: activeStep === idx ? Infinity : 0 }}
                 >
-                  <ArrowRightIcon size={28} className="text-[#c9a84c]/60" />
+                  <ArrowRightIcon size={24} className="text-[#c9a84c]/50" />
                 </motion.div>
               </div>
             )}
 
             <motion.div
               animate={{
-                scale: activeStep === idx ? 1.02 : 1,
-                borderColor: activeStep === idx ? '#c9a84c' : 'rgba(255,255,255,0.1)',
-                boxShadow: activeStep === idx ? '0 0 30px rgba(201,168,76,0.3)' : 'none'
+                scale: activeStep === idx ? [1, 1.02, 1] : 1,
+                borderColor: activeStep === idx ? "#c9a84c" : "rgba(255,255,255,0.1)",
+                boxShadow: activeStep === idx ? "0 10px 30px rgba(201,168,76,0.15)" : "none"
               }}
               transition={{ duration: 0.5, repeat: activeStep === idx ? Infinity : 0, repeatDelay: 2 }}
-              className={`bg-gradient-to-br ${step.color} border-2 rounded-xl p-5 text-center relative overflow-hidden ${activeStep === idx ? 'border-[#c9a84c]' : 'border-white/10'}`}
+              className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border rounded-xl p-5 relative overflow-hidden h-full"
             >
+              {/* Shine effect on active */}
               {activeStep === idx && (
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
                   animate={{ x: ['-100%', '100%'] }}
                   transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
                 />
               )}
               
-              <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-white/40 text-[10px] font-bold">
-                {step.step}
+              {/* Step number */}
+              <div className="flex justify-between items-start mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center">
+                  <step.icon size={20} className="text-[#c9a84c]" />
+                </div>
+                <span className="text-2xl font-bold text-white/10">{step.step}</span>
               </div>
 
-              <div className="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-3 relative z-10">
-                <step.icon size={26} className="text-[#c9a84c]" />
-              </div>
+              <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
+              <p className="text-white/50 text-xs mb-3">{step.description}</p>
               
-              <h3 className="text-base font-bold text-white mb-1">{step.title}</h3>
-              <p className="text-white/50 text-xs">{step.description}</p>
+              <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-white/10">
+                {step.features.map((feature, fIdx) => (
+                  <span key={fIdx} className="text-[#c9a84c]/60 text-[10px] bg-[#c9a84c]/5 px-2 py-0.5 rounded-full">{feature}</span>
+                ))}
+              </div>
+
+              {/* Progress dots for active step */}
+              {activeStep === idx && (
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
+                  <div className="w-1 h-1 rounded-full bg-[#c9a84c] animate-pulse" />
+                  <div className="w-1 h-1 rounded-full bg-[#c9a84c]/50 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                  <div className="w-1 h-1 rounded-full bg-[#c9a84c]/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
+                </div>
+              )}
             </motion.div>
           </motion.div>
         ))}
@@ -521,53 +625,64 @@ const HowItWorksFlow = () => {
   );
 };
 
-// --- Collaboration Section ---
-const CollaborationSection = () => {
+// --- Problem Section ---
+const ProblemSection = () => {
   return (
-    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10">
-      <div className="grid md:grid-cols-2 gap-6 items-center">
-        <div>
-          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-3 py-1 rounded-full mb-3">
-            <HeartHandshake size={12} className="text-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-[10px] font-medium">Human + AI Collaboration</span>
-          </div>
-          <h3 className="text-xl font-bold text-white mb-3">We Don't Replace Your Receptionist — We Empower Them</h3>
-          <p className="text-white/60 text-sm mb-4">
-            Your receptionist is the heart of your practice. But no human can work 24/7. 
-            Our AI voice agent steps in when your team is unavailable — after hours, during lunch, 
-            or when they're busy with patients.
-          </p>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-white/5 rounded-lg p-2.5">
-              <Clock size={14} className="text-[#c9a84c] mb-1" />
-              <p className="text-white/70 text-xs font-medium">After Hours Coverage</p>
-              <p className="text-white/30 text-[10px]">Never miss a call at night</p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-2.5">
-              <Users size={14} className="text-[#c9a84c] mb-1" />
-              <p className="text-white/70 text-xs font-medium">Reduce Burnout</p>
-              <p className="text-white/30 text-[10px]">Let AI handle the overflow</p>
-            </div>
-          </div>
+    <div className="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <SectionHeader badge="The Problem" title="Every Missed Call = Lost Revenue" description="Clinics lose 30–40% of calls" center={false} />
+        <ul className="space-y-3">
+          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">Patients call when you're busy</span></li>
+          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">No answers after clinic hours</span></li>
+          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">Receptionist burnout</span></li>
+        </ul>
+      </div>
+      
+      <div className="bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+          <span className="text-white/70 text-sm font-medium">Missed Calls This Week</span>
         </div>
-        <div className="relative">
-          <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
-                  <Bot size={12} className="text-[#c9a84c]" />
-                </div>
-                <span className="text-white/70 text-[10px]">AI Agent</span>
-              </div>
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+        <div className="space-y-2">
+          {[
+            { patient: "Sarah Johnson", value: "$450" },
+            { patient: "Michael Chen", value: "$320" },
+            { patient: "Dr. Emily Wilson", value: "$580" }
+          ].map((call, i) => (
+            <div key={i} className="bg-white/5 rounded-lg p-3 flex justify-between items-center">
+              <span className="text-white/80 text-sm">{call.patient}</span>
+              <span className="text-red-400/80 text-sm font-medium">-{call.value}</span>
             </div>
-            <div className="space-y-2">
-              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[10px]">AI: "Dr. Smith is busy. Can I help book an appointment?"</p></div>
-              <div className="bg-[#c9a84c]/10 rounded-lg p-2"><p className="text-[#c9a84c] text-[10px]">Patient: "Yes, I need a cleaning next week."</p></div>
-              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[10px]">AI: "Tuesday at 2pm works. I'll book it and add you to the system."</p></div>
-            </div>
-          </div>
+          ))}
         </div>
+        <div className="mt-4 p-3 bg-red-500/20 rounded-lg text-center">
+          <p className="text-red-400 text-sm font-bold">Total Lost: $1,350 this week</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Solution Section ---
+const SolutionSection = () => {
+  return (
+    <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+      <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-6">
+        <div className="flex items-center gap-3 mb-4"><XCircle size={22} className="text-red-400" /><h3 className="text-white font-bold text-lg">Before AI</h3></div>
+        <ul className="space-y-3">
+          <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Missed calls after hours</li>
+          <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Manual appointment booking</li>
+          <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Lost revenue</li>
+        </ul>
+      </div>
+      <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-6 relative overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="flex items-center gap-3 mb-4"><ThumbsUp size={22} className="text-[#c9a84c]" /><h3 className="text-white font-bold text-lg">With AI</h3></div>
+        <ul className="space-y-3">
+          <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI answers instantly 24/7</li>
+          <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Auto appointment booking</li>
+          <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Capture every call</li>
+        </ul>
       </div>
     </div>
   );
@@ -578,47 +693,47 @@ const PricingSection = ({ onFreeTrialClick }) => {
   return (
     <div>
       <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-5 shadow-xl shadow-[#c9a84c]/15">
-          <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[10px] font-bold px-2 py-0.5 rounded-full">
+        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-6 shadow-xl shadow-[#c9a84c]/15">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[11px] font-bold px-3 py-1 rounded-full">
             OUR PLAN
           </div>
           <div className="relative text-center">
-            <div className="w-10 h-10 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-3">
-              <Crown size={18} className="text-[#c9a84c]" />
+            <div className="w-12 h-12 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-4">
+              <Crown size={22} className="text-[#c9a84c]" />
             </div>
-            <h3 className="text-lg font-bold text-white">DentalVoiceAI</h3>
-            <div className="mt-3 mb-1">
-              <span className="text-3xl font-bold text-[#c9a84c]">$49.99</span>
-              <span className="text-white/40 text-sm">/month</span>
+            <h3 className="text-xl font-bold text-white">DentalVoiceAI</h3>
+            <div className="mt-4 mb-1">
+              <span className="text-4xl font-bold text-[#c9a84c]">$49.99</span>
+              <span className="text-white/40 text-base">/month</span>
             </div>
-            <p className="text-[#c9a84c] text-[10px] mb-3">+ nominal per-call fee for high volumes</p>
-            <ul className="space-y-1.5 text-left mt-4 mb-4">
-              <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> No setup fees</li>
-              <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> 24/7 availability</li>
-              <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Free CRM integration</li>
-              <li className="flex items-center gap-2 text-white/80 text-xs"><CheckCircle2 size={10} className="text-[#c9a84c]" /> Low latency response</li>
+            <p className="text-[#c9a84c] text-xs mb-4">+ nominal per-call fee for high volumes</p>
+            <ul className="space-y-2 text-left mt-5 mb-6">
+              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> No setup fees</li>
+              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> 24/7 availability</li>
+              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Free CRM integration</li>
+              <li className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Low latency response</li>
             </ul>
-            <button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2 rounded-lg hover:shadow-lg transition-all text-sm">
+            <button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-3 rounded-lg hover:shadow-lg transition-all text-sm">
               Start Free Trial
             </button>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-5">
+        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-6">
           <div className="text-center">
-            <div className="w-10 h-10 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-3">
-              <AlertCircle size={18} className="text-white/40" />
+            <div className="w-12 h-12 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-4">
+              <AlertCircle size={22} className="text-white/40" />
             </div>
-            <h3 className="text-lg font-bold text-white/60">Other AI Voice Agents</h3>
-            <div className="mt-3 mb-1">
-              <span className="text-2xl font-bold text-white/40">$200+</span>
-              <span className="text-white/30 text-sm">/month</span>
+            <h3 className="text-xl font-bold text-white/60">Other AI Voice Agents</h3>
+            <div className="mt-4 mb-1">
+              <span className="text-3xl font-bold text-white/40">$200+</span>
+              <span className="text-white/30 text-base">/month</span>
             </div>
-            <ul className="space-y-1.5 text-left mt-4 mb-4">
-              <li className="flex items-center gap-2 text-white/40 text-xs"><X size={10} className="text-red-400" /> High setup fees ($500+)</li>
-              <li className="flex items-center gap-2 text-white/40 text-xs"><X size={10} className="text-red-400" /> Expensive per-call charges</li>
-              <li className="flex items-center gap-2 text-white/40 text-xs"><X size={10} className="text-red-400" /> Slow response time</li>
-              <li className="flex items-center gap-2 text-white/40 text-xs"><X size={10} className="text-red-400" /> Long-term contracts</li>
+            <ul className="space-y-2 text-left mt-5 mb-6">
+              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> High setup fees ($500+)</li>
+              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Expensive per-call charges</li>
+              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Slow response time</li>
+              <li className="flex items-center gap-2 text-white/40 text-sm"><X size={12} className="text-red-400" /> Long-term contracts</li>
             </ul>
           </div>
         </div>
@@ -636,7 +751,7 @@ const CalendlySection = () => {
       <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10">
         <div className="text-center mb-5">
           <h3 className="text-xl font-bold text-white mb-1">Schedule Your Free Demo</h3>
-          <p className="text-white/50 text-xs">Choose a time that works for you. 30-min personalized walkthrough.</p>
+          <p className="text-white/50 text-sm">Choose a time that works for you. 30-min personalized walkthrough.</p>
         </div>
         <div className="rounded-xl overflow-hidden border border-white/10 min-h-[550px] relative">
           {!isLoaded && (
@@ -778,6 +893,11 @@ export default function DentalVoiceAgentLanding() {
         <AIWorkAnimation />
       </SectionWrapper>
 
+      {/* Feature Cards */}
+      <SectionWrapper className="pt-0 pb-8">
+        <FeatureCards />
+      </SectionWrapper>
+
       {/* Video Section */}
       <SectionWrapper className="pt-0 pb-12">
         <VideoSection onDemoClick={scrollToCalendly} />
@@ -788,11 +908,6 @@ export default function DentalVoiceAgentLanding() {
         <div className="text-center">
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
-      </SectionWrapper>
-
-      {/* Collaboration Section */}
-      <SectionWrapper className="py-8">
-        <CollaborationSection />
       </SectionWrapper>
 
       {/* How It Works Section */}
@@ -809,65 +924,18 @@ export default function DentalVoiceAgentLanding() {
       </SectionWrapper>
 
       {/* Problem Section */}
-      <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-10">
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <SectionHeader badge="The Problem" title="Every Missed Call = Lost Revenue" center={false} />
-            <div className="mb-5 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-              <p className="text-red-400 font-bold text-center text-sm">Clinics lose 30–40% of calls</p>
-            </div>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-2"><X size={12} className="text-red-400" /><span className="text-white/70 text-xs">Patients call when you're busy</span></li>
-              <li className="flex items-center gap-2"><X size={12} className="text-red-400" /><span className="text-white/70 text-xs">No answers after clinic hours</span></li>
-              <li className="flex items-center gap-2"><X size={12} className="text-red-400" /><span className="text-white/70 text-xs">Receptionist burnout</span></li>
-            </ul>
-          </div>
-          <div className="bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="text-white/70 text-[10px] font-medium">Missed Calls This Week</span>
-            </div>
-            <div className="space-y-2">
-              {[
-                { patient: "Sarah Johnson", value: "$450" },
-                { patient: "Michael Chen", value: "$320" },
-                { patient: "Dr. Emily Wilson", value: "$580" }
-              ].map((call, i) => (
-                <div key={i} className="bg-white/5 rounded-lg p-2 flex justify-between">
-                  <span className="text-white/80 text-[10px]">{call.patient}</span>
-                  <span className="text-red-400/70 text-[10px]">-{call.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-12">
+        <ProblemSection />
       </SectionWrapper>
 
       {/* Solution Section */}
-      <SectionWrapper className="py-10">
+      <SectionWrapper className="py-12">
         <SectionHeader badge="The Solution" title="Your 24/7 AI Receptionist That Converts Calls" center={true} />
-        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-5">
-            <div className="flex items-center gap-2 mb-3"><XCircle size={18} className="text-red-400" /><h3 className="text-white font-bold text-base">Before AI</h3></div>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-2 text-white/60 text-sm"><X size={12} className="text-red-400" /> Missed calls after hours</li>
-              <li className="flex items-center gap-2 text-white/60 text-sm"><X size={12} className="text-red-400" /> Manual appointment booking</li>
-              <li className="flex items-center gap-2 text-white/60 text-sm"><X size={12} className="text-red-400" /> Lost revenue</li>
-            </ul>
-          </div>
-          <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-5">
-            <div className="flex items-center gap-2 mb-3"><ThumbsUp size={18} className="text-[#c9a84c]" /><h3 className="text-white font-bold text-base">With AI</h3></div>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> AI answers instantly 24/7</li>
-              <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Auto appointment booking</li>
-              <li className="flex items-center gap-2 text-white/70 text-sm"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Capture every call</li>
-            </ul>
-          </div>
-        </div>
+        <SolutionSection />
       </SectionWrapper>
 
       {/* Pricing Section */}
-      <SectionWrapper id="pricing" className="py-10">
+      <SectionWrapper id="pricing" className="py-12">
         <SectionHeader badge="Simple Pricing" title="Simple, Affordable Pricing" />
         <PricingSection onFreeTrialClick={() => setShowFreeTrial(true)} />
       </SectionWrapper>
@@ -885,17 +953,17 @@ export default function DentalVoiceAgentLanding() {
       </SectionWrapper>
 
       {/* FAQ Section */}
-      <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-10">
+      <SectionWrapper className="bg-gradient-to-b from-[#0a0f1c] to-[#080c14] py-12">
         <SectionHeader badge="FAQ" title="Frequently Asked Questions" />
-        <div className="max-w-2xl mx-auto space-y-2">
+        <div className="max-w-2xl mx-auto space-y-3">
           {faqs.map((faq, idx) => (
             <div key={idx} className="border border-white/10 rounded-lg overflow-hidden">
-              <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full flex justify-between items-center p-3 text-left">
-                <span className="text-white font-medium text-xs">{faq.q}</span>
-                <ChevronDown size={12} className={`text-white/50 transition-transform ${activeFaq === idx ? 'rotate-180' : ''}`} />
+              <button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full flex justify-between items-center p-4 text-left">
+                <span className="text-white font-medium text-sm">{faq.q}</span>
+                <ChevronDown size={14} className={`text-white/50 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
               </button>
               {activeFaq === idx && (
-                <div className="p-3 pt-0 text-white/50 text-[10px] border-t border-white/10">{faq.a}</div>
+                <div className="p-4 pt-0 text-white/50 text-xs border-t border-white/10">{faq.a}</div>
               )}
             </div>
           ))}
@@ -903,23 +971,24 @@ export default function DentalVoiceAgentLanding() {
       </SectionWrapper>
 
       {/* Final CTA */}
-      <SectionWrapper className="py-10">
-        <div className="rounded-xl bg-gradient-to-br from-[#c9a84c]/10 to-[#0d1220] border border-[#c9a84c]/20 p-6 text-center">
-          <h3 className="text-lg font-bold text-white mb-2">Ready to Never Miss a Patient Call Again?</h3>
+      <SectionWrapper className="py-12">
+        <div className="rounded-xl bg-gradient-to-br from-[#c9a84c]/10 to-[#0d1220] border border-[#c9a84c]/20 p-8 text-center">
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-3">Ready to Never Miss a Patient Call Again?</h3>
+          <p className="text-white/60 mb-6 text-sm">Join hundreds of dental practices automating their front desk with our AI voice agent.</p>
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
       </SectionWrapper>
 
       {/* Footer */}
-      <div className="border-t border-white/10 py-5 text-center">
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+      <div className="border-t border-white/10 py-6 text-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
-              <Mic size={12} className="text-[#080c14]" />
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#dbb85c] flex items-center justify-center">
+              <Mic size={14} className="text-[#080c14]" />
             </div>
-            <span className="text-white font-bold text-xs">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
+            <span className="text-white font-bold text-sm">Dental<span className="text-[#c9a84c]">Voice</span>AI</span>
           </div>
-          <div className="text-white/40 text-[9px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
+          <div className="text-white/40 text-[11px]">© 2024 DentalVoiceAI. AI Voice Receptionist for Dental Practices</div>
         </div>
       </div>
 
