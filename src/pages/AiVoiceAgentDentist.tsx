@@ -204,20 +204,25 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-       {/* Close Button - Middle Left Position */}
-<div className="absolute left-4 top-1/2 -translate-y-1/2 z-30">
-  <button 
-    onClick={onClose} 
-    className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 text-white hover:text-white transition-all duration-300 group shadow-lg"
-    aria-label="Close modal"
-  >
-    <X size={16} className="group-hover:rotate-90 transition-transform duration-300" />
-    <span className="text-sm font-medium">Close</span>
-  </button>
-</div>
 
+{/* Header with Close Button - Top Left next to title */}
+<div className="sticky top-0 left-0 right-0 z-20 bg-gradient-to-b from-[#0a0f1c] to-transparent pt-4 pb-2 px-5 sm:px-6">
+  <div className="flex items-center justify-between">
+    <button 
+      onClick={onClose} 
+      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 text-white hover:text-white transition-all duration-300 group"
+      aria-label="Close modal"
+    >
+      <X size={14} className="group-hover:rotate-90 transition-transform duration-300" />
+      <span className="text-xs font-medium">Close</span>
+    </button>
+    <div className="w-20"></div> {/* Spacer for balance */}
+  </div>
+</div>
+        
         {!submitted ? (
-          <form onSubmit={handleSubmit} className="px-5 pb-8 sm:px-6">
+  <form onSubmit={handleSubmit} className="px-5 pb-8 sm:px-6 pt-2">
+        
             <input type="hidden" name="_subject" value="7-Day Free Trial Request - Dental Voice AI" />
             <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
             <input type="hidden" name="_captcha" value="false" />
