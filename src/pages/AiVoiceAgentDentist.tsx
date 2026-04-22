@@ -13,7 +13,8 @@ import {
   Crown, Gem, Rocket, Target, Brain, Bot, Headset, Volume2,
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
-  VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon
+  VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
+  BarChart, LineChart, PieChart, UserCheck, PhoneOff, MessageCircle
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -92,12 +93,14 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   ];
 
   const crmOptions = [
+    "HubSpot",
+    "Salesforce",
     "Open Dental",
     "Dentrix",
     "Eaglesoft",
     "Curve Dental",
-    "We don't have a CRM (Need free implementation)",
-    "Other (Looking to implement)"
+    "Other (Please specify)",
+    "We are looking to implement CRM"
   ];
 
   const handleSubmit = async (e) => {
@@ -207,7 +210,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
 
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   {crmOptions.map(option => (
                     <label key={option} className="flex items-center gap-2 text-white/70 text-sm cursor-pointer hover:text-white transition-colors">
                       <input type="radio" name="crm" value={option} required className="border-white/20 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20" />
@@ -260,12 +263,11 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   );
 };
 
-// --- Stable AI Work Animation (No vibration - static heights, no continuous animations on containers) ---
+// --- Stable AI Work Animation ---
 const AIWorkAnimation = () => {
   return (
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl border border-white/10 overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
-        {/* Step 1 - Incoming Call */}
         <div className="p-4 md:p-5 text-center">
           <div className="w-12 h-12 mx-auto rounded-full bg-blue-500/20 flex items-center justify-center mb-2">
             <PhoneCall size={22} className="text-blue-400" />
@@ -278,8 +280,6 @@ const AIWorkAnimation = () => {
             <div className="w-1.5 h-1.5 rounded-full bg-blue-400/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
           </div>
         </div>
-
-        {/* Step 2 - AI Agent */}
         <div className="p-4 md:p-5 text-center bg-gradient-to-r from-[#c9a84c]/5 to-transparent">
           <div className="relative w-14 h-14 mx-auto mb-2">
             <div className="absolute inset-0 rounded-full bg-[#c9a84c]/20 animate-ping" style={{ animationDuration: '2s' }} />
@@ -291,8 +291,6 @@ const AIWorkAnimation = () => {
           <p className="text-[#c9a84c] font-semibold text-sm">AI Voice Agent</p>
           <p className="text-white/40 text-xs">Analyzing & Responding</p>
         </div>
-
-        {/* Step 3 - Appointment Booked */}
         <div className="p-4 md:p-5 text-center">
           <div className="w-12 h-12 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-2">
             <Calendar size={22} className="text-green-400" />
@@ -302,7 +300,6 @@ const AIWorkAnimation = () => {
           <CheckCircle2 size={14} className="text-green-400 mx-auto mt-2" />
         </div>
       </div>
-      
       <div className="bg-white/5 py-2 text-center border-t border-white/10">
         <p className="text-white/40 text-[11px] flex flex-wrap items-center justify-center gap-3">
           <span className="flex items-center gap-1"><Clock size={10} /> Answers instantly</span>
@@ -359,24 +356,24 @@ const TypingEffect = () => {
   );
 };
 
-// --- Video Section with Auto-play and Blinking Live Indicator ---
+// --- Video Section with Auto-play and Sound Controls ---
 const VideoSection = ({ onDemoClick }) => {
   const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
 
   useEffect(() => {
-    if (isInView && videoRef.current && !isPlaying) {
+    if (isInView && videoRef.current) {
       videoRef.current.play().then(() => {
         setIsPlaying(true);
       }).catch(() => {
-        console.log("Auto-play prevented");
+        setIsPlaying(false);
       });
     }
-  }, [isInView, isPlaying]);
+  }, [isInView]);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -407,7 +404,6 @@ const VideoSection = ({ onDemoClick }) => {
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c9a84c]/40 to-[#c9a84c]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
       <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0a0f1c] to-[#0d1220]">
-        {/* Live indicator with blinking red dot */}
         <div className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
           <div className="relative">
             <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
@@ -416,7 +412,6 @@ const VideoSection = ({ onDemoClick }) => {
           <span className="text-white text-xs font-medium tracking-wider">🔴 WATCH LIVE DEMO</span>
         </div>
         
-        {/* Mute button */}
         <button
           onClick={handleMuteToggle}
           className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm rounded-full p-2 hover:bg-black/80 transition-colors"
@@ -438,7 +433,6 @@ const VideoSection = ({ onDemoClick }) => {
             Your browser does not support the video tag.
           </video>
           
-          {/* Play/Pause overlay button - only show when paused */}
           {!isPlaying && (
             <button
               onClick={handlePlayPause}
@@ -465,38 +459,6 @@ const VideoSection = ({ onDemoClick }) => {
         </button>
       </div>
     </motion.div>
-  );
-};
-
-// --- Feature Cards Section (What AI Can Do) ---
-const FeatureCards = () => {
-  const features = [
-    { icon: Phone, title: "Answer 24/7", description: "Never miss a call, day or night" },
-    { icon: Calendar, title: "Auto Booking", description: "Schedule appointments instantly" },
-    { icon: Database, title: "CRM Sync", description: "Update patient records automatically" },
-    { icon: MessageSquare, title: "Smart Questions", description: "Answer patient FAQs naturally" },
-    { icon: BellRing, title: "Smart Reminders", description: "Reduce no-shows by 40%" },
-    { icon: TrendingUp, title: "Revenue Recovery", description: "Capture every missed opportunity" }
-  ];
-
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-      {features.map((feature, idx) => (
-        <motion.div
-          key={idx}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.05 }}
-          className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-3 text-center hover:border-[#c9a84c]/30 transition-all duration-300 group"
-        >
-          <div className="w-10 h-10 mx-auto rounded-lg bg-[#c9a84c]/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-            <feature.icon size={18} className="text-[#c9a84c]" />
-          </div>
-          <p className="text-white text-xs font-medium">{feature.title}</p>
-          <p className="text-white/30 text-[10px]">{feature.description}</p>
-        </motion.div>
-      ))}
-    </div>
   );
 };
 
@@ -552,7 +514,6 @@ const HowItWorksFlow = () => {
             animate={controls}
             className="relative"
           >
-            {/* Connector arrow */}
             {idx < 2 && (
               <div className="hidden md:block absolute top-1/3 -right-4 z-10">
                 <motion.div
@@ -573,7 +534,6 @@ const HowItWorksFlow = () => {
               transition={{ duration: 0.5, repeat: activeStep === idx ? Infinity : 0, repeatDelay: 2 }}
               className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border rounded-xl p-5 relative overflow-hidden h-full"
             >
-              {/* Shine effect on active */}
               {activeStep === idx && (
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
@@ -582,7 +542,6 @@ const HowItWorksFlow = () => {
                 />
               )}
               
-              {/* Step number */}
               <div className="flex justify-between items-start mb-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center">
                   <step.icon size={20} className="text-[#c9a84c]" />
@@ -599,7 +558,6 @@ const HowItWorksFlow = () => {
                 ))}
               </div>
 
-              {/* Progress dots for active step */}
               {activeStep === idx && (
                 <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
                   <div className="w-1 h-1 rounded-full bg-[#c9a84c] animate-pulse" />
@@ -625,6 +583,165 @@ const HowItWorksFlow = () => {
   );
 };
 
+// --- Human + AI Collaboration Section (New) ---
+const CollaborationSection = () => {
+  return (
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 md:p-8 border border-white/10">
+      <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-3 py-1 rounded-full mb-4">
+            <HeartHandshake size={14} className="text-[#c9a84c]" />
+            <span className="text-[#c9a84c] text-xs font-medium">Human + AI Collaboration</span>
+          </div>
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-4">We're Not Trying to Replace Your Receptionist — We're Empowering Them</h3>
+          <p className="text-white/60 text-sm md:text-base mb-4">
+            Your receptionist is the heart of your practice. But no human can work 24/7/365. 
+            Unlike traditional voicemails or answering machines that just take messages, our AI Voice Agent 
+            works <span className="text-[#c9a84c]">intelligently alongside your team</span> — handling routine calls, booking appointments, 
+            and updating records while your receptionist focuses on complex patient needs.
+          </p>
+          <div className="grid grid-cols-2 gap-3 mt-6">
+            <div className="bg-white/5 rounded-xl p-3">
+              <TrendingUp size={16} className="text-[#c9a84c] mb-2" />
+              <p className="text-white/80 text-sm font-medium">3x Higher Productivity</p>
+              <p className="text-white/30 text-xs">AI handles 70% of routine calls</p>
+            </div>
+            <div className="bg-white/5 rounded-xl p-3">
+              <UserCheck size={16} className="text-[#c9a84c] mb-2" />
+              <p className="text-white/80 text-sm font-medium">Less Burnout</p>
+              <p className="text-white/30 text-xs">Receptionists focus on patients</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
+          <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
+                  <Bot size={14} className="text-[#c9a84c]" />
+                </div>
+                <span className="text-white/80 text-xs font-medium">AI Voice Agent</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-white/40 text-[10px]">Active 24/7</span>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[11px]">AI: "Dr. Smith is with a patient. Can I help book an appointment?"</p></div>
+              <div className="bg-[#c9a84c]/10 rounded-lg p-2"><p className="text-[#c9a84c] text-[11px]">Patient: "Yes, I need a cleaning next week."</p></div>
+              <div className="bg-white/5 rounded-lg p-2"><p className="text-white/60 text-[11px]">AI: "Tuesday at 2pm works. I'll book it and add you to the system."</p></div>
+              <div className="border-t border-white/10 pt-2 mt-2 text-center">
+                <p className="text-white/30 text-[10px]">Seamless handoff to human during business hours</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Comparison Table: AI vs Voicemail vs Answering Machine ---
+const ComparisonTable = () => {
+  const comparisons = [
+    { feature: "24/7 Availability", ai: true, voicemail: false, answering: false },
+    { feature: "Instant Response", ai: true, voicemail: false, answering: false },
+    { feature: "Books Appointments", ai: true, voicemail: false, answering: false },
+    { feature: "Answers Patient Questions", ai: true, voicemail: false, answering: false },
+    { feature: "Updates CRM Automatically", ai: true, voicemail: false, answering: false },
+    { feature: "Reduces Receptionist Workload", ai: true, voicemail: false, answering: false },
+    { feature: "Patient Satisfaction", ai: "High", voicemail: "Low", answering: "Medium" },
+  ];
+
+  return (
+    <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-6 border border-white/10 overflow-x-auto">
+      <h3 className="text-lg font-bold text-white text-center mb-6">Why AI Voice Agent is Better Than Traditional Voicemail or Answering Machines</h3>
+      <table className="w-full min-w-[500px]">
+        <thead>
+          <tr className="border-b border-white/10">
+            <th className="text-left text-white/60 text-sm font-medium py-3 px-2">Feature</th>
+            <th className="text-center text-[#c9a84c] text-sm font-medium py-3 px-2">AI Voice Agent</th>
+            <th className="text-center text-white/40 text-sm font-medium py-3 px-2">Voicemail</th>
+            <th className="text-center text-white/40 text-sm font-medium py-3 px-2">Answering Machine</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisons.map((item, idx) => (
+            <tr key={idx} className="border-b border-white/5">
+              <td className="text-white/70 text-sm py-3 px-2">{item.feature}</td>
+              <td className="text-center py-3 px-2">
+                {typeof item.ai === 'boolean' ? (
+                  item.ai ? <CheckCircle2 size={16} className="text-[#c9a84c] mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />
+                ) : (
+                  <span className="text-[#c9a84c] text-sm">{item.ai}</span>
+                )}
+              </td>
+              <td className="text-center py-3 px-2">
+                {typeof item.voicemail === 'boolean' ? (
+                  item.voicemail ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />
+                ) : (
+                  <span className="text-white/40 text-sm">{item.voicemail}</span>
+                )}
+              </td>
+              <td className="text-center py-3 px-2">
+                {typeof item.answering === 'boolean' ? (
+                  item.answering ? <CheckCircle2 size={16} className="text-green-500/50 mx-auto" /> : <X size={14} className="text-red-400 mx-auto" />
+                ) : (
+                  <span className="text-white/40 text-sm">{item.answering}</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="mt-6 p-4 bg-[#c9a84c]/10 rounded-lg text-center">
+        <p className="text-[#c9a84c] text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p>
+      </div>
+    </div>
+  );
+};
+
+// --- Productivity Boost Section ---
+const ProductivityBoost = () => {
+  return (
+    <div className="grid md:grid-cols-2 gap-8 items-center">
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
+        <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <BarChart size={24} className="text-[#c9a84c]" />
+            <span className="text-white font-bold text-lg">Before AI Voice Agent</span>
+          </div>
+          <ul className="space-y-3">
+            <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Receptionist spends 4+ hours/day on calls</li>
+            <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> 30-40% of after-hours calls go unanswered</li>
+            <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Manual data entry into CRM</li>
+            <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> High receptionist burnout & turnover</li>
+          </ul>
+        </div>
+      </div>
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-l from-[#c9a84c]/20 to-transparent blur-3xl" />
+        <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <TrendingUp size={24} className="text-[#c9a84c]" />
+            <span className="text-white font-bold text-lg">After AI Voice Agent</span>
+          </div>
+          <ul className="space-y-3">
+            <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI handles 70% of routine calls</li>
+            <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 100% of after-hours calls answered</li>
+            <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Automatic CRM updates</li>
+            <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> 3x happier receptionists, lower turnover</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // --- Problem Section ---
 const ProblemSection = () => {
   return (
@@ -632,9 +749,9 @@ const ProblemSection = () => {
       <div>
         <SectionHeader badge="The Problem" title="Every Missed Call = Lost Revenue" description="Clinics lose 30–40% of calls" center={false} />
         <ul className="space-y-3">
-          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">Patients call when you're busy</span></li>
-          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">No answers after clinic hours</span></li>
-          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">Receptionist burnout</span></li>
+          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">Patients call when you're busy with other patients</span></li>
+          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">No one answers after clinic hours or on weekends</span></li>
+          <li className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"><X size={16} className="text-red-400" /><span className="text-white/70 text-sm">Receptionist burnout and high turnover</span></li>
         </ul>
       </div>
       
@@ -672,7 +789,7 @@ const SolutionSection = () => {
         <ul className="space-y-3">
           <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Missed calls after hours</li>
           <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Manual appointment booking</li>
-          <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Lost revenue</li>
+          <li className="flex items-center gap-2 text-white/60"><X size={14} className="text-red-400" /> Lost revenue from unanswered calls</li>
         </ul>
       </div>
       <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-6 relative overflow-hidden group">
@@ -681,7 +798,7 @@ const SolutionSection = () => {
         <ul className="space-y-3">
           <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> AI answers instantly 24/7</li>
           <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Auto appointment booking</li>
-          <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Capture every call</li>
+          <li className="flex items-center gap-2 text-white/70"><CheckCircle2 size={14} className="text-[#c9a84c]" /> Capture every patient call</li>
         </ul>
       </div>
     </div>
@@ -874,13 +991,11 @@ export default function DentalVoiceAgentLanding() {
     }
   };
 
-  const openCalendlyModal = () => setShowCalendly(true);
-
   const faqs = [
     { q: "How does the AI work with my existing phone number?", a: "Simply forward your clinic's number to us. The AI answers instantly, 24/7. Setup takes less than 24 hours." },
-    { q: "Will this replace my receptionist?", a: "No! We believe in human + AI collaboration. Our AI steps in after hours, during lunch breaks, or when your team is busy." },
-    { q: "Can it handle complex appointment scheduling?", a: "Absolutely. It checks real-time availability from your calendar and books appointments naturally." },
-    { q: "What CRMs do you integrate with?", a: "We integrate with Open Dental, Dentrix, Eaglesoft, and more. No CRM? We provide one for free." },
+    { q: "Will this replace my receptionist?", a: "No! We believe in human + AI collaboration. Our AI steps in after hours, during lunch breaks, or when your team is busy — handling routine calls so your receptionist can focus on complex patient needs." },
+    { q: "Can it handle complex appointment scheduling?", a: "Absolutely. It checks real-time availability from your calendar and books appointments naturally, handling multiple providers and locations." },
+    { q: "What CRMs do you integrate with?", a: "We integrate with HubSpot, Salesforce, Open Dental, Dentrix, Eaglesoft, and more. No CRM? We provide one for free with no implementation charges." },
   ];
 
   return (
@@ -893,11 +1008,6 @@ export default function DentalVoiceAgentLanding() {
         <AIWorkAnimation />
       </SectionWrapper>
 
-      {/* Feature Cards */}
-      <SectionWrapper className="pt-0 pb-8">
-        <FeatureCards />
-      </SectionWrapper>
-
       {/* Video Section */}
       <SectionWrapper className="pt-0 pb-12">
         <VideoSection onDemoClick={scrollToCalendly} />
@@ -908,6 +1018,21 @@ export default function DentalVoiceAgentLanding() {
         <div className="text-center">
           <CTAButtons onDemoClick={scrollToCalendly} onTrialClick={() => setShowFreeTrial(true)} variant="small" />
         </div>
+      </SectionWrapper>
+
+      {/* Human + AI Collaboration Section */}
+      <SectionWrapper className="py-8">
+        <CollaborationSection />
+      </SectionWrapper>
+
+      {/* Comparison Table */}
+      <SectionWrapper className="py-8">
+        <ComparisonTable />
+      </SectionWrapper>
+
+      {/* Productivity Boost Section */}
+      <SectionWrapper className="py-8">
+        <ProductivityBoost />
       </SectionWrapper>
 
       {/* How It Works Section */}
