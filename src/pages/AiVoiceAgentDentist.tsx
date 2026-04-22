@@ -14,7 +14,8 @@ import {
   Wifi, Cloud, ShieldCheck, Gift, FastForward, Layers,
   Info, Eye, TrendingUp as TrendingIcon, DollarSign as DollarIcon,
   VolumeX, Volume1, Radio, Signal, Headphones as HeadphonesIcon,
-  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon
+  Pause, Activity, UserCheck, PieChart, LineChart, BarChart as BarChartIcon,
+  Tooth, Mic2, Waves, RadioTower
 } from 'lucide-react';
 
 // --- Configuration ---
@@ -77,11 +78,12 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component ---
+// --- Free Trial Modal Component with Fixed Close Button ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
+  const [selectedAISolutions, setSelectedAISolutions] = useState("");
 
   const aiOptions = [
     "24/7 Appointment Booking",
@@ -89,7 +91,8 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
     "Emergency Triage",
     "Insurance Verification",
     "Prescription Refills",
-    "Payment Processing"
+    "Payment Processing",
+    "All of the above features"
   ];
 
   const crmOptions = [
@@ -148,13 +151,15 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 right-0 z-20 flex justify-end p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent">
+        {/* Close Button - Left Side with Close Text */}
+        <div className="sticky top-0 left-0 right-0 z-20 flex justify-start p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent border-b border-white/10">
           <button 
             onClick={onClose} 
-            className="w-10 h-10 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 flex items-center justify-center text-white hover:text-white transition-all duration-300 group"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 text-white hover:text-white transition-all duration-300 group"
             aria-label="Close modal"
           >
-            <X size={18} className="group-hover:rotate-90 transition-transform duration-300" />
+            <X size={16} className="group-hover:rotate-90 transition-transform duration-300" />
+            <span className="text-sm font-medium">Close</span>
           </button>
         </div>
 
@@ -207,23 +212,24 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
+              {/* AI Solutions - Dropdown instead of checkboxes */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
-                <div className="flex flex-col space-y-2">
+                <select 
+                  name="ai_solutions" 
+                  required 
+                  className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all cursor-pointer"
+                  value={selectedAISolutions}
+                  onChange={(e) => setSelectedAISolutions(e.target.value)}
+                >
+                  <option value="">Select AI solutions...</option>
                   {aiOptions.map(option => (
-                    <label key={option} className="flex items-center gap-3 w-full cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition-colors">
-                      <input 
-                        type="checkbox" 
-                        name="ai_solutions" 
-                        value={option} 
-                        className="w-5 h-5 min-w-[20px] rounded border-white/30 bg-[#080c14] text-[#c9a84c] focus:ring-[#c9a84c]/20 cursor-pointer"
-                      />
-                      <span className="text-white/80 text-sm leading-relaxed break-words group-hover:text-white transition-colors">{option}</span>
-                    </label>
+                    <option key={option} value={option}>{option}</option>
                   ))}
-                </div>
+                </select>
               </div>
 
+              {/* CRM Options - Dropdown */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
                 <select 
@@ -898,7 +904,7 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Comparison Table (Fixed) ---
+// --- Comparison Table ---
 const ComparisonTable = () => {
   const comparisons = [
     { feature: "Instant Response", ai: true, voicemail: false, answering: false },
@@ -919,7 +925,7 @@ const ComparisonTable = () => {
             <th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th>
             <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th>
-           </tr>
+            </tr>
         </thead>
         <tbody>
           {comparisons.map((item, idx) => (
@@ -946,10 +952,10 @@ const ComparisonTable = () => {
                   <span className="text-white/40 text-[8px] sm:text-sm">{item.answering}</span>
                 )}
               </td>
-             </tr>
+            </tr>
           ))}
         </tbody>
-       </table>
+      </table>
       <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-[#c9a84c]/10 rounded-lg text-center">
         <p className="text-[#c9a84c] text-[8px] sm:text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p>
       </div>
@@ -1082,7 +1088,7 @@ const CalendlySection = () => {
   );
 };
 
-// --- Animated Hero Component ---
+// --- Animated Hero Component with Premium Icons ---
 const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => { const rect = e.currentTarget.getBoundingClientRect(); setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top }); };
@@ -1094,25 +1100,36 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         <div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} />
       </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-2 sm:gap-3">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-3 sm:gap-4">
+          {/* Premium Dental Icon with Glow */}
           <div className="relative">
-            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
-              <Activity size={14} className="sm:size-18 text-[#c9a84c]" />
+            <div className="absolute -inset-2 rounded-full bg-[#c9a84c]/20 blur-lg animate-pulse" />
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border border-[#c9a84c]/40">
+              <Activity size={18} className="sm:size-22 text-[#c9a84c]" />
             </div>
           </div>
-          <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full border border-[#c9a84c]/20">
-            <Sparkles size={8} className="sm:size-12 text-[#c9a84c] animate-pulse" />
-            <span className="text-[#c9a84c] text-[6px] sm:text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
+          
+          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c9a84c]/20 to-[#c9a84c]/5 backdrop-blur-sm px-3 sm:px-5 py-1.5 sm:py-2 rounded-full border border-[#c9a84c]/30 shadow-lg shadow-[#c9a84c]/10">
+            <Sparkles size={10} className="sm:size-12 text-[#c9a84c] animate-pulse" />
+            <span className="text-[#c9a84c] text-[8px] sm:text-[10px] font-medium uppercase tracking-wider">Smart AI Receptionist for Dental Practices</span>
           </span>
+          
+          {/* Premium AI Voice Icon with Sound Waves */}
           <div className="relative">
-            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center animate-pulse">
-              <Activity size={14} className="sm:size-18 text-[#c9a84c]" />
+            <div className="absolute -inset-2 rounded-full bg-[#c9a84c]/20 blur-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#c9a84c]/30 to-[#c9a84c]/10 flex items-center justify-center border border-[#c9a84c]/40">
+              <RadioTower size={18} className="sm:size-22 text-[#c9a84c] animate-pulse" />
             </div>
-            <div className="absolute -inset-0.5 sm:-inset-1 rounded-full bg-[#c9a84c]/30 animate-ping opacity-75" style={{ animationDuration: '0.8s' }} />
+            {/* Sound wave animation */}
+            <div className="absolute -inset-1 rounded-full border-2 border-[#c9a84c]/30 animate-ping opacity-75" style={{ animationDuration: '1.5s' }} />
+            <div className="absolute -inset-3 rounded-full border border-[#c9a84c]/20 animate-ping opacity-50" style={{ animationDuration: '2s', animationDelay: '0.5s' }} />
           </div>
         </motion.div>
+        
         <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-5 leading-tight">Never Miss a Patient Call —<TypingEffect /></motion.h1>
+        
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-white/60 text-[10px] sm:text-sm md:text-base mb-4 sm:mb-5 max-w-2xl mx-auto">AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.</motion.p>
+        
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="inline-flex flex-wrap items-center justify-center gap-1 sm:gap-2 bg-[#0a0f1c]/80 backdrop-blur-sm border border-white/10 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6">
           <DollarIcon size={10} className="sm:size-14 text-[#c9a84c]" />
           <span className="text-white font-semibold text-[8px] sm:text-xs">Starts at $49.99/month</span>
@@ -1121,7 +1138,9 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
           <span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span>
           <span className="text-white/70 text-[7px] sm:text-xs">No setup fees</span>
         </motion.div>
+        
         <CTAButtons onDemoClick={onDemoClick} onTrialClick={onFreeTrialClick} />
+        
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }} className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6 text-[6px] sm:text-[10px] md:text-xs text-white/40">
           <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Works with your number</span>
           <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Setup in 24 hours</span>
