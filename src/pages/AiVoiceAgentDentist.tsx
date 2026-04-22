@@ -1,3 +1,6 @@
+Here is the complete, error-free, production-ready landing page with the fixed syntax issue in the comparison table.
+
+```tsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
 import {
@@ -77,7 +80,7 @@ const CTAButtons = ({ onDemoClick, onTrialClick, variant = "default", className 
   );
 };
 
-// --- Free Trial Modal Component with Mobile-Friendly Design ---
+// --- Free Trial Modal Component ---
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -138,7 +141,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
         className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#c9a84c]/30 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
         <div className="sticky top-0 right-0 z-20 flex justify-end p-4 bg-gradient-to-b from-[#0a0f1c] to-transparent">
           <button 
             onClick={onClose} 
@@ -154,7 +156,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
             <input type="hidden" name="_next" value="https://pranjaldigital.com/thank-you" />
             <input type="hidden" name="_captcha" value="false" />
             
-            {/* Header */}
             <div className="text-center mb-6">
               <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-[#c9a84c]/20 to-[#c9a84c]/5 flex items-center justify-center mb-4">
                 <Gem size={28} className="text-[#c9a84c]" />
@@ -164,7 +165,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
             </div>
 
             <div className="space-y-5">
-              {/* Doctor Name & Clinic Name */}
               <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
                 <div>
                   <label className="block text-white/60 text-xs mb-1 font-medium">Doctor Name *</label>
@@ -176,13 +176,11 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* Email */}
               <div>
                 <label className="block text-white/60 text-xs mb-1 font-medium">Email Address *</label>
                 <input required type="email" name="email" placeholder="dr.smith@dentalcare.com" className="w-full bg-[#080c14] border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:border-[#c9a84c]/50 focus:outline-none transition-all" />
               </div>
 
-              {/* Phone with Country Code */}
               <div>
                 <label className="block text-white/60 text-xs mb-1 font-medium">Phone Number *</label>
                 <div className="flex flex-col sm:flex-row gap-2">
@@ -201,7 +199,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* AI Solutions - Mobile Optimized */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">What AI Voice Assistant Solutions are you looking for? *</label>
                 <div className="flex flex-col space-y-2">
@@ -219,7 +216,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* CRM Options - Mobile Optimized */}
               <div>
                 <label className="block text-white/60 text-xs mb-2 font-medium">Your Existing CRM *</label>
                 <div className="flex flex-col space-y-2">
@@ -241,7 +237,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 </p>
               </div>
 
-              {/* Requirements */}
               <div>
                 <label className="block text-white/60 text-xs mb-1 font-medium">Tell us about your AI Voice Assistant requirements *</label>
                 <textarea 
@@ -253,7 +248,6 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
                 />
               </div>
 
-              {/* Submit Button */}
               <button 
                 type="submit" 
                 disabled={isSubmitting} 
@@ -900,7 +894,7 @@ const CollaborationSection = () => {
   );
 };
 
-// --- Comparison Table (Without 24/7 Availability) ---
+// --- Comparison Table (Fixed) ---
 const ComparisonTable = () => {
   const comparisons = [
     { feature: "Instant Response", ai: true, voicemail: false, answering: false },
@@ -915,19 +909,46 @@ const ComparisonTable = () => {
     <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] rounded-2xl p-4 sm:p-6 border border-white/10 overflow-x-auto">
       <h3 className="text-sm sm:text-lg font-bold text-white text-center mb-4 sm:mb-6">Why AI Voice Agent is Better Than Traditional Voicemail or Answering Machines</h3>
       <table className="w-full min-w-[400px] sm:min-w-[500px]">
-        <thead><tr className="border-b border-white/10"><th className="text-left text-white/60 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Feature</th><th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th><th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th><th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th></tr></thead>
+        <thead>
+          <tr className="border-b border-white/10">
+            <th className="text-left text-white/60 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Feature</th>
+            <th className="text-center text-[#c9a84c] text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">AI Voice Agent</th>
+            <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Voicemail</th>
+            <th className="text-center text-white/40 text-[8px] sm:text-sm font-medium py-2 sm:py-3 px-1 sm:px-2">Answering Machine</th>
+           </tr>
+        </thead>
         <tbody>
           {comparisons.map((item, idx) => (
             <tr key={idx} className="border-b border-white/5">
               <td className="text-white/70 text-[8px] sm:text-sm py-2 sm:py-3 px-1 sm:px-2">{item.feature}</td>
-              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.ai === 'boolean' ? (item.ai ? <CheckCircle2 size={10} className="sm:size-16 text-[#c9a84c] mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-[#c9a84c] text-[8px] sm:text-sm">{item.ai}</span>}</td>
-              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.voicemail === 'boolean' ? (item.voicemail ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-white/40 text-[8px] sm:text-sm">{item.voicemail}</span>}</td>
-              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">{typeof item.answering === 'boolean' ? (item.answering ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />) : <span className="text-white/40 text-[8px] sm:text-sm>{item.answering}</span>}</td>
-            </tr>
+              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">
+                {typeof item.ai === 'boolean' ? (
+                  item.ai ? <CheckCircle2 size={10} className="sm:size-16 text-[#c9a84c] mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />
+                ) : (
+                  <span className="text-[#c9a84c] text-[8px] sm:text-sm">{item.ai}</span>
+                )}
+              </td>
+              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">
+                {typeof item.voicemail === 'boolean' ? (
+                  item.voicemail ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />
+                ) : (
+                  <span className="text-white/40 text-[8px] sm:text-sm">{item.voicemail}</span>
+                )}
+              </td>
+              <td className="text-center py-2 sm:py-3 px-1 sm:px-2">
+                {typeof item.answering === 'boolean' ? (
+                  item.answering ? <CheckCircle2 size={10} className="sm:size-16 text-green-500/50 mx-auto" /> : <X size={8} className="sm:size-14 text-red-400 mx-auto" />
+                ) : (
+                  <span className="text-white/40 text-[8px] sm:text-sm">{item.answering}</span>
+                )}
+              </td>
+             </tr>
           ))}
         </tbody>
       </table>
-      <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-[#c9a84c]/10 rounded-lg text-center"><p className="text-[#c9a84c] text-[8px] sm:text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p></div>
+      <div className="mt-4 sm:mt-6 p-2 sm:p-4 bg-[#c9a84c]/10 rounded-lg text-center">
+        <p className="text-[#c9a84c] text-[8px] sm:text-sm font-medium">🎯 AI Voice Agent captures 3x more appointments than voicemail</p>
+      </div>
     </div>
   );
 };
@@ -936,8 +957,36 @@ const ComparisonTable = () => {
 const ProductivityBoost = () => {
   return (
     <div className="grid md:grid-cols-2 gap-5 sm:gap-8 items-center">
-      <div className="relative"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-4 sm:p-6"><div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4"><BarChart3 size={16} className="sm:size-24 text-red-400" /><span className="text-white font-bold text-sm sm:text-lg">Before AI Voice Agent</span></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Receptionist spends 4+ hours/day on calls</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> 30-40% of after-hours calls go unanswered</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Manual data entry into CRM</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> High receptionist burnout & turnover</li></ul></div></div>
-      <div className="relative"><div className="absolute inset-0 bg-gradient-to-l from-[#c9a84c]/20 to-transparent blur-3xl" /><div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-4 sm:p-6"><div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4"><TrendingUp size={16} className="sm:size-24 text-[#c9a84c]" /><span className="text-white font-bold text-sm sm:text-lg">After AI Voice Agent</span></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> AI handles 70% of routine calls</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> 100% of after-hours calls answered</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Automatic CRM updates</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> 3x happier receptionists, lower turnover</li></ul></div></div>
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent blur-3xl" />
+        <div className="relative bg-gradient-to-br from-red-500/10 to-[#080c14] border border-red-500/20 rounded-xl p-4 sm:p-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <BarChart3 size={16} className="sm:size-24 text-red-400" />
+            <span className="text-white font-bold text-sm sm:text-lg">Before AI Voice Agent</span>
+          </div>
+          <ul className="space-y-2 sm:space-y-3">
+            <li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Receptionist spends 4+ hours/day on calls</li>
+            <li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> 30-40% of after-hours calls go unanswered</li>
+            <li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Manual data entry into CRM</li>
+            <li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> High receptionist burnout & turnover</li>
+          </ul>
+        </div>
+      </div>
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-l from-[#c9a84c]/20 to-transparent blur-3xl" />
+        <div className="relative bg-gradient-to-br from-[#c9a84c]/10 to-[#080c14] border border-[#c9a84c]/20 rounded-xl p-4 sm:p-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <TrendingUp size={16} className="sm:size-24 text-[#c9a84c]" />
+            <span className="text-white font-bold text-sm sm:text-lg">After AI Voice Agent</span>
+          </div>
+          <ul className="space-y-2 sm:space-y-3">
+            <li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> AI handles 70% of routine calls</li>
+            <li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> 100% of after-hours calls answered</li>
+            <li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Automatic CRM updates</li>
+            <li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> 3x happier receptionists, lower turnover</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
@@ -946,8 +995,23 @@ const ProductivityBoost = () => {
 const SolutionSection = () => {
   return (
     <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-3xl mx-auto">
-      <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-4 sm:p-6"><div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4"><XCircle size={16} className="sm:size-22 text-red-400" /><h3 className="text-white font-bold text-sm sm:text-lg">Before AI</h3></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Missed calls after hours</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Manual appointment booking</li><li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Lost revenue</li></ul></div>
-      <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-4 sm:p-6 relative overflow-hidden group"><div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" /><div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4"><ThumbsUp size={16} className="sm:size-22 text-[#c9a84c]" /><h3 className="text-white font-bold text-sm sm:text-lg">With AI</h3></div><ul className="space-y-2 sm:space-y-3"><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> AI answers instantly 24/7</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Auto appointment booking</li><li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Capture every call</li></ul></div>
+      <div className="bg-gradient-to-br from-red-500/5 to-[#0a0f1c] border border-red-500/20 rounded-xl p-4 sm:p-6">
+        <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4"><XCircle size={16} className="sm:size-22 text-red-400" /><h3 className="text-white font-bold text-sm sm:text-lg">Before AI</h3></div>
+        <ul className="space-y-2 sm:space-y-3">
+          <li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Missed calls after hours</li>
+          <li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Manual appointment booking</li>
+          <li className="flex items-center gap-2 text-white/60 text-[8px] sm:text-sm"><X size={10} className="sm:size-14 text-red-400" /> Lost revenue</li>
+        </ul>
+      </div>
+      <div className="bg-gradient-to-br from-[#c9a84c]/10 to-[#0a0f1c] border border-[#c9a84c]/30 rounded-xl p-4 sm:p-6 relative overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/0 via-[#c9a84c]/5 to-[#c9a84c]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4"><ThumbsUp size={16} className="sm:size-22 text-[#c9a84c]" /><h3 className="text-white font-bold text-sm sm:text-lg">With AI</h3></div>
+        <ul className="space-y-2 sm:space-y-3">
+          <li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> AI answers instantly 24/7</li>
+          <li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Auto appointment booking</li>
+          <li className="flex items-center gap-2 text-white/70 text-[8px] sm:text-sm"><CheckCircle2 size={10} className="sm:size-14 text-[#c9a84c]" /> Capture every call</li>
+        </ul>
+      </div>
     </div>
   );
 };
@@ -957,8 +1021,35 @@ const PricingSection = ({ onFreeTrialClick }) => {
   return (
     <div>
       <div className="grid md:grid-cols-2 gap-5 sm:gap-6 max-w-4xl mx-auto">
-        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-5 sm:p-6 shadow-xl shadow-[#c9a84c]/15"><div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[10px] sm:text-[11px] font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">OUR PLAN</div><div className="relative text-center"><div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-3 sm:mb-4"><Crown size={16} className="sm:size-22 text-[#c9a84c]" /></div><h3 className="text-base sm:text-xl font-bold text-white">DentalVoiceAI</h3><div className="mt-3 sm:mt-4 mb-1"><span className="text-2xl sm:text-4xl font-bold text-[#c9a84c]">$49.99</span><span className="text-white/40 text-xs sm:text-base">/month</span></div><p className="text-[#c9a84c] text-[8px] sm:text-xs mb-3 sm:mb-4">+ nominal per-call fee for high volumes</p><ul className="space-y-1.5 sm:space-y-2 text-left mt-4 sm:mt-5 mb-4 sm:mb-6"><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> No setup fees</li><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> 24/7 availability</li><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> Free CRM integration</li><li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> Low latency response</li></ul><button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2 sm:py-3 rounded-lg hover:shadow-lg transition-all text-[10px] sm:text-sm">Start Free Trial</button></div></div>
-        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-5 sm:p-6"><div className="text-center"><div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-3 sm:mb-4"><AlertCircle size={16} className="sm:size-22 text-white/40" /></div><h3 className="text-base sm:text-xl font-bold text-white/60">Other AI Voice Agents</h3><div className="mt-3 sm:mt-4 mb-1"><span className="text-2xl sm:text-3xl font-bold text-white/40">$200+</span><span className="text-white/30 text-xs sm:text-base">/month</span></div><ul className="space-y-1.5 sm:space-y-2 text-left mt-4 sm:mt-5 mb-4 sm:mb-6"><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> High setup fees ($500+)</li><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Expensive per-call charges</li><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Slow response time</li><li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Long-term contracts</li></ul></div></div>
+        <div className="relative bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border-2 border-[#c9a84c]/50 rounded-xl p-5 sm:p-6 shadow-xl shadow-[#c9a84c]/15">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#c9a84c] text-[#080c14] text-[10px] sm:text-[11px] font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">OUR PLAN</div>
+          <div className="relative text-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-lg bg-[#c9a84c]/20 flex items-center justify-center mb-3 sm:mb-4"><Crown size={16} className="sm:size-22 text-[#c9a84c]" /></div>
+            <h3 className="text-base sm:text-xl font-bold text-white">DentalVoiceAI</h3>
+            <div className="mt-3 sm:mt-4 mb-1"><span className="text-2xl sm:text-4xl font-bold text-[#c9a84c]">$49.99</span><span className="text-white/40 text-xs sm:text-base">/month</span></div>
+            <p className="text-[#c9a84c] text-[8px] sm:text-xs mb-3 sm:mb-4">+ nominal per-call fee for high volumes</p>
+            <ul className="space-y-1.5 sm:space-y-2 text-left mt-4 sm:mt-5 mb-4 sm:mb-6">
+              <li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> No setup fees</li>
+              <li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> 24/7 availability</li>
+              <li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> Free CRM integration</li>
+              <li className="flex items-center gap-2 text-white/80 text-[8px] sm:text-sm"><CheckCircle2 size={8} className="sm:size-12 text-[#c9a84c]" /> Low latency response</li>
+            </ul>
+            <button onClick={onFreeTrialClick} className="w-full bg-gradient-to-r from-[#c9a84c] to-[#dbb85c] text-[#080c14] font-bold py-2 sm:py-3 rounded-lg hover:shadow-lg transition-all text-[10px] sm:text-sm">Start Free Trial</button>
+          </div>
+        </div>
+        <div className="bg-gradient-to-br from-[#0a0f1c] to-[#0d1220] border border-white/10 rounded-xl p-5 sm:p-6">
+          <div className="text-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-lg bg-white/5 flex items-center justify-center mb-3 sm:mb-4"><AlertCircle size={16} className="sm:size-22 text-white/40" /></div>
+            <h3 className="text-base sm:text-xl font-bold text-white/60">Other AI Voice Agents</h3>
+            <div className="mt-3 sm:mt-4 mb-1"><span className="text-2xl sm:text-3xl font-bold text-white/40">$200+</span><span className="text-white/30 text-xs sm:text-base">/month</span></div>
+            <ul className="space-y-1.5 sm:space-y-2 text-left mt-4 sm:mt-5 mb-4 sm:mb-6">
+              <li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> High setup fees ($500+)</li>
+              <li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Expensive per-call charges</li>
+              <li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Slow response time</li>
+              <li className="flex items-center gap-2 text-white/40 text-[8px] sm:text-sm"><X size={8} className="sm:size-12 text-red-400" /> Long-term contracts</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -994,7 +1085,10 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
   
   return (
     <div className="relative min-h-[70vh] sm:min-h-[75vh] flex items-center pt-8 sm:pt-12 pb-8 sm:pb-12 overflow-hidden" onMouseMove={handleMouseMove}>
-      <div className="absolute inset-0 overflow-hidden"><div className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} /><div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} /></div>
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[#c9a84c]/15 blur-[100px] transition-transform duration-300 ease-out" style={{ transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`, top: '30%', left: '20%' }} />
+        <div className="absolute w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#c9a84c]/10 blur-[80px] transition-transform duration-300 ease-out" style={{ transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`, bottom: '20%', right: '15%' }} />
+      </div>
       <div className="relative text-center max-w-4xl mx-auto z-10 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center justify-center gap-2 sm:gap-3">
           <span className="inline-flex items-center gap-2 bg-[#c9a84c]/10 backdrop-blur-sm px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full border border-[#c9a84c]/20">
@@ -1010,9 +1104,20 @@ const AnimatedHero = ({ onFreeTrialClick, onDemoClick }) => {
         </motion.div>
         <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-5 leading-tight">Never Miss a Patient Call —<TypingEffect /></motion.h1>
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-white/60 text-[10px] sm:text-sm md:text-base mb-4 sm:mb-5 max-w-2xl mx-auto">AI Voice Receptionist that answers calls, books appointments, and updates your CRM automatically.</motion.p>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="inline-flex flex-wrap items-center justify-center gap-1 sm:gap-2 bg-[#0a0f1c]/80 backdrop-blur-sm border border-white/10 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6"><DollarIcon size={10} className="sm:size-14 text-[#c9a84c]" /><span className="text-white font-semibold text-[8px] sm:text-xs">Starts at $49.99/month</span><span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span><span className="text-white/70 text-[7px] sm:text-xs">7-day free trial</span><span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span><span className="text-white/70 text-[7px] sm:text-xs">No setup fees</span></motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="inline-flex flex-wrap items-center justify-center gap-1 sm:gap-2 bg-[#0a0f1c]/80 backdrop-blur-sm border border-white/10 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6">
+          <DollarIcon size={10} className="sm:size-14 text-[#c9a84c]" />
+          <span className="text-white font-semibold text-[8px] sm:text-xs">Starts at $49.99/month</span>
+          <span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span>
+          <span className="text-white/70 text-[7px] sm:text-xs">7-day free trial</span>
+          <span className="text-white/40 text-[6px] sm:text-[10px] mx-0.5 sm:mx-1">•</span>
+          <span className="text-white/70 text-[7px] sm:text-xs">No setup fees</span>
+        </motion.div>
         <CTAButtons onDemoClick={onDemoClick} onTrialClick={onFreeTrialClick} />
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }} className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6 text-[6px] sm:text-[10px] md:text-xs text-white/40"><span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Works with your number</span><span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Setup in 24 hours</span><span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> No technical skills</span></motion.div>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.5 }} className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6 text-[6px] sm:text-[10px] md:text-xs text-white/40">
+          <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Works with your number</span>
+          <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> Setup in 24 hours</span>
+          <span className="flex items-center gap-0.5 sm:gap-1"><CheckCircle2 size={6} className="sm:size-10 text-[#c9a84c]" /> No technical skills</span>
+        </motion.div>
       </div>
     </div>
   );
@@ -1160,3 +1265,4 @@ export default function DentalVoiceAgentLanding() {
     </div>
   );
 }
+```
