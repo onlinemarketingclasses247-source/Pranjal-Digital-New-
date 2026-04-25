@@ -499,6 +499,7 @@ export default function GoogleSearchConsoleReportingToolPage() {
             </div>
           </motion.div>
 
+          {/* === FIXED YOUTUBE EMBED (16:9 aspect ratio) === */}
           <motion.div
             initial={{ opacity: 0, x: 28 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -508,13 +509,16 @@ export default function GoogleSearchConsoleReportingToolPage() {
           >
             <div className="absolute -inset-4 rounded-3xl bg-[#c9a84c]/10 blur-2xl" />
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#040608] p-2 shadow-2xl shadow-black/35">
-              <iframe
-                className="aspect-square h-full w-full rounded-xl"
-                src="https://www.youtube.com/embed/Tbd_q_-dTUk?si=lMiHklXHiy2KVR9a"
-                title="Google Search Console Reporting Tool overview"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {/* Changed from aspect-square to aspect-video (16:9) */}
+              <div className="aspect-video w-full overflow-hidden rounded-xl">
+                <iframe
+                  className="h-full w-full"
+                  src="https://www.youtube.com/embed/Tbd_q_-dTUk?si=lMiHklXHiy2KVR9a"
+                  title="Google Search Console Reporting Tool overview"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
             </div>
           </motion.div>
         </div>
