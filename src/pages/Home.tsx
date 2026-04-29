@@ -143,109 +143,6 @@ const industriesData = [
 { name: 'Local Business', icon: MapPin, color: 'from-cyan-500/20 to-sky-500/20', projects: 35, whatIDid: 'Helped local businesses grow from 5 to 60+ leads/month using Google Maps + Local SEO.', whatICanDo: 'Google Business Profile optimization, local citations, review management, local link building.', results: ['12x leads', '38% lower CPA', '60 leads/month'] },
 ];
 
-// Enhanced Comparison Table Data
-const comparisonData = [
-{
-aspect: 'Years of Hands-On Experience',
-agency: 'Average 2-4 years (high turnover, junior talent)',
-me: '12+ years — I have done it all, seen it all, fixed it all',
-major: true,
-agencyIcon: '📉',
-meIcon: '🏆',
-detail: 'Agencies often assign fresh graduates to your account. I bring over a decade of battle-tested experience.'
-},
-{
-aspect: 'Who Actually Works On Your Account',
-agency: 'Rotating junior account managers (changes every 6 months)',
-me: 'Direct access to me — the expert who built this business',
-major: true,
-agencyIcon: '🔄',
-meIcon: '👨‍💻',
-detail: 'No handovers. No "let me check with my manager". You get decisions instantly.'
-},
-{
-aspect: 'Response Time & Communication',
-agency: '24-72 hours (through multiple layers of approval)',
-me: '2-4 hours — WhatsApp, Call, or Email. Direct line to me.',
-major: true,
-agencyIcon: '🐢',
-meIcon: '⚡',
-detail: 'When a campaign needs immediate attention, I respond. Not a ticket system.'
-},
-{
-aspect: 'Strategy Development',
-agency: 'Template-based approach — one size fits all',
-me: '100% custom strategy built specifically for YOUR business',
-major: true,
-agencyIcon: '📋',
-meIcon: '🎯',
-detail: 'I study your business, competitors, customers, and market before writing a single word of strategy.'
-},
-{
-aspect: 'Contract & Commitment',
-agency: '6-12 month lock-in contracts + auto-renewal',
-me: 'Month-to-month. Cancel anytime. No questions asked.',
-major: false,
-agencyIcon: '🔒',
-meIcon: '🔓',
-detail: 'I earn your business every single month. If you are not happy, you walk away.'
-},
-{
-aspect: 'Reporting & Metrics',
-agency: 'Vanity metrics — impressions, clicks, "brand awareness"',
-me: 'Revenue-tied KPIs — ROAS, CAC, LTV, pipeline value',
-major: true,
-agencyIcon: '📊',
-meIcon: '💰',
-detail: 'I only report on metrics that impact your bottom line. No fluff. No BS.'
-},
-{
-aspect: 'Team Access & Resources',
-agency: 'Limited to 1 account manager (the rest are "internal")',
-me: 'Full team of 25+ specialists — designers, writers, developers, analysts',
-major: false,
-agencyIcon: '👤',
-meIcon: '👥',
-detail: 'You get a full agency\'s firepower. But you pay freelancer rates. And you talk to me directly.'
-},
-{
-aspect: 'Pricing Model & Transparency',
-agency: 'High retainers + hidden fees + markup on ad spend',
-me: 'Use the calculator. Fixed project. Hourly. Whatever works for you.',
-major: true,
-agencyIcon: '💸',
-meIcon: '💎',
-detail: 'No hidden fees. No markup on your ad spend. You pay exactly what we agree.'
-},
-{
-aspect: 'Industry Experience Depth',
-agency: 'Generalist — spread thin across 50+ industries',
-me: 'Deep expertise in 25+ industries with proven playbooks',
-major: false,
-agencyIcon: '🌐',
-meIcon: '🎓',
-detail: 'I bring best practices from every industry I have worked with. Your competitors might be from a different sector.'
-},
-{
-aspect: 'AI & Technology Integration',
-agency: 'Basic or outsourced (they charge you extra for "AI services")',
-me: 'Advanced AI — PMax, Advantage+, GPT optimization, AI funnels',
-major: true,
-agencyIcon: '🤖',
-meIcon: '🧠',
-detail: 'I use AI to automate, optimize, and scale. You get cutting-edge tech without the markup.'
-},
-{
-aspect: 'Risk & Accountability',
-agency: 'They get paid even if you get zero results',
-me: 'My reputation is on the line. I only succeed when you succeed.',
-major: true,
-agencyIcon: '⚠️',
-meIcon: '✅',
-detail: 'I am personally invested in your success. My business grows when your business grows.'
-},
-];
-
 // FAQ with detailed answers
 const faqs = [
 { q: "What exactly do you do?", a: "I help businesses grow online. SEO, Google Ads, Social Media, everything. Whatever it takes to get you more customers and more sales. I have 12+ years of experience across 25+ industries and 20+ countries." },
@@ -585,7 +482,7 @@ className="text-center mt-6 md:mt-8"
 </section>
 
 {/* ========== VIDEO SECTION ========== */}
-<section className="pt-8 pb-6 md:pt-16 md:pb-8 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
+<section className="pt-8 pb-6 md:pt-16 md:pb-6 bg-gradient-to-b from-[#080c14] to-[#0a0f1c]">
 
 <div className="max-w-6xl mx-auto px-4">
 <div className="flex flex-col lg:flex-row gap-8 items-center">
@@ -644,8 +541,6 @@ allowFullScreen
 </div>
 </div>
 </section>
-
-{/* Video Modal */}
 
 {/* ========== FUNNEL SECTION ========== */}
 <FunnelDesktop />
@@ -726,14 +621,14 @@ View All 14+ Detailed Services <ArrowRight size={16} />
 </div>
 </section>
 
-{/* ========== GOOGLE SEARCH CONSOLE TOOL SECTION ========== */}
-<section className="py-16 md:py-24 bg-gradient-to-b from-[#040608] to-[#080c14] relative overflow-hidden">
+{/* ========== GOOGLE SEARCH CONSOLE TOOL SECTION (WITH STEPS) ========== */}
+<section className="py-12 md:py-16 bg-gradient-to-b from-[#040608] to-[#080c14] relative overflow-hidden">
   <div className="max-w-7xl mx-auto px-4">
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-center mb-8 md:mb-12"
+      className="text-center mb-8 md:mb-10"
     >
       <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
         <BarChart3 size={14} className="text-[#c9a84c]" />
@@ -752,21 +647,22 @@ View All 14+ Detailed Services <ArrowRight size={16} />
     </motion.div>
 
     <div className="flex flex-col lg:flex-row gap-8 md:gap-12 items-stretch">
-      {/* LEFT: Features with icons and description */}
+      {/* LEFT: Features + How It Works Steps */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
-        className="lg:w-1/2 flex flex-col justify-between"
+        className="lg:w-1/2 flex flex-col gap-6"
       >
-        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 h-full">
+        {/* Features Card */}
+        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8">
           <h3 className="text-xl md:text-2xl font-bold text-white mb-3">What does it do?</h3>
           <p className="text-white/70 text-sm md:text-base leading-relaxed mb-6">
             This tool connects directly to your Google Search Console and transforms raw numbers into clear, actionable reports. 
             No technical skills needed. Use it to discover:
           </p>
           
-          <div className="space-y-4 mb-8">
+          <div className="space-y-3 mb-6">
             {[
               { icon: Search, text: "Which queries bring you the most traffic" },
               { icon: BarChart3, text: "Trends in clicks, impressions, CTR, and position" },
@@ -783,33 +679,43 @@ View All 14+ Detailed Services <ArrowRight size={16} />
               </div>
             ))}
           </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
-            <a
-              href="https://pranjaldigital.com/google-search-console-reporting-tool"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#c9a84c]/30 hover:scale-105 w-full sm:w-auto text-sm md:text-base"
-            >
-              <span>Use the Free Tool →</span>
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </a>
-            <div className="flex items-center gap-1 text-white/40 text-xs">
-              <Shield size={12} />
-              <span>Free • Always free • No sign‑up required</span>
-            </div>
+        </div>
+
+        {/* How It Works Steps */}
+        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8">
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <Zap size={20} className="text-[#c9a84c]" />
+            How It Works
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { step: 1, title: "Connect", desc: "Authorize the tool to access your Google Search Console data (secure & read-only)." },
+              { step: 2, title: "Analyze", desc: "View automatic reports on queries, pages, clicks, impressions, and CTR trends." },
+              { step: 3, title: "Optimize", desc: "Spot underperforming pages and ranking opportunities to boost traffic." },
+              { step: 4, title: "Export", desc: "Download reports as PDF/CSV for your team or clients." },
+            ].map((item) => (
+              <div key={item.step} className="flex gap-3 items-start">
+                <div className="w-8 h-8 rounded-full bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0 text-[#c9a84c] font-bold">
+                  {item.step}
+                </div>
+                <div>
+                  <div className="text-white font-semibold text-base">{item.title}</div>
+                  <div className="text-white/60 text-xs md:text-sm">{item.desc}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </motion.div>
 
-      {/* RIGHT: YouTube Video */}
+      {/* RIGHT: YouTube Video + CTA */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
-        className="lg:w-1/2"
+        className="lg:w-1/2 flex flex-col gap-6"
       >
-        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6 h-full">
+        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6">
           <div className="aspect-video w-full rounded-xl overflow-hidden shadow-2xl shadow-black/30">
             <iframe
               width="560"
@@ -827,6 +733,24 @@ View All 14+ Detailed Services <ArrowRight size={16} />
             Watch demo: Analyze your GSC data in minutes
           </p>
         </div>
+
+        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 text-center">
+          <div className="flex flex-col items-center gap-4">
+            <a
+              href="https://pranjaldigital.com/google-search-console-reporting-tool"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#c9a84c]/30 hover:scale-105 w-full sm:w-auto text-base md:text-lg"
+            >
+              <span>Use the Free Tool →</span>
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            </a>
+            <div className="flex items-center gap-2 text-white/40 text-sm">
+              <Shield size={14} />
+              <span>Free • Always free • No sign‑up required</span>
+            </div>
+          </div>
+        </div>
       </motion.div>
     </div>
     
@@ -834,7 +758,7 @@ View All 14+ Detailed Services <ArrowRight size={16} />
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-center mt-6 md:mt-8"
+      className="text-center mt-8"
     >
       <p className="text-white/40 text-xs md:text-sm px-4">
         ✅ I built this tool for you – use it as much as you want. Forever free.
@@ -962,17 +886,14 @@ Pranjal Digital brings proven experience across 25+ industries, delivering resul
 </section>
 
 {/* ========== ENHANCED 3D COMPARISON TABLE ========== */}
-{/* ========== PREMIUM COMPARISON TABLE (CLEAN + HIGH-END) ========== */}
 <section className="py-16 md:py-20 bg-[#080c14] relative overflow-hidden">
 
-{/* Background Glow */}
 <div className="absolute inset-0">
 <div className="absolute top-1/2 left-1/2 w-[800px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-[#c9a84c]/10 blur-[120px]" />
 </div>
 
 <div className="relative max-w-6xl mx-auto px-4">
 
-{/* Heading */}
 <div className="text-center mb-8 md:mb-10">
 <h2 className="text-2xl md:text-5xl font-bold text-white mb-3">
 Big Agency vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Pranjal Digital</span>
@@ -982,10 +903,8 @@ Clear differences. No fluff. Just what impacts your growth.
 </p>
 </div>
 
-{/* Table */}
 <div className="rounded-2xl border border-white/10 overflow-hidden backdrop-blur-xl">
 
-{/* Header */}
 <div className="grid grid-cols-3 bg-[#0a0f1c] text-xs md:text-sm font-semibold">
 <div className="p-3 md:p-4 text-white/40">Factor</div>
 <div className="p-3 md:p-4 text-center text-white/50 border-l border-white/10">
@@ -996,7 +915,6 @@ Pranjal Digital
 </div>
 </div>
 
-{/* Rows */}
 {[
 {
 title: "Experience",
@@ -1045,18 +963,15 @@ key={i}
 className="grid grid-cols-3 text-xs md:text-sm border-t border-white/10 hover:bg-white/5 transition"
 >
 
-{/* Factor */}
 <div className="p-3 md:p-4 text-white font-medium">
 {row.title}
 </div>
 
-{/* Agency */}
 <div className="p-3 md:p-4 text-center text-white/50 border-l border-white/10 flex items-center justify-center gap-1 md:gap-2">
 <span className="text-red-400">✕</span>
 {row.agency}
 </div>
 
-{/* Me */}
 <div className="p-3 md:p-4 text-center border-l border-[#c9a84c]/20 bg-gradient-to-r from-[#c9a84c]/5 to-transparent flex items-center justify-center gap-1 md:gap-2">
 <span className="text-[#c9a84c]">✓</span>
 <span className="text-white/80 font-medium">{row.me}</span>
@@ -1069,6 +984,7 @@ className="grid grid-cols-3 text-xs md:text-sm border-t border-white/10 hover:bg
 
 </div>
 </section>
+
 {/* ========== FAQ SECTION ========== */}
 <section className="py-16 md:py-24 bg-gradient-to-b from-[#040608] to-[#080c14]">
 <div className="max-w-4xl mx-auto px-4">
@@ -1123,11 +1039,7 @@ Digital Marketing ROI?
 Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on how to grow your business.
 </p>
 
-
-
-  
 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8">
-
   <a
     href={CALENDLY}
     target="_blank"
@@ -1137,21 +1049,13 @@ Let's hop on a 30-min call. No pressure. No sales pitch. Just honest advice on h
     Book Free Strategy Call
     <ArrowRight size={16} />
   </a>
-
   <Link href="/contact">
     <a className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-xl hover:border-[#c9a84c]/50 hover:text-[#c9a84c] transition-colors w-full sm:w-auto text-sm md:text-base">
       Send a Message
     </a>
   </Link>
-
 </div>
 
-
-
-  
-
-
-  
 <p className="text-white/30 text-xs md:text-sm mt-6">
 ⏰ 30-min free consultation • No obligation • Real advice • Use calculator for pricing
 </p>
