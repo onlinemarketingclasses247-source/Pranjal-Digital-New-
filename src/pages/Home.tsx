@@ -13,7 +13,7 @@ Star, Zap, Shield, Clock, PhoneCall, X, Check, Award, Briefcase,
 Sparkles, Heart, Coffee, Smile, ThumbsUp, Rocket as RocketIcon,
 Layers, Palette, Grid, Circle, Triangle, Hexagon, Instagram, Facebook,
 Linkedin, Youtube, Twitter, PenTool, Megaphone, LineChart, PieChart,
-Settings, Map, Navigation, Compass, Activity, Eye, Mic, Bot, Brain,
+Settings, Map, Navigation, Compass, Activity, Eye, FileText, Mic, Bot, Brain,
 Zap as ZapIcon, TrendingUp as TrendingIcon, Award as AwardIcon,
 MapPin, Navigation2, Compass as CompassIcon,
 Package, Scale, Gamepad, Car, LucideIcon
@@ -726,7 +726,7 @@ View All 14+ Detailed Services <ArrowRight size={16} />
 </div>
 </section>
 
-{/* ========== GOOGLE SEARCH CONSOLE TOOL SECTION (NEW - ADDED IN THE MIDDLE) ========== */}
+{/* ========== GOOGLE SEARCH CONSOLE TOOL SECTION ========== */}
 <section className="py-16 md:py-24 bg-gradient-to-b from-[#040608] to-[#080c14] relative overflow-hidden">
   <div className="max-w-7xl mx-auto px-4">
     <motion.div
@@ -737,16 +737,17 @@ View All 14+ Detailed Services <ArrowRight size={16} />
     >
       <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
         <BarChart3 size={14} className="text-[#c9a84c]" />
-        <span className="text-[#c9a84c] text-xs font-medium">FREE ANALYTICS TOOL</span>
+        <span className="text-[#c9a84c] text-xs font-medium">TOOL I BUILT – ALWAYS FREE</span>
       </div>
       <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-        Google Search Console{' '}
+        Check Out My Search Console Tool<br />
         <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">
-          Reporting Tool
+          Analyze Your Data for Better Decisions
         </span>
       </h2>
       <p className="text-white/60 text-sm md:text-lg max-w-3xl mx-auto px-4">
-        Analyze your Google Search Console data like never before. Get actionable insights, track performance, and uncover hidden opportunities — all in one place.
+        I created this tool to help you understand your Google Search Console data without complexity. 
+        It's free, no catch, and always will be free.
       </p>
     </motion.div>
 
@@ -761,21 +762,22 @@ View All 14+ Detailed Services <ArrowRight size={16} />
         <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 h-full">
           <h3 className="text-xl md:text-2xl font-bold text-white mb-3">What does it do?</h3>
           <p className="text-white/70 text-sm md:text-base leading-relaxed mb-6">
-            This tool connects directly to your Google Search Console data and transforms raw numbers into beautiful, easy-to-understand reports. No technical skills needed — just connect and discover:
+            This tool connects directly to your Google Search Console and transforms raw numbers into clear, actionable reports. 
+            No technical skills needed. Use it to discover:
           </p>
           
           <div className="space-y-4 mb-8">
             {[
-              { icon: Search, text: "Top-performing queries driving traffic to your site", color: "text-[#c9a84c]" },
-              { icon: BarChart3, text: "Click, impression, CTR, and position trends over time", color: "text-[#c9a84c]" },
-              { icon: Eye, text: "Which pages get the most visibility from Google", color: "text-[#c9a84c]" },
-              { icon: TrendingUp, text: "Identify quick-win opportunities to boost rankings", color: "text-[#c9a84c]" },
-              { icon: Activity, text: "Compare performance across devices and countries", color: "text-[#c9a84c]" },
-              { icon: FileText, text: "Export-ready reports for clients or internal use", color: "text-[#c9a84c]" },
+              { icon: Search, text: "Which queries bring you the most traffic" },
+              { icon: BarChart3, text: "Trends in clicks, impressions, CTR, and position" },
+              { icon: Eye, text: "Your best‑performing pages in Google search" },
+              { icon: TrendingUp, text: "Quick opportunities to improve rankings" },
+              { icon: Activity, text: "Compare performance across devices / countries" },
+              { icon: FileText, text: "Export‑ready reports for sharing or analysis" },
             ].map((feature, idx) => (
               <div key={idx} className="flex items-start gap-3 group">
                 <div className="mt-0.5 w-5 h-5 rounded-full bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
-                  <feature.icon size={12} className={feature.color} />
+                  <feature.icon size={12} className="text-[#c9a84c]" />
                 </div>
                 <span className="text-white/80 text-sm md:text-base">{feature.text}</span>
               </div>
@@ -789,12 +791,12 @@ View All 14+ Detailed Services <ArrowRight size={16} />
               rel="noopener noreferrer"
               className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#c9a84c]/30 hover:scale-105 w-full sm:w-auto text-sm md:text-base"
             >
-              <span>Access the Tool →</span>
+              <span>Use the Free Tool →</span>
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
             <div className="flex items-center gap-1 text-white/40 text-xs">
               <Shield size={12} />
-              <span>Free • No credit card</span>
+              <span>Free • Always free • No sign‑up required</span>
             </div>
           </div>
         </div>
@@ -835,7 +837,7 @@ View All 14+ Detailed Services <ArrowRight size={16} />
       className="text-center mt-6 md:mt-8"
     >
       <p className="text-white/40 text-xs md:text-sm px-4">
-        🔍 Check out my Search Console tool so that you can analyze your search console data for free — what it does? Simple reports, actionable insights.
+        ✅ I built this tool for you – use it as much as you want. Forever free.
       </p>
     </motion.div>
   </div>
