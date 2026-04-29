@@ -726,6 +726,121 @@ View All 14+ Detailed Services <ArrowRight size={16} />
 </div>
 </section>
 
+{/* ========== GOOGLE SEARCH CONSOLE TOOL SECTION (NEW - ADDED IN THE MIDDLE) ========== */}
+<section className="py-16 md:py-24 bg-gradient-to-b from-[#040608] to-[#080c14] relative overflow-hidden">
+  <div className="max-w-7xl mx-auto px-4">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="text-center mb-8 md:mb-12"
+    >
+      <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-full px-4 py-1.5 mb-4">
+        <BarChart3 size={14} className="text-[#c9a84c]" />
+        <span className="text-[#c9a84c] text-xs font-medium">FREE ANALYTICS TOOL</span>
+      </div>
+      <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+        Google Search Console{' '}
+        <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">
+          Reporting Tool
+        </span>
+      </h2>
+      <p className="text-white/60 text-sm md:text-lg max-w-3xl mx-auto px-4">
+        Analyze your Google Search Console data like never before. Get actionable insights, track performance, and uncover hidden opportunities — all in one place.
+      </p>
+    </motion.div>
+
+    <div className="flex flex-col lg:flex-row gap-8 md:gap-12 items-stretch">
+      {/* LEFT: Features with icons and description */}
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        className="lg:w-1/2 flex flex-col justify-between"
+      >
+        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 h-full">
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-3">What does it do?</h3>
+          <p className="text-white/70 text-sm md:text-base leading-relaxed mb-6">
+            This tool connects directly to your Google Search Console data and transforms raw numbers into beautiful, easy-to-understand reports. No technical skills needed — just connect and discover:
+          </p>
+          
+          <div className="space-y-4 mb-8">
+            {[
+              { icon: Search, text: "Top-performing queries driving traffic to your site", color: "text-[#c9a84c]" },
+              { icon: BarChart3, text: "Click, impression, CTR, and position trends over time", color: "text-[#c9a84c]" },
+              { icon: Eye, text: "Which pages get the most visibility from Google", color: "text-[#c9a84c]" },
+              { icon: TrendingUp, text: "Identify quick-win opportunities to boost rankings", color: "text-[#c9a84c]" },
+              { icon: Activity, text: "Compare performance across devices and countries", color: "text-[#c9a84c]" },
+              { icon: FileText, text: "Export-ready reports for clients or internal use", color: "text-[#c9a84c]" },
+            ].map((feature, idx) => (
+              <div key={idx} className="flex items-start gap-3 group">
+                <div className="mt-0.5 w-5 h-5 rounded-full bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
+                  <feature.icon size={12} className={feature.color} />
+                </div>
+                <span className="text-white/80 text-sm md:text-base">{feature.text}</span>
+              </div>
+            ))}
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
+            <a
+              href="https://pranjaldigital.com/google-search-console-reporting-tool"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#080c14] font-bold px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#c9a84c]/30 hover:scale-105 w-full sm:w-auto text-sm md:text-base"
+            >
+              <span>Access the Tool →</span>
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </a>
+            <div className="flex items-center gap-1 text-white/40 text-xs">
+              <Shield size={12} />
+              <span>Free • No credit card</span>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* RIGHT: YouTube Video */}
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        className="lg:w-1/2"
+      >
+        <div className="bg-[#0a0f1c]/60 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6 h-full">
+          <div className="aspect-video w-full rounded-xl overflow-hidden shadow-2xl shadow-black/30">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/Tbd_q_-dTUk?si=5wts6V7gkgpuIfD4"
+              title="Google Search Console Reporting Tool Demo"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+          <p className="text-white/50 text-xs md:text-sm text-center mt-4">
+            Watch demo: Analyze your GSC data in minutes
+          </p>
+        </div>
+      </motion.div>
+    </div>
+    
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="text-center mt-6 md:mt-8"
+    >
+      <p className="text-white/40 text-xs md:text-sm px-4">
+        🔍 Check out my Search Console tool so that you can analyze your search console data for free — what it does? Simple reports, actionable insights.
+      </p>
+    </motion.div>
+  </div>
+</section>
+
 {/* ========== INDUSTRIES SECTION - 25+ INDUSTRIES ========== */}
 <section className="py-16 md:py-24 bg-[#040608]">
 <div className="max-w-7xl mx-auto px-4">
