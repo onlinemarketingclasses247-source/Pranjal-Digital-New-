@@ -214,7 +214,7 @@ return (
       <li className="flex items-start gap-2">
         <MapPin size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
         <span className="text-white/50 text-xs lg:text-sm leading-relaxed">
-          1st floor, H.no 5, Rodali path, Janakpur, Kahilipara, Guwahati, Assam 781019, India
+          Chandigarh, India
         </span>
       </li>
       {/* Phone - icon only, space reserved for later addition */}
