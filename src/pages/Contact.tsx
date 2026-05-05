@@ -1118,7 +1118,7 @@ export default function Contact() {
                   <div>
                     <p className="text-white/70 text-sm font-medium mb-1">Visit Us</p>
                     <p className="text-white/50 text-xs sm:text-sm leading-relaxed">
-                      1st floor, H.no 5, Rodali path, Janakpur, Kahilipara, Guwahati, Assam 781019, India
+                     Chandigarh, India
                     </p>
                   </div>
                 </div>
