@@ -1,315 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
-  ArrowRight,
-  CheckCircle2,
-  TrendingUp,
-  Search,
-  Target,
-  MapPin,
-  Smartphone,
-  MessageSquare,
-  Calendar,
-  PhoneCall,
-  Shield,
-  DollarSign,
-  ChevronRight,
-  Star,
-  Zap,
-  BarChart3,
-  Users,
-  Award,
-  Facebook,
-  Instagram,
-  Layers,
-  Megaphone,
-  Activity,
-  Clock,
-  Rocket,
-  BadgeCheck,
-  Scale,
-  Coffee,
-  Play,
-  Briefcase,
-  Building2,
-  Cpu,
-  Mail,
-  Linkedin,
-  Twitter,
-  Youtube,
-  PenTool,
-  LineChart,
-  PieChart,
-  Settings,
-  FileText,
-  Mic,
-  Gem,
-  Medal,
-  Trophy,
-  Flag,
-  Handshake,
-  ClipboardList,
-  CheckSquare,
-  Code,
-  Database,
-  Cloud,
-  Wifi,
-  Bluetooth,
-  Battery,
-  Plug,
-  Headphones,
-  Speaker,
-  Music,
-  Radio,
-  Tv,
-  Monitor,
-  Laptop,
-  Tablet,
-  Watch,
-  Camera,
-  Video,
-  Image,
-  Layout,
-  Grid,
-  List,
-  Menu,
-  X,
-  Plus,
-  Minus,
-  Trash2,
-  Edit2,
-  Copy,
-  Save,
-  Folder,
-  File,
-  Printer,
-  EyeOff,
-  Eye,
-  Lock,
-  Unlock,
-  Key,
-  User,
-  UserPlus,
-  UserMinus,
-  UsersIcon,
-  UserCheck,
-  UserX,
-  Bell,
-  BellOff,
-  AlertCircle,
-  AlertTriangle,
-  Info,
-  HelpCircle,
-  XCircle,
-  CheckCircleIcon,
-  PlusCircle,
-  MinusCircle,
-  Circle,
-  Square,
-  CheckSquareIcon,
-  XSquare,
-  PlayIcon,
-  Pause,
-  SkipBack,
-  SkipForward,
-  Volume1,
-  Volume2,
-  VolumeX,
-  MicOff,
-  RadioIcon,
-  TvIcon,
-  Airplay,
-  Cast,
-  WifiIcon,
-  BluetoothIcon,
-  BatteryIcon,
-  BatteryCharging,
-  PlugIcon,
-  ZapIcon,
-  Flame,
-  Snowflake,
-  Sun,
-  Moon,
-  CloudRain,
-  CloudSnow,
-  CloudLightning,
-  CloudSun,
-  CloudMoon,
-  Wind,
-  Droplet,
-  Thermometer,
-  CompassIcon,
-  NavigationIcon,
-  MapIcon,
-  Anchor,
-  Ship,
-  Plane,
-  Car,
-  Train,
-  Bus,
-  Bike,
-  Run,
-  Walk,
-  Navigation2,
-  CompassIcon2,
-  MapPinIcon,
-  Locate,
-  Crosshair,
-  TargetIcon,
-  ActivityIcon,
-  Pulse,
-  HeartPulse,
-  Stethoscope,
-  Syringe,
-  Pill,
-  Bandage,
-  Ambulance,
-  Hospital,
-  Microscope,
-  Dna,
-  Flask,
-  Beaker,
-  Atom,
-  Radioactive,
-  Biohazard,
-  Leaf,
-  Tree,
-  Flower,
-  Sprout,
-  AppleIcon,
-  CoffeeIcon,
-  Utensils,
-  Cake,
-  Pizza,
-  Burger,
-  Fish,
-  Egg,
-  Milk,
-  Wheat,
-  Carrot,
-  Broccoli,
-  Pepper,
-  Salt,
-  Candy,
-  IceCream,
-  Beer,
-  Wine,
-  Glass,
-  Mug,
-  Cup,
-  Tea,
-  Soda,
-  Water,
-  DropletsIcon,
-  Waves,
-  ZapIcon2,
-  FlameIcon,
-  SnowflakeIcon,
-  WindIcon,
-  CloudIcon,
-  Umbrella,
-  Sunglasses,
-  Hat,
-  Shirt,
-  Shoe,
-  Bag,
-  Wallet,
-  WatchIcon,
-  Glasses,
-  Ring,
-  Diamond,
-  GiftIcon,
-  PackageIcon,
-  Box,
-  Cube,
-  Sphere,
-  Cylinder,
-  Pyramid,
-  Cone,
-  Hexagon,
-  Pentagon,
-  Octagon,
-  StarIcon,
-  HeartIcon,
-  ShieldIcon,
-  AwardIcon,
-  TrophyIcon,
-  MedalIcon,
-  RibbonIcon,
-  FlagIcon,
-  CheckIcon,
-  XIcon,
-  PlusIcon,
-  MinusIcon,
-  Divide,
-  Equal,
-  Percent,
-  Hash,
-  AtSign,
-  DollarSignIcon,
-  Euro,
-  Pound,
-  Yen,
-  Bitcoin,
-  CreditCard,
-  WalletIcon2,
-  Banknote,
-  PiggyBank,
-  Coins,
-  Receipt,
-  FileTextIcon,
-  FileCheckIcon,
-  FileXIcon,
-  FilePlusIcon,
-  FileMinusIcon,
-  FolderIcon,
-  FolderOpen,
-  FolderPlus,
-  FolderMinus,
-  FolderTree,
-  FolderSearch,
-  FileSearchIcon,
-  SearchIcon,
-  FilterIcon,
-  SlidersIcon,
-  BarChartIcon,
-  LineChartIcon,
-  PieChartIcon,
-  AreaChart,
-  ScatterChart,
-  BubbleChart,
-  Radar,
-  Treemap,
-  Histogram,
-  BoxPlot,
-  Candlestick,
-  GaugeIcon,
-  Tachometer,
-  Speedometer,
-  GaugeCircle,
-  ActivityIcon2,
-  HeartMonitor,
-  BrainIcon,
-  CpuIcon,
-  HardDrive,
-  Server,
-  DatabaseIcon,
-  CloudIcon2,
-  CloudOff,
-  CloudUpload,
-  CloudDownload,
+  ArrowRight, CheckCircle2, TrendingUp, Search, Target, MapPin,
+  Smartphone, MessageSquare, Calendar, PhoneCall, Shield, DollarSign,
+  ChevronRight, Star, Zap, BarChart3, Users, Globe, Award,
+  Facebook, Instagram, Layers, Megaphone, Eye, Activity,
+  Clock, Rocket, Sparkles, ThumbsUp, Brain, Bot, Gauge,
+  Crown, BadgeCheck, Compass, Navigation, Filter, Sliders,
+  Scale, HeartHandshake, Coffee, Play, Briefcase, Building2, Cpu, Mail,
+  Linkedin, Youtube, PenTool, LineChart, PieChart, Settings, FileText, Mic,
+  Gem, Medal, Trophy, Flag, Handshake, ClipboardList, CheckSquare
 } from 'lucide-react';
-
-import FunnelDesktop from '../components/FunnelDesktop';
-import FunnelMobile from '../components/FunnelMobile';
-import StatsDesktop from '../components/StatsDesktop';
-import StatsMobile from '../components/StatsMobile';
-import CostCalculator from '../components/CostCalculator';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
-// ==================== TYPES ====================
+// ----- Types -------------------------------------------------
 interface Campaign {
   name: string;
   type: string;
@@ -336,91 +42,64 @@ interface Plan {
   tag: string | null;
 }
 
-// ==================== DATA ====================
+// ----- Data -------------------------------------------------
 const metaCampaigns: Campaign[] = [
-  { name: 'Summer Smile Makeover', type: 'Lead Generation', cpl: '$10.28', ctr: '5.2%', roas: '4.2x', leads: '187', impressions: '245K', emoji: '✨' },
-  { name: 'Emergency Dentist – Dallas', type: 'Calls & Forms', cpl: '$12.45', ctr: '6.8%', roas: '3.8x', leads: '96', impressions: '128K', emoji: '🚨' },
-  { name: 'Clear Aligners Offer', type: 'Booking Campaign', cpl: '$8.97', ctr: '7.1%', roas: '5.1x', leads: '312', impressions: '356K', emoji: '💎' },
+  { name: "Summer Smile Makeover", type: "Lead Generation", cpl: "$10.28", ctr: "5.2%", roas: "4.2x", leads: "187", impressions: "245K", emoji: "✨" },
+  { name: "Emergency Dentist – Dallas", type: "Calls & Forms", cpl: "$12.45", ctr: "6.8%", roas: "3.8x", leads: "96", impressions: "128K", emoji: "🚨" },
+  { name: "Clear Aligners Offer", type: "Booking Campaign", cpl: "$8.97", ctr: "7.1%", roas: "5.1x", leads: "312", impressions: "356K", emoji: "💎" },
 ];
 
 const rankings: Ranking[] = [
-  { term: 'dentist Dallas TX', before: 'Out of top 20', after: 'Top 6–10', hot: true },
-  { term: 'clear aligners Dallas', before: 'Not ranked', after: 'Top 8–12', hot: true },
-  { term: 'veneers Dallas', before: 'Not ranked', after: 'Top 10–15', hot: false },
-  { term: 'family dentist Dallas', before: 'Out of maps pack', after: 'Maps pack visibility', hot: true },
+  { term: "dentist Dallas TX", before: "Out of top 20", after: "Top 6–10", hot: true },
+  { term: "clear aligners Dallas", before: "Not ranked", after: "Top 8–12", hot: true },
+  { term: "veneers Dallas", before: "Not ranked", after: "Top 10–15", hot: false },
+  { term: "family dentist Dallas", before: "Out of maps pack", after: "Maps pack visibility", hot: true },
 ];
 
 const plans: Plan[] = [
   {
-    name: 'Essentials',
+    name: "Essentials",
     price: 499,
-    description: 'Perfect for new practices wanting to dominate local social media.',
+    description: "Perfect for new practices wanting to dominate local social media.",
     features: [
-      'Meta Ads (Facebook + Instagram) – full management',
-      'Landing page design & optimization',
-      'Creative design (static & carousel ads)',
-      'Ad copy & content creation',
-      'Monthly performance reporting',
+      "Meta Ads (Facebook + Instagram) – full management",
+      "Landing page design & optimization",
+      "Creative design (static & carousel ads)",
+      "Ad copy & content creation",
+      "Monthly performance reporting"
     ],
-    tag: null,
+    tag: null
   },
   {
-    name: 'Growth',
+    name: "Growth",
     price: 999,
-    description: 'Ideal for practices ready to scale with multi-channel campaigns.',
+    description: "Ideal for practices ready to scale with multi‑channel campaigns.",
     features: [
-      'Everything in Essentials',
-      'Google Ads (Search + Call Ads) management',
-      'Video ad creation (15-30 sec)',
-      'Advanced graphics & motion design',
-      'A/B testing & creative optimization',
+      "Everything in Essentials",
+      "Google Ads (Search + Call Ads) management",
+      "Video ad creation (15‑30 sec)",
+      "Advanced graphics & motion design",
+      "A/B testing & creative optimization"
     ],
-    tag: 'MOST POPULAR',
+    tag: "MOST POPULAR"
   },
   {
-    name: 'Dominator',
+    name: "Dominator",
     price: 1999,
-    description: 'Full‑funnel domination – from awareness to long‑term organic growth.',
+    description: "Full‑funnel domination – from awareness to long‑term organic growth.",
     features: [
-      'Everything in Growth',
-      'SEO + AEO + GEO (full strategy & execution)',
-      'Complete website management & CRO',
-      'Technical SEO & ongoing design changes',
-      'Dedicated account strategist',
+      "Everything in Growth",
+      "SEO + AEO + GEO (full strategy & execution)",
+      "Complete website management & CRO",
+      "Technical SEO & ongoing design changes",
+      "Dedicated account strategist"
     ],
-    tag: 'BEST VALUE',
+    tag: "BEST VALUE"
   },
 ];
 
-const whyChooseUs = [
-  { icon: Shield, title: 'Flat $499/month Starting', desc: 'Transparent pricing – no hidden fees or surprise bills. All services clearly defined per tier.' },
-  { icon: Award, title: '12+ Years Dental Focus', desc: 'We only work with dental practices. We know patient psychology, seasonality, and compliance.' },
-  { icon: Users, title: 'Proven Results', desc: 'Royal Lane Dental grew from 20 to 90+ calls/month and 350% more organic traffic in 2026.' },
-  { icon: Rocket, title: 'First Month Guarantee', desc: 'See measurable results in 30 days or we refund 100% of management fees.' },
-];
-
-const processSteps = [
-  { num: '01', title: 'Discovery & Audit', desc: 'We analyze your current marketing, website, GBP, and competitors to create a custom plan.', icon: Search },
-  { num: '02', title: 'Strategy & Setup', desc: 'We build your ad accounts, design creatives, optimize GBP, and install tracking.', icon: Settings },
-  { num: '03', title: 'Launch & Monitor', desc: 'Campaigns go live. We monitor performance daily, adjust bids, and test new angles.', icon: Activity },
-  { num: '04', title: 'Scale & Optimize', desc: 'We double down on winning channels, add new services, and grow your patient base.', icon: TrendingUp },
-];
-
-const dentalClients = [
-  { state: 'Texas', city: 'Dallas', lat: 32.7767, lng: -96.797, clients: 12, name: 'Royal Lane Dental Center' },
-  { state: 'California', city: 'Los Angeles', lat: 34.0522, lng: -118.2437, clients: 8, name: 'LA Smile Studio' },
-  { state: 'New York', city: 'Manhattan', lat: 40.7128, lng: -74.006, clients: 7, name: 'Fifth Avenue Dental' },
-  { state: 'Florida', city: 'Miami', lat: 25.7617, lng: -80.1918, clients: 6, name: 'Sunshine Dental Group' },
-  { state: 'Illinois', city: 'Chicago', lat: 41.8781, lng: -87.6298, clients: 5, name: 'Windy City Dentistry' },
-  { state: 'Georgia', city: 'Atlanta', lat: 33.749, lng: -84.388, clients: 4, name: 'Peachtree Dental Care' },
-  { state: 'Washington', city: 'Seattle', lat: 47.6062, lng: -122.3321, clients: 4, name: 'Emerald City Dental' },
-  { state: 'Colorado', city: 'Denver', lat: 39.7392, lng: -104.9903, clients: 3, name: 'Mile High Dentistry' },
-  { state: 'Arizona', city: 'Phoenix', lat: 33.4484, lng: -112.074, clients: 3, name: 'Desert Smiles' },
-  { state: 'Massachusetts', city: 'Boston', lat: 42.3601, lng: -71.0589, clients: 4, name: 'Boston Family Dental' },
-];
-
-// ==================== HOOKS ====================
-function useCountUp(end: number, duration: number = 2000, trigger: boolean = false) {
+// ----- Hooks -------------------------------------------------
+function useCountUp(end: number, duration = 2000, trigger = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!trigger) return;
@@ -439,10 +118,10 @@ function useCountUp(end: number, duration: number = 2000, trigger: boolean = fal
   return count;
 }
 
-// ==================== COMPONENTS ====================
+// ----- Components -------------------------------------------
 const Particles: React.FC = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {[...Array(25)].map((_, i) => (
+    {[...Array(20)].map((_, i) => (
       <motion.div
         key={i}
         className="absolute rounded-full"
@@ -453,76 +132,75 @@ const Particles: React.FC = () => (
           top: `${Math.random() * 100}%`,
           background: `rgba(201,168,76,${Math.random() * 0.4 + 0.1})`,
         }}
-        animate={{ y: [0, -40, 0], opacity: [0.2, 0.8, 0.2] }}
-        transition={{ duration: Math.random() * 5 + 3, repeat: Infinity, delay: Math.random() * 4 }}
+        animate={{ y: [0, -30, 0], opacity: [0.2, 0.8, 0.2] }}
+        transition={{ duration: Math.random() * 4 + 3, repeat: Infinity, delay: Math.random() * 4 }}
       />
     ))}
   </div>
 );
 
-const Orb: React.FC<{ style?: React.CSSProperties; className?: string }> = ({ style, className = '' }) => (
+const Orb: React.FC<{ style?: React.CSSProperties; className?: string }> = ({ style, className = "" }) => (
   <motion.div
-    animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.35, 0.15] }}
-    transition={{ duration: 10, repeat: Infinity }}
-    className={`absolute rounded-full blur-[120px] pointer-events-none ${className}`}
+    animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+    transition={{ duration: 8, repeat: Infinity }}
+    className={`absolute rounded-full blur-[100px] pointer-events-none ${className}`}
     style={style}
   />
 );
 
-const USMap: React.FC = () => {
-  const [hoveredClient, setHoveredClient] = useState<typeof dentalClients[0] | null>(null);
+// Dental‑specific funnel section (replaces generic FunnelDesktop/FunnelMobile)
+const DentalFunnel: React.FC = () => {
+  const funnelSteps = [
+    { stage: "TOFU", title: "Awareness", icon: Eye, description: "Facebook & Instagram ads, educational reels, local awareness campaigns", color: "#c9a84c" },
+    { stage: "MOFU", title: "Consideration", icon: Search, description: "Retargeting ads, Google search ads, case studies, before/after galleries", color: "#f0d282" },
+    { stage: "BOFU", title: "Conversion", icon: Target, description: "Special offers, appointment booking, call extensions, GBP actions", color: "#c9a84c" },
+  ];
   return (
-    <div className="relative bg-[#0a0f1c] rounded-2xl border border-white/10 p-6 overflow-hidden">
-      <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-        <MapPin size={18} className="text-[#c9a84c]" />
-        Our Dental Clients Across the USA
-      </h3>
-      {/* Map container with solid background and overlay image */}
-      <div className="relative w-full aspect-[1.4/1] bg-[#1a202c] rounded-lg overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{ backgroundImage: 'url(https://upload.wikimedia.org/wikipedia/commons/1/1a/Blank_US_Map_%28states%29.svg)' }}
-        />
-        {dentalClients.map((client, idx) => (
+    <div className="max-w-7xl mx-auto px-4 py-16">
+      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+        <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
+          <Layers size={14} className="text-[#c9a84c]" />
+          <span className="text-[#c9a84c] text-xs font-bold tracking-wider">DENTAL MARKETING FUNNEL</span>
+        </div>
+        <h2 className="text-3xl md:text-5xl font-extrabold">How We Turn <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Strangers into Patients</span></h2>
+        <p className="text-white/50 text-lg max-w-2xl mx-auto mt-4">A proven three‑stage funnel designed specifically for dental practices.</p>
+      </motion.div>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        {funnelSteps.map((step, idx) => (
           <motion.div
-            key={idx}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: idx * 0.05, type: 'spring' }}
-            className="absolute w-4 h-4 cursor-pointer group"
-            style={{
-              left: `${((client.lng + 125) / 70) * 100}%`,
-              top: `${(50 - client.lat / 2.7)}%`,
-              transform: 'translate(-50%, -50%)',
-            }}
-            onMouseEnter={() => setHoveredClient(client)}
-            onMouseLeave={() => setHoveredClient(null)}
+            key={step.stage}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 }}
+            whileHover={{ y: -8 }}
+            className="relative bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center group overflow-hidden"
           >
-            <div className="relative">
-              <div className="w-3 h-3 bg-[#c9a84c] rounded-full animate-pulse shadow-lg shadow-[#c9a84c]/50" />
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black/80 backdrop-blur-sm rounded text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                {client.name} ({client.clients}+ practices)
-              </div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#c9a84c] to-transparent" />
+            <div className="inline-block px-3 py-1 rounded-full bg-[#c9a84c]/20 text-[#c9a84c] text-xs font-bold mb-4">{step.stage}</div>
+            <div className="w-16 h-16 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+              <step.icon size={28} style={{ color: step.color }} />
+            </div>
+            <h3 className="text-white font-bold text-xl mb-2">{step.title}</h3>
+            <p className="text-white/60 text-sm leading-relaxed">{step.description}</p>
+            <div className="mt-5 flex justify-center gap-1">
+              {[...Array(3)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/40" />)}
             </div>
           </motion.div>
         ))}
       </div>
-      {hoveredClient && (
-        <div className="mt-4 text-center text-white/70 text-xs">
-          {hoveredClient.state}: {hoveredClient.name} – {hoveredClient.clients}+ locations
-        </div>
-      )}
-      <div className="mt-4 flex flex-wrap justify-center gap-2">
-        {dentalClients.map((c) => (
-          <span key={c.state} className="text-[10px] bg-white/5 px-2 py-1 rounded-full text-white/60">
-            {c.state}
-          </span>
-        ))}
+
+      {/* connecting arrows (desktop) */}
+      <div className="hidden md:flex justify-center items-center gap-4 mt-8 text-white/20">
+        <ArrowRight size={32} className="animate-pulse" />
+        <ArrowRight size={32} className="animate-pulse delay-100" />
       </div>
     </div>
   );
 };
 
+// Campaign Card
 const CampaignCard: React.FC<{ campaign: Campaign; idx: number }> = ({ campaign, idx }) => (
   <motion.div
     initial={{ opacity: 0, y: 40 }}
@@ -557,15 +235,12 @@ const CampaignCard: React.FC<{ campaign: Campaign; idx: number }> = ({ campaign,
       </div>
       <div className="grid grid-cols-2 gap-2 mb-4">
         {[
-          { label: 'Cost Per Lead', value: campaign.cpl, highlight: true },
-          { label: 'CTR', value: campaign.ctr, highlight: false },
-          { label: 'ROAS', value: campaign.roas, highlight: false },
-          { label: 'Total Leads', value: campaign.leads, highlight: false },
+          { label: "Cost Per Lead", value: campaign.cpl, highlight: true },
+          { label: "CTR", value: campaign.ctr, highlight: false },
+          { label: "ROAS", value: campaign.roas, highlight: false },
+          { label: "Total Leads", value: campaign.leads, highlight: false },
         ].map((m, i) => (
-          <div
-            key={i}
-            className={`p-3 rounded-xl border ${m.highlight ? 'bg-[#c9a84c]/10 border-[#c9a84c]/30' : 'bg-white/[0.03] border-white/8'}`}
-          >
+          <div key={i} className={`p-3 rounded-xl border ${m.highlight ? 'bg-[#c9a84c]/10 border-[#c9a84c]/30' : 'bg-white/[0.03] border-white/8'}`}>
             <div className="text-white/40 text-[10px] uppercase mb-1">{m.label}</div>
             <div className={`font-bold text-xl ${m.highlight ? 'text-[#c9a84c]' : 'text-white'}`}>{m.value}</div>
           </div>
@@ -600,92 +275,85 @@ const CampaignCard: React.FC<{ campaign: Campaign; idx: number }> = ({ campaign,
         </div>
       </div>
     </div>
-    <div
-      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-      style={{ boxShadow: 'inset 0 0 40px rgba(201,168,76,0.06)' }}
-    />
+    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      style={{ boxShadow: 'inset 0 0 40px rgba(201,168,76,0.06)' }} />
   </motion.div>
 );
 
-// ==================== MAIN PAGE ====================
+// ----- Main Page ----------------------------------------------
 export default function DentalLeadsPage() {
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
+
   const organic = useCountUp(1900, 2200, statsInView);
   const calls = useCountUp(90, 2000, statsInView);
   const forms = useCountUp(35, 2000, statsInView);
   const traffic = useCountUp(350, 2000, statsInView);
 
   useEffect(() => {
-    document.title = 'Dental Leads | Plans from $499/mo | Meta, Google, SEO';
+    document.title = 'Dental Leads | Get Patients at $10/Lead* | Meta, Google, SEO';
     const meta = document.createElement('meta');
     meta.name = 'description';
-    meta.content = 'Get more dental patients with flat‑fee marketing: Meta Ads, Google Ads, SEO, GBP optimization. Results guaranteed.';
+    meta.content = 'Get dental patients at $10/lead* with our proven system: Meta Ads, Google Ads, GBP optimization, SEO/AEO/GEO. Results in first month or 100% money back.';
     document.head.appendChild(meta);
     return () => document.head.removeChild(meta);
   }, []);
 
   return (
-    <div className="bg-[#070b12] text-white font-sans overflow-x-hidden">
+    <div style={{ background: '#070b12', color: '#fff', fontFamily: "'Inter', sans-serif", overflow: 'hidden' }}>
       <Particles />
-      <Orb style={{ width: 800, height: 800, top: '-20%', left: '-20%', background: 'rgba(201,168,76,0.1)' }} />
-      <Orb style={{ width: 1000, height: 1000, bottom: '-30%', right: '-30%', background: 'rgba(201,168,76,0.08)' }} />
+      <Orb style={{ width: 600, height: 600, top: '-10%', left: '-10%', background: 'rgba(201,168,76,0.08)' }} />
+      <Orb style={{ width: 700, height: 700, bottom: '-20%', right: '-15%', background: 'rgba(201,168,76,0.06)' }} />
 
-      {/* Hero */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center">
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-          }}
-        />
-        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center pt-24 pb-20">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex flex-col justify-center">
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: 'linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)',
+          backgroundSize: '60px 60px'
+        }} />
+        <div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 pb-20 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 mb-8 px-5 py-2.5 rounded-full border border-[#c9a84c]/30 bg-gradient-to-r from-[#c9a84c]/10 to-[#c9a84c]/5"
+            className="inline-flex items-center gap-3 mb-8 px-5 py-2.5 rounded-full border border-[#c9a84c]/30 bg-gradient-to-r from-[#c9a84c]/12 to-[#c9a84c]/04"
           >
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-2.5 h-2.5 rounded-full bg-[#c9a84c]"
-            />
-            <span className="text-[#c9a84c] text-sm font-semibold">🦷 Dental Marketing That Works</span>
+            <motion.span animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-2 h-2 rounded-full bg-[#c9a84c]" />
+            <span style={{ color: '#c9a84c', fontSize: 13, fontWeight: 600 }}>🦷 Specialized Dental Clinic Growth System</span>
           </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl sm:text-7xl lg:text-8xl font-extrabold leading-[1.1] tracking-tight mb-6"
+            style={{ fontSize: 'clamp(38px, 7vw, 78px)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em' }}
           >
-            <span className="text-white">Get More Dental Patients</span>
+            <span style={{ color: '#fff' }}>Get Dental Patients</span>
             <br />
-            <span className="bg-gradient-to-r from-[#c9a84c] via-[#f0d282] to-[#c9a84c] bg-clip-text text-transparent bg-[length:200%] animate-gradient-x">
-              Plans from $499/month
+            <span style={{ background: 'linear-gradient(90deg, #c9a84c, #f0d282, #c9a84c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%' }}>
+              at $10/Lead*
             </span>
           </motion.h1>
+          <p className="text-white/50 text-sm mt-2">* Lead price may vary based on city, competition and target demography</p>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-white/60 text-xl max-w-2xl mx-auto mb-6 leading-relaxed"
+            transition={{ delay: 0.3 }}
+            style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'clamp(16px,2vw,20px)', maxWidth: 620, margin: '24px auto 40px', lineHeight: 1.7 }}
           >
-            Meta Ads • Google Ads • SEO/AEO/GEO • GBP • Website CRO
+            Meta Ads · Google Ads · GBP Optimization · SEO/AEO/GEO · Website CRO
             <br />
-            <span className="text-[#c9a84c] font-semibold">Flat‑fee, no surprises. Results in first month or 100% money back.</span>
+            <span style={{ color: '#c9a84c', fontWeight: 600 }}>Results in first month or 100% money back.</span>
           </motion.p>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.5 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-5"
           >
-            <a
-              href={CALENDLY}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12]"
-            >
+            <a href={CALENDLY} target="_blank"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12]">
               <Calendar size={20} /> Book Free Strategy Call <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </a>
             <Link href="/contact">
@@ -694,101 +362,78 @@ export default function DentalLeadsPage() {
               </a>
             </Link>
           </motion.div>
+
           <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
             {[
-              { icon: Shield, label: 'Money Back Guarantee' },
-              { icon: Users, label: '400+ Clients Served' },
-              { icon: Award, label: '12+ Years Experience' },
-              { icon: Star, label: '4.9/5 Client Rating' },
+              { icon: Shield, label: "Money Back Guarantee" },
+              { icon: Users, label: "400+ Clients Served" },
+              { icon: Award, label: "12+ Years Experience" },
+              { icon: Star, label: "4.9/5 Client Rating" },
             ].map((b, i) => (
               <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                <b.icon size={14} className="text-[#c9a84c]" />
+                <b.icon size={14} style={{ color: '#c9a84c' }} />
                 <span className="text-white/60 text-xs">{b.label}</span>
               </div>
             ))}
           </div>
         </div>
         <motion.div
-          animate={{ y: [0, 10, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <div className="w-6 h-10 border border-white/20 rounded-full flex justify-center pt-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-bounce" />
+            <motion.div animate={{ y: [0, 12, 0] }} transition={{ duration: 2, repeat: Infinity }}
+              className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
           </div>
         </motion.div>
       </section>
 
-      {/* Money Back Guarantee early */}
-      <div className="max-w-7xl mx-auto px-4 -mt-12 mb-12">
-        <div className="bg-gradient-to-r from-[#c9a84c]/10 to-transparent border border-[#c9a84c]/30 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-sm">
-          <div className="flex items-center gap-3">
-            <Shield size={28} className="text-[#c9a84c]" />
-            <div>
-              <h3 className="text-white font-bold">100% Money‑Back Guarantee</h3>
-              <p className="text-white/60 text-sm">No results in first month? We refund 100% of your management fees.</p>
-            </div>
-          </div>
-          <a href={CALENDLY} target="_blank" className="px-5 py-2 rounded-lg bg-[#c9a84c] text-[#070b12] font-semibold text-sm hover:bg-[#f0d282] transition">
-            Claim Your Guarantee →
-          </a>
-        </div>
-      </div>
-
       {/* Meta Ads Campaigns */}
-      <section className="py-16 bg-gradient-to-b from-[#070b12] to-[#080d15]">
+      <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
         <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <Megaphone size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold">REAL META ADS RESULTS</span>
+              <span className="text-[#c9a84c] text-xs font-bold tracking-wider">REAL META ADS RESULTS</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold">
-              Real Campaigns. <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Real Dental Leads.</span>
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold">Real Campaigns. <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Real Dental Leads.</span></h2>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6">{metaCampaigns.map((c, i) => <CampaignCard key={c.name} campaign={c} idx={i} />)}</div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {metaCampaigns.map((c, i) => <CampaignCard key={c.name} campaign={c} idx={i} />)}
+          </div>
           <div className="text-center mt-10">
-            <a href={CALENDLY} target="_blank" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-[#c9a84c] hover:text-[#070b12] transition">
-              Get Campaigns Like These → <ArrowRight size={16} />
+            <a href={CALENDLY} target="_blank"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-white/5 border border-white/20 text-white font-semibold hover:bg-[#c9a84c] hover:text-[#070b12] transition-all">
+              Launch Your Campaigns → <ArrowRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
       {/* Case Study */}
-      <section className="py-16 bg-[#060a10] relative">
+      <section className="py-20 bg-[#060a10] relative">
         <Orb style={{ width: 800, height: 800, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', background: 'rgba(201,168,76,0.04)' }} />
         <div className="relative max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <Award size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold">VERIFIED CASE STUDY 2026</span>
+              <span className="text-[#c9a84c] text-xs font-bold">VERIFIED CASE STUDY</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold">
-              How We Transformed <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Royal Lane Dental</span>
-            </h2>
-            <p className="text-white/50 text-lg">Dallas, TX · 12 months of SEO + GBP + Ads (2025–2026)</p>
+            <h2 className="text-4xl md:text-5xl font-extrabold">How We Transformed <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Royal Lane Dental</span></h2>
+            <p className="text-white/50 text-lg">Dallas, TX · 12 months of SEO + GBP optimization (2025–2026)</p>
           </motion.div>
+
           <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
             {[
-              { emoji: '📈', value: organic, suffix: '+', label: 'Organic Sessions/Mo', change: '↑ 352% from 420', color: '#4ade80' },
-              { emoji: '📞', value: calls, suffix: '+', label: 'GBP Calls/Month', change: '↑ 350% from 20', color: '#60a5fa' },
-              { emoji: '📝', value: forms, suffix: '+', label: 'Form Submissions/Mo', change: '↑ 540% from 5', color: '#f472b6' },
-              { emoji: '📊', value: traffic, suffix: '%', label: 'Organic Traffic Growth', change: 'Full year 2026', color: '#c9a84c' },
+              { emoji: "📈", value: organic, suffix: "+", label: "Organic Sessions/Mo", change: "↑ 352% from 420", color: "#4ade80" },
+              { emoji: "📞", value: calls, suffix: "+", label: "GBP Calls/Month", change: "↑ 350% from 20", color: "#60a5fa" },
+              { emoji: "📝", value: forms, suffix: "+", label: "Form Submissions/Mo", change: "↑ 540% from 5", color: "#f472b6" },
+              { emoji: "📊", value: traffic, suffix: "%", label: "Organic Traffic Growth", change: "Full year 2026", color: "#c9a84c" },
             ].map((s, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.85 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
@@ -796,21 +441,17 @@ export default function DentalLeadsPage() {
               >
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#c9a84c]/10 to-transparent rounded-full blur-2xl" />
                 <div className="text-3xl mb-2">{s.emoji}</div>
-                <div className="text-4xl md:text-5xl font-bold" style={{ color: s.color }}>
-                  {s.value.toLocaleString()}
-                  {s.suffix}
-                </div>
+                <div className="text-4xl md:text-5xl font-bold" style={{ color: s.color }}>{s.value.toLocaleString()}{s.suffix}</div>
                 <div className="text-white/70 text-sm mt-2">{s.label}</div>
                 <div className="text-white/40 text-xs mt-1">{s.change}</div>
               </motion.div>
             ))}
           </div>
+
           <div className="grid lg:grid-cols-2 gap-6 mb-8">
             <div className="bg-[#0a0f1a] border border-white/10 rounded-2xl p-6">
-              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                <Search size={18} className="text-[#c9a84c]" /> Google Maps Rankings
-              </h3>
-              {rankings.map((r) => (
+              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2"><Search size={18} className="text-[#c9a84c]" /> Google Maps Rankings</h3>
+              {rankings.map(r => (
                 <div key={r.term} className="flex justify-between border-b border-white/10 py-2">
                   <span className="text-white/80">{r.term}</span>
                   <span className="text-green-400 font-semibold">{r.after}</span>
@@ -818,69 +459,44 @@ export default function DentalLeadsPage() {
               ))}
             </div>
             <div className="bg-[#0a0f1a] border border-white/10 rounded-2xl p-6">
-              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                <PhoneCall size={18} className="text-[#c9a84c]" /> Lead Volume Growth
-              </h3>
+              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2"><PhoneCall size={18} className="text-[#c9a84c]" /> Lead Volume Growth</h3>
               {[
-                { label: 'GBP Calls', before: 20, after: 90 },
-                { label: 'Website Forms', before: 5, after: 35 },
-                { label: 'Chat / SMS', before: 0, after: 15 },
-              ].map((item) => (
+                { label: "GBP Calls", before: 20, after: 90 },
+                { label: "Website Forms", before: 5, after: 35 },
+                { label: "Chat / SMS", before: 0, after: 15 },
+              ].map(item => (
                 <div key={item.label} className="mb-3">
-                  <div className="flex justify-between text-sm">
-                    <span>{item.label}</span>
-                    <span>
-                      <span className="line-through text-white/40">{item.before}</span> → <span className="text-green-400">{item.after}</span>
-                    </span>
-                  </div>
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282]" style={{ width: `${(item.after / 100) * 100}%` }} />
-                  </div>
+                  <div className="flex justify-between text-sm"><span>{item.label}</span><span><span className="line-through text-white/40">{item.before}</span> → <span className="text-green-400">{item.after}</span></span></div>
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282]" style={{ width: `${(item.after / 100) * 100}%` }} /></div>
                 </div>
               ))}
-              <div className="mt-4 p-2 bg-[#c9a84c]/10 rounded-xl text-center text-[#c9a84c] text-sm">📊 25 → 140+ monthly inquiries</div>
+              <div className="mt-4 p-2 bg-[#c9a84c]/10 rounded-xl text-center text-[#c9a84c] text-sm">📊 Total: ~25/mo → 140+/mo in patient inquiries</div>
             </div>
           </div>
           <div className="text-center">
-            <a
-              href="https://www.royallanedental.com/"
-              target="_blank"
-              className="text-white/40 hover:text-[#c9a84c] text-sm inline-flex items-center gap-1"
-            >
-              View Case Study <ChevronRight size={14} />
-            </a>
+            <a href="https://www.royallanedental.com/" target="_blank" className="text-white/40 hover:text-[#c9a84c] text-sm inline-flex items-center gap-1">View Full Case Study <ChevronRight size={14} /></a>
           </div>
           <div className="text-center mt-8">
-            <a
-              href={CALENDLY}
-              target="_blank"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition"
-            >
+            <a href={CALENDLY} target="_blank"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition">
               Get Same Results for Your Practice → <ArrowRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
-      {/* Funnel Sections */}
-      <FunnelDesktop />
-      <FunnelMobile />
+      {/* Dental Funnel (replaces generic funnel) */}
+      <DentalFunnel />
 
       {/* Pricing Plans */}
-      <section className="py-16 bg-[#060a10]">
+      <section className="py-20 bg-[#060a10]">
         <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <DollarSign size={14} className="text-[#c9a84c]" />
               <span className="text-[#c9a84c] text-xs font-bold">SIMPLE PRICING</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold">
-              Choose Your <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Growth Plan</span>
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold">Choose Your <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Growth Plan</span></h2>
             <p className="text-white/50 text-lg">Flat monthly fee – no hidden costs. Cancel anytime.</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6 mb-12">
@@ -891,11 +507,7 @@ export default function DentalLeadsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -10 }}
-                className={`relative rounded-2xl p-6 transition-all ${
-                  plan.tag
-                    ? 'bg-gradient-to-br from-[#0f1927] to-[#0a0f1a] border border-[#c9a84c]/40 shadow-xl'
-                    : 'bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10'
-                }`}
+                className={`relative rounded-2xl p-6 transition-all ${plan.tag ? 'bg-gradient-to-br from-[#0f1927] to-[#0a0f1a] border border-[#c9a84c]/40 shadow-xl' : 'bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10'}`}
               >
                 {plan.tag && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] text-xs font-extrabold px-3 py-1 rounded-full">
@@ -909,164 +521,163 @@ export default function DentalLeadsPage() {
                 </div>
                 <p className="text-white/50 text-sm mb-4">{plan.description}</p>
                 <ul className="space-y-2 mb-6">
-                  {plan.features.map((f) => (
+                  {plan.features.map(f => (
                     <li key={f} className="flex items-start gap-2 text-white/70 text-sm">
                       <CheckCircle2 size={14} className="text-[#c9a84c] mt-0.5 flex-shrink-0" />
                       {f}
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={CALENDLY}
-                  target="_blank"
-                  className="block text-center py-3 rounded-xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] hover:scale-105 transition"
-                >
+                <a href={CALENDLY} target="_blank"
+                  className="block text-center py-3 rounded-xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] hover:scale-105 transition">
                   Get Started →
                 </a>
               </motion.div>
             ))}
           </div>
           <div className="text-center">
-            <a
-              href={CALENDLY}
-              target="_blank"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/5 border border-white/20 text-white font-semibold hover:bg-[#c9a84c] hover:text-[#070b12] transition"
-            >
+            <a href={CALENDLY} target="_blank"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/5 border border-white/20 text-white font-semibold hover:bg-[#c9a84c] hover:text-[#070b12] transition">
               Need a Custom Plan? Talk to Us → <ArrowRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us + US Map */}
-      <section className="py-16 bg-gradient-to-b from-[#070b12] to-[#080d15]">
+      {/* Why Choose Us (replaces US map) – with dental clients grid */}
+      <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }}>
-              <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-                <BadgeCheck size={14} className="text-[#c9a84c]" />
-                <span className="text-[#c9a84c] text-xs font-bold">WHY DENTISTS CHOOSE US</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
-                Why Choose <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Pranjal Digital</span>
-              </h2>
-              <div className="space-y-4">
-                {whyChooseUs.map((item, idx) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-[#c9a84c]/30 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
-                      <item.icon size={18} className="text-[#c9a84c]" />
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold">{item.title}</h3>
-                      <p className="text-white/60 text-sm">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-            <USMap />
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
+              <BadgeCheck size={14} className="text-[#c9a84c]" />
+              <span className="text-[#c9a84c] text-xs font-bold">WHY DENTISTS CHOOSE US</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold">Why Choose <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Pranjal Digital</span></h2>
+          </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: Shield, title: "Flat $499/month Starting", desc: "Transparent pricing – no hidden fees. All services clearly defined per tier." },
+              { icon: Award, title: "12+ Years Dental Focus", desc: "We only work with dental practices. We know patient psychology, seasonality, and compliance." },
+              { icon: Users, title: "Proven Results", desc: "Royal Lane Dental grew from 20 to 90+ calls/month and 350% more organic traffic in 2026." },
+              { icon: Rocket, title: "First Month Guarantee", desc: "See measurable results in 30 days or we refund 100% of management fees." },
+            ].map((item, idx) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ y: -6 }}
+                className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center group"
+              >
+                <div className="w-12 h-12 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                  <item.icon size={22} className="text-[#c9a84c]" />
+                </div>
+                <h3 className="text-white font-bold text-lg mb-2">{item.title}</h3>
+                <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
-          <div className="text-center mt-12">
-            <a
-              href={CALENDLY}
-              target="_blank"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition"
-            >
-              Grow Your Dental Business Revenue → <ArrowRight size={16} />
-            </a>
+          {/* Dental Clients Across USA Grid (instead of map) */}
+          <div className="mt-16">
+            <h3 className="text-white font-bold text-2xl text-center mb-8">📌 Dental Clients Across the USA</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              {[
+                "Texas (12 practices)", "California (8)", "New York (7)", "Florida (6)",
+                "Illinois (5)", "Georgia (4)", "Washington (4)", "Colorado (3)",
+                "Arizona (3)", "Massachusetts (4)"
+              ].map((state, i) => (
+                <motion.div
+                  key={state}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="bg-white/5 border border-white/10 rounded-xl p-3 text-center text-white/80 text-sm hover:border-[#c9a84c]/40 transition"
+                >
+                  {state}
+                </motion.div>
+              ))}
+            </div>
+            <p className="text-white/40 text-xs text-center mt-4">Serving dental practices across 10+ states and growing</p>
           </div>
         </div>
       </section>
 
-      {/* Our Process */}
-      <section className="py-16 bg-[#060a10]">
+      {/* Our Process – Enhanced */}
+      <section className="py-20 bg-[#060a10]">
         <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <Rocket size={14} className="text-[#c9a84c]" />
               <span className="text-[#c9a84c] text-xs font-bold">OUR PROVEN PROCESS</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold">
-              From Zero to <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Full Chair</span>
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold">From Zero to <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Full Chair</span></h2>
           </motion.div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {processSteps.map((step, idx) => (
+            {[
+              { step: "01", title: "Discovery & Audit", icon: Search, desc: "We analyze your current marketing, website, GBP, and competitors to create a custom plan.", color: "#c9a84c" },
+              { step: "02", title: "Strategy & Setup", icon: Settings, desc: "We build your ad accounts, design creatives, optimize GBP, and install tracking.", color: "#f0d282" },
+              { step: "03", title: "Launch & Monitor", icon: Activity, desc: "Campaigns go live. We monitor performance daily, adjust bids, and test new angles.", color: "#c9a84c" },
+              { step: "04", title: "Scale & Optimize", icon: TrendingUp, desc: "We double down on winning channels, add new services, and grow your patient base.", color: "#f0d282" },
+            ].map((step, idx) => (
               <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 30 }}
+                key={step.step}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="relative bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center group"
+                whileHover={{ y: -10 }}
+                className="relative bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center group overflow-hidden"
               >
-                <div className="absolute -top-3 left-6 text-[#c9a84c] font-mono text-4xl font-black opacity-20">{step.num}</div>
-                <div className="w-14 h-14 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                  <step.icon size={24} className="text-[#c9a84c]" />
+                <div className="absolute -top-3 left-6 text-6xl font-black text-[#c9a84c]/10">{step.step}</div>
+                <div className="relative z-10">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                    <step.icon size={28} style={{ color: step.color }} />
+                  </div>
+                  <h3 className="text-white font-bold text-xl mb-2">{step.title}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">{step.desc}</p>
+                  <div className="mt-4 flex justify-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-[#c9a84c]/60" />
+                    <div className="w-2 h-2 rounded-full bg-[#c9a84c]/30" />
+                    <div className="w-2 h-2 rounded-full bg-[#c9a84c]/10" />
+                  </div>
                 </div>
-                <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-                <p className="text-white/60 text-sm">{step.desc}</p>
               </motion.div>
             ))}
           </div>
           <div className="text-center mt-10">
-            <a
-              href={CALENDLY}
-              target="_blank"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-white/5 border border-white/20 text-white font-semibold hover:bg-[#c9a84c] hover:text-[#070b12] transition"
-            >
-              Start Your Process Today → <ArrowRight size={16} />
+            <a href={CALENDLY} target="_blank"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-white/5 border border-white/20 text-white font-semibold hover:bg-[#c9a84c] hover:text-[#070b12] transition">
+              Start Your Journey → <ArrowRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
-      {/* US vs Other Agencies */}
-      <section className="py-16 bg-gradient-to-b from-[#070b12] to-[#080d15]">
+      {/* Comparison Table – Enhanced */}
+      <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
         <div className="max-w-5xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <Scale size={14} className="text-[#c9a84c]" />
               <span className="text-[#c9a84c] text-xs font-bold">COMPARISON</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold">
-              Pranjal Digital vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Other Dental Agencies</span>
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold">Pranjal Digital vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Other Dental Agencies</span></h2>
           </motion.div>
           <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#0a0f1a]">
             <table className="w-full text-sm">
               <thead className="bg-white/5">
-                <tr>
-                  <th className="p-4 text-left text-white/60">Feature</th>
-                  <th className="p-4 text-left text-[#c9a84c] font-bold">Pranjal Digital</th>
-                  <th className="p-4 text-left text-white/60">Others</th>
-                </tr>
+                <tr><th className="p-4 text-left text-white/60">Feature</th><th className="p-4 text-left text-[#c9a84c] font-bold">Pranjal Digital</th><th className="p-4 text-left text-white/60">Other Agencies</th></tr>
               </thead>
               <tbody>
                 {[
-                  { feature: 'Monthly Fee', us: '$499–$1999 all-inclusive', them: '$2,000–$10,000+ à la carte' },
-                  { feature: 'Dental Specialization', us: '12+ years exclusively dental', them: 'Generalist / one-size-fits-all' },
-                  { feature: 'Meta + Google + GBP + SEO', us: '✓ All included', them: 'Separate fees for each channel' },
-                  { feature: 'Creative & Content', us: 'In-house designers & copywriters', them: 'Outsourced / extra cost' },
-                  { feature: 'Reporting & Transparency', us: 'Live dashboards + monthly deep-dive', them: 'Fancy PDFs with no insights' },
-                  { feature: 'Money-Back Guarantee', us: 'First month results or refund', them: '6–12 month lock-in contracts' },
+                  { feature: "Monthly Fee", us: "$499–$1,999 all‑inclusive", them: "$2,000–$10,000+ à la carte" },
+                  { feature: "Dental Specialization", us: "12+ years exclusively dental", them: "Generalist / one‑size‑fits‑all" },
+                  { feature: "Meta + Google + GBP + SEO", us: "✓ All included", them: "Separate fees for each channel" },
+                  { feature: "Creative & Content", us: "In‑house designers & copywriters", them: "Outsourced / extra cost" },
+                  { feature: "Reporting & Transparency", us: "Live dashboards + monthly deep‑dive", them: "Fancy PDFs with no insights" },
+                  { feature: "Money‑Back Guarantee", us: "First month results or refund", them: "6–12 month lock‑in contracts" },
                 ].map((row, idx) => (
-                  <tr key={idx} className="border-t border-white/10">
-                    <td className="p-4 text-white/80">{row.feature}</td>
+                  <tr key={idx} className="border-t border-white/10 hover:bg-white/5 transition">
+                    <td className="p-4 text-white/80 font-medium">{row.feature}</td>
                     <td className="p-4 text-[#c9a84c] font-semibold">{row.us}</td>
                     <td className="p-4 text-white/50">{row.them}</td>
                   </tr>
@@ -1075,28 +686,22 @@ export default function DentalLeadsPage() {
             </table>
           </div>
           <div className="text-center mt-8">
-            <a
-              href={CALENDLY}
-              target="_blank"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition"
-            >
+            <a href={CALENDLY} target="_blank"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition">
               Switch to a Smarter Agency → <ArrowRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
-      {/* Cost Calculator */}
-      <CostCalculator />
-
       {/* Final CTA */}
-      <section className="relative py-20 overflow-hidden">
-        <Orb style={{ width: 900, height: 600, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', background: 'rgba(201,168,76,0.1)' }} />
+      <section className="relative py-24 overflow-hidden">
+        <Orb style={{ width: 900, height: 600, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', background: 'rgba(201,168,76,0.07)' }} />
         <div className="relative max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}>
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <TrendingUp size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold">READY TO GROW?</span>
+              <span className="text-[#c9a84c] text-xs font-bold">READY FOR MORE PATIENTS?</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-extrabold mb-5">
               Stop Wasting Money on <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Ineffective Marketing</span>
@@ -1105,11 +710,8 @@ export default function DentalLeadsPage() {
               Let's build a predictable patient acquisition system – starting at $499/month.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <a
-                href={CALENDLY}
-                target="_blank"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12]"
-              >
+              <a href={CALENDLY} target="_blank"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12]">
                 <Calendar size={20} /> Book Free Consultation <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </a>
               <Link href="/contact">
@@ -1118,21 +720,10 @@ export default function DentalLeadsPage() {
                 </a>
               </Link>
             </div>
+            <p className="text-white/30 text-xs mt-6">* Lead price may vary based on city, competition and target demography</p>
           </motion.div>
         </div>
       </section>
-
-      <style>{`
-        @keyframes gradient-x {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient-x {
-          background-size: 200%;
-          animation: gradient-x 3s ease infinite;
-        }
-      `}</style>
     </div>
   );
 }
