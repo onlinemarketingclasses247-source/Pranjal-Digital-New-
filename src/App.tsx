@@ -13,6 +13,7 @@ import Contact from "@/pages/Contact";
 import FreeGoogleAdsCompetitorResearch from "./pages/ai-products/FreeGoogleAdsCompetitorResearch";
 import AIProducts from "./pages/AIProducts";
 import AiVoiceAgentDentist from "@/pages/AiVoiceAgentDentist";
+import DentalLeads from "@/pages/DentalLeads";
 
 import CaseStudies from "@/pages/CaseStudies";
 import TermsOfService from "@/pages/TermsOfService";
@@ -33,6 +34,7 @@ function Router() {
         <Route path="/thank-you" component={ThankYou} />
         <Route path="/ai-products" component={AIProducts} />
         <Route path="/ai-voice-agent-dentist" component={AiVoiceAgentDentist} />
+        <Route path="/dental-leads" component={DentalLeads} />
         <Route 
   path="/google-search-console-reporting-tool" 
   component={GoogleSearchConsoleReportingTool} 
