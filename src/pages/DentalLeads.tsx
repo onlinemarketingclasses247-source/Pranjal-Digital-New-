@@ -11,7 +11,7 @@ import {
   Scale, HeartHandshake, Coffee, Play, Briefcase, Building2, Cpu, Mail,
   Linkedin, Youtube, PenTool, LineChart, PieChart, Settings, FileText, Mic,
   Gem, Medal, Trophy, Flag, Handshake, ClipboardList, CheckSquare, Code, Database,
-  X, XCircle
+  X, XCircle, AlertTriangle, TrendingDown
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -377,6 +377,109 @@ export default function DentalLeadsPage() {
               className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]" />
           </div>
         </motion.div>
+      </section>
+
+      {/* ========== NEW SECTION: ARE YOU STRUGGLING? ========== */}
+      <section className="py-16 md:py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
+              <AlertTriangle size={14} className="text-[#c9a84c]" />
+              <span className="text-[#c9a84c] text-xs font-bold">REAL TALK</span>
+            </div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left side: Questions */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-4"
+            >
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                Are you looking for more patients<br />
+                <span className="text-[#c9a84c]">but struggling to get new inquiries?</span>
+              </h2>
+              <div className="space-y-3 mt-6">
+                {[
+                  "Your marketing agency is not delivering results?",
+                  "Marketing is getting very expensive?",
+                  "Existing marketing agency is overcharging?",
+                  "Your agency shows you vanity metrics that don't translate into patients?"
+                ].map((question, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10"
+                  >
+                    <TrendingDown size={18} className="text-[#c9a84c] flex-shrink-0" />
+                    <span className="text-white/80 text-sm md:text-base">{question}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right side: Solution steps */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6"
+            >
+              <p className="text-[#c9a84c] font-semibold text-lg mb-4">That's why we created this dental marketing program — it's really simple:</p>
+              
+              <div className="space-y-5">
+                {/* Step 1 */}
+                <div className="relative pl-8 border-l-2 border-[#c9a84c]/30 group">
+                  <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-[#c9a84c] flex items-center justify-center text-[#070b12] font-bold text-xs">1</div>
+                  <h3 className="text-white font-bold text-xl mb-1">We start with Meta Ads</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">We use <span className="text-[#c9a84c] font-semibold">Advantage+ AI</span> (automated campaign optimization), <span className="text-[#c9a84c] font-semibold">Andromeda</span> (Meta's latest ad ranking system), and <span className="text-[#c9a84c] font-semibold">dynamic creative testing</span>. We build custom patient lookalike audiences and leverage Advantage+ shopping campaigns to reduce CPL by up to 35% within 30 days.</p>
+                </div>
+
+                {/* Step 2 */}
+                <div className="relative pl-8 border-l-2 border-[#c9a84c]/30 group">
+                  <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-[#c9a84c] flex items-center justify-center text-[#070b12] font-bold text-xs">2</div>
+                  <h3 className="text-white font-bold text-xl mb-1">Then we move to Google Ads</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">We complement Meta with <span className="text-[#c9a84c] font-semibold">Performance Max (PMax)</span> campaigns, local service ads, and call‑only campaigns. Our AI‑driven bidding targets high‑intent searches like "emergency dentist near me" and captures patients ready to book.</p>
+                </div>
+
+                {/* Step 3 */}
+                <div className="relative pl-8 border-l-2 border-[#c9a84c]/30 group">
+                  <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-[#c9a84c] flex items-center justify-center text-[#070b12] font-bold text-xs">3</div>
+                  <h3 className="text-white font-bold text-xl mb-1">SEO + AEO + GEO integration</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">While ads run, we build your <span className="text-[#c9a84c] font-semibold">long‑term organic presence</span> – ranking on Google, ChatGPT, Perplexity, and voice search. We optimize for Answer Engines (AEO) and Generative Engines (GEO) so patients find you everywhere.</p>
+                </div>
+
+                {/* Step 4 */}
+                <div className="relative pl-8 border-l-2 border-[#c9a84c]/30 group">
+                  <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-[#c9a84c] flex items-center justify-center text-[#070b12] font-bold text-xs">4</div>
+                  <h3 className="text-white font-bold text-xl mb-1">Website redesign & CRO</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">Finally, we optimize your website for <span className="text-[#c9a84c] font-semibold">conversion</span> – mobile‑first, sub‑2s load time, appointment booking, chat/SMS, and heatmap‑driven improvements. Your website becomes a 24/7 patient acquisition machine.</p>
+                </div>
+              </div>
+
+              <div className="mt-6 p-3 bg-[#c9a84c]/10 rounded-xl text-center">
+                <p className="text-[#c9a84c] font-bold text-sm">⚡ This sequential system works because each channel feeds the next – Meta fills the top, Google captures mid‑funnel, SEO/AEO/GEO builds authority, and the website converts.</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* CTA after this section */}
+          <div className="text-center mt-10">
+            <a href={CALENDLY} target="_blank"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition shadow-lg">
+              Start Your 4‑Step System Today → <ArrowRight size={16} />
+            </a>
+          </div>
+        </div>
       </section>
 
       {/* Money Back Guarantee (After Hero) – Redesigned larger, no button */}
