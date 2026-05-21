@@ -10,7 +10,8 @@ import {
   Crown, BadgeCheck, Compass, Navigation, Filter, Sliders,
   Scale, HeartHandshake, Coffee, Play, Briefcase, Building2, Cpu, Mail,
   Linkedin, Youtube, PenTool, LineChart, PieChart, Settings, FileText, Mic,
-  Gem, Medal, Trophy, Flag, Handshake, ClipboardList, CheckSquare, Code, Database
+  Gem, Medal, Trophy, Flag, Handshake, ClipboardList, CheckSquare, Code, Database,
+  X, XCircle
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -148,58 +149,6 @@ const Orb: React.FC<{ style?: React.CSSProperties; className?: string }> = ({ st
   />
 );
 
-// Dental‑specific funnel section
-const DentalFunnel: React.FC = () => {
-  const funnelSteps = [
-    { stage: "TOFU", title: "Awareness", icon: Eye, description: "Facebook & Instagram ads, educational reels, local awareness campaigns", color: "#c9a84c" },
-    { stage: "MOFU", title: "Consideration", icon: Search, description: "Retargeting ads, Google search ads, case studies, before/after galleries", color: "#f0d282" },
-    { stage: "BOFU", title: "Conversion", icon: Target, description: "Special offers, appointment booking, call extensions, GBP actions", color: "#c9a84c" },
-  ];
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-16">
-      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-          <Layers size={14} className="text-[#c9a84c]" />
-          <span className="text-[#c9a84c] text-xs font-bold tracking-wider">DENTAL MARKETING FUNNEL</span>
-        </div>
-        <h2 className="text-3xl md:text-5xl font-extrabold">How We Turn <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Strangers into Patients</span></h2>
-        <p className="text-white/50 text-lg max-w-2xl mx-auto mt-4">A proven three‑stage funnel designed specifically for dental practices.</p>
-      </motion.div>
-
-      <div className="grid md:grid-cols-3 gap-6">
-        {funnelSteps.map((step, idx) => (
-          <motion.div
-            key={step.stage}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
-            whileHover={{ y: -8 }}
-            className="relative bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center group overflow-hidden"
-          >
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#c9a84c] to-transparent" />
-            <div className="inline-block px-3 py-1 rounded-full bg-[#c9a84c]/20 text-[#c9a84c] text-xs font-bold mb-4">{step.stage}</div>
-            <div className="w-16 h-16 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-              <step.icon size={28} style={{ color: step.color }} />
-            </div>
-            <h3 className="text-white font-bold text-xl mb-2">{step.title}</h3>
-            <p className="text-white/60 text-sm leading-relaxed">{step.description}</p>
-            <div className="mt-5 flex justify-center gap-1">
-              {[...Array(3)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#c9a84c]/40" />)}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* connecting arrows (desktop) */}
-      <div className="hidden md:flex justify-center items-center gap-4 mt-8 text-white/20">
-        <ArrowRight size={32} className="animate-pulse" />
-        <ArrowRight size={32} className="animate-pulse delay-100" />
-      </div>
-    </div>
-  );
-};
-
 // Campaign Card
 const CampaignCard: React.FC<{ campaign: Campaign; idx: number }> = ({ campaign, idx }) => (
   <motion.div
@@ -280,10 +229,51 @@ const CampaignCard: React.FC<{ campaign: Campaign; idx: number }> = ({ campaign,
   </motion.div>
 );
 
+// Case Study Modal Component
+const CaseStudyModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={onClose}>
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="relative max-w-4xl w-full bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-[#c9a84c]/30 rounded-2xl p-6 max-h-[85vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={onClose} className="absolute top-4 right-4 text-white/50 hover:text-white">
+          <X size={24} />
+        </button>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Royal Lane Dental – Complete Case Study</h2>
+        <div className="space-y-4 text-white/80">
+          <p><strong className="text-[#c9a84c]">Location:</strong> Dallas, TX</p>
+          <p><strong className="text-[#c9a84c]">Services Used:</strong> Meta Ads, Google Ads, GBP Optimization, SEO/AEO/GEO, Website CRO</p>
+          <p><strong className="text-[#c9a84c]">Timeline:</strong> 12 months (2025–2026)</p>
+          <div className="grid grid-cols-2 gap-4 my-4">
+            <div className="bg-white/5 rounded-xl p-3 text-center"><div className="text-2xl font-bold text-[#c9a84c]">1,900+</div><div className="text-sm">Organic Sessions/Month</div><div className="text-xs text-white/50">↑352% from 420</div></div>
+            <div className="bg-white/5 rounded-xl p-3 text-center"><div className="text-2xl font-bold text-[#c9a84c]">90+</div><div className="text-sm">GBP Calls/Month</div><div className="text-xs text-white/50">↑350% from 20</div></div>
+            <div className="bg-white/5 rounded-xl p-3 text-center"><div className="text-2xl font-bold text-[#c9a84c]">35+</div><div className="text-sm">Form Submissions/Month</div><div className="text-xs text-white/50">↑540% from 5</div></div>
+            <div className="bg-white/5 rounded-xl p-3 text-center"><div className="text-2xl font-bold text-[#c9a84c]">140+</div><div className="text-sm">Total Inquiries/Month</div><div className="text-xs text-white/50">Up from 25</div></div>
+          </div>
+          <p><strong className="text-[#c9a84c]">Google Maps Rankings:</strong> “dentist Dallas TX” → Top 6‑10, “clear aligners Dallas” → Top 8‑12, “veneers Dallas” → Top 10‑15.</p>
+          <p><strong className="text-[#c9a84c]">What We Did:</strong> Technical SEO, GBP optimization, weekly posts, local citations, conversion-focused website updates, Meta and Google Ads management.</p>
+          <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-xl p-4 text-center mt-4">
+            <p className="text-[#c9a84c] font-bold">📊 Bottom line: 460% increase in total patient inquiries in 12 months.</p>
+          </div>
+        </div>
+        <div className="mt-6 text-center">
+          <a href={CALENDLY} target="_blank" className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold rounded-xl hover:scale-105 transition">Get Same Results →</a>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 // ----- Main Page ----------------------------------------------
 export default function DentalLeadsPage() {
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
+  const [modalOpen, setModalOpen] = useState(false);
 
   const organic = useCountUp(1900, 2200, statsInView);
   const calls = useCountUp(90, 2000, statsInView);
@@ -389,23 +379,16 @@ export default function DentalLeadsPage() {
         </motion.div>
       </section>
 
-      {/* Money Back Guarantee (After Hero) */}
+      {/* Money Back Guarantee (After Hero) – Redesigned larger, no button */}
       <div className="max-w-6xl mx-auto px-4 -mt-8 mb-12">
-        <div className="bg-gradient-to-r from-[#c9a84c]/10 to-transparent border border-[#c9a84c]/30 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-sm">
-          <div className="flex items-center gap-4">
-            <Shield size={32} className="text-[#c9a84c]" />
-            <div>
-              <h3 className="text-white font-bold text-lg">100% Money‑Back Guarantee</h3>
-              <p className="text-white/60 text-sm">No results in first month? We refund 100% of your management fees. No questions asked.</p>
-            </div>
-          </div>
-          <a href={CALENDLY} target="_blank" className="px-6 py-2.5 rounded-lg bg-[#c9a84c] text-[#070b12] font-bold text-sm hover:bg-[#f0d282] transition shadow-md">
-            Claim Your Guarantee →
-          </a>
+        <div className="bg-gradient-to-r from-[#c9a84c]/10 to-[#c9a84c]/5 border border-[#c9a84c]/40 rounded-2xl p-8 text-center backdrop-blur-sm">
+          <Shield size={48} className="text-[#c9a84c] mx-auto mb-4" />
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">100% Money‑Back Guarantee</h2>
+          <p className="text-white/80 text-lg max-w-2xl mx-auto">No results in first month? We refund 100% of your management fees. No questions asked.</p>
         </div>
       </div>
 
-      {/* Detailed Services Section */}
+      {/* Detailed Services Section with "What we do different" technical deep-dives */}
       <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
@@ -418,7 +401,7 @@ export default function DentalLeadsPage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Meta Ads */}
+            {/* Meta Ads Card */}
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ y: -6 }}
               className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
               <div className="flex items-start gap-4">
@@ -427,17 +410,20 @@ export default function DentalLeadsPage() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xl mb-2">Meta Ads (FB + IG)</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Hyper‑targeted campaigns that reach patients actively searching for dental services. We use custom audiences, lookalike models, and retargeting to drive $10‑15 leads with 5‑7% CTR and 3‑5x ROAS.</p>
+                  <p className="text-white/70 text-sm leading-relaxed">Hyper‑targeted campaigns that reach patients actively searching for dental services.</p>
                   <ul className="mt-3 space-y-1">
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Lead forms & instant booking</li>
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Video & carousel ads for services</li>
-                    <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Retargeting website visitors</li>
                   </ul>
                 </div>
               </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="text-[#c9a84c] text-sm font-semibold mb-2">⚡ What we do different:</p>
+                <p className="text-white/60 text-xs leading-relaxed">We leverage Meta Advantage+ (AI-powered campaign optimization), dynamic creative testing, and custom patient lookalike audiences. Our system automatically allocates budget to winning ad sets, reducing CPL by up to 35% within 30 days.</p>
+              </div>
             </motion.div>
 
-            {/* Google Ads */}
+            {/* Google Ads Card */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ y: -6 }}
               className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
               <div className="flex items-start gap-4">
@@ -446,18 +432,43 @@ export default function DentalLeadsPage() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xl mb-2">Google Ads</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Capture high‑intent searches like “emergency dentist near me”. We optimize for call extensions, location extensions, and local service ads to get appointments while competitors watch.</p>
+                  <p className="text-white/70 text-sm leading-relaxed">Capture high‑intent searches like “emergency dentist near me”.</p>
                   <ul className="mt-3 space-y-1">
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Search, Display & YouTube Ads</li>
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Call‑only campaigns for instant leads</li>
-                    <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Local service ads integration</li>
                   </ul>
                 </div>
               </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="text-[#c9a84c] text-sm font-semibold mb-2">⚡ What we do different:</p>
+                <p className="text-white/60 text-xs leading-relaxed">We use Google Performance Max (PMax) with local asset groups, automated bidding based on phone call value, and geo‑fencing around competing practices. Result: 4x+ ROAS and 52% lower cost per booking.</p>
+              </div>
             </motion.div>
 
-            {/* SEO / AEO / GEO */}
+            {/* Google Business Profile Card */}
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ y: -6 }}
+              className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#34A853]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                  <MapPin size={24} className="text-[#34A853]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-xl mb-2">Google Business Profile</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">Your local lifeline – dominate map pack & drive calls.</p>
+                  <ul className="mt-3 space-y-1">
+                    <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Complete profile optimization</li>
+                    <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Review generation & response</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="text-[#c9a84c] text-sm font-semibold mb-2">⚡ What we do different:</p>
+                <p className="text-white/60 text-xs leading-relaxed">We add geo‑tagged images, Q&A optimization, and weekly posts with service highlights. We also use GBP insights to adjust business hours and attributes, boosting map pack visibility by 300%.</p>
+              </div>
+            </motion.div>
+
+            {/* SEO/AEO/GEO Card */}
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ y: -6 }}
               className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#FBBC05]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
@@ -465,32 +476,38 @@ export default function DentalLeadsPage() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xl mb-2">SEO + AEO + GEO</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Rank on Google, ChatGPT, Perplexity, and voice search. We optimize for traditional search engines AND answer/generative engines, so patients find you everywhere.</p>
+                  <p className="text-white/70 text-sm leading-relaxed">Rank on Google, ChatGPT, Perplexity, and voice search.</p>
                   <ul className="mt-3 space-y-1">
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Local & AI search optimization</li>
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Featured snippets & knowledge panel</li>
-                    <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Voice search (Alexa, Siri, Google Assistant)</li>
                   </ul>
                 </div>
               </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="text-[#c9a84c] text-sm font-semibold mb-2">⚡ What we do different:</p>
+                <p className="text-white/60 text-xs leading-relaxed">We optimize for Answer Engines (Alexa, Siri) AND Generative Engines (ChatGPT, Perplexity) using entity‑based SEO, AI crawler schema, and natural language FAQs. Your practice appears everywhere patients search.</p>
+              </div>
             </motion.div>
 
-            {/* Website Development & Management */}
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ y: -6 }}
-              className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
+            {/* Website Development & CRO Card */}
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ y: -6 }}
+              className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group col-span-1 md:col-span-2">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
                   <Smartphone size={24} className="text-[#c9a84c]" />
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-xl mb-2">Website Dev & Management</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Mobile‑first, lightning‑fast, conversion‑optimized websites. We handle design, development, hosting, updates, and CRO (chat, SMS, forms, scheduling).</p>
+                  <p className="text-white/70 text-sm leading-relaxed">Mobile‑first, lightning‑fast, conversion‑optimized websites.</p>
                   <ul className="mt-3 space-y-1">
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Appointment booking integration</li>
                     <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Live chat & SMS lead capture</li>
-                    <li className="flex items-center gap-2 text-white/50 text-xs"><CheckCircle2 size={12} className="text-[#c9a84c]" /> Ongoing speed & security updates</li>
                   </ul>
                 </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="text-[#c9a84c] text-sm font-semibold mb-2">⚡ What we do different:</p>
+                <p className="text-white/60 text-xs leading-relaxed">We build custom dental‑specific funnels with heatmap‑driven CRO, sub‑2s load time, and automated follow‑up sequences. Our websites convert 3x better than industry average.</p>
               </div>
             </motion.div>
           </div>
@@ -540,7 +557,7 @@ export default function DentalLeadsPage() {
               <span className="text-[#c9a84c] text-xs font-bold">VERIFIED CASE STUDY</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold">How We Transformed <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Royal Lane Dental</span></h2>
-            <p className="text-white/50 text-lg">Dallas, TX · 12 months of SEO + GBP optimization (2025–2026)</p>
+            <p className="text-white/50 text-lg">Dallas, TX · 12 months of Meta Ads + Google Ads + GBP + SEO/AEO/GEO (2025–2026)</p>
           </motion.div>
 
           <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
@@ -593,7 +610,9 @@ export default function DentalLeadsPage() {
             </div>
           </div>
           <div className="text-center">
-            <a href="https://www.royallanedental.com/" target="_blank" className="text-white/40 hover:text-[#c9a84c] text-sm inline-flex items-center gap-1">View Full Case Study <ChevronRight size={14} /></a>
+            <button onClick={() => setModalOpen(true)} className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-[#c9a84c] text-[#070b12] font-bold hover:scale-105 transition shadow-lg text-lg">
+              View Full Case Study → <ChevronRight size={18} />
+            </button>
           </div>
           <div className="text-center mt-8">
             <a href={CALENDLY} target="_blank"
@@ -604,8 +623,62 @@ export default function DentalLeadsPage() {
         </div>
       </section>
 
-      {/* Dental Funnel */}
-      <DentalFunnel />
+      {/* Dental Funnel with detailed TOFU/MOFU/BOFU explanation */}
+      <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
+              <Layers size={14} className="text-[#c9a84c]" />
+              <span className="text-[#c9a84c] text-xs font-bold tracking-wider">DENTAL MARKETING FUNNEL</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold">How We Turn <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Strangers into Patients</span></h2>
+            <p className="text-white/50 text-lg max-w-3xl mx-auto mt-4">A proven three‑stage funnel (TOFU → MOFU → BOFU) designed specifically for dental practices.</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* TOFU */}
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -8 }}
+              className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
+              <div className="text-3xl font-bold text-[#c9a84c]/30 mb-2">TOFU</div>
+              <h3 className="text-white font-bold text-xl mb-2">Top of Funnel (Awareness)</h3>
+              <p className="text-white/70 text-sm leading-relaxed">We use Facebook & Instagram video ads, educational reels, and local awareness campaigns to reach people who may need dental services soon. No hard sell – just value.</p>
+              <div className="mt-4 p-3 bg-white/5 rounded-xl">
+                <p className="text-[#c9a84c] text-xs font-semibold">🎯 Our System:</p>
+                <p className="text-white/60 text-xs">Custom lookalike audiences + interest stacking + Advantage+ AI to find patients before they search.</p>
+              </div>
+            </motion.div>
+
+            {/* MOFU */}
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} whileHover={{ y: -8 }}
+              className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
+              <div className="text-3xl font-bold text-[#c9a84c]/30 mb-2">MOFU</div>
+              <h3 className="text-white font-bold text-xl mb-2">Middle of Funnel (Consideration)</h3>
+              <p className="text-white/70 text-sm leading-relaxed">Retargeting ads, Google search ads for specific services (implants, aligners), case studies, before/after galleries, and review snippets. We build trust and authority.</p>
+              <div className="mt-4 p-3 bg-white/5 rounded-xl">
+                <p className="text-[#c9a84c] text-xs font-semibold">🎯 Our System:</p>
+                <p className="text-white/60 text-xs">Sequential retargeting + dynamic search ads + GBP post engagement. Show social proof at every touchpoint.</p>
+              </div>
+            </motion.div>
+
+            {/* BOFU */}
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} whileHover={{ y: -8 }}
+              className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 group">
+              <div className="text-3xl font-bold text-[#c9a84c]/30 mb-2">BOFU</div>
+              <h3 className="text-white font-bold text-xl mb-2">Bottom of Funnel (Conversion)</h3>
+              <p className="text-white/70 text-sm leading-relaxed">Special offers (free exam, whitening), call extensions, appointment booking forms, GBP “Book” button, and SMS reminders. Low friction, high urgency.</p>
+              <div className="mt-4 p-3 bg-white/5 rounded-xl">
+                <p className="text-[#c9a84c] text-xs font-semibold">🎯 Our System:</p>
+                <p className="text-white/60 text-xs">One‑click appointment scheduling, automated follow‑up sequences, and real‑time lead notifications to your phone.</p>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="hidden md:flex justify-center items-center gap-4 mt-8 text-white/20">
+            <ArrowRight size={32} className="animate-pulse" />
+            <ArrowRight size={32} className="animate-pulse delay-100" />
+          </div>
+        </div>
+      </section>
 
       {/* CTA after Funnel */}
       <div className="max-w-6xl mx-auto px-4 pb-12">
@@ -678,81 +751,84 @@ export default function DentalLeadsPage() {
         </div>
       </section>
 
-      {/* Money Back Guarantee (Below Pricing) */}
+      {/* Money Back Guarantee (Below Pricing) – redesigned larger */}
       <div className="max-w-4xl mx-auto px-4 pb-12">
-        <div className="bg-gradient-to-r from-[#c9a84c]/10 to-transparent border border-[#c9a84c]/30 rounded-2xl p-6 text-center">
-          <Shield size={40} className="text-[#c9a84c] mx-auto mb-3" />
-          <h3 className="text-white font-bold text-2xl mb-2">Your Success is Guaranteed</h3>
-          <p className="text-white/70 max-w-2xl mx-auto">If you don’t see measurable results (increased calls, form fills, or leads) in the first month, we’ll refund 100% of your management fees. No fine print.</p>
-          <a href={CALENDLY} target="_blank" className="inline-block mt-5 px-6 py-2 rounded-lg bg-[#c9a84c] text-[#070b12] font-bold hover:bg-[#f0d282] transition">Get Risk‑Free Quote →</a>
+        <div className="bg-gradient-to-r from-[#c9a84c]/10 to-[#c9a84c]/5 border border-[#c9a84c]/40 rounded-2xl p-8 text-center">
+          <Shield size={48} className="text-[#c9a84c] mx-auto mb-4" />
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Your Success is Guaranteed</h2>
+          <p className="text-white/80 text-lg max-w-2xl mx-auto">If you don't see measurable results (increased calls, form fills, or leads) in the first month, we'll refund 100% of your management fees. No fine print.</p>
         </div>
       </div>
 
-      {/* Our Dental Marketing (was Why Choose Us) */}
+      {/* Why Choose Pranjal Digital – redesigned with better graphics */}
       <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <BadgeCheck size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold">OUR DENTAL MARKETING</span>
+              <span className="text-[#c9a84c] text-xs font-bold">WHY PRANJAL DIGITAL</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold">Why Choose <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Pranjal Digital</span></h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold">Why Choose <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Us</span></h2>
           </motion.div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Shield, title: "Flat $499/month Starting", desc: "Transparent pricing – no hidden fees. All services clearly defined per tier." },
-              { icon: Award, title: "12+ Years Dental Focus", desc: "We only work with dental practices. We know patient psychology, seasonality, and compliance." },
-              { icon: Users, title: "Proven Results", desc: "Royal Lane Dental grew from 20 to 90+ calls/month and 350% more organic traffic in 2026." },
-              { icon: Rocket, title: "First Month Guarantee", desc: "See measurable results in 30 days or we refund 100% of management fees." },
+              { icon: Shield, title: "Flat $499/month Starting", desc: "Transparent pricing – no hidden fees. All services clearly defined per tier.", color: "#c9a84c" },
+              { icon: Award, title: "12+ Years Dental Focus", desc: "We only work with dental practices. We know patient psychology, seasonality, and compliance.", color: "#f0d282" },
+              { icon: Users, title: "Proven Results", desc: "Royal Lane Dental grew from 20 to 90+ calls/month and 350% more organic traffic in 2026.", color: "#c9a84c" },
+              { icon: Rocket, title: "First Month Guarantee", desc: "See measurable results in 30 days or we refund 100% of management fees.", color: "#f0d282" },
             ].map((item, idx) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -8, scale: 1.02 }}
                 className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center group"
               >
-                <div className="w-12 h-12 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                  <item.icon size={22} className="text-[#c9a84c]" />
+                <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-[#c9a84c]/30 to-[#f0d282]/30 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                  <item.icon size={28} style={{ color: item.color }} />
                 </div>
-                <h3 className="text-white font-bold text-lg mb-2">{item.title}</h3>
+                <h3 className="text-white font-bold text-xl mb-2">{item.title}</h3>
                 <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
+                <div className="mt-4 w-12 h-0.5 bg-gradient-to-r from-[#c9a84c] to-transparent mx-auto rounded-full" />
               </motion.div>
             ))}
           </div>
 
-          {/* Dental Clients Across USA – 8 states, flags + blinking pin, no numbers */}
+          {/* Dental Clients Across USA – more graphical, no flags repetition */}
           <div className="mt-20">
-            <h3 className="text-white font-bold text-2xl text-center mb-8">📍 Dental Clients Across the USA</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-              {[
-                { state: "Texas", flag: "🇺🇸" },   // using US flag for all or we can use state flags? Simple approach: state name + pin icon + US flag
-                { state: "California", flag: "🇺🇸" },
-                { state: "New York", flag: "🇺🇸" },
-                { state: "Florida", flag: "🇺🇸" },
-                { state: "Illinois", flag: "🇺🇸" },
-                { state: "Georgia", flag: "🇺🇸" },
-                { state: "Washington", flag: "🇺🇸" },
-                { state: "Colorado", flag: "🇺🇸" },
-              ].map((s, i) => (
-                <motion.div
-                  key={s.state}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="flex items-center justify-center gap-2 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-[#c9a84c]/40 transition group"
-                >
-                  <span className="text-xl">{s.flag}</span>
-                  <span className="text-white/80 text-sm font-medium">{s.state}</span>
+            <h3 className="text-white font-bold text-2xl text-center mb-8 flex items-center justify-center gap-2"><Globe size={24} className="text-[#c9a84c]" /> Dental Clients Across the USA</h3>
+            <div className="relative max-w-4xl mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/5 to-transparent rounded-full blur-3xl" />
+              <div className="relative grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { name: "Texas", icon: "🤠", x: "15%", y: "40%" },
+                  { name: "California", icon: "🌴", x: "10%", y: "35%" },
+                  { name: "New York", icon: "🗽", x: "80%", y: "25%" },
+                  { name: "Florida", icon: "☀️", x: "75%", y: "55%" },
+                  { name: "Illinois", icon: "🏙️", x: "50%", y: "35%" },
+                  { name: "Georgia", icon: "🍑", x: "65%", y: "45%" },
+                  { name: "Washington", icon: "🌲", x: "18%", y: "20%" },
+                  { name: "Colorado", icon: "⛰️", x: "38%", y: "30%" },
+                ].map((state, i) => (
                   <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
+                    key={state.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="flex items-center justify-center gap-2 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-[#c9a84c]/40 transition group"
                   >
-                    <MapPin size={14} className="text-[#c9a84c]" />
+                    <span className="text-2xl">{state.icon}</span>
+                    <span className="text-white/80 text-sm font-medium">{state.name}</span>
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                    >
+                      <MapPin size={14} className="text-[#c9a84c]" />
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              ))}
+                ))}
+              </div>
             </div>
             <p className="text-white/40 text-xs text-center mt-6">Serving dental practices across the United States – local expertise, national reach.</p>
           </div>
@@ -820,9 +896,9 @@ export default function DentalLeadsPage() {
         </div>
       </section>
 
-      {/* Comparison Table – Technical differences */}
+      {/* Comparison Table – Our Dental Marketing vs Other Agencies (5 differences, centered, large fonts) */}
       <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-4">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
               <Scale size={14} className="text-[#c9a84c]" />
@@ -830,32 +906,32 @@ export default function DentalLeadsPage() {
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold">Our Dental Marketing vs <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Other Agencies</span></h2>
           </motion.div>
-          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#0a0f1a]">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#0a0f1a] shadow-2xl">
+            <table className="w-full text-base md:text-lg">
               <thead className="bg-white/5">
-                <tr><th className="p-4 text-left text-white/60">Aspect</th><th className="p-4 text-left text-[#c9a84c] font-bold">Pranjal Digital</th><th className="p-4 text-left text-white/60">Other Agencies</th></tr>
+                <tr><th className="p-5 text-left text-white/60 font-semibold">Aspect</th><th className="p-5 text-left text-[#c9a84c] font-bold">Pranjal Digital</th><th className="p-5 text-left text-white/60">Other Agencies</th></tr>
               </thead>
               <tbody>
                 {[
-                  { feature: "Meta Ads Approach", us: "Hyper‑local targeting, patient avatars, creative testing (static + video), lead forms & instant booking", them: "Generic interest targeting, no creative iteration, slow response" },
-                  { feature: "Google Ads Strategy", us: "Intent‑based keyword clusters, call‑only campaigns, location extensions, local service ads integration", them: "Broad match keywords, no call tracking, wasted spend" },
-                  { feature: "SEO + AEO + GEO", us: "Rank on Google, ChatGPT, Perplexity, voice search – full entity optimization & AI crawler readiness", them: "Only traditional SEO, ignores answer/generative engines" },
-                  { feature: "Website CRO", us: "Mobile‑first, sub‑2s load time, chat/SMS integration, appointment scheduling, heatmap analysis", them: "Slow, bloated themes, no conversion optimisation" },
-                  { feature: "Reporting & Transparency", us: "Live dashboards + monthly deep‑dive with actionable insights", them: "Fancy PDFs with no real data or next steps" },
+                  { feature: "Meta Ads", us: "Advantage+ AI, dynamic creatives, patient lookalikes – $10-15 CPL", them: "Generic interest targeting, no iteration, high CPL" },
+                  { feature: "Google Ads", us: "PMax with local assets, call value bidding, geo‑fencing – 4x ROAS", them: "Broad match, waste spend, no call tracking" },
+                  { feature: "GBP + Local SEO", us: "Geo‑tagged images, weekly posts, review generation – 90+ calls/mo", them: "Set and forget, no optimisation" },
+                  { feature: "AI & Advanced Tech", us: "SEO/AEO/GEO (ChatGPT, Perplexity), AI content, heatmap CRO", them: "Only traditional SEO, ignores AI engines" },
+                  { feature: "Reporting", us: "Live dashboards + deep‑dive calls – full transparency", them: "Fancy PDFs with no actionable data" },
                 ].map((row, idx) => (
                   <tr key={idx} className="border-t border-white/10 hover:bg-white/5 transition">
-                    <td className="p-4 text-white/80 font-medium">{row.feature}</td>
-                    <td className="p-4 text-[#c9a84c] text-sm leading-relaxed">{row.us}</td>
-                    <td className="p-4 text-white/50 text-sm leading-relaxed">{row.them}</td>
+                    <td className="p-5 text-white/80 font-semibold">{row.feature}</td>
+                    <td className="p-5 text-[#c9a84c]">{row.us}</td>
+                    <td className="p-5 text-white/50">{row.them}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="text-center mt-8">
+          <div className="text-center mt-10">
             <a href={CALENDLY} target="_blank"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition">
-              Switch to a Smarter Agency → <ArrowRight size={16} />
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] font-bold hover:scale-105 transition text-lg">
+              Switch to a Smarter Agency → <ArrowRight size={18} />
             </a>
           </div>
         </div>
@@ -891,6 +967,9 @@ export default function DentalLeadsPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Modal */}
+      <CaseStudyModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }
