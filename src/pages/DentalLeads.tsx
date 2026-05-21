@@ -8,8 +8,7 @@ import {
   Facebook, Instagram, Layers, Megaphone, Eye, Activity,
   Clock, Rocket, Sparkles, ThumbsUp, Brain, Bot, Gauge,
   Crown, BadgeCheck, Compass, Navigation, Filter, Sliders,
-  Scale, BadgeDollarSign, HeartHandshake,
-  // ... (keeping all used icons)
+  Scale, HeartHandshake, Settings
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
@@ -54,7 +53,7 @@ const vsAgencies = [
   { feature: 'Money‑Back Guarantee', us: '✓ First month results or refund', them: 'Locked into 6–12 month contracts' },
 ];
 
-// Custom Hooks & Components
+// Custom Hooks
 function useCountUp(end: number, duration: number = 2000, trigger: boolean = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -74,6 +73,7 @@ function useCountUp(end: number, duration: number = 2000, trigger: boolean = fal
   return count;
 }
 
+// Components
 const Particles: React.FC = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {Array.from({ length: 30 }).map((_, i) => (
@@ -134,7 +134,7 @@ const FocusDiagram: React.FC = () => {
   );
 };
 
-// Main component
+// Main Component
 export default function DentalLeadsPage() {
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
@@ -247,7 +247,7 @@ export default function DentalLeadsPage() {
         </div>
       </section>
 
-      {/* Case Study: Royal Lane Dental (with data visualizations instead of missing images) */}
+      {/* Case Study: Royal Lane Dental */}
       <section className="py-20 bg-[#060a10] relative">
         <Orb style={{ width: 800, height: 800, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(201,168,76,0.04)' }} />
         <div className="relative max-w-7xl mx-auto px-4">
@@ -263,7 +263,6 @@ export default function DentalLeadsPage() {
             <p className="text-white/50 text-lg">Dallas, TX · General & Cosmetic Dentistry · 12 months of SEO + GBP + Ads</p>
           </motion.div>
 
-          {/* Stats Cards */}
           <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
             {[
               { emoji: '📈', value: organic, suffix: '+', label: 'Organic Sessions/Mo', change: '↑ 352% from 420', color: '#4ade80' },
@@ -285,9 +284,7 @@ export default function DentalLeadsPage() {
             ))}
           </div>
 
-          {/* Data Visualizations (replaces missing images) */}
           <div className="grid md:grid-cols-3 gap-6 mb-12">
-            {/* GBP Ranking Card */}
             <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-5">
               <h3 className="text-white font-bold text-md mb-3 flex items-center gap-2"><MapPin size={16} className="text-[#34A853]" /> Google Maps Ranking</h3>
               <div className="space-y-2">
@@ -305,7 +302,6 @@ export default function DentalLeadsPage() {
               <div className="mt-4 text-center text-white/50 text-xs">⭐ 4.9 (345+ reviews)</div>
             </div>
 
-            {/* GA4 Traffic Chart */}
             <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-5">
               <h3 className="text-white font-bold text-md mb-3 flex items-center gap-2"><BarChart3 size={16} className="text-[#c9a84c]" /> Organic Traffic Growth</h3>
               <div className="h-32 flex items-end gap-2">
@@ -319,7 +315,6 @@ export default function DentalLeadsPage() {
               <p className="text-center text-white/60 text-xs mt-3">420 → 1,900+ sessions/mo (+352%)</p>
             </div>
 
-            {/* Lead Flow Summary */}
             <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-5">
               <h3 className="text-white font-bold text-md mb-3 flex items-center gap-2"><PhoneCall size={16} className="text-[#c9a84c]" /> Lead Volume</h3>
               {[
@@ -376,7 +371,6 @@ export default function DentalLeadsPage() {
       <section className="py-20 bg-[#060a10]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-10">
-            {/* Why Choose Us */}
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
                 <BadgeCheck size={14} className="text-[#c9a84c]" />
@@ -402,7 +396,6 @@ export default function DentalLeadsPage() {
               </div>
             </motion.div>
 
-            {/* Comparison */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
                 <Scale size={14} className="text-[#c9a84c]" />
@@ -440,7 +433,7 @@ export default function DentalLeadsPage() {
         </div>
       </section>
 
-      {/* Single $499 Pricing */}
+      {/* Pricing */}
       <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#060a10]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
