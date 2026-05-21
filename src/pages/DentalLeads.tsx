@@ -1,59 +1,99 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import {
-  ArrowRight, CheckCircle2, TrendingUp, Search, Target, MapPin,
-  Smartphone, MessageSquare, Calendar, PhoneCall, Shield, DollarSign,
-  ChevronRight, Star, Zap, BarChart3, Users, Globe, Award,
-  Facebook, Instagram, Layers, Megaphone, Eye, Activity,
-  Clock, Rocket, Sparkles, ThumbsUp, Brain, Bot, Gauge,
-  Crown, BadgeCheck, Compass, Navigation, Filter, Sliders,
-  Scale, HeartHandshake, Settings
+  ArrowRight,
+  CheckCircle2,
+  TrendingUp,
+  Search,
+  Target,
+  MapPin,
+  Smartphone,
+  MessageSquare,
+  Calendar,
+  PhoneCall,
+  Shield,
+  DollarSign,
+  ChevronRight,
+  Star,
+  Zap,
+  BarChart3,
+  Users,
+  Award,
+  Facebook,
+  Instagram,
+  Layers,
+  Megaphone,
+  Activity,
+  Clock,
 } from 'lucide-react';
 
 const CALENDLY = 'https://calendly.com/pranjaldigital-info/30min';
 
-// Types
+// ==================== TYPES ====================
+interface Campaign {
+  name: string;
+  type: string;
+  cpl: string;
+  ctr: string;
+  roas: string;
+  leads: string;
+  impressions: string;
+  emoji: string;
+}
+
+interface Ranking {
+  term: string;
+  before: string;
+  after: string;
+  hot: boolean;
+}
+
 interface Service {
   icon: React.ElementType;
   name: string;
-  description: string;
+  tag: string;
+  stats: string[];
+  proof: string;
   color: string;
 }
 
-// Data
+interface Plan {
+  name: string;
+  price: number;
+  features: string[];
+  tag: string | null;
+}
+
+// ==================== DATA ====================
+const metaCampaigns: Campaign[] = [
+  { name: "Summer Smile Makeover", type: "Lead Generation", cpl: "$10.28", ctr: "5.2%", roas: "4.2x", leads: "187", impressions: "245K", emoji: "✨" },
+  { name: "Emergency Dentist – Dallas", type: "Calls & Forms", cpl: "$12.45", ctr: "6.8%", roas: "3.8x", leads: "96", impressions: "128K", emoji: "🚨" },
+  { name: "Clear Aligners Offer", type: "Booking Campaign", cpl: "$8.97", ctr: "7.1%", roas: "5.1x", leads: "312", impressions: "356K", emoji: "💎" },
+];
+
+const rankings: Ranking[] = [
+  { term: "dentist Dallas TX", before: "Out of top 20", after: "Top 6–10", hot: true },
+  { term: "clear aligners Dallas", before: "Not ranked", after: "Top 8–12", hot: true },
+  { term: "veneers Dallas", before: "Not ranked", after: "Top 10–15", hot: false },
+  { term: "family dentist Dallas", before: "Out of maps pack", after: "Maps pack visibility", hot: true },
+];
+
 const services: Service[] = [
-  { icon: Facebook, name: 'Meta Ads (FB + IG)', description: 'Your leads engine – targeted campaigns that generate $10–15 dental leads', color: '#1877F2' },
-  { icon: Target, name: 'Google Ads', description: 'Your leads funnel – high‑intent search & call ads for immediate appointments', color: '#EA4335' },
-  { icon: MapPin, name: 'Google Business Profile', description: 'Local dentist lifeline – dominate map pack & drive 90+ calls/month', color: '#34A853' },
-  { icon: Search, name: 'SEO + AEO + GEO', description: 'Long‑term strategy – rank on Google, ChatGPT, voice search, and AI engines', color: '#FBBC05' },
-  { icon: Smartphone, name: 'Website + CRO', description: 'Conversion optimization – mobile‑first design, forms, chat, and SMS', color: '#c9a84c' },
+  { icon: Megaphone, name: "Meta Ads", tag: "FB + IG", stats: ["$10–15 CPL", "5–7% CTR", "3–5x ROAS"], proof: "312 leads in 30 days for a Dallas clinic at $8.97/lead", color: "#1877F2" },
+  { icon: Target, name: "Google Ads", tag: "Search + Call Ads", stats: ["$12–18 CPL", "Top 3 positions", "4x+ ROAS"], proof: "Reduced cost per booking by 52% for a dental chain", color: "#EA4335" },
+  { icon: MapPin, name: "Google Business", tag: "GBP Optimization", stats: ["90+ calls/mo", "Top 6–10 map rank", "350% more actions"], proof: "Royal Lane went from 20 calls → 90+ calls/month", color: "#34A853" },
+  { icon: Search, name: "SEO + AEO + GEO", tag: "Organic Growth", stats: ["350% traffic↑", "Top 10 keywords", "Featured snippets"], proof: "420 → 1,900+ organic sessions/month for Royal Lane", color: "#FBBC05" },
+  { icon: Smartphone, name: "Website + CRO", tag: "Conversion Rate", stats: ["75% mobile traffic", "55+ inquiries/mo", "28–35 forms/mo"], proof: "Chat & SMS added — 10–20 extra inquiries/month instantly", color: "#c9a84c" },
 ];
 
-const processSteps = [
-  { num: '01', title: 'Audit & Strategy', desc: 'We analyze your current marketing, competitors, and patient journey.', icon: Search },
-  { num: '02', title: 'Setup & Integration', desc: 'We build your campaigns, optimize GBP, install tracking, and configure CRM.', icon: Settings },
-  { num: '03', title: 'Launch & Monitor', desc: 'Campaigns go live. We monitor performance daily, adjust bids, and test creatives.', icon: Activity },
-  { num: '04', title: 'Scale & Optimize', desc: 'We double down on what works, add new channels, and grow your patient flow.', icon: TrendingUp },
+const plans: Plan[] = [
+  { name: "Starter", price: 499, features: ["SEO + GBP optimization", "Weekly posts & updates", "Review management", "Monthly reporting"], tag: null },
+  { name: "Growth", price: 999, features: ["Everything in Starter", "Google Ads management", "Meta Ads management", "Landing page optimization", "Chat/SMS setup"], tag: "MOST POPULAR" },
+  { name: "Premium", price: 1999, features: ["Everything in Growth", "AEO + GEO strategy", "Video ads creation", "Full funnel automation", "Dedicated strategist"], tag: "BEST RESULTS" },
 ];
 
-const whyChooseUs = [
-  { icon: Shield, title: 'Flat $499/month', desc: 'No surprise fees. All services included – Meta, Google, GBP, SEO, CRO, and reporting.' },
-  { icon: Award, title: '12+ Years Experience', desc: 'Specialized in dental marketing since 2012. We know what works for practices like yours.' },
-  { icon: Users, title: 'Proven Results', desc: 'Royal Lane Dental grew from 20 to 90+ calls/month and 350% more organic traffic.' },
-  { icon: Rocket, title: 'First Month Results', desc: 'We guarantee measurable results in 30 days or 100% money back on management fees.' },
-];
-
-const vsAgencies = [
-  { feature: 'Monthly Fee', us: '$499 (all‑inclusive)', them: '$2,000–$5,000+ hidden fees' },
-  { feature: 'Dental Specialization', us: '✓ 12+ years in dental', them: 'Generalist agencies' },
-  { feature: 'Meta + Google + GBP + SEO', us: '✓ All included', them: 'A la carte → extra $1,000+' },
-  { feature: 'Dedicated Account Manager', us: '✓ Same expert every month', them: 'Rotating junior staff' },
-  { feature: 'Reporting & Analytics', us: '✓ Live dashboards + monthly deep‑dives', them: 'Fancy PDFs with no insights' },
-  { feature: 'Money‑Back Guarantee', us: '✓ First month results or refund', them: 'Locked into 6–12 month contracts' },
-];
-
-// Custom Hooks
+// ==================== HOOKS ====================
 function useCountUp(end: number, duration: number = 2000, trigger: boolean = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -73,10 +113,10 @@ function useCountUp(end: number, duration: number = 2000, trigger: boolean = fal
   return count;
 }
 
-// Components
+// ==================== SUBCOMPONENTS ====================
 const Particles: React.FC = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {Array.from({ length: 30 }).map((_, i) => (
+    {[...Array(20)].map((_, i) => (
       <motion.div
         key={i}
         className="absolute rounded-full"
@@ -85,435 +125,1183 @@ const Particles: React.FC = () => (
           height: Math.random() * 4 + 1,
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
-          background: `rgba(201,168,76,${Math.random() * 0.3 + 0.05})`,
+          background: `rgba(201,168,76,${Math.random() * 0.4 + 0.1})`,
         }}
-        animate={{ y: [0, -40, 0], opacity: [0, 0.5, 0] }}
-        transition={{ duration: Math.random() * 6 + 3, repeat: Infinity, delay: Math.random() * 4 }}
+        animate={{ y: [0, -30, 0], opacity: [0.2, 0.8, 0.2] }}
+        transition={{ duration: Math.random() * 4 + 3, repeat: Infinity, delay: Math.random() * 4 }}
       />
     ))}
   </div>
 );
 
-const Orb: React.FC<{ style?: React.CSSProperties; className?: string }> = ({ style, className }) => (
+const Orb: React.FC<{ style?: React.CSSProperties; className?: string }> = ({ style, className = "" }) => (
   <motion.div
-    animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.25, 0.1] }}
-    transition={{ duration: 12, repeat: Infinity }}
-    className={`absolute rounded-full blur-[100px] pointer-events-none ${className || ''}`}
+    animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+    transition={{ duration: 8, repeat: Infinity }}
+    className={`absolute rounded-full blur-[100px] pointer-events-none ${className}`}
     style={style}
   />
 );
 
-const FocusDiagram: React.FC = () => {
-  const diagramRef = useRef(null);
-  const isInView = useInView(diagramRef, { once: true, amount: 0.3 });
-  return (
-    <div ref={diagramRef} className="relative py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {services.map((service, idx) => (
-          <motion.div
-            key={service.name}
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ delay: idx * 0.1 }}
-            whileHover={{ y: -8, scale: 1.02 }}
-            className="relative group"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-transparent rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500" />
-            <div className="relative bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center hover:border-[#c9a84c]/40 transition-all duration-300 h-full">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <service.icon size={28} style={{ color: service.color }} />
-              </div>
-              <h3 className="text-white font-bold text-lg mb-2">{service.name}</h3>
-              <p className="text-white/60 text-sm leading-relaxed">{service.description}</p>
-              <div className="mt-4 w-12 h-0.5 bg-[#c9a84c]/40 mx-auto rounded-full" />
-            </div>
-          </motion.div>
-        ))}
+const StatBadge: React.FC<{ icon: React.ElementType; label: string; value: string; color?: string }> = ({
+  icon: Icon,
+  label,
+  value,
+  color = "#c9a84c",
+}) => (
+  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+    <Icon size={14} style={{ color }} />
+    <span className="text-white/50 text-xs">{label}</span>
+    <span className="text-white font-bold text-sm" style={{ color }}>{value}</span>
+  </div>
+);
+
+const CampaignCard: React.FC<{ campaign: Campaign; idx: number }> = ({ campaign, idx }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: idx * 0.12, duration: 0.6 }}
+    whileHover={{ y: -10, scale: 1.02 }}
+    className="relative bg-gradient-to-br from-[#0d1422] to-[#060a10] border border-white/10 rounded-2xl overflow-hidden group"
+    style={{ boxShadow: '0 0 40px rgba(201,168,76,0.05)' }}
+  >
+    {/* Mock browser bar */}
+    <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/10">
+      <div className="flex gap-1.5">
+        <div className="w-3 h-3 rounded-full bg-red-400/60" />
+        <div className="w-3 h-3 rounded-full bg-yellow-400/60" />
+        <div className="w-3 h-3 rounded-full bg-green-400/60" />
+      </div>
+      <div className="flex-1 text-center">
+        <span className="text-white/30 text-xs font-mono">Meta Ads Manager · Campaign Results</span>
       </div>
     </div>
-  );
-};
 
-// Main Component
+    <div className="p-6">
+      <div className="flex items-start justify-between mb-4">
+        <div>
+          <div className="text-2xl mb-1">{campaign.emoji}</div>
+          <h3 className="text-white font-bold text-lg leading-tight">{campaign.name}</h3>
+          <span className="text-xs text-white/40 font-mono">{campaign.type}</span>
+        </div>
+        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+          <span className="text-green-400 text-xs font-medium">Active</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 mb-4">
+        {[
+          { label: "Cost Per Lead", value: campaign.cpl, highlight: true },
+          { label: "Click-Through Rate", value: campaign.ctr, highlight: false },
+          { label: "ROAS", value: campaign.roas, highlight: false },
+          { label: "Total Leads", value: campaign.leads, highlight: false },
+        ].map((m, i) => (
+          <div
+            key={i}
+            className={`p-3 rounded-xl border ${m.highlight ? 'bg-[#c9a84c]/10 border-[#c9a84c]/30' : 'bg-white/[0.03] border-white/8'}`}
+          >
+            <div className="text-white/40 text-[10px] uppercase tracking-wider mb-1">{m.label}</div>
+            <div className={`font-bold text-xl ${m.highlight ? 'text-[#c9a84c]' : 'text-white'}`}>{m.value}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="border-t border-white/8 pt-4">
+        <div className="text-white/30 text-[10px] uppercase tracking-wider mb-2 flex items-center gap-1">
+          <Activity size={10} />
+          Impressions: {campaign.impressions}
+        </div>
+        <div className="flex items-end gap-1 h-10">
+          {[40, 65, 45, 80, 70, 90, 75, 100, 85, 95, 88, 92].map((h, i) => (
+            <motion.div
+              key={i}
+              initial={{ height: 0 }}
+              whileInView={{ height: `${h}%` }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 + i * 0.03, duration: 0.5 }}
+              className="flex-1 rounded-sm"
+              style={{ background: `rgba(201,168,76,${0.2 + (h / 100) * 0.6})` }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="flex gap-2 mt-4">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#1877F2]/10 border border-[#1877F2]/20 rounded-full">
+          <Facebook size={10} className="text-[#1877F2]" />
+          <span className="text-[#1877F2] text-[10px] font-medium">Facebook</span>
+        </div>
+        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#E4405F]/10 border border-[#E4405F]/20 rounded-full">
+          <Instagram size={10} className="text-[#E4405F]" />
+          <span className="text-[#E4405F] text-[10px] font-medium">Instagram</span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      style={{ boxShadow: 'inset 0 0 40px rgba(201,168,76,0.06)' }}
+    />
+  </motion.div>
+);
+
+// ==================== MAIN PAGE ====================
 export default function DentalLeadsPage() {
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
-  const { scrollYProgress } = useScroll();
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
-  const organic = useCountUp(1900, 2000, statsInView);
+  const organic = useCountUp(1900, 2200, statsInView);
   const calls = useCountUp(90, 2000, statsInView);
   const forms = useCountUp(35, 2000, statsInView);
   const traffic = useCountUp(350, 2000, statsInView);
 
   useEffect(() => {
-    document.title = 'Dental Leads | $499/month – Flat Fee | Meta, Google, SEO';
+    document.title = 'Dental Leads | $10/Lead* | SEO, Google Ads, Meta Ads';
     const meta = document.createElement('meta');
     meta.name = 'description';
-    meta.content = 'Get dental patients at $499/month flat fee. Includes Meta Ads, Google Ads, GBP optimization, SEO/AEO/GEO, and website CRO. Results guaranteed.';
+    meta.content =
+      'Get dental patients at $10/lead* with our proven system: Meta Ads, Google Ads, GBP optimization, SEO/AEO/GEO. Results in first month or 100% money back.';
     document.head.appendChild(meta);
-    return () => document.head.removeChild(meta);
+    return () => {
+      document.head.removeChild(meta);
+    };
   }, []);
 
   return (
-    <div className="bg-[#070b12] text-white font-sans overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
+    <div style={{ background: '#070b12', color: '#fff', fontFamily: "'Inter', sans-serif", overflow: 'hidden' }}>
+      {/* ========== HERO ========== */}
+      <section className="relative min-h-screen flex flex-col justify-center">
         <Particles />
-        <Orb style={{ width: 800, height: 800, top: '-20%', left: '-20%', background: 'rgba(201,168,76,0.1)' }} />
-        <Orb style={{ width: 1000, height: 1000, bottom: '-30%', right: '-30%', background: 'rgba(201,168,76,0.08)' }} />
+        <Orb style={{ width: 600, height: 600, top: '-10%', left: '-10%', background: 'rgba(201,168,76,0.08)' }} />
+        <Orb style={{ width: 700, height: 700, bottom: '-20%', right: '-15%', background: 'rgba(201,168,76,0.06)' }} />
 
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat'
-        }} />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
+          }}
+        />
 
-        <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 max-w-6xl mx-auto px-4 text-center pt-24 pb-20">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-3 mb-8 px-5 py-2.5 rounded-full border border-[#c9a84c]/30 bg-gradient-to-r from-[#c9a84c]/10 to-[#c9a84c]/5 backdrop-blur-sm">
-            <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-2.5 h-2.5 rounded-full bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-sm font-semibold tracking-wide">🦷 Flat‑fee Dental Marketing</span>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 pb-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-3 mb-8 px-5 py-2.5 rounded-full border border-[#c9a84c]/30"
+            style={{ background: 'linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04))' }}
+          >
+            <motion.span
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-2 h-2 rounded-full bg-[#c9a84c]"
+            />
+            <span style={{ color: '#c9a84c', fontSize: 13, fontWeight: 600 }}>🦷 Specialized Dental Clinic Growth System</span>
           </motion.div>
 
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
-            className="text-5xl sm:text-7xl lg:text-8xl font-extrabold leading-[1.1] tracking-tight mb-6">
-            <span className="text-white">Everything for</span>
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            style={{ fontSize: 'clamp(38px, 7vw, 78px)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em' }}
+          >
+            <span style={{ color: '#fff' }}>Get Dental Patients</span>
             <br />
-            <span className="bg-gradient-to-r from-[#c9a84c] via-[#f0d282] to-[#c9a84c] bg-clip-text text-transparent bg-[length:200%] animate-gradient-x">
-              $499/month
+            <span
+              style={{
+                background: 'linear-gradient(90deg, #c9a84c, #f0d282, #c9a84c)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundSize: '200%',
+              }}
+            >
+              at $10/Lead*
             </span>
           </motion.h1>
 
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-white/60 text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
-            Meta Ads • Google Ads • GBP Optimization • SEO/AEO/GEO • Website CRO
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            style={{
+              color: 'rgba(255,255,255,0.55)',
+              fontSize: 'clamp(16px,2vw,20px)',
+              maxWidth: 620,
+              margin: '24px auto 40px',
+              lineHeight: 1.7,
+            }}
+          >
+            Meta Ads · Google Ads · GBP Optimization · SEO/AEO/GEO · Website CRO
             <br />
-            <span className="text-[#c9a84c] font-semibold">One flat fee. No surprises. Results in first month or 100% money back.</span>
+            <span style={{ color: '#c9a84c', fontWeight: 600 }}>Results in first month or 100% money back.</span>
           </motion.p>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-5">
-            <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#c9a84c]/30 bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12]">
-              <Calendar size={20} /> Book Free Strategy Call <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href={CALENDLY}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-bold text-base transition-all duration-300"
+              style={{
+                background: 'linear-gradient(135deg, #c9a84c, #f0d282)',
+                color: '#070b12',
+                boxShadow: '0 8px 40px rgba(201,168,76,0.35)',
+              }}
+            >
+              <Calendar size={18} />
+              Book Free Strategy Call
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
             <Link href="/contact">
-              <a className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 border border-white/20 bg-white/5 backdrop-blur-sm hover:border-[#c9a84c]/60 hover:text-[#c9a84c]">
-                <MessageSquare size={20} /> Contact for Leads
+              <a
+                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300"
+                style={{ border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.04)', color: '#fff' }}
+              >
+                <MessageSquare size={18} />
+                Contact for Leads
               </a>
             </Link>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-            className="flex flex-wrap items-center justify-center gap-5 mt-12">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="flex flex-wrap items-center justify-center gap-4 mt-12"
+          >
             {[
               { icon: Shield, label: 'Money Back Guarantee' },
               { icon: Users, label: '400+ Clients Served' },
               { icon: Award, label: '12+ Years Experience' },
               { icon: Star, label: '4.9/5 Client Rating' },
-            ].map((badge, i) => (
-              <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-                <badge.icon size={14} className="text-[#c9a84c]" />
-                <span className="text-white/60 text-xs font-medium">{badge.label}</span>
+            ].map((b, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 px-4 py-2 rounded-full"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+              >
+                <b.icon size={13} style={{ color: '#c9a84c' }} />
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>{b.label}</span>
               </div>
             ))}
           </motion.div>
-        </motion.div>
 
-        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="w-6 h-10 border border-white/20 rounded-full flex justify-center pt-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-bounce" />
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Focus Diagram */}
-      <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15] relative">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-              <Compass size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold tracking-wide">OUR FOCUS</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              What We Focus On{' '}
-              <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">to Grow Your Practice</span>
-            </h2>
-          </motion.div>
-          <FocusDiagram />
+          <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: 11, marginTop: 20 }}>
+            *$10/lead based on location, targeting & competition. Actual costs may vary.
+          </p>
         </div>
+
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          style={{ color: 'rgba(255,255,255,0.2)' }}
+        >
+          <div
+            style={{
+              width: 24,
+              height: 40,
+              border: '1px solid rgba(255,255,255,0.15)',
+              borderRadius: 12,
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              paddingTop: 6,
+            }}
+          >
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{ width: 4, height: 4, borderRadius: '50%', background: '#c9a84c' }}
+            />
+          </div>
+        </motion.div>
       </section>
 
-      {/* Case Study: Royal Lane Dental */}
-      <section className="py-20 bg-[#060a10] relative">
-        <Orb style={{ width: 800, height: 800, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(201,168,76,0.04)' }} />
-        <div className="relative max-w-7xl mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-              <Award size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold tracking-wide">VERIFIED CASE STUDY</span>
+      {/* ========== META ADS CAMPAIGNS ========== */}
+      <section style={{ padding: '100px 0', background: 'linear-gradient(180deg, #070b12 0%, #080d15 100%)' }}>
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div
+              className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full"
+              style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)' }}
+            >
+              <Megaphone size={13} style={{ color: '#c9a84c' }} />
+              <span style={{ color: '#c9a84c', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em' }}>
+                REAL META ADS RESULTS
+              </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              How We Transformed{' '}
-              <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Royal Lane Dental</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px,5vw,52px)',
+                fontWeight: 800,
+                letterSpacing: '-0.02em',
+                marginBottom: 16,
+              }}
+            >
+              Real Campaigns.{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #c9a84c, #f0d282)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Real Dental Leads.
+              </span>
             </h2>
-            <p className="text-white/50 text-lg">Dallas, TX · General & Cosmetic Dentistry · 12 months of SEO + GBP + Ads</p>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 17, maxWidth: 560, margin: '0 auto' }}>
+              Campaign-level data from active Facebook + Instagram dental lead generation campaigns.
+            </p>
           </motion.div>
 
-          <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
-            {[
-              { emoji: '📈', value: organic, suffix: '+', label: 'Organic Sessions/Mo', change: '↑ 352% from 420', color: '#4ade80' },
-              { emoji: '📞', value: calls, suffix: '+', label: 'GBP Calls/Month', change: '↑ 350% from 20', color: '#60a5fa' },
-              { emoji: '📝', value: forms, suffix: '+', label: 'Form Submissions/Mo', change: '↑ 540% from 5', color: '#f472b6' },
-              { emoji: '📊', value: traffic, suffix: '%', label: 'Organic Traffic Growth', change: 'Full year 2025', color: '#c9a84c' },
-            ].map((stat, i) => (
-              <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }} whileHover={{ y: -6 }}
-                className="bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#c9a84c]/10 to-transparent rounded-full blur-2xl" />
-                <div className="text-3xl mb-2">{stat.emoji}</div>
-                <div className="text-4xl md:text-5xl font-bold" style={{ color: stat.color }}>
-                  {stat.value.toLocaleString()}{stat.suffix}
-                </div>
-                <div className="text-white/70 text-sm mt-2">{stat.label}</div>
-                <div className="text-white/40 text-xs mt-1">{stat.change}</div>
-              </motion.div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {metaCampaigns.map((c, i) => (
+              <CampaignCard key={c.name} campaign={c} idx={i} />
             ))}
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-5">
-              <h3 className="text-white font-bold text-md mb-3 flex items-center gap-2"><MapPin size={16} className="text-[#34A853]" /> Google Maps Ranking</h3>
-              <div className="space-y-2">
-                {[
-                  { term: 'dentist Dallas TX', rank: 'Top 6–10' },
-                  { term: 'clear aligners Dallas', rank: 'Top 8–12' },
-                  { term: 'veneers Dallas', rank: 'Top 10–15' },
-                ].map(r => (
-                  <div key={r.term} className="flex justify-between text-sm border-b border-white/10 pb-1">
-                    <span className="text-white/70">{r.term}</span>
-                    <span className="text-green-400 font-semibold">{r.rank}</span>
-                  </div>
-                ))}
+          {/* Aggregate dashboard row */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-8 rounded-2xl overflow-hidden"
+            style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'linear-gradient(135deg, #0d1422, #070b12)' }}
+          >
+            <div className="flex items-center gap-3 px-6 py-4 border-b border-white/8">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(24,119,242,0.15)' }}>
+                <Facebook size={16} style={{ color: '#1877F2' }} />
               </div>
-              <div className="mt-4 text-center text-white/50 text-xs">⭐ 4.9 (345+ reviews)</div>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(228,64,95,0.15)' }}>
+                <Instagram size={16} style={{ color: '#E4405F' }} />
+              </div>
+              <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: 13 }}>Meta Ads Manager — Aggregate Dashboard</span>
+              <div
+                className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full"
+                style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)' }}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span style={{ color: '#4ade80', fontSize: 11 }}>Live</span>
+              </div>
             </div>
 
-            <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-5">
-              <h3 className="text-white font-bold text-md mb-3 flex items-center gap-2"><BarChart3 size={16} className="text-[#c9a84c]" /> Organic Traffic Growth</h3>
-              <div className="h-32 flex items-end gap-2">
-                {[420, 680, 920, 1250, 1580, 1900].map((val, idx) => (
-                  <div key={idx} className="flex-1 flex flex-col items-center">
-                    <div className="w-full bg-[#c9a84c]/40 rounded-t-md" style={{ height: `${(val / 2000) * 100}%` }} />
-                    <span className="text-[10px] text-white/50 mt-1">{idx === 0 ? 'Jan' : idx === 5 ? 'Dec' : ''}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-center text-white/60 text-xs mt-3">420 → 1,900+ sessions/mo (+352%)</p>
-            </div>
-
-            <div className="bg-[#0a0f1c] border border-white/10 rounded-2xl p-5">
-              <h3 className="text-white font-bold text-md mb-3 flex items-center gap-2"><PhoneCall size={16} className="text-[#c9a84c]" /> Lead Volume</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ background: 'rgba(255,255,255,0.05)' }}>
               {[
-                { label: 'GBP Calls', before: 20, after: 90 },
-                { label: 'Forms', before: 5, after: 35 },
-                { label: 'Chat/SMS', before: 0, after: 15 },
-              ].map(item => (
-                <div key={item.label} className="mb-2">
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white/60">{item.label}</span>
-                    <span><span className="text-white/40 line-through">{item.before}</span> → <span className="text-green-400">{item.after}</span></span>
+                { label: 'Total Ad Spend', value: '$8,247', delta: '+12% MoM', up: true },
+                { label: 'Leads Generated', value: '642', delta: '+34% MoM', up: true },
+                { label: 'Avg. Cost/Lead', value: '$12.84', delta: '−18% MoM', up: false },
+                { label: 'Blended ROAS', value: '4.2×', delta: '+0.8× MoM', up: true },
+              ].map((s, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.1 }}
+                  className="p-5 text-center"
+                  style={{ background: '#0a0f1a' }}
+                >
+                  <div
+                    style={{
+                      color: 'rgba(255,255,255,0.35)',
+                      fontSize: 11,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      marginBottom: 8,
+                    }}
+                  >
+                    {s.label}
                   </div>
-                  <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-[#c9a84c] to-[#f0d282]" style={{ width: `${(item.after / 100) * 100}%` }} />
-                  </div>
-                </div>
+                  <div style={{ color: '#fff', fontWeight: 800, fontSize: 28, letterSpacing: '-0.02em' }}>{s.value}</div>
+                  <div style={{ color: s.up ? '#4ade80' : '#f87171', fontSize: 12, marginTop: 4, fontWeight: 600 }}>{s.delta}</div>
+                </motion.div>
               ))}
             </div>
-          </div>
+
+            <div className="px-6 pb-6 pt-4">
+              <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: 11, marginBottom: 8 }}>LEADS OVER TIME (30 DAYS)</div>
+              <div className="flex items-end gap-1" style={{ height: 48 }}>
+                {[22, 35, 28, 45, 38, 55, 48, 62, 51, 70, 63, 78, 68, 85, 72, 90, 78, 95, 82, 100, 88, 96, 91, 98, 86, 94, 89, 97, 93, 100].map(
+                  (h, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ height: 0 }}
+                      whileInView={{ height: `${h}%` }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.5 + i * 0.02, duration: 0.4 }}
+                      style={{
+                        flex: 1,
+                        borderRadius: '2px 2px 0 0',
+                        background: `rgba(201,168,76,${0.15 + (h / 100) * 0.65})`,
+                      }}
+                    />
+                  )
+                )}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Our Process */}
-      <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#080d15]">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-              <Rocket size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold tracking-wide">OUR PROCESS</span>
+      {/* ========== CASE STUDY: ROYAL LANE DENTAL ========== */}
+      <section style={{ padding: '100px 0', background: '#060a10', position: 'relative' }}>
+        <Orb style={{ width: 800, height: 800, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', background: 'rgba(201,168,76,0.04)' }} />
+
+        <div className="relative max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div
+              className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full"
+              style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)' }}
+            >
+              <Award size={13} style={{ color: '#c9a84c' }} />
+              <span style={{ color: '#c9a84c', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em' }}>VERIFIED CASE STUDY</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              From Zero to{' '}
-              <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Full Chair</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px,5vw,52px)',
+                fontWeight: 800,
+                letterSpacing: '-0.02em',
+                marginBottom: 16,
+              }}
+            >
+              How We Transformed{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #c9a84c, #f0d282)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Royal Lane Dental
+              </span>
             </h2>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 17, maxWidth: 560, margin: '0 auto' }}>
+              Dallas, TX · General & Cosmetic Dentistry · 12 months of SEO + GBP optimization
+            </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {processSteps.map((step, idx) => (
-              <motion.div key={step.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }} whileHover={{ y: -8 }}
-                className="relative bg-gradient-to-br from-[#0d1422] to-[#070b12] border border-white/10 rounded-2xl p-6 text-center group">
-                <div className="absolute -top-3 left-6 text-[#c9a84c] font-mono text-4xl font-black opacity-20">{step.num}</div>
-                <div className="w-14 h-14 mx-auto rounded-full bg-[#c9a84c]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <step.icon size={24} className="text-[#c9a84c]" />
+
+          <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+            {[
+              { emoji: '📈', value: organic, suffix: '+', sub: 'Organic Sessions/Mo', change: '↑ 352% from 420', color: '#4ade80' },
+              { emoji: '📞', value: calls, suffix: '+', sub: 'GBP Calls/Month', change: '↑ 350% from 20', color: '#60a5fa' },
+              { emoji: '📝', value: forms, suffix: '+', sub: 'Form Submissions/Mo', change: '↑ 540% from 5', color: '#f472b6' },
+              { emoji: '📊', value: traffic, suffix: '%', sub: 'Organic Traffic Growth', change: 'Full year 2025', color: '#c9a84c' },
+            ].map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.85 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -6 }}
+                style={{
+                  background: 'linear-gradient(135deg, #0d1422, #070b12)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: 20,
+                  padding: 28,
+                  textAlign: 'center',
+                  cursor: 'default',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: -30,
+                    right: -30,
+                    width: 100,
+                    height: 100,
+                    borderRadius: '50%',
+                    background: `${s.color}15`,
+                    filter: 'blur(30px)',
+                    pointerEvents: 'none',
+                  }}
+                />
+                <div style={{ fontSize: 28, marginBottom: 12 }}>{s.emoji}</div>
+                <div
+                  style={{
+                    fontWeight: 800,
+                    fontSize: 'clamp(32px,4vw,48px)',
+                    letterSpacing: '-0.03em',
+                    color: s.color,
+                    lineHeight: 1,
+                  }}
+                >
+                  {s.value.toLocaleString()}
+                  {s.suffix}
                 </div>
-                <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-                <p className="text-white/60 text-sm">{step.desc}</p>
+                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 8, fontWeight: 500 }}>{s.sub}</div>
+                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, marginTop: 4 }}>{s.change}</div>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Why Choose Us + vs Agencies */}
-      <section className="py-20 bg-[#060a10]">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-10">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-                <BadgeCheck size={14} className="text-[#c9a84c]" />
-                <span className="text-[#c9a84c] text-xs font-bold tracking-wide">WHY DENTISTS CHOOSE US</span>
+          <div className="grid lg:grid-cols-2 gap-6 mb-8">
+            {/* Rankings table */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              style={{ background: '#0a0f1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, overflow: 'hidden' }}
+            >
+              <div className="flex items-center gap-3 px-5 py-4 border-b border-white/8">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(234,67,53,0.12)' }}>
+                  <Search size={14} style={{ color: '#EA4335' }} />
+                </div>
+                <span style={{ color: '#fff', fontWeight: 700, fontSize: 14 }}>Google Maps & Search Rankings</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-6">
-                Why Choose{' '}
-                <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Pranjal Digital</span>
-              </h2>
-              <div className="space-y-4">
-                {whyChooseUs.map((item, idx) => (
-                  <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-[#c9a84c]/30 transition-colors">
-                    <div className="w-10 h-10 rounded-lg bg-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
-                      <item.icon size={18} className="text-[#c9a84c]" />
+              <div style={{ padding: '8px 0' }}>
+                <div
+                  className="grid grid-cols-3 px-5 py-2"
+                  style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.07em' }}
+                >
+                  <span>Keyword</span>
+                  <span>Before</span>
+                  <span>After</span>
+                </div>
+                {rankings.map((r, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 + i * 0.08 }}
+                    className="grid grid-cols-3 px-5 py-3 border-t border-white/5 group hover:bg-white/[0.02] transition-colors"
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      {r.hot && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#c9a84c', flexShrink: 0 }} />}
+                      <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: 500 }}>{r.term}</span>
                     </div>
-                    <div>
-                      <h3 className="text-white font-bold">{item.title}</h3>
-                      <p className="text-white/60 text-sm">{item.desc}</p>
-                    </div>
+                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>{r.before}</span>
+                    <span style={{ color: '#4ade80', fontSize: 13, fontWeight: 600 }}>{r.after}</span>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-                <Scale size={14} className="text-[#c9a84c]" />
-                <span className="text-[#c9a84c] text-xs font-bold tracking-wide">COMPARISON</span>
+            {/* Lead flow chart */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              style={{ background: '#0a0f1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, overflow: 'hidden' }}
+            >
+              <div className="flex items-center gap-3 px-5 py-4 border-b border-white/8">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(201,168,76,0.12)' }}>
+                  <PhoneCall size={14} style={{ color: '#c9a84c' }} />
+                </div>
+                <span style={{ color: '#fff', fontWeight: 700, fontSize: 14 }}>Monthly Lead Volume — Before vs After</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-6">
-                Us vs{' '}
-                <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Other Dental Agencies</span>
-              </h2>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-3 text-white/60 font-medium">Feature</th>
-                      <th className="text-left py-3 text-[#c9a84c] font-bold">Pranjal Digital</th>
-                      <th className="text-left py-3 text-white/60 font-medium">Others</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {vsAgencies.map((row, idx) => (
-                      <tr key={idx} className="border-b border-white/10">
-                        <td className="py-3 text-white/80">{row.feature}</td>
-                        <td className="py-3 text-[#c9a84c] font-semibold">{row.us}</td>
-                        <td className="py-3 text-white/50">{row.them}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="mt-6 p-4 bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded-xl text-center">
-                <p className="text-[#c9a84c] text-sm font-bold">⭐ The only dental marketing agency with a flat $499/month all‑inclusive fee and first‑month results guarantee.</p>
+              <div style={{ padding: 24 }}>
+                {[
+                  { label: 'GBP Calls', before: 20, after: 90, color: '#60a5fa' },
+                  { label: 'Website Forms', before: 5, after: 35, color: '#4ade80' },
+                  { label: 'Chat / SMS', before: 0, after: 15, color: '#f472b6' },
+                ].map((item, i) => (
+                  <div key={i} style={{ marginBottom: i < 2 ? 24 : 0 }}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>{item.label}</span>
+                      <div className="flex items-center gap-2">
+                        <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13, textDecoration: 'line-through' }}>
+                          {item.before}/mo
+                        </span>
+                        <ArrowRight size={12} style={{ color: '#c9a84c' }} />
+                        <span style={{ color: item.color, fontSize: 16, fontWeight: 800 }}>{item.after}+/mo</span>
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: 5 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10, width: 36 }}>Before</span>
+                        <div style={{ flex: 1, height: 6, background: 'rgba(255,255,255,0.05)', borderRadius: 3, overflow: 'hidden' }}>
+                          <div
+                            style={{
+                              width: `${(item.before / item.after) * 100}%`,
+                              height: '100%',
+                              background: 'rgba(255,255,255,0.15)',
+                              borderRadius: 3,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10, width: 36 }}>After</span>
+                        <div style={{ flex: 1, height: 10, background: 'rgba(255,255,255,0.05)', borderRadius: 5, overflow: 'hidden' }}>
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: '100%' }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 + i * 0.15, duration: 0.9 }}
+                            style={{
+                              height: '100%',
+                              background: `linear-gradient(90deg, ${item.color}60, ${item.color})`,
+                              borderRadius: 5,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div
+                  style={{
+                    marginTop: 24,
+                    padding: '14px 16px',
+                    background: 'rgba(201,168,76,0.06)',
+                    border: '1px solid rgba(201,168,76,0.2)',
+                    borderRadius: 12,
+                    textAlign: 'center',
+                  }}
+                >
+                  <span style={{ color: '#c9a84c', fontWeight: 700, fontSize: 14 }}>
+                    📊 Total: ~25/mo → 140+/mo in patient inquiries
+                  </span>
+                </div>
               </div>
             </motion.div>
+          </div>
+
+          {/* What was done — timeline */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ background: '#0a0f1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 32 }}
+          >
+            <h3 style={{ color: '#fff', fontWeight: 700, fontSize: 16, marginBottom: 24 }}>🛠 What We Did (2025 Strategy)</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  num: '01',
+                  title: 'Technical & On-Page SEO',
+                  items: ['Fixed crawl errors & mobile UX', 'Implemented local + service schema', "Rewrote title tags for 'Dallas dentist'", 'Optimized site speed & headers'],
+                },
+                {
+                  num: '02',
+                  title: 'GBP Management',
+                  items: ['Completed all GBP profile fields', 'Weekly posts with service highlights', 'Geo-tagged images on Maps', 'Review request strategy'],
+                },
+                {
+                  num: '03',
+                  title: 'Local Citations',
+                  items: ['Cleaned inconsistent NAP listings', 'Added healthcare directory citations', 'Built local Dallas backlinks', 'Monitored citation consistency'],
+                },
+                {
+                  num: '04',
+                  title: 'Conversion Focus',
+                  items: ['Added appointment form + phone CTAs', 'SMS chat widget integrated', 'Analytics tracking for all actions', 'A/B tested landing page variants'],
+                },
+              ].map((s, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <div
+                    style={{
+                      color: '#c9a84c',
+                      fontWeight: 800,
+                      fontSize: 28,
+                      fontFamily: 'monospace',
+                      marginBottom: 8,
+                      opacity: 0.5,
+                    }}
+                  >
+                    {s.num}
+                  </div>
+                  <h4 style={{ color: '#fff', fontWeight: 700, fontSize: 13, marginBottom: 10 }}>{s.title}</h4>
+                  <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                    {s.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-2 mb-2">
+                        <CheckCircle2 size={12} style={{ color: '#c9a84c', marginTop: 2, flexShrink: 0 }} />
+                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-6 text-center">
+            <a
+              href="https://www.royallanedental.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: 'rgba(255,255,255,0.3)',
+                fontSize: 13,
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#c9a84c')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
+            >
+              View Royal Lane Dental Website <ChevronRight size={14} />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ========== SERVICES SYSTEM ========== */}
+      <section style={{ padding: '100px 0', background: 'linear-gradient(180deg, #070b12, #060a10)' }}>
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div
+              className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full"
+              style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)' }}
+            >
+              <Layers size={13} style={{ color: '#c9a84c' }} />
+              <span style={{ color: '#c9a84c', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em' }}>COMPLETE SYSTEM</span>
+            </div>
+            <h2
+              style={{
+                fontSize: 'clamp(28px,5vw,52px)',
+                fontWeight: 800,
+                letterSpacing: '-0.02em',
+                marginBottom: 16,
+              }}
+            >
+              Everything to{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #c9a84c, #f0d282)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Fill Your Chair
+              </span>
+            </h2>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 17, maxWidth: 500, margin: '0 auto' }}>
+              5 channels. One dashboard. One point of contact. Proven results.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {services.map((s, i) => (
+              <motion.div
+                key={s.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -8 }}
+                style={{
+                  background: 'linear-gradient(135deg, #0d1422, #070b12)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  borderRadius: 20,
+                  padding: 28,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  cursor: 'default',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 24,
+                    right: 24,
+                    height: 2,
+                    background: `linear-gradient(90deg, ${s.color}, transparent)`,
+                    borderRadius: '0 0 2px 2px',
+                  }}
+                />
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 14,
+                    background: `${s.color}15`,
+                    border: `1px solid ${s.color}30`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 20,
+                  }}
+                >
+                  <s.icon size={22} style={{ color: s.color }} />
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 style={{ color: '#fff', fontWeight: 700, fontSize: 18 }}>{s.name}</h3>
+                  <span
+                    style={{
+                      color: 'rgba(255,255,255,0.3)',
+                      fontSize: 12,
+                      background: 'rgba(255,255,255,0.05)',
+                      padding: '2px 8px',
+                      borderRadius: 6,
+                    }}
+                  >
+                    {s.tag}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {s.stats.map((stat, j) => (
+                    <span
+                      key={j}
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: s.color,
+                        background: `${s.color}10`,
+                        border: `1px solid ${s.color}25`,
+                        padding: '3px 10px',
+                        borderRadius: 20,
+                      }}
+                    >
+                      {stat}
+                    </span>
+                  ))}
+                </div>
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                    <Zap size={13} style={{ color: '#c9a84c', marginTop: 1, flexShrink: 0 }} />
+                    <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, lineHeight: 1.6, margin: 0 }}>
+                      <span style={{ color: '#c9a84c', fontWeight: 600 }}>Proof: </span>
+                      {s.proof}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* CTA card */}
+            <motion.a
+              href={CALENDLY}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              whileHover={{ y: -8 }}
+              style={{
+                background: 'linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04))',
+                border: '1px solid rgba(201,168,76,0.25)',
+                borderRadius: 20,
+                padding: 28,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                textDecoration: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              <div
+                style={{
+                  width: 56,
+                  height: 56,
+                  borderRadius: '50%',
+                  background: 'rgba(201,168,76,0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 16,
+                }}
+              >
+                <Calendar size={24} style={{ color: '#c9a84c' }} />
+              </div>
+              <h3 style={{ color: '#fff', fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Get Your Free Growth Plan</h3>
+              <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 13, marginBottom: 20 }}>
+                30-minute call. We'll audit your current setup and show you what's possible.
+              </p>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 24px',
+                  background: 'linear-gradient(135deg, #c9a84c, #f0d282)',
+                  borderRadius: 10,
+                  color: '#070b12',
+                  fontWeight: 700,
+                  fontSize: 14,
+                }}
+              >
+                Book Free Call <ArrowRight size={14} />
+              </div>
+            </motion.a>
           </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="py-20 bg-gradient-to-b from-[#070b12] to-[#060a10]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-              <DollarSign size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold tracking-wide">SIMPLE PRICING</span>
+      {/* ========== PRICING ========== */}
+      <section style={{ padding: '100px 0', background: '#060a10' }}>
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div
+              className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full"
+              style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)' }}
+            >
+              <DollarSign size={13} style={{ color: '#c9a84c' }} />
+              <span style={{ color: '#c9a84c', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em' }}>TRANSPARENT PRICING</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              One Flat Fee.{' '}
-              <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Everything Included.</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px,5vw,52px)',
+                fontWeight: 800,
+                letterSpacing: '-0.02em',
+                marginBottom: 16,
+              }}
+            >
+              Service Fees from{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #c9a84c, #f0d282)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                $499/month
+              </span>
             </h2>
-            <div className="relative inline-block my-8">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#c9a84c]/20 to-[#f0d282]/20 rounded-2xl blur-2xl" />
-              <div className="relative bg-gradient-to-br from-[#0f1927] to-[#0a0f1a] border border-[#c9a84c]/40 rounded-2xl p-8 shadow-2xl">
-                <div className="text-6xl md:text-7xl font-extrabold text-[#c9a84c]">$499</div>
-                <div className="text-white/50 text-sm mt-1">per month • all services included</div>
-                <div className="w-16 h-0.5 bg-[#c9a84c]/50 mx-auto my-4" />
-                <ul className="text-left space-y-2 mb-6">
-                  {['Meta Ads (Facebook + Instagram)', 'Google Ads (Search + Call Ads)', 'Google Business Profile Optimization', 'SEO + AEO + GEO (Traditional + AI)', 'Website CRO + Chat/SMS Integration', 'Monthly Reporting & Strategy Calls'].map(feature => (
-                    <li key={feature} className="flex items-center gap-2 text-white/80 text-sm"><CheckCircle2 size={14} className="text-[#c9a84c]" /> {feature}</li>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 17 }}>No hidden fees. No long-term contracts. Ad spend billed separately.</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {plans.map((plan, i) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -10 }}
+                style={{
+                  position: 'relative',
+                  background: plan.tag ? 'linear-gradient(135deg, #0f1927, #0a0f1a)' : 'linear-gradient(135deg, #0d1422, #070b12)',
+                  border: plan.tag === 'MOST POPULAR' ? '1px solid rgba(201,168,76,0.4)' : '1px solid rgba(255,255,255,0.07)',
+                  borderRadius: 24,
+                  padding: '36px 28px',
+                  boxShadow: plan.tag === 'MOST POPULAR' ? '0 0 60px rgba(201,168,76,0.1)' : 'none',
+                }}
+              >
+                {plan.tag && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: -14,
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      background: plan.tag === 'MOST POPULAR' ? 'linear-gradient(90deg, #c9a84c, #f0d282)' : 'rgba(255,255,255,0.15)',
+                      color: plan.tag === 'MOST POPULAR' ? '#070b12' : '#fff',
+                      fontSize: 10,
+                      fontWeight: 800,
+                      letterSpacing: '0.1em',
+                      padding: '5px 16px',
+                      borderRadius: 20,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {plan.tag}
+                  </div>
+                )}
+                <h3 style={{ color: '#fff', fontWeight: 700, fontSize: 20, marginBottom: 8 }}>{plan.name}</h3>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
+                  <span style={{ color: '#c9a84c', fontWeight: 800, fontSize: 42, letterSpacing: '-0.03em' }}>${plan.price}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 14 }}>/month</span>
+                </div>
+                <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, marginBottom: 28 }}>Ad spend billed separately</p>
+                <ul style={{ listStyle: 'none', margin: '0 0 32px', padding: 0 }}>
+                  {plan.features.map((f, j) => (
+                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                      <div
+                        style={{
+                          width: 18,
+                          height: 18,
+                          borderRadius: '50%',
+                          background: 'rgba(201,168,76,0.12)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <CheckCircle2 size={11} style={{ color: '#c9a84c' }} />
+                      </div>
+                      <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>{f}</span>
+                    </li>
                   ))}
                 </ul>
-                <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-bold bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12] hover:scale-105 transition-transform">
-                  Get Started → <ArrowRight size={16} />
+                <a
+                  href={CALENDLY}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'block',
+                    textAlign: 'center',
+                    padding: '14px',
+                    borderRadius: 12,
+                    fontWeight: 700,
+                    fontSize: 14,
+                    textDecoration: 'none',
+                    background: plan.tag === 'MOST POPULAR' ? 'linear-gradient(135deg, #c9a84c, #f0d282)' : 'rgba(255,255,255,0.05)',
+                    color: plan.tag === 'MOST POPULAR' ? '#070b12' : '#fff',
+                    border: plan.tag === 'MOST POPULAR' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  Get Started →
                 </a>
-              </div>
-            </div>
-            <div className="mt-8 p-4 bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-xl max-w-md mx-auto">
-              <Shield size={24} className="text-[#c9a84c] mx-auto mb-2" />
-              <p className="text-white/80 text-sm font-medium">100% Money‑Back Guarantee – First month results or we refund 100% of management fees.</p>
-            </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{
+              maxWidth: 600,
+              margin: '0 auto',
+              background: 'linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02))',
+              border: '1px solid rgba(201,168,76,0.25)',
+              borderRadius: 20,
+              padding: '36px 40px',
+              textAlign: 'center',
+            }}
+          >
+            <Shield size={36} style={{ color: '#c9a84c', marginBottom: 16 }} />
+            <h3 style={{ color: '#fff', fontWeight: 800, fontSize: 22, marginBottom: 12 }}>100% Money-Back Guarantee</h3>
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, lineHeight: 1.7, margin: 0 }}>
+              If you don't see measurable results in the first month — increased calls, form fills, or leads — we'll refund 100% of your
+              management fees. No questions asked.
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="relative py-24 overflow-hidden">
-        <Orb style={{ width: 1000, height: 600, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(201,168,76,0.12)' }} />
+      {/* ========== FINAL CTA ========== */}
+      <section style={{ padding: '120px 0', position: 'relative', overflow: 'hidden' }}>
+        <Orb style={{ width: 900, height: 600, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', background: 'rgba(201,168,76,0.07)' }} />
         <Particles />
         <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-[#c9a84c]/10 border border-[#c9a84c]/20">
-              <TrendingUp size={14} className="text-[#c9a84c]" />
-              <span className="text-[#c9a84c] text-xs font-bold tracking-wide">READY FOR MORE PATIENTS?</span>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div
+              className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full"
+              style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)' }}
+            >
+              <TrendingUp size={13} style={{ color: '#c9a84c' }} />
+              <span style={{ color: '#c9a84c', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em' }}>READY FOR MORE PATIENTS?</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-5">
-              Stop Wasting Money on{' '}
-              <span className="bg-gradient-to-r from-[#c9a84c] to-[#f0d282] bg-clip-text text-transparent">Ineffective Marketing</span>
+            <h2
+              style={{
+                fontSize: 'clamp(32px,6vw,64px)',
+                fontWeight: 800,
+                lineHeight: 1.1,
+                letterSpacing: '-0.03em',
+                marginBottom: 20,
+              }}
+            >
+              Stop Paying for Ads<br />
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #c9a84c, #f0d282)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                That Don't Convert
+              </span>
             </h2>
-            <p className="text-white/60 text-xl max-w-xl mx-auto mb-10">
-              Let's build a system that fills your schedule with quality patients — for a flat $499/month.
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 18, maxWidth: 500, margin: '0 auto 48px', lineHeight: 1.7 }}>
+              Let's build a system that consistently fills your schedule with quality patients — every month.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <a href={CALENDLY} target="_blank" rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl bg-gradient-to-r from-[#c9a84c] to-[#f0d282] text-[#070b12]">
-                <Calendar size={20} /> Book Free Consultation <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={CALENDLY}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 px-9 py-4.5 rounded-xl font-bold text-base transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #c9a84c, #f0d282)',
+                  color: '#070b12',
+                  boxShadow: '0 12px 50px rgba(201,168,76,0.4)',
+                  padding: '16px 36px',
+                  borderRadius: 14,
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              >
+                <Calendar size={18} />
+                Book Free Consultation
+                <ArrowRight size={16} />
               </a>
               <Link href="/contact">
-                <a className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 border border-white/20 bg-white/5 backdrop-blur-sm hover:border-[#c9a84c]/60 hover:text-[#c9a84c]">
-                  <MessageSquare size={20} /> Ask About Leads
+                <a
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    padding: '16px 36px',
+                    borderRadius: 14,
+                    fontWeight: 700,
+                    fontSize: 15,
+                    textDecoration: 'none',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    background: 'rgba(255,255,255,0.04)',
+                    color: '#fff',
+                  }}
+                >
+                  <MessageSquare size={18} />
+                  Ask About Leads
                 </a>
               </Link>
             </div>
-            <p className="text-white/30 text-sm mt-8">🦷 Dental marketing specialists · 12+ years · 400+ clients worldwide</p>
+            <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12, marginTop: 32 }}>
+              🦷 Dental marketing specialists · 12+ years · 400+ clients worldwide
+            </p>
           </motion.div>
         </div>
       </section>
-
-      <style>{`
-        @keyframes gradient-x {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient-x {
-          background-size: 200%;
-          animation: gradient-x 3s ease infinite;
-        }
-      `}</style>
     </div>
   );
 }
